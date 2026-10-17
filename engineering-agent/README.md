@@ -24,8 +24,9 @@ capability registry, lazy configuration and the separated security components.
 .\run.ps1 chat --workspace E:\projects\app --provider ollama
 ```
 
-Configure a reachable model locally first. No live model/account was configured
-on the development machine; transport and orchestration tests use local fixtures.
+Configure a reachable model locally first. Transport and orchestration tests use
+local fixtures. OpenCode's live catalog was fetched, but inference attempts were
+blocked by free-tier restrictions or account billing; see [provider status](PROVIDERS.md).
 
 For the interactive terminal, run `.\run.ps1` with no arguments or
 `.\run.ps1 tui --workspace E:\projects\app`. It includes provider/model selection,
@@ -117,7 +118,8 @@ The optional Bedrock contract is checked using the real SDK with Stubber, withou
 an AWS request. PyTorch-specific tests skip when its optional stack is absent.
 
 Streaming native tool calls, richer TUI/Git integration, general delegation,
-browser/desktop tools, OS isolation, financial budgets, native OAuth and matched
-AlphaCode task benchmarks remain development work. See [ENGINEERING.md](ENGINEERING.md).
+broader browser QA and desktop automation, OS isolation, financial budgets,
+native OAuth and matched AlphaCode task benchmarks remain development work.
+See [ENGINEERING.md](ENGINEERING.md).
 
 MIT licensed; see [LICENSE](LICENSE).

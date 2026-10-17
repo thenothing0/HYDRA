@@ -23,8 +23,8 @@ mapped to API-key billing.
 
 **Transport implemented does not mean account access or live compatibility has
 been verified.** Tests validate every API profile's request construction and
-exercise real local HTTP exchanges for the four protocol families. No paid
-provider credentials are configured on this machine. Provider availability,
+exercise real local HTTP exchanges for the four protocol families. No successful
+paid-model inference has been verified here. Provider availability,
 model access and third-party proxy-specific requirements can change.
 
 The API profiles are: opencode, opencode-go, zai, kimi, 302ai, baseten, cortecs,
