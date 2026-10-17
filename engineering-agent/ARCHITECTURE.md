@@ -19,6 +19,7 @@ flags and `hydra.main` imports remain compatible.
 | Command routing | `hydra/cli.py` | Explicit runtime names; compatibility for recognized security flags; no engine initialization while routing |
 | Environment and settings | `hydra/config.py` | Lazy `.env` loading, process environment precedence, per-instance defaults, cached settings snapshot |
 | Agent lifecycle | `hydra/engineering/agent.py` | Bounded observe/action/verify loop; only enabled session tools accepted |
+| Terminal presentation | `hydra/engineering/tui/` | Textual widgets over an independent controller; asynchronous approval uses the same process boundary |
 | Tool registry | `hydra/engineering/registry.py` | Named capability ownership, duplicate refusal, defensive schema copies, dispatch |
 | Capability packs | `hydra/engineering/capabilities/` | File, process, session and opt-in browser handlers own their tool contracts |
 | Process execution | `hydra/engineering/process.py` | Authorized argv execution, bounded output, timeout and cancellation cleanup |

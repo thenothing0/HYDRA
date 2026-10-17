@@ -1,6 +1,7 @@
 """Authorized subprocess lifecycle and bounded output capture."""
 
 import asyncio
+import inspect
 import os
 import signal
 
@@ -20,7 +21,10 @@ class ProcessRunner:
             raise ValueError("argv must be a nonempty list of text arguments")
         if type(timeout) not in (int, float) or not 0 < timeout <= 120:
             raise ValueError("Command timeout must be between 0 and 120 seconds")
-        if not self.approve(argv):
+        approval = self.approve(argv)
+        if inspect.isawaitable(approval):
+            approval = await approval
+        if not approval:
             raise PermissionError("Command not authorized by the operator")
         # stdout is drained continuously but only the first 16 KB is retained.
         options = {"start_new_session": True} if os.name != "nt" else {}

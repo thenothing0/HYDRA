@@ -38,7 +38,14 @@ checks. Desktop and delegated agents are not available in this runtime yet.
 
 class EngineeringAgent:
     def __init__(
-        self, session, model, tools=None, max_steps=30, max_seconds=600, on_event=None
+        self,
+        session,
+        model,
+        tools=None,
+        max_steps=30,
+        max_seconds=600,
+        on_event=None,
+        on_result=None,
     ):
         if not 1 <= max_steps <= 200 or not 1 <= max_seconds <= 7200:
             raise ValueError("max_steps must be 1..200; max_seconds must be 1..7200")
@@ -48,6 +55,7 @@ class EngineeringAgent:
         self.max_steps = max_steps
         self.max_seconds = max_seconds
         self.on_event = on_event or (lambda event: None)
+        self.on_result = on_result or (lambda event: None)
 
     def prompt(self):
         state = self.session.state
@@ -144,6 +152,7 @@ class EngineeringAgent:
                 except (ValueError, OSError, KeyError, TypeError) as error:
                     result = {"error": str(error), "success": False}
                 self.session.event("result", tool=action["tool"], result=result)
+                self.on_result({"tool": action["tool"], "result": result})
                 if result.get("completed"):
                     return state
                 if result.get("success") is False or "error" in result:

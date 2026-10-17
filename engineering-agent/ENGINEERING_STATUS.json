@@ -23,7 +23,8 @@
     "Lazy configuration snapshots, initialization failure recovery and provider/security settings independence",
     "Separated security lifecycle, workflow, result and console components",
     "Separated confirmation evidence models, signatures and check groups with the existing SafeProber boundary",
-    "Loopback deployment defaults, explicit infrastructure passwords and Docker context exclusions"
+    "Loopback deployment defaults, explicit infrastructure passwords and Docker context exclusions",
+    "Interactive Textual engineering terminal with provider/model selection, durable sessions, plan/diff panels, live tool activity and asynchronous command approval"
   ],
   "verification": {
     "suite": "output/architecture-tests.xml",
@@ -37,16 +38,21 @@
     "provider_http_tests": "real loopback HTTP servers; no paid provider calls",
     "bedrock_test": "real SDK with Stubber; no AWS account request",
     "browser_integration": "output/browser-e2e.json; real isolated Chromium with local fixture and pregranted fixture host permission",
-    "browser_manual_checks_pending": ["interactive host permission prompt", "active-tab screenshot", "Firefox runtime validation (unsigned build and Firefox WebSocket origin tests pass)"],
+    "browser_manual_checks_pending": [
+      "interactive host permission prompt",
+      "active-tab screenshot",
+      "Firefox runtime validation (unsigned build and Firefox WebSocket origin tests pass)"
+    ],
     "live_model_verified": false,
-    "superiority_benchmark_completed": false
+    "superiority_benchmark_completed": false,
+    "terminal_tests": "tests/test_engineering_tui.py; deterministic models, real local edits/processes and headless terminal interaction"
   },
   "remaining": [
     "Native subscription/OAuth integration for claude, auto-import, alphacode, openai, cursor, copilot, gemini, antigravity, google",
     "Live provider/account validation with operator-configured credentials",
     "Streaming native function calling and token/context budgets",
     "Enforced monetary budgets",
-    "Richer TUI and Git/worktree integration",
+    "Git/worktree integration and semantic/LSP navigation",
     "General engineering delegation, broader browser QA and desktop tools",
     "OS-level process isolation",
     "Matched-task, matched-model benchmarking against AlphaCode"

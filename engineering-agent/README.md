@@ -27,6 +27,11 @@ capability registry, lazy configuration and the separated security components.
 Configure a reachable model locally first. No live model/account was configured
 on the development machine; transport and orchestration tests use local fixtures.
 
+For the interactive terminal, run `.\run.ps1` with no arguments or
+`.\run.ps1 tui --workspace E:\projects\app`. It includes provider/model selection,
+session navigation, live tool activity, plan/diff panels and command approval.
+See [TERMINAL.md](TERMINAL.md) for setup, shortcuts and tested limits.
+
 ```powershell
 .\run.ps1 run "Fix the failing tests with a minimal change" --workspace E:\projects\app --provider deepseek --model YOUR_MODEL_ID
 .\run.ps1 run "Explain the architecture" --workspace E:\projects\app --read-only

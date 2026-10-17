@@ -104,7 +104,7 @@ leave a `.lock`; inspect it before removing it and resuming.
 2. Add streaming native tool calls, context/token budgeting, and financial cost
    accounting. Provider-reported token usage is recorded, but no monetary limit
    is enforced. The current cross-provider tool protocol uses JSON text.
-3. Build a richer TUI, Git worktree integration, semantic/LSP navigation and
+3. Build Git worktree integration, semantic/LSP navigation and
    stronger OS-level execution isolation.
 4. Add general engineering delegation and desktop automation with
    capability-specific permissions and integration tests.

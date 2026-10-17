@@ -20,7 +20,7 @@ def parser():
         epilog="Security workflows: hydra security --help. Explicit engineering entry: hydra engineering --help.",
     )
     sub = root.add_subparsers(dest="command", required=True)
-    for name in ("run", "chat", "resume"):
+    for name in ("run", "chat", "resume", "tui"):
         command = sub.add_parser(name)
         if name == "run":
             command.add_argument("goal")
@@ -306,7 +306,13 @@ async def main(argv=None):
 def entry(argv=None):
     configure_console()
     try:
-        raise SystemExit(asyncio.run(main(argv)))
+        arguments = list(sys.argv[1:] if argv is None else argv)
+        if not arguments or arguments[0] == "tui":
+            from hydra.engineering.tui import launch
+
+            launch(parser().parse_args(arguments or ["tui"]))
+            return
+        raise SystemExit(asyncio.run(main(arguments)))
     except KeyboardInterrupt:
         print(
             "\nInterrupted. Session evidence is saved; use hydra resume <id>.",
