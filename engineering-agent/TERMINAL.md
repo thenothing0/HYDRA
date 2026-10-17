@@ -62,10 +62,17 @@ there is no secret-key entry field, and keys are never requested in chat.
 | Ctrl+N / `/new` | Start a new session |
 | `/plan` | Show the current plan |
 | `/resume SESSION_ID` | Resume an unfinished session |
+| `/model` | Open the provider/model dialog; Enter applies and Escape cancels |
+| `/model MODEL_ID` | Change the model for the current provider |
 | `/provider NAME MODEL` | Select an implemented provider/model |
 | `/cancel` / Ctrl+C | Cancel the active run |
 | `/help` | Show supported commands |
 | `/quit` / Ctrl+Q | Exit |
+
+Model changes apply to the next request, including a follow-up in the current
+session. Finish or cancel an active run before changing models. `/model` uses
+local configuration and sends no API request; enter an exact model ID supported
+by your provider. For example, `/model YOUR_MODEL_ID` keeps the current provider.
 
 The CLI's `--browser`, `--allow-browser-actions`, `--verify-command`, `--max-steps`
 and `--max-seconds` options also apply. Browser use still requires the separately

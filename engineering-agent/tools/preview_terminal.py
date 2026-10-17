@@ -74,6 +74,10 @@ async def render(destination):
         async with app.run_test(size=(160, 48)) as pilot:
             await pilot.pause()
             app.save_screenshot("terminal-welcome.svg", path=str(destination))
+            await app.slash_command("/model")
+            await pilot.pause()
+            app.save_screenshot("terminal-model.svg", path=str(destination))
+            await pilot.press("escape")
             app.query_one("#prompt", Prompt).load_text("Fix the incorrect addition and verify the change.")
             await pilot.press("enter")
 

@@ -14,9 +14,9 @@ from textual.worker import WorkerCancelled, WorkerFailed
 
 from hydra.engineering.providers import describe_providers, settings
 from hydra.engineering.tui.controller import EngineeringController
-from hydra.engineering.tui.widgets import CommandApproval, Prompt, safe_text
+from hydra.engineering.tui.widgets import CommandApproval, ModelSelection, Prompt, safe_text
 
-HELP = "/new  /sessions  /resume ID  /diff  /plan  /provider NAME MODEL  /cancel  /help  /quit"
+HELP = "/new  /sessions  /resume ID  /diff  /plan  /model [ID]  /provider NAME MODEL  /cancel  /help  /quit"
 
 
 class SessionItem(ListItem):
@@ -96,7 +96,7 @@ class EngineeringApp(App):
                 with VerticalScroll(id="conversation"):
                     yield Static(Text("HYDRA", style="bold cyan"), id="welcome-logo")
                     yield Static(
-                        "Build. Fix. Understand.\n\nDescribe a task to inspect your project, make changes and verify them.\nSessions, tool activity and evidence stay in your workspace.\n\nChoose a provider and model above. Credentials come from your local environment.\nType /help for commands.",
+                        "Build. Fix. Understand.\n\nDescribe a task to inspect your project, make changes and verify them.\nSessions, tool activity and evidence stay in your workspace.\n\nChoose a provider and model above or type /model. Credentials come from your local environment.\nType /help for commands.",
                         id="welcome",
                     )
                 yield Static("Ready · no model request sent", id="run-status")
@@ -261,7 +261,20 @@ class EngineeringApp(App):
         except ValueError:
             default_model = ""
         self.query_one("#provider", Select).value = name
-        self.query_one("#model", Input).value = model if model is not None else default_model
+        selected_model = model if model is not None else default_model
+        self.options.model = selected_model or None
+        self.query_one("#model", Input).value = selected_model
+
+    def apply_model_selection(self, selection):
+        if selection is None:
+            return
+        if self.busy:
+            self.notify("Cancel or finish the current run before changing the model.")
+            return
+        provider, model = selection
+        self.select_provider(provider, model)
+        self.add_message("Model selected", f"{provider} · {model}\nApplies to the next request.")
+        self.query_one("#prompt", Prompt).focus()
 
     @on(ListView.Selected, "#sessions")
     def select_session(self, event):
@@ -350,6 +363,18 @@ class EngineeringApp(App):
         elif command == "/sessions":
             self.refresh_sessions()
             self.query_one("#sessions-panel").display = True
+        elif command == "/model":
+            if self.busy:
+                self.notify("Cancel or finish the current run before changing the model.")
+                return
+            provider = str(self.query_one("#provider", Select).value)
+            if argument.strip():
+                self.apply_model_selection((provider, argument.strip()))
+            else:
+                self.push_screen(
+                    ModelSelection(self._catalog, provider, self.query_one("#model", Input).value),
+                    self.apply_model_selection,
+                )
         elif command == "/resume" and argument and not self.busy:
             try:
                 self.controller.load(argument.strip())

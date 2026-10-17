@@ -11,7 +11,7 @@ from textual.widgets import Input, Select
 
 from hydra.engineering.tui.app import EngineeringApp
 from hydra.engineering.tui.controller import EngineeringController, RunOptions
-from hydra.engineering.tui.widgets import CommandApproval, Prompt, safe_text
+from hydra.engineering.tui.widgets import CommandApproval, ModelSelection, Prompt, safe_text
 from hydra.engineering.workspace import digest
 
 
@@ -135,6 +135,11 @@ async def test_tui_cancellation_saves_an_interrupted_session(tmp_path):
         app.query_one("#prompt", Prompt).load_text("Wait for response")
         await pilot.press("enter")
         await asyncio.wait_for(entered.wait(), 5)
+        await app.slash_command("/model replacement")
+        await app.slash_command("/model")
+        assert not isinstance(app.screen, ModelSelection)
+        assert app.options.model == "fixture"
+        assert app.query_one("#model", Input).value == "fixture"
         await pilot.press("ctrl+c")
         await until(lambda: not app.busy)
         assert app.controller.session.state["status"] == "interrupted"
@@ -221,3 +226,71 @@ async def test_provider_error_leaves_a_recoverable_session(tmp_path):
         assert app.controller.session.state["status"] == "blocked"
         assert not app.query_one("#model", Input).disabled
         assert app.controller.sessions()[0]["goal"] == "Inspect the application"
+
+
+@pytest.mark.asyncio
+async def test_model_command_changes_the_next_real_request(tmp_path):
+    selected = []
+    model = ScriptModel([action("finish", summary="Inspection complete")])
+
+    def factory(provider, model_id):
+        selected.append((provider, model_id))
+        return model
+
+    app = EngineeringApp(tmp_path, RunOptions(provider="ollama", model="original"), model_factory=factory)
+    async with app.run_test(size=(100, 32)) as pilot:
+        app.query_one("#prompt", Prompt).load_text("/model  team/custom-model:latest  ")
+        await pilot.press("enter")
+        assert selected == []
+        assert not (tmp_path / ".hydra/sessions").exists()
+        assert app.options.model == "team/custom-model:latest"
+        assert app.query_one("#model", Input).value == "team/custom-model:latest"
+        app.query_one("#prompt", Prompt).load_text("Inspect without edits")
+        await pilot.press("enter")
+        await until(lambda: app.controller.session is not None and not app.busy)
+        assert selected == [("ollama", "team/custom-model:latest")]
+
+
+@pytest.mark.asyncio
+async def test_model_dialog_applies_provider_and_model_without_network(tmp_path):
+    selected = []
+    app = EngineeringApp(
+        tmp_path, RunOptions(provider="ollama", model="original"), model_factory=lambda *args: selected.append(args)
+    )
+    async with app.run_test(size=(100, 32)) as pilot:
+        app.query_one("#prompt", Prompt).load_text("/model")
+        await pilot.press("enter")
+        assert isinstance(app.screen, ModelSelection)
+        dialog = app.screen
+        assert dialog.query_one("#model-id", Input).value == "original"
+        dialog.query_one("#model-provider", Select).value = "openai-compatible"
+        await pilot.pause()
+        # A provider change must not carry the previous provider's model ID.
+        assert dialog.query_one("#model-id", Input).value != "original"
+        dialog.query_one("#model-id", Input).value = "   "
+        await pilot.press("enter")
+        assert app.screen is dialog
+        dialog.query_one("#model-id", Input).value = "my-deployment/v2"
+        await pilot.press("enter")
+        await pilot.pause()
+        assert not isinstance(app.screen, ModelSelection)
+        assert app.query_one("#provider", Select).value == "openai-compatible"
+        assert app.query_one("#model", Input).value == "my-deployment/v2"
+        assert app.options.provider == "openai-compatible"
+        assert app.options.model == "my-deployment/v2"
+        assert selected == []
+        assert not (tmp_path / ".hydra/sessions").exists()
+
+
+@pytest.mark.asyncio
+async def test_model_dialog_escape_keeps_configuration_in_small_terminal(tmp_path):
+    app = EngineeringApp(tmp_path, RunOptions(provider="ollama", model="original"))
+    async with app.run_test(size=(80, 24)) as pilot:
+        app.query_one("#prompt", Prompt).load_text("/model")
+        await pilot.press("enter")
+        assert isinstance(app.screen, ModelSelection)
+        app.screen.query_one("#model-id", Input).value = "discarded"
+        await pilot.press("escape")
+        assert not isinstance(app.screen, ModelSelection)
+        assert app.query_one("#model", Input).value == "original"
+        assert app.options.model == "original"
