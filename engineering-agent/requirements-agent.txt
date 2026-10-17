@@ -1,0 +1,4 @@
+# Complete engineering runtime: terminal, HTTP providers, Bedrock and Burp MCP.
+-r requirements-tui.txt
+-r requirements-mcp.txt
+-r requirements-providers.txt

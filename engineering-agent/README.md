@@ -32,6 +32,21 @@ For the interactive terminal, run `.\run.ps1` with no arguments or
 session navigation, live tool activity, plan/diff panels and command approval.
 See [TERMINAL.md](TERMINAL.md) for setup, shortcuts and tested limits.
 
+## Start on Linux/macOS
+
+With Python 3.10+ and venv available, run from `engineering-agent`:
+
+```sh
+bash setup.sh --skip-tests
+bash run.sh
+```
+
+The installer includes terminal, provider and Burp MCP client dependencies. API
+keys/accounts, model downloads and external applications are configured separately.
+`/model` opens a searchable model table with favorites, a saved default and live
+provider catalog refresh. [Burp MCP](BURP.md) is a built-in capability; `/burp`
+checks the official extension and its tools. Each Burp call needs approval.
+
 ```powershell
 .\run.ps1 run "Fix the failing tests with a minimal change" --workspace E:\projects\app --provider deepseek --model YOUR_MODEL_ID
 .\run.ps1 run "Explain the architecture" --workspace E:\projects\app --read-only

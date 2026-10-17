@@ -6,13 +6,14 @@ import sys
 from pathlib import Path
 from hydra.engineering.registry import ToolRegistry
 from hydra.engineering.process import ProcessRunner
-from hydra.engineering.capabilities import files, process, session, browser
+from hydra.engineering.capabilities import files, process, session, browser, burp
 
 CAPABILITIES = {
     "files": files.FileCapability,
     "process": process.ProcessCapability,
     "session": session.SessionCapability,
     "browser": browser.BrowserCapability,
+    "burp": burp.BurpCapability,
 }
 BROWSER_TOOLS = browser.SCHEMAS
 TOOLS = {
@@ -47,6 +48,8 @@ class EngineeringTools:
         verify_command=None,
         browser=False,
         allow_browser_actions=False,
+        burp_url=None,
+        approve_burp=None,
     ):
         self.session = session
         self.workspace = session.workspace
@@ -57,6 +60,8 @@ class EngineeringTools:
         self.read_pages = {}
         self.browser_enabled = browser
         self.allow_browser_actions = allow_browser_actions
+        self.burp_url = burp_url
+        self.approve_burp = approve_burp or self.approve
         self.registry = ToolRegistry()
         for name, pack in CAPABILITIES.items():
             if name == "browser" and not self.browser_enabled:

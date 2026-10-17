@@ -33,6 +33,7 @@ def parser():
         )
         command.add_argument("--max-steps", type=int, default=30)
         command.add_argument("--max-seconds", type=int, default=600)
+        command.add_argument("--burp-url", help="Official Burp MCP SSE endpoint on loopback (or BURP_MCP_URL)")
         command.add_argument("--read-only", action="store_true")
         command.add_argument(
             "--browser",
@@ -67,6 +68,9 @@ def parser():
     providers = sub.add_parser("providers")
     providers.add_argument("--workspace", default=".")
     providers.add_argument("--json", action="store_true")
+    burp = sub.add_parser("burp", help="Check the official Burp MCP extension and list its tools")
+    burp.add_argument("--workspace", default=".")
+    burp.add_argument("--url")
     browser = sub.add_parser("browser", help="Local unpacked-extension bridge")
     commands = browser.add_subparsers(dest="browser_command", required=True)
     for name in ("start", "status", "extension"):
@@ -162,6 +166,8 @@ async def start_run(args, workspace, session=None, goal=None, model=None):
         verify_command=verification,
         browser=args.browser,
         allow_browser_actions=args.allow_browser_actions,
+        burp_url=getattr(args, "burp_url", None),
+        approve_burp=approve,
     )
     session.state["verification_command"] = tools.verify_command
     session.save()
@@ -196,6 +202,11 @@ async def main(argv=None):
     if getattr(args, "allow_browser_actions", False) and not args.browser:
         raise ValueError("--allow-browser-actions requires --browser")
     workspace = Workspace(args.workspace)
+    if args.command == "burp":
+        from hydra.engineering.burp import BurpClient
+
+        print(json.dumps(await BurpClient(args.url).status(), ensure_ascii=False, indent=2))
+        return 0
     if args.command == "browser":
         if args.browser_command == "extension":
             print(Path(__file__).resolve().parents[2] / "extensions/hydra-browser")

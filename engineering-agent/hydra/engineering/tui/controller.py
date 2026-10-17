@@ -22,20 +22,22 @@ class RunOptions:
     allow_browser_actions: bool = False
     allow_run: bool = False
     verify_command: list[str] | None = None
+    burp_url: str | None = None
 
     @classmethod
     def from_args(cls, args):
-        values = {name: getattr(args, name) for name in cls.__dataclass_fields__}
+        values = {name: getattr(args, name, None) for name in cls.__dataclass_fields__}
         if args.verify_command:
             values["verify_command"] = json.loads(args.verify_command)
         return cls(**values)
 
 
 class EngineeringController:
-    def __init__(self, workspace, options, approve, emit=None, model_factory=None):
+    def __init__(self, workspace, options, approve, emit=None, model_factory=None, approve_burp=None):
         self.workspace = Workspace(workspace)
         self.options = options
         self.approve = approve
+        self.approve_burp = approve_burp or approve
         self.emit = emit or (lambda event: None)
         self.model_factory = model_factory or ProviderModel
         self.session = None
@@ -105,6 +107,8 @@ class EngineeringController:
                 verify_command=verification,
                 browser=options.browser,
                 allow_browser_actions=options.allow_browser_actions,
+                burp_url=options.burp_url,
+                approve_burp=self.approve_burp,
             )
             session.state["verification_command"] = tools.verify_command
             session.save()

@@ -11,6 +11,20 @@ defaults:
     working-directory: engineering-agent
 
 jobs:
+  linux-installer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install the complete engineering runtime on Linux
+        run: |
+          bash -n setup.sh run.sh setup-security.sh
+          printf 'HYDRA_SETUP_FIXTURE=keep\n' > .env
+          bash setup.sh --skip-tests
+          .venv/bin/python -c "from pathlib import Path; assert Path('.env').read_text() == 'HYDRA_SETUP_FIXTURE=keep\n'; import textual, mcp, boto3"
+          bash run.sh tui --help
   test:
     runs-on: ubuntu-latest
     strategy:

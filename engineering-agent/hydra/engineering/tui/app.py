@@ -16,7 +16,7 @@ from hydra.engineering.providers import describe_providers, settings
 from hydra.engineering.tui.controller import EngineeringController
 from hydra.engineering.tui.widgets import CommandApproval, ModelSelection, Prompt, safe_text
 
-HELP = "/new  /sessions  /resume ID  /diff  /plan  /model [ID]  /provider NAME MODEL  /cancel  /help  /quit"
+HELP = "/new  /sessions  /resume ID  /diff  /plan  /model [ID]  /provider NAME MODEL  /burp  /cancel  /help  /quit"
 
 
 class SessionItem(ListItem):
@@ -38,6 +38,11 @@ class EngineeringApp(App):
 
     def __init__(self, workspace, options, *, model_factory=None):
         super().__init__()
+        from hydra.engineering.models import ModelPreferences
+
+        self.model_preferences = ModelPreferences()
+        if not options.provider and not options.model and self.model_preferences.default:
+            options.provider, options.model = self.model_preferences.default
         self.options = options
         self.controller = EngineeringController(
             workspace, options, self.approve_command, self.receive_event, model_factory
@@ -197,10 +202,14 @@ class EngineeringApp(App):
             self.query_one("#run-status", Static).update(f"Session {event['id'][:8]} · connecting to model")
 
     async def approve_command(self, argv):
-        if self.options.allow_run:
+        is_burp = bool(argv and argv[0] == "burp-mcp")
+        if self.options.allow_run and not is_burp:
             return True
         self.query_one("#run-status", Static).update("Waiting for command approval")
-        screen = CommandApproval(argv)
+        screen = CommandApproval(
+            argv, title="Burp MCP tool approval" if is_burp else "Command approval",
+            description="This tool can access Burp traffic or change Burp state. Allow this call once?" if is_burp else None,
+        )
         try:
             return bool(await self.push_screen_wait(screen))
         except asyncio.CancelledError:
@@ -363,7 +372,9 @@ class EngineeringApp(App):
         elif command == "/sessions":
             self.refresh_sessions()
             self.query_one("#sessions-panel").display = True
-        elif command == "/model":
+        elif command == "/burp":
+            self.run_worker(self.check_burp(), group="burp-status", exclusive=True, exit_on_error=False)
+        elif command in ("/model", "/models"):
             if self.busy:
                 self.notify("Cancel or finish the current run before changing the model.")
                 return
@@ -372,7 +383,10 @@ class EngineeringApp(App):
                 self.apply_model_selection((provider, argument.strip()))
             else:
                 self.push_screen(
-                    ModelSelection(self._catalog, provider, self.query_one("#model", Input).value),
+                    ModelSelection(
+                        self._catalog, provider, self.query_one("#model", Input).value,
+                        preferences=self.model_preferences, discover=self.discover_models,
+                    ),
                     self.apply_model_selection,
                 )
         elif command == "/resume" and argument and not self.busy:
@@ -389,3 +403,18 @@ class EngineeringApp(App):
             self.select_provider(name, model.strip() if model else None)
         else:
             self.add_message("Command unavailable", HELP, "error")
+
+    async def discover_models(self, provider):
+        from hydra.engineering.models import discover_models
+
+        return await discover_models(provider)
+
+    async def check_burp(self):
+        from hydra.engineering.burp import BurpClient
+
+        self.add_message("Burp MCP", "Checking the configured local Burp MCP server…")
+        try:
+            result = await BurpClient(self.options.burp_url, timeout=10).status()
+            self.add_message("Burp MCP connected", result["server"] + "\n" + "\n".join(tool["name"] for tool in result["tools"]))
+        except ValueError as error:
+            self.add_message("Burp MCP unavailable", str(error), "error")

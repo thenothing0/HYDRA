@@ -29,9 +29,22 @@ For an existing minimal environment, install the optional interface first:
 Linux/macOS with an existing Python environment:
 
 ```sh
-python -m pip install -r requirements-tui.txt
+python -m pip install -r requirements-agent.txt
 python -m hydra tui --workspace /path/to/project --provider ollama --model YOUR_MODEL
 ```
+
+For a fresh checkout on Linux/macOS with Python 3.10+ and venv:
+
+```sh
+cd engineering-agent
+bash setup.sh --skip-tests
+bash run.sh
+```
+
+Setup installs the terminal, HTTP provider transports, AWS SDK and Burp MCP client
+into `.venv`. API keys/account access, locally hosted model downloads, Burp Suite
+and its extension are configured separately. The legacy security-tool installer
+is preserved as `setup-security.sh`; engineering setup does not require root.
 
 No-argument `python -m hydra` opens the interface. Existing headless commands
 remain available. `python -m hydra tui --help` lists the launch options without
@@ -62,17 +75,29 @@ there is no secret-key entry field, and keys are never requested in chat.
 | Ctrl+N / `/new` | Start a new session |
 | `/plan` | Show the current plan |
 | `/resume SESSION_ID` | Resume an unfinished session |
-| `/model` | Open the provider/model dialog; Enter applies and Escape cancels |
+| `/model` or `/models` | Open the searchable provider/model table |
 | `/model MODEL_ID` | Change the model for the current provider |
+| Ctrl+F in model dialog | Toggle favorite for the highlighted row or entered model |
+| Ctrl+O in model dialog | Save a default model for future launches |
 | `/provider NAME MODEL` | Select an implemented provider/model |
+| `/burp` | Check the Burp MCP server and list its tools |
 | `/cancel` / Ctrl+C | Cancel the active run |
 | `/help` | Show supported commands |
 | `/quit` / Ctrl+Q | Exit |
 
 Model changes apply to the next request, including a follow-up in the current
-session. Finish or cancel an active run before changing models. `/model` uses
-local configuration and sends no API request; enter an exact model ID supported
-by your provider. For example, `/model YOUR_MODEL_ID` keeps the current provider.
+session. Finish or cancel an active run before changing models. The model table
+starts with configured/saved IDs. **Refresh list** fetches the selected provider's
+live catalog with its own credentials, without sending project context or an
+inference prompt. Providers without a model-list endpoint can use manual entry.
+A catalog listing does not guarantee your account can run that model.
+Search filters provider/model IDs; Enter in search focuses the table, and Enter
+on a row applies it. Escape cancels. Favorites and the explicit default are stored
+in your user configuration directory (`hydra/models.json`), without API keys.
+Launch flags override a saved default. Unimplemented subscription/OAuth profiles
+remain unavailable; they are not labelled as working OAuth routes.
+
+Burp MCP is built in; see [BURP.md](BURP.md) for its extension and connection setup.
 
 The CLI's `--browser`, `--allow-browser-actions`, `--verify-command`, `--max-steps`
 and `--max-seconds` options also apply. Browser use still requires the separately

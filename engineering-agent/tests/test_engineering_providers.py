@@ -41,6 +41,30 @@ def test_catalog_accounts_for_all_upstream_login_entries():
     assert registry()["copilot"]["status"] == "auth_integration_pending"
 
 
+@pytest.mark.parametrize("model_id,protocol,path", [
+    ("gpt-fixture", "responses", "/openai/v1/responses"),
+    ("claude-fixture", "anthropic", "/anthropic/v1/messages"),
+    ("gemini-fixture", "gemini", "/google/v1beta/models/gemini-fixture:generateContent"),
+    ("glm-fixture", "openai_chat", "/openai/v1/chat/completions"),
+])
+def test_opencode_native_model_routes(monkeypatch, model_id, protocol, path):
+    monkeypatch.setenv("OPENCODE_API_KEY", "opencode-fixture")
+    monkeypatch.delenv("OPENCODE_BASE_URL", raising=False)
+    monkeypatch.delenv("OPENCODE_PROTOCOL", raising=False)
+    model = ProviderModel("opencode", model_id)
+    model.config = settings("opencode", model_id)
+    url, headers, body = model.request("instructions\nSESSION DATA:\ncontext")
+    assert model.config.protocol == protocol
+    assert url == "https://opencode.ai/inference" + path
+    assert "opencode-fixture" in str(headers)
+    if protocol == "gemini":
+        assert "Authorization" not in headers
+        assert body["contents"][0]["parts"][0]["text"] == "context"
+        assert model.parse({"candidates": [{"content": {"parts": [{"text": "response"}]}}],
+                            "usageMetadata": {"promptTokenCount": 3, "candidatesTokenCount": 2}}) == "response"
+        assert model.usage["input_tokens"] == 3
+
+
 def test_minimax_never_borrows_openai_credentials(monkeypatch):
     monkeypatch.setenv("OPENAI_API_KEY", "must-not-be-shared")
     monkeypatch.delenv("MINIMAX_API_KEY", raising=False)

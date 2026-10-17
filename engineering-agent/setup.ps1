@@ -35,7 +35,7 @@ if (-not (Test-Path -LiteralPath '.venv\Scripts\python.exe')) {
     Invoke-Checked $PythonExecutable @('-m', 'venv', '.venv')
 }
 $projectPython = Join-Path $PSScriptRoot '.venv\Scripts\python.exe'
-Invoke-Checked $projectPython @('-m', 'pip', 'install', '-r', 'requirements-dev.txt')
+Invoke-Checked $projectPython @('-m', 'pip', 'install', '-r', 'requirements-agent.txt')
 if ($Full) { Invoke-Checked $projectPython @('-m', 'pip', 'install', '-r', 'requirements.txt') }
 if ($Providers) { Invoke-Checked $projectPython @('-m', 'pip', 'install', '-r', 'requirements-providers.txt') }
 if ($MCP) {
@@ -54,8 +54,12 @@ if ($InstallTools) {
     & (Join-Path $PSScriptRoot 'install-tools.ps1')
 }
 Invoke-Checked $projectPython @('-m', 'pip', 'check')
-if (-not $SkipTests) { Invoke-Checked $projectPython @('-m', 'pytest', 'tests', '-q') }
+if (-not $SkipTests) {
+    Invoke-Checked $projectPython @('-m', 'pip', 'install', '-r', 'requirements-dev.txt')
+    Invoke-Checked $projectPython @('-m', 'pytest', 'tests', '-q')
+}
 Invoke-Checked $projectPython @('-m', 'hydra.main', '--check-tools')
 Write-Host 'HYDRA local setup complete. Missing external tools are listed above.' -ForegroundColor Green
-Write-Host 'Run: .\run.ps1 --list-workflows'
+Write-Host 'Run: .\run.ps1'
+Write-Host 'Provider keys go in .env. Ollama/models and Burp Suite + its MCP extension are separate applications.'
 Write-Host 'Network scans require installed tools and --scope-file <authorized-scope.json>.'

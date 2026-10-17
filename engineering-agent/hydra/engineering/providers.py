@@ -22,6 +22,7 @@ def registry():
     profiles["anthropic-api"].update(protocol="anthropic", model_env="ANTHROPIC_MODEL")
     profiles["gemini-api"]["model_env"] = "GEMINI_MODEL"
     profiles["ollama"].update(protocol="ollama", base_url="http://127.0.0.1:11434", model_env="OLLAMA_MODEL")
+    profiles["opencode"]["base_url"] = "https://opencode.ai/inference/openai/v1"
     # An unspecified custom endpoint must not silently send project data to a
     # hosted proxy. The operator supplies its URL explicitly.
     profiles["openai-compatible"].update(base_url="", key_env="CUSTOM_LLM_KEY", model_env="CUSTOM_LLM_MODEL")
@@ -103,13 +104,29 @@ def settings(provider=None, model=None):
     if not selected_model:
         raise ValueError(f"Set {profile['model_env']} or pass --model for {name}")
     key = os.getenv(profile["key_env"], "") if profile["key_env"] else ""
+    protocol = profile["protocol"]
+    if name == "opencode":
+        # OpenCode publishes separate native routes. Explicit operator settings
+        # cover models with provider-specific protocol requirements.
+        default_protocol = ("gemini" if selected_model.startswith("gemini-") else
+                            "anthropic" if selected_model.startswith("claude-") else
+                            "responses" if selected_model.startswith(("gpt-", "grok-", "muse-")) else "openai_chat")
+        protocol = os.getenv("OPENCODE_PROTOCOL", default_protocol)
+        if protocol not in {"anthropic", "responses", "openai_chat", "gemini"}:
+            raise ValueError("OPENCODE_PROTOCOL must be anthropic, responses, openai_chat or gemini")
+        if selected_model.startswith("jev-"):
+            raise ValueError("OpenCode's Jev/SystemOne models are not generative coding models; select another model")
+        if not os.getenv("OPENCODE_BASE_URL"):
+            family = "anthropic" if protocol == "anthropic" else "openai"
+            base_url = ("https://opencode.ai/inference/google/v1beta" if protocol == "gemini" else
+                        f"https://opencode.ai/inference/{family}/v1")
     if profile["requires_key"] and not key:
         raise ValueError(f"Set {profile['key_env']} locally for {name}")
     if profile["protocol"] != "bedrock":
         if not base_url:
             raise ValueError(f"Set {prefix}_BASE_URL / the provider endpoint before using {name}")
         base_url = validate_url(base_url)
-    return ProviderSettings(name, profile["protocol"], base_url, selected_model, key)
+    return ProviderSettings(name, protocol, base_url, selected_model, key)
 
 
 def describe_providers():
@@ -152,6 +169,16 @@ class ProviderModel:
         headers = {"Content-Type": "application/json"}
         if cfg.api_key:
             headers["Authorization"] = f"Bearer {cfg.api_key}"
+        if cfg.protocol == "gemini":
+            from urllib.parse import quote
+
+            headers.pop("Authorization", None)
+            headers["x-goog-api-key"] = cfg.api_key
+            body = {"contents": [{"role": "user", "parts": [{"text": context}]}],
+                    "generationConfig": {"maxOutputTokens": cfg.max_tokens}}
+            if instructions:
+                body["systemInstruction"] = {"parts": [{"text": instructions}]}
+            return cfg.base_url + "/models/" + quote(cfg.model, safe="") + ":generateContent", headers, body
         if cfg.protocol == "responses":
             body = {"model": cfg.model, "input": context, "max_output_tokens": cfg.max_tokens, "store": False}
             if instructions:
@@ -177,7 +204,13 @@ class ProviderModel:
     def parse(self, data):
         cfg = self.config
         usage = data.get("usage", {})
-        if cfg.protocol == "responses":
+        if cfg.protocol == "gemini":
+            candidates = data.get("candidates", [])
+            text = "".join(part.get("text", "") for candidate in candidates[:1]
+                           for part in candidate.get("content", {}).get("parts", []) if not part.get("thought"))
+            meta = data.get("usageMetadata", {})
+            usage = {"input_tokens": meta.get("promptTokenCount", 0), "output_tokens": meta.get("candidatesTokenCount", 0)}
+        elif cfg.protocol == "responses":
             if data.get("status") not in (None, "completed"):
                 raise RuntimeError(f"{cfg.id}: response was not complete")
             text = "".join(c.get("text", "") for item in data.get("output", [])
@@ -206,6 +239,16 @@ class ProviderModel:
                                    timeout=aiohttp.ClientTimeout(total=self.config.timeout)) as response:
                 if response.status >= 300:
                     # Do not log response bodies or URLs containing account data.
+                    if response.status == 402:
+                        raise RuntimeError(f"{self.config.id}: HTTP 402; the provider requires account credits or billing")
+                    if self.config.id == "opencode" and response.status == 403:
+                        try:
+                            error_data = await response.json()
+                            error_type = error_data.get("error", {}).get("type")
+                        except (ValueError, AttributeError, TypeError):
+                            error_type = None
+                        if error_type == "FreeTierError":
+                            raise RuntimeError("opencode: HTTP 403; this free tier is restricted to OpenCode's own client. Choose a supported paid model.")
                     raise RuntimeError(f"{self.config.id}: HTTP {response.status}; check credentials, model and endpoint")
                 data = await response.json()
         self.usage["requests"] += 1

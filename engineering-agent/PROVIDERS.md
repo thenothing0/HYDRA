@@ -78,6 +78,33 @@ Important differences:
   a copy of AlphaCode's private/free-pool credentials. It requires explicit
   selection and model configuration just like other transports.
 
+## OpenCode live check and routes
+
+OpenCode Console's current API has separate native routes for Responses, Messages,
+Gemini and compatible Chat Completions. HYDRA selects GPT/Grok/Muse, Claude and
+Gemini routes by model family; other models default to compatible chat. Set
+`OPENCODE_PROTOCOL=anthropic|responses|gemini|openai_chat` for a model whose documented
+route differs, and `OPENCODE_BASE_URL` for an explicit endpoint override. Model-list
+discovery uses the separate catalog endpoint. Jev/SystemOne models are not general
+text-generation models and cannot drive the engineering loop.
+
+On 2026-10-17, a live catalog request returned 48 models. A live engineering smoke
+test using `glm-5.3-flash-free` was refused with `FreeTierError`: the service limits
+that free tier to its own client. A minimal paid-model request using `gpt-5.4-nano`
+returned HTTP 402 (account credits/billing required). No successful live engineering
+task is claimed. HYDRA does not spoof another client to bypass service restrictions.
+
+After configuring a supported model and account credits locally, an opt-in check
+can run on a temporary calculator project:
+
+```sh
+python tools/smoke_opencode.py --model YOUR_SUPPORTED_MODEL
+```
+
+It allows only its fixed regression command, checks the resulting edit and
+verification, and removes the temporary project. It makes real provider requests;
+normal account billing applies. See [OpenCode's model endpoints](https://opencode.ai/docs/zen/).
+
 ## Pending authentication integrations
 
 The following entries are discoverable but **cannot be selected for inference**:

@@ -7,12 +7,17 @@ import sys
 import pytest
 
 pytest.importorskip("textual")
-from textual.widgets import Input, Select
+from textual.widgets import DataTable, Input, Select
 
 from hydra.engineering.tui.app import EngineeringApp
 from hydra.engineering.tui.controller import EngineeringController, RunOptions
 from hydra.engineering.tui.widgets import CommandApproval, ModelSelection, Prompt, safe_text
 from hydra.engineering.workspace import digest
+
+
+@pytest.fixture(autouse=True)
+def isolated_model_preferences(tmp_path, monkeypatch):
+    monkeypatch.setenv("HYDRA_CONFIG_DIR", str(tmp_path / "user-config"))
 
 
 class ScriptModel:
@@ -294,3 +299,59 @@ async def test_model_dialog_escape_keeps_configuration_in_small_terminal(tmp_pat
         assert not isinstance(app.screen, ModelSelection)
         assert app.query_one("#model", Input).value == "original"
         assert app.options.model == "original"
+
+
+@pytest.mark.asyncio
+async def test_model_catalog_search_favorite_default_and_keyboard_selection(tmp_path):
+    from hydra.engineering.models import ModelPreferences
+
+    app = EngineeringApp(tmp_path, RunOptions(provider="ollama", model="original"))
+
+    async def discover(provider):
+        return [{"provider": provider, "id": model, "method": "local"} for model in ("first", "second")]
+
+    app.discover_models = discover
+    async with app.run_test(size=(130, 42)) as pilot:
+        app.query_one("#prompt", Prompt).load_text("/model")
+        await pilot.press("enter")
+        dialog = app.screen
+        await pilot.click("#model-refresh")
+        await until(lambda: any(entry["id"] == "second" for entry in dialog.entries))
+        dialog.query_one("#model-search", Input).value = "second"
+        await pilot.pause()
+        assert dialog.query_one("#model-list", DataTable).row_count == 1
+        dialog.query_one("#model-list", DataTable).focus()
+        await pilot.press("ctrl+f", "ctrl+o")
+        saved = ModelPreferences()
+        assert ("ollama", "second") in saved.favorites
+        assert saved.default == ("ollama", "second")
+        await pilot.press("enter")
+        assert not isinstance(app.screen, ModelSelection)
+        assert app.options.model == "second"
+    next_launch = EngineeringApp(tmp_path, RunOptions())
+    assert next_launch.options.provider == "ollama"
+    assert next_launch.options.model == "second"
+
+
+@pytest.mark.asyncio
+async def test_burp_tools_still_require_approval_with_allow_run(tmp_path, monkeypatch):
+    from hydra.engineering.burp import BurpClient
+
+    requests = []
+
+    async def exchange(*args):
+        requests.append(args)
+        return {"success": True}
+
+    monkeypatch.setattr(BurpClient, "exchange", exchange)
+    model = ScriptModel([action("burp_call", name="get_proxy_http_history", arguments={"count": 1})])
+    app = EngineeringApp(tmp_path, RunOptions(provider="ollama", model="fixture", max_steps=1, allow_run=True),
+                         model_factory=lambda *_: model)
+    async with app.run_test(size=(120, 36)) as pilot:
+        app.query_one("#prompt", Prompt).load_text("Inspect Burp fixture")
+        await pilot.press("enter")
+        await until(lambda: isinstance(app.screen, CommandApproval))
+        assert app.screen.title_text == "Burp MCP tool approval"
+        await pilot.press("escape")
+        await until(lambda: not app.busy)
+        assert not requests
