@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "date": "2026-10-17",
+  "objective": "Evolve HYDRA into a general-purpose engineering agent competitive with AlphaCode, including provider compatibility",
+  "overall_status": "in_progress",
+  "implemented": [
+    "Bounded engineering agent loop with real file and process tools",
+    "Read-only mode and explicit command authorization",
+    "Workspace path guards and applicable AGENTS.md enforcement",
+    "Content-hash edit conflicts, atomic file writes and tracked diffs",
+    "Durable integrity-checked sessions, resume and conflict-aware rollback",
+    "Configured verification gate before completing code changes",
+    "Interactive follow-ups and CLI doctor",
+    "Full 60-entry upstream provider parity catalog with explicit statuses",
+    "51 provider transport profiles across compatible chat, Responses, Messages, Ollama, Azure and optional AWS Bedrock",
+    "Provider isolation, redirect refusal and provider-reported token accounting",
+    "Backward-compatible security workflow entry point",
+    "Opt-in unpacked Chromium extension with authenticated loopback bridge and explicit paired-tab origins",
+    "DOM snapshots, scoped interactions, screenshots and passive network metadata tools",
+    "Integrity-checked browser evidence, investigation hypotheses, alternative benign methods and snapshot comparisons",
+    "Unified engineering/security command router with legacy CLI and import compatibility",
+    "Session-local capability registry and separated file/process/session/browser handlers",
+    "Lazy configuration snapshots, initialization failure recovery and provider/security settings independence",
+    "Separated security lifecycle, workflow, result and console components",
+    "Separated confirmation evidence models, signatures and check groups with the existing SafeProber boundary",
+    "Loopback deployment defaults, explicit infrastructure passwords and Docker context exclusions"
+  ],
+  "verification": {
+    "suite": "output/architecture-tests.xml",
+    "architecture_guide": "ARCHITECTURE.md",
+    "architecture_summary": "output/architecture-review.json",
+    "security_cli_smoke": "output/architecture-smoke/hydra_config.py/reports/summary.json",
+    "docker_runtime_verified": false,
+    "demo": "output/engineering-demo/result.json",
+    "model_in_demo": "deterministic fixture, not a live model",
+    "real_process_demo": "initial regression fails; edit fixes it; resumed run passes",
+    "provider_http_tests": "real loopback HTTP servers; no paid provider calls",
+    "bedrock_test": "real SDK with Stubber; no AWS account request",
+    "browser_integration": "output/browser-e2e.json; real isolated Chromium with local fixture and pregranted fixture host permission",
+    "browser_manual_checks_pending": ["interactive host permission prompt", "active-tab screenshot", "Firefox runtime validation (unsigned build and Firefox WebSocket origin tests pass)"],
+    "live_model_verified": false,
+    "superiority_benchmark_completed": false
+  },
+  "remaining": [
+    "Native subscription/OAuth integration for claude, auto-import, alphacode, openai, cursor, copilot, gemini, antigravity, google",
+    "Live provider/account validation with operator-configured credentials",
+    "Streaming native function calling and token/context budgets",
+    "Enforced monetary budgets",
+    "Richer TUI and Git/worktree integration",
+    "General engineering delegation, broader browser QA and desktop tools",
+    "OS-level process isolation",
+    "Matched-task, matched-model benchmarking against AlphaCode"
+  ],
+  "limitations": [
+    "Approved commands have normal OS permissions and are not sandboxed",
+    "Rollback covers tracked file-tool changes, not arbitrary command side effects",
+    "Provider transport implementation does not establish live service availability or account access",
+    "AlphaCode feature parity and superiority are not claimed"
+  ]
+}

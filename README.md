@@ -1,3 +1,5 @@
+> **General engineering runtime:** the independently tested HYDRA engineering agent, browser extensions and architecture cleanup are available in [`engineering-agent/`](engineering-agent/README.md). Run its commands from that directory; the existing security/knowledge platform remains separate.
+
 <p align="center">
   <img src="https://img.shields.io/badge/HYDRA-Offensive_Knowledge_OS-00ff88?style=for-the-badge&labelColor=000000" alt="HYDRA"/>
   <img src="https://img.shields.io/badge/Phase-O_·_Temporal_Intelligence-blueviolet?style=for-the-badge&labelColor=000000" alt="Phase O"/>

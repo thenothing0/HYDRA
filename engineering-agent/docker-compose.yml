@@ -1,0 +1,186 @@
+version: "3.9"
+
+# ════════════════════════════════════════════════
+#  HYDRA — optional development infrastructure (not production-validated)
+#  Configure credentials and authorized scope before starting services.
+# ════════════════════════════════════════════════
+
+services:
+  # ── Redis — Shared Memory Bus + Task Queue ──
+  redis:
+    image: redis:7-alpine
+    container_name: hydra-redis
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes --maxmemory 1gb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ── PostgreSQL — Persistent Storage ────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: hydra-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-hydra}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD locally}
+      POSTGRES_DB: ${POSTGRES_DB:-hydra}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ── ChromaDB — Vector Database (Semantic Memory) ──
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: hydra-chromadb
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - chromadb-data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  # ── Prometheus — Metrics Collection ────────
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: hydra-prometheus
+    ports:
+      - "127.0.0.1:9090:9090"
+    volumes:
+      - ./k8s/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.retention.time=30d'
+    restart: unless-stopped
+
+  # ── Grafana — Dashboards & Visualization ───
+  grafana:
+    image: grafana/grafana:latest
+    container_name: hydra-grafana
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:?Set GRAFANA_PASSWORD locally}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+  # ── MCP Tool Server ────────────────────────
+  mcp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: mcp-server
+    container_name: hydra-mcp
+    ports:
+      - "127.0.0.1:${MCP_PORT:-8900}:8900"
+    environment:
+      - MCP_HOST=0.0.0.0
+      - MCP_PORT=8900
+    volumes:
+      - ./wordlists:/app/wordlists
+      - ./results:/app/results
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ── Swarm Coordinator ──────────────────────
+  coordinator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: coordinator
+    container_name: hydra-coordinator
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=${POSTGRES_USER:-hydra}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD locally}
+      - POSTGRES_DB=${POSTGRES_DB:-hydra}
+      - HYDRA_NODE_ROLE=coordinator
+      - HYDRA_DISTRIBUTED=true
+      - HYDRA_QUEUE_MODE=distributed
+      - MCP_HOST=mcp-server
+      - MCP_PORT=8900
+      - DASHBOARD_HOST=0.0.0.0
+      - DASHBOARD_PORT=8080
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OLLAMA_URL=${OLLAMA_URL:-http://host.docker.internal:11434}
+      - OLLAMA_ENABLED=${OLLAMA_ENABLED:-true}
+      - HYDRA_MONTHLY_CAP=${HYDRA_MONTHLY_CAP:-100}
+      - HYDRA_DAILY_CAP=${HYDRA_DAILY_CAP:-10}
+      - HYDRA_SCAN_CAP=${HYDRA_SCAN_CAP:-5}
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      mcp-server:
+        condition: service_started
+    restart: unless-stopped
+
+  # ── Worker Agents ──────────────────────────
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: worker
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=${POSTGRES_USER:-hydra}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD locally}
+      - POSTGRES_DB=${POSTGRES_DB:-hydra}
+      - HYDRA_NODE_ROLE=worker
+      - HYDRA_DISTRIBUTED=true
+      - HYDRA_QUEUE_MODE=distributed
+      - MCP_HOST=mcp-server
+      - MCP_PORT=8900
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OLLAMA_URL=${OLLAMA_URL:-http://host.docker.internal:11434}
+    depends_on:
+      redis:
+        condition: service_healthy
+      coordinator:
+        condition: service_started
+      mcp-server:
+        condition: service_started
+    deploy:
+      replicas: ${WORKER_REPLICAS:-2}
+    restart: unless-stopped
+
+volumes:
+  redis-data:
+  postgres-data:
+  chromadb-data:
+  prometheus-data:
+  grafana-data:

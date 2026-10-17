@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>HYDRA Browser</title><link rel="stylesheet" href="popup.css"></head>
+<body><h1>HYDRA Browser</h1><p>Pair only a tab you are authorized to inspect.</p>
+<label>Local bridge<input id="bridge" value="http://127.0.0.1:8911" autocomplete="off"></label>
+<label>Pairing code<input id="token" type="password" autocomplete="off"></label>
+<button id="connect">Connect bridge</button><button id="pair">Pair this tab</button>
+<button id="refresh">Refresh status</button><button id="disconnect">Disconnect</button>
+<pre id="status" aria-live="polite">Not connected</pre>
+<p class="note">Snapshots omit field values. Network capture stores scoped metadata only. Screenshots may contain visible private information.</p>
+<script type="module" src="popup.js"></script></body></html>
