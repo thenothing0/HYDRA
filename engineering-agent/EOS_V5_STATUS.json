@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0.0",
+  "specification": "AI Engineering Operating System V5",
+  "source_sha256": "dd69538b6a206c6349b98a523a86f3e3ac5494a5a16caf933f5a1e92ec6f07c4",
+  "source_numbered_sections": 309,
+  "adoption": [
+    "engineering_work_method",
+    "phased_product_direction"
+  ],
+  "current_phase": {
+    "id": "phase_1",
+    "status": "implemented",
+    "scope": [
+      "validate_existing_session_schema",
+      "independent_per_run_limits",
+      "observed_usage_and_stop_reasons",
+      "evidence_linked_handoff"
+    ],
+    "section_references": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      21,
+      43,
+      49,
+      65,
+      66,
+      72,
+      109,
+      214,
+      215,
+      216,
+      220,
+      235,
+      236,
+      237,
+      242,
+      243,
+      244,
+      245,
+      246,
+      299,
+      300,
+      301,
+      302
+    ],
+    "evidence": [
+      "tests/test_engineering_governance.py",
+      "tests/test_engineering_agent.py",
+      "tests/test_engineering_tui.py"
+    ]
+  },
+  "reference_semantics": "References indicate partial implemented requirements in those sections, not full chapter compliance.",
+  "next_phases": [
+    {
+      "id": "phase_2",
+      "status": "planned",
+      "scope": "Versioned capability contracts, scoped permissions and policy explanations"
+    },
+    {
+      "id": "phase_3",
+      "status": "planned",
+      "scope": "Project-scoped memory provenance, acceptance criteria and checkpoints"
+    },
+    {
+      "id": "phase_4",
+      "status": "planned",
+      "scope": "Golden/adversarial task evaluation and comparable release evidence"
+    },
+    {
+      "id": "phase_5",
+      "status": "conditional",
+      "scope": "Delegation, richer cost accounting, scheduling and orchestration when justified"
+    }
+  ],
+  "not_claimed": [
+    "Complete 309-section platform implementation",
+    "Canonical V5 multi-tenant project state",
+    "Hard financial caps",
+    "Provider-side exact token quotas",
+    "Persistent autonomous learning",
+    "Production compliance certification",
+    "OS process sandboxing",
+    "Model superiority benchmarks"
+  ],
+  "guide": "AI_EOS_V5.md",
+  "verification": {
+    "local_suite": {
+      "tests": 732,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 9,
+      "passed": 723
+    },
+    "report": "output/eos-v5-phase1-tests.xml",
+    "scope": "Implementation regression evidence; not model intelligence or full V5 compliance"
+  }
+}

@@ -150,6 +150,7 @@ class ProviderModel:
         self.model = model
         self.config = None
         self.usage = {"input_tokens": 0, "output_tokens": 0, "requests": 0}
+        self.usage_available = False
 
     async def initialize(self):
         self.config = settings(self.provider, self.model)
@@ -203,13 +204,15 @@ class ProviderModel:
 
     def parse(self, data):
         cfg = self.config
-        usage = data.get("usage", {})
+        usage = data.get("usage") or {}
+        if not isinstance(usage, dict):
+            usage = {}
         if cfg.protocol == "gemini":
             candidates = data.get("candidates", [])
             text = "".join(part.get("text", "") for candidate in candidates[:1]
                            for part in candidate.get("content", {}).get("parts", []) if not part.get("thought"))
             meta = data.get("usageMetadata", {})
-            usage = {"input_tokens": meta.get("promptTokenCount", 0), "output_tokens": meta.get("candidatesTokenCount", 0)}
+            usage = {"input_tokens": meta.get("promptTokenCount"), "output_tokens": meta.get("candidatesTokenCount")}
         elif cfg.protocol == "responses":
             if data.get("status") not in (None, "completed"):
                 raise RuntimeError(f"{cfg.id}: response was not complete")
@@ -220,12 +223,16 @@ class ProviderModel:
             text = "".join(c.get("text", "") for c in data.get("content", []) if c.get("type") == "text")
         elif cfg.protocol == "ollama":
             text = data.get("response", "")
-            usage = {"input_tokens": data.get("prompt_eval_count", 0), "output_tokens": data.get("eval_count", 0)}
+            usage = {"input_tokens": data.get("prompt_eval_count"), "output_tokens": data.get("eval_count")}
         else:
             content = data.get("choices", [{}])[0].get("message", {}).get("content", "")
             text = content if isinstance(content, str) else "".join(c.get("text", "") for c in (content or []))
-        self.usage["input_tokens"] += usage.get("input_tokens", usage.get("prompt_tokens", 0)) or 0
-        self.usage["output_tokens"] += usage.get("output_tokens", usage.get("completion_tokens", 0)) or 0
+        input_count = usage.get("input_tokens", usage.get("prompt_tokens"))
+        output_count = usage.get("output_tokens", usage.get("completion_tokens"))
+        self.usage_available = all(type(value) is int and value >= 0 for value in (input_count, output_count))
+        if self.usage_available:
+            self.usage["input_tokens"] += input_count
+            self.usage["output_tokens"] += output_count
         if not text:
             raise RuntimeError(f"{cfg.id}: provider returned no text")
         return text
@@ -268,8 +275,11 @@ class ProviderModel:
             client.close()
         self.usage["requests"] += 1
         usage = data.get("usage", {})
-        self.usage["input_tokens"] += usage.get("inputTokens", 0)
-        self.usage["output_tokens"] += usage.get("outputTokens", 0)
+        self.usage_available = all(type(usage.get(key)) is int and usage[key] >= 0
+                                   for key in ("inputTokens", "outputTokens"))
+        if self.usage_available:
+            self.usage["input_tokens"] += usage["inputTokens"]
+            self.usage["output_tokens"] += usage["outputTokens"]
         text = "".join(c.get("text", "") for c in data.get("output", {}).get("message", {}).get("content", []))
         if not text:
             raise RuntimeError("bedrock: provider returned no text")

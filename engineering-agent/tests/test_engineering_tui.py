@@ -140,6 +140,9 @@ async def test_tui_cancellation_saves_an_interrupted_session(tmp_path):
         app.query_one("#prompt", Prompt).load_text("Wait for response")
         await pilot.press("enter")
         await asyncio.wait_for(entered.wait(), 5)
+        before = app.controller.session.path.read_bytes()
+        await app.slash_command("/status")
+        assert app.controller.session.path.read_bytes() == before
         await app.slash_command("/model replacement")
         await app.slash_command("/model")
         assert not isinstance(app.screen, ModelSelection)
@@ -355,3 +358,26 @@ async def test_burp_tools_still_require_approval_with_allow_run(tmp_path, monkey
         await pilot.press("escape")
         await until(lambda: not app.busy)
         assert not requests
+
+
+@pytest.mark.asyncio
+async def test_tui_obeys_tool_budget_and_exports_committed_state(tmp_path):
+    model = ScriptModel([action("list_files")])
+    options = RunOptions(provider="ollama", model="fixture", max_tool_calls=1)
+    app = EngineeringApp(tmp_path, options, model_factory=lambda *_: model)
+    async with app.run_test(size=(120, 36)) as pilot:
+        app.query_one("#prompt", Prompt).load_text("Inspect repository")
+        await pilot.press("enter")
+        await until(lambda: app.controller.session is not None and not app.busy)
+        session = app.controller.session
+        assert session.state["status"] == "budget_exhausted"
+        assert session.state["run"]["stop_reason"] == "max_tool_calls"
+        before = session.path.read_bytes()
+        app.query_one("#prompt", Prompt).load_text("/status")
+        await pilot.press("enter")
+        app.query_one("#prompt", Prompt).load_text("/handoff")
+        await pilot.press("enter")
+        await pilot.pause()
+        assert session.path.read_bytes() == before
+        assert model.calls == 1
+        assert session.handoff()["source_checksum"] == session.state["checksum"]

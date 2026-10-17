@@ -24,7 +24,13 @@
     "Separated security lifecycle, workflow, result and console components",
     "Separated confirmation evidence models, signatures and check groups with the existing SafeProber boundary",
     "Loopback deployment defaults, explicit infrastructure passwords and Docker context exclusions",
-    "Interactive Textual engineering terminal with provider/model selection, durable sessions, plan/diff panels, live tool activity and asynchronous command approval"
+    "Interactive Textual engineering terminal with provider/model selection, durable sessions, plan/diff panels, live tool activity and asynchronous command approval",
+    "Searchable model table with explicit provider catalog refresh, favorites and default preference storage",
+    "Complete Linux engineering installer with required provider and Burp MCP client dependencies",
+    "Built-in official Burp MCP SSE client with per-call approval and read-only restrictions",
+    "Validated existing session schema, same-generation disk corruption refusal and storage path rechecks",
+    "Independent per-run governor for tool calls, context characters, observed tokens and failure budgets",
+    "Run-correlated durable events, explicit stop reasons and validated evidence-linked handoff exports"
   ],
   "verification": {
     "suite": "output/architecture-tests.xml",
@@ -45,17 +51,33 @@
     ],
     "live_model_verified": false,
     "superiority_benchmark_completed": false,
-    "terminal_tests": "tests/test_engineering_tui.py; deterministic models, real local edits/processes and headless terminal interaction"
+    "terminal_tests": "tests/test_engineering_tui.py; deterministic models, real local edits/processes and headless terminal interaction",
+    "governance_tests": "tests/test_engineering_governance.py; real snapshots, bounded fixture agents, handoff CLI and terminal state export",
+    "opencode_live_attempts": {
+      "catalog_models": 48,
+      "free_tier": "HTTP 403 FreeTierError",
+      "paid_probe": "HTTP 402 billing required",
+      "successful_inference": false
+    },
+    "linux_installer": "Required GitHub Actions linux-installer job; baseline commit 71fdb7639bd025b4de68d6e636d5d14b8f20a2e6 passed",
+    "local_phase1_suite": {
+      "tests": 732,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 9,
+      "passed": 723
+    }
   },
   "remaining": [
     "Native subscription/OAuth integration for claude, auto-import, alphacode, openai, cursor, copilot, gemini, antigravity, google",
-    "Live provider/account validation with operator-configured credentials",
-    "Streaming native function calling and token/context budgets",
+    "Successful live provider task validation with operator-configured account access",
+    "Streaming native function calling and tokenizer-aware request budget reservations",
     "Enforced monetary budgets",
     "Git/worktree integration and semantic/LSP navigation",
     "General engineering delegation, broader browser QA and desktop tools",
     "OS-level process isolation",
-    "Matched-task, matched-model benchmarking against AlphaCode"
+    "Matched-task, matched-model benchmarking against AlphaCode",
+    "Remaining AI-EOS V5 phases listed in EOS_V5_STATUS.json"
   ],
   "limitations": [
     "Approved commands have normal OS permissions and are not sandboxed",

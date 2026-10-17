@@ -17,6 +17,10 @@ class RunOptions:
     model: str | None = None
     max_steps: int = 30
     max_seconds: int = 600
+    max_tool_calls: int | None = None
+    max_tokens: int | None = None
+    max_context_chars: int = 64000
+    max_failures: int = 5
     read_only: bool = False
     browser: bool = False
     allow_browser_actions: bool = False
@@ -26,7 +30,7 @@ class RunOptions:
 
     @classmethod
     def from_args(cls, args):
-        values = {name: getattr(args, name, None) for name in cls.__dataclass_fields__}
+        values = {name: getattr(args, name, field.default) for name, field in cls.__dataclass_fields__.items()}
         if args.verify_command:
             values["verify_command"] = json.loads(args.verify_command)
         return cls(**values)
@@ -123,6 +127,8 @@ class EngineeringController:
                 options.max_seconds,
                 on_event=lambda event: self.emit({"kind": "action", **event}),
                 on_result=lambda event: self.emit({"kind": "result", **event}),
+                max_tool_calls=options.max_tool_calls, max_tokens=options.max_tokens,
+                max_context_chars=options.max_context_chars, max_failures=options.max_failures,
             )
             result = await agent.run()
             self.emit({"kind": "finished", "status": result["status"], "summary": result.get("summary", "")})

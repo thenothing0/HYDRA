@@ -7,6 +7,7 @@ import uuid
 from datetime import datetime, timezone
 
 from hydra.engineering.workspace import atomic_write, digest
+from hydra.engineering.state_schema import validate_state
 
 
 def now():
@@ -29,6 +30,7 @@ class Session:
             if self.path.is_symlink():
                 raise ValueError("Session snapshots cannot be symlinks")
             self.state = json.loads(self.path.read_text(encoding="utf-8"))
+            validate_state(self.state, workspace, session_id)
             if (self.state.get("schema") != 1 or self.state.get("id") != session_id
                     or self.state.get("workspace") != str(workspace.root)):
                 raise ValueError("Session schema or workspace mismatch")
@@ -47,6 +49,7 @@ class Session:
             self.save()
 
     def save(self):
+        self.guard_storage()
         self.directory.mkdir(parents=True, exist_ok=True)
         lock = self.path.with_suffix(".lock")
         try:
@@ -57,10 +60,15 @@ class Session:
             os.close(fd)
             if self.path.exists():
                 disk = json.loads(self.path.read_text(encoding="utf-8"))
+                validate_state(disk, self.workspace, self.state["id"])
+                disk_content = {k: v for k, v in disk.items() if k != "checksum"}
+                if digest(json.dumps(disk_content, sort_keys=True, ensure_ascii=False).encode("utf-8")) != disk["checksum"]:
+                    raise ValueError("Session checksum mismatch on disk; refusing to overwrite it")
                 if disk.get("generation") != self._generation:
                     raise ValueError("Concurrent session update detected; reload the session")
             self.state["updated_at"] = now()
             self.state["generation"] = self._generation + 1
+            validate_state(self.state, self.workspace, self.state["id"], persisted=False)
             content = {k: v for k, v in self.state.items() if k != "checksum"}
             self.state["checksum"] = digest(json.dumps(content, sort_keys=True, ensure_ascii=False).encode("utf-8"))
             atomic_write(self.path, json.dumps(self.state, ensure_ascii=False, indent=2).encode("utf-8"))
@@ -71,6 +79,42 @@ class Session:
     def event(self, kind, **data):
         self.state["events"].append({"time": now(), "kind": kind, **data})
         self.save()
+
+    def handoff(self):
+        """A read-only export with evidence references, not raw retained tool data."""
+        validate_state(self.state, self.workspace, self.state["id"])
+        self.guard_storage()
+        content = {k: v for k, v in self.state.items() if k != "checksum"}
+        if digest(json.dumps(content, sort_keys=True, ensure_ascii=False).encode("utf-8")) != self.state["checksum"]:
+            raise ValueError("Session checksum mismatch; save a valid committed state before export")
+        latest = Session(self.workspace, session_id=self.state["id"])
+        if latest.state["checksum"] != self.state["checksum"]:
+            raise ValueError("Concurrent session update detected; reload before export")
+        state = self.state
+        evidence = [{"event_index": index, "time": event["time"], "tool": event.get("tool"),
+                     "success": event["result"].get("success"), "exit_code": event["result"].get("exit_code")}
+                    for index, event in enumerate(state["events"])
+                    if event["kind"] == "result" and isinstance(event.get("result"), dict)]
+        report = {"schema_version": "1.0.0", "kind": "hydra_session_handoff", "session_id": state["id"],
+                  "workspace": str(self.workspace.root), "goal": state["goal"], "status": state["status"],
+                  "source_generation": state["generation"], "source_checksum": state["checksum"],
+                  "updated_at": state["updated_at"], "summary": state["summary"],
+                  "summary_provenance": "model-authored summary; inspect tool evidence for verified claims",
+                  "plan": list(state["plan"]), "revision": state["revision"],
+                  "verified_revision": state["verified_revision"], "run": state.get("run"),
+                  "evidence": evidence, "changed_files": sorted({c["path"] for c in state["changes"] if c["status"] == "applied"}),
+                  "next_actions": [] if state["status"] == "completed" else ["Inspect the retained session evidence and current workspace before resuming.", "Recheck provider, permissions and run limits."],
+                  "limitations": ["Plan items are not asserted complete by this export.", "Tool evidence references are not a claim of exhaustive test coverage.", "Approved OS commands are not sandboxed; arbitrary command side effects are not rolled back."]}
+        report["checksum"] = digest(json.dumps(report, sort_keys=True, ensure_ascii=False).encode("utf-8"))
+        return report
+
+    def guard_storage(self):
+        for directory in (self.workspace.root / ".hydra", self.directory):
+            if (directory.is_symlink() or (hasattr(directory, "is_junction") and directory.is_junction())
+                    or not directory.resolve().is_relative_to(self.workspace.root)):
+                raise ValueError("Session storage must stay inside the workspace")
+        if self.path.is_symlink():
+            raise ValueError("Session snapshots cannot be symlinks")
 
     def change(self, name, content, expected_sha256):
         path = self.workspace.resolve(name)

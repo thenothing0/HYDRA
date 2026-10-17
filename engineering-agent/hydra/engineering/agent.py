@@ -6,6 +6,7 @@ import time
 
 from hydra.engineering.tools import EngineeringTools, TOOLS
 from hydra.engineering.providers import ProviderModel as RouterModel
+from hydra.engineering.governor import RunGovernor, RunLimits, RunStopped
 
 __all__ = ["EngineeringAgent", "RouterModel"]
 
@@ -50,9 +51,15 @@ class EngineeringAgent:
         max_seconds=600,
         on_event=None,
         on_result=None,
+        *,
+        max_tool_calls=None,
+        max_tokens=None,
+        max_context_chars=64000,
+        max_failures=5,
     ):
-        if not 1 <= max_steps <= 200 or not 1 <= max_seconds <= 7200:
-            raise ValueError("max_steps must be 1..200; max_seconds must be 1..7200")
+        self.limits = RunLimits(max_steps=max_steps, max_seconds=max_seconds,
+                                max_tool_calls=max_steps if max_tool_calls is None else max_tool_calls,
+                                max_tokens=max_tokens, max_context_chars=max_context_chars, max_failures=max_failures)
         self.session = session
         self.model = model
         self.tools = tools or EngineeringTools(session)
@@ -88,6 +95,7 @@ class EngineeringAgent:
             "verification_command": self.tools.verify_command,
             "recent_events": list(reversed(history)),
             "tools": self.tools.available_tools,
+            "run_limits": self.session.state.get("run", {}).get("limits"),
         }
         return SYSTEM + "\nSESSION DATA:\n" + json.dumps(context, ensure_ascii=False)
 
@@ -107,75 +115,99 @@ class EngineeringAgent:
         return action
 
     async def run(self):
-        started = time.monotonic()
+        governor = RunGovernor(self.limits, getattr(self.model, "usage", None))
         state = self.session.state
+        state["run"] = governor.state
         state["status"] = "running"
         self.session.event(
-            "run_started", max_steps=self.max_steps, max_seconds=self.max_seconds
+            "run_started", run_id=governor.state["run_id"], max_steps=self.max_steps,
+            max_seconds=self.max_seconds, limits=governor.state["limits"]
         )
-        failures = 0
+        protocol_failures = 0
         try:
             for step in range(self.max_steps):
-                remaining = self.max_seconds - (time.monotonic() - started)
-                if remaining <= 0:
-                    state["status"] = "budget_exhausted"
-                    break
+                prompt = self.prompt()
+                governor.before_model(prompt)
+                self.session.event("model_request_started", run_id=governor.state["run_id"],
+                                   request=governor.state["model_requests"], context_chars=len(prompt))
                 try:
+                    remaining = governor.remaining()
                     response = await asyncio.wait_for(
-                        self.model.respond(self.prompt()), timeout=remaining
+                        self.model.respond(prompt), timeout=remaining
                     )
-                    if hasattr(self.model, "usage"):
-                        state["model_usage"] = dict(self.model.usage)
+                    self.record_usage()
                     if getattr(self.model, "config", None):
                         state["provider"] = self.model.config.id
                         state["model"] = self.model.config.model
+                    governor.after_model(getattr(self.model, "usage", None),
+                                         usage_available=getattr(self.model, "usage_available", None))
                     action = self.parse(response, self.tools.available_tools)
                 except (ValueError, json.JSONDecodeError) as error:
-                    failures += 1
-                    self.session.event("protocol_error", error=str(error))
-                    if failures >= 3:
+                    protocol_failures += 1
+                    self.session.event("protocol_error", run_id=governor.state["run_id"], error=str(error))
+                    governor.result({"protocol_error": str(error)}, False)
+                    if protocol_failures >= 3:
                         state["status"] = "blocked"
+                        governor.state["stop_reason"] = "protocol_errors"
                         break
                     continue
+                protocol_failures = 0
                 note = str(action.get("note", ""))[:400]
+                governor.before_tool()
                 self.on_event({"step": step + 1, "tool": action["tool"], "note": note})
                 self.session.event(
                     "action",
+                    run_id=governor.state["run_id"],
                     tool=action["tool"],
                     arguments=action.get("arguments", {}),
                     note=note,
                 )
                 try:
-                    remaining = self.max_seconds - (time.monotonic() - started)
-                    if remaining <= 0:
-                        raise asyncio.TimeoutError()
+                    remaining = governor.remaining()
                     result = await asyncio.wait_for(
                         self.tools.execute(action["tool"], action.get("arguments", {})),
                         timeout=remaining,
                     )
                 except (ValueError, OSError, KeyError, TypeError) as error:
                     result = {"error": str(error), "success": False}
-                self.session.event("result", tool=action["tool"], result=result)
+                self.session.event("result", run_id=governor.state["run_id"], tool=action["tool"], result=result)
                 self.on_result({"tool": action["tool"], "result": result})
                 if result.get("completed"):
+                    governor.state["stop_reason"] = "completed"
                     return state
-                if result.get("success") is False or "error" in result:
-                    failures += 1
-                    if failures >= 5:
-                        state["status"] = "blocked"
-                        break
-                else:
-                    failures = 0
+                governor.result({"tool": action["tool"], "arguments": action.get("arguments", {})},
+                                not (result.get("success") is False or "error" in result))
             else:
                 state["status"] = "budget_exhausted"
+                governor.state["stop_reason"] = "max_steps"
+        except RunStopped as error:
+            state["status"] = error.status
+            governor.state["stop_reason"] = error.reason
         except asyncio.TimeoutError:
             state["status"] = "budget_exhausted"
+            governor.state["stop_reason"] = "max_seconds"
         except asyncio.CancelledError:
             state["status"] = "interrupted"
-            self.session.save()
+            governor.state["stop_reason"] = "cancelled"
             raise
         except Exception as error:
             state["status"] = "failed"
-            self.session.event("runtime_error", error=str(error))
-        self.session.save()
+            governor.state["stop_reason"] = "runtime_error"
+            self.session.event("runtime_error", run_id=governor.state["run_id"], error=str(error))
+        finally:
+            usage = getattr(self.model, "usage", None)
+            self.record_usage()
+            if governor.state["model_requests"]:
+                governor.observe_usage(usage, usage_available=getattr(self.model, "usage_available", None))
+            governor.state["elapsed_seconds"] = round(time.monotonic() - governor.started, 3)
+            self.session.event("run_stopped", run_id=governor.state["run_id"], status=state["status"],
+                               reason=governor.state["stop_reason"], usage=dict(governor.state))
         return state
+
+    def record_usage(self):
+        usage = getattr(self.model, "usage", None)
+        if isinstance(usage, dict):
+            self.session.state["model_usage"] = {
+                key: usage[key] for key in ("input_tokens", "output_tokens", "requests")
+                if type(usage.get(key)) is int and usage[key] >= 0
+            }

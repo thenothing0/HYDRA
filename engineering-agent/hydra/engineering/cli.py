@@ -33,6 +33,10 @@ def parser():
         )
         command.add_argument("--max-steps", type=int, default=30)
         command.add_argument("--max-seconds", type=int, default=600)
+        command.add_argument("--max-tool-calls", type=int, help="Tool dispatch limit per run; defaults to max-steps")
+        command.add_argument("--max-tokens", type=int, help="Observed provider token ceiling; may exceed by one in-flight request")
+        command.add_argument("--max-context-chars", type=int, default=64000)
+        command.add_argument("--max-failures", type=int, default=5)
         command.add_argument("--burp-url", help="Official Burp MCP SSE endpoint on loopback (or BURP_MCP_URL)")
         command.add_argument("--read-only", action="store_true")
         command.add_argument(
@@ -65,6 +69,9 @@ def parser():
     diff = sub.add_parser("diff")
     diff.add_argument("session_id")
     diff.add_argument("--workspace", default=".")
+    handoff = sub.add_parser("handoff", help="Print a validated JSON handoff with evidence references")
+    handoff.add_argument("session_id")
+    handoff.add_argument("--workspace", default=".")
     providers = sub.add_parser("providers")
     providers.add_argument("--workspace", default=".")
     providers.add_argument("--json", action="store_true")
@@ -184,7 +191,9 @@ async def start_run(args, workspace, session=None, goal=None, model=None):
         print(f"[{event['step']}] {event['tool']}: {event['note']}", flush=True)
 
     agent = EngineeringAgent(
-        session, model, tools, args.max_steps, args.max_seconds, progress
+        session, model, tools, args.max_steps, args.max_seconds, progress,
+        max_tool_calls=getattr(args, "max_tool_calls", None), max_tokens=getattr(args, "max_tokens", None),
+        max_context_chars=getattr(args, "max_context_chars", 64000), max_failures=getattr(args, "max_failures", 5),
     )
     result = await agent.run()
     print(
@@ -193,6 +202,8 @@ async def start_run(args, workspace, session=None, goal=None, model=None):
     )
     if result.get("summary"):
         print(result["summary"])
+    if result.get("run", {}).get("stop_reason"):
+        print("Stop reason:", result["run"]["stop_reason"])
     print(f"Evidence: {session.path}")
     return result
 
@@ -202,6 +213,10 @@ async def main(argv=None):
     if getattr(args, "allow_browser_actions", False) and not args.browser:
         raise ValueError("--allow-browser-actions requires --browser")
     workspace = Workspace(args.workspace)
+    if args.command == "handoff":
+        session = Session(workspace, session_id=args.session_id)
+        print(json.dumps(session.handoff(), ensure_ascii=False, indent=2))
+        return 0
     if args.command == "burp":
         from hydra.engineering.burp import BurpClient
 

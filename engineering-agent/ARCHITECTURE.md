@@ -19,9 +19,11 @@ flags and `hydra.main` imports remain compatible.
 | Command routing | `hydra/cli.py` | Explicit runtime names; compatibility for recognized security flags; no engine initialization while routing |
 | Environment and settings | `hydra/config.py` | Lazy `.env` loading, process environment precedence, per-instance defaults, cached settings snapshot |
 | Agent lifecycle | `hydra/engineering/agent.py` | Bounded observe/action/verify loop; only enabled session tools accepted |
+| Run governor | `hydra/engineering/governor.py` | Model-independent request/tool/context/failure ceilings, observed-token accounting and monotonic time limits |
+| Session validation | `hydra/engineering/state_schema.py` | Existing schema validation before activating or saving state; no implicit format migration |
 | Terminal presentation | `hydra/engineering/tui/` | Textual widgets over an independent controller; asynchronous approval uses the same process boundary |
 | Tool registry | `hydra/engineering/registry.py` | Named capability ownership, duplicate refusal, defensive schema copies, dispatch |
-| Capability packs | `hydra/engineering/capabilities/` | File, process, session and opt-in browser handlers own their tool contracts |
+| Capability packs | `hydra/engineering/capabilities/` | File, process, session, Burp MCP and opt-in browser handlers own their tool contracts |
 | Process execution | `hydra/engineering/process.py` | Authorized argv execution, bounded output, timeout and cancellation cleanup |
 | Workspace and durability | `hydra/engineering/workspace.py`, `session.py` | Path guards, instruction checks, edit conflicts, durable sessions, verification and rollback |
 | Browser transport | `hydra/browser/`, `extensions/hydra-browser/` | Authenticated loopback bridge and explicitly paired tabs |

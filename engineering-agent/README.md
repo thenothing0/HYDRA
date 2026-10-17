@@ -54,6 +54,10 @@ checks the official extension and its tools. Each Burp call needs approval.
 
 [Engineering guide](ENGINEERING.md) · [Provider configuration/status](PROVIDERS.md)
 
+[AI-EOS V5 implementation](AI_EOS_V5.md) adds validated session state, independent
+run limits, failure budgets and evidence-linked handoff. Use `/status` or
+`/handoff` in the terminal, or `python -m hydra handoff SESSION_ID` to export JSON.
+
 ## Engineering capabilities
 
 - Workspace search, bounded file reads, hash-checked edits, atomic writes and diffs.

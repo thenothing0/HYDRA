@@ -32,7 +32,9 @@ see [PROVIDERS.md](PROVIDERS.md). Use `--provider openai-api` for API-key OpenAI
 `openai` in the parity catalog refers to subscription/OAuth, which is pending.
 `--model` selects an exact model/deployment without editing global settings.
 
-No live model was configured during implementation. Offline regression tests
+Live OpenCode catalog discovery succeeded; attempted free inference was refused
+with HTTP 403 and a minimal paid-model request required account billing (HTTP 402).
+No successful live engineering task has been verified. Offline regression tests
 use a deterministic model fixture while exercising real filesystem changes,
 real Python subprocesses, failed/passing assertions, session reload and rollback.
 Those tests verify orchestration, not model intelligence or benchmark superiority.
@@ -54,6 +56,9 @@ Those tests verify orchestration, not model intelligence or benchmark superiorit
 - An interactive terminal loop with follow-ups in the same session.
 - Hard model/action-step and elapsed-time limits, plus bounded protocol/failure
   retries. These are execution limits, **not financial spending limits**.
+- [AI-EOS V5 phase 1](AI_EOS_V5.md): strict existing-session validation, per-run
+  tool/context/failure limits, observed-token ceilings, recorded stop reasons and
+  evidence-linked handoff exports.
 
 ## Permissions and verification
 
@@ -101,9 +106,9 @@ leave a `.lock`; inspect it before removing it and resuming.
 
 1. Verify real provider runs and establish task success/repair-rate benchmarks
    on the same tasks, models, hardware and budgets as the comparison baseline.
-2. Add streaming native tool calls, context/token budgeting, and financial cost
-   accounting. Provider-reported token usage is recorded, but no monetary limit
-   is enforced. The current cross-provider tool protocol uses JSON text.
+2. Add streaming native tool calls, tokenizer-aware request reservations and
+   financial cost accounting. Observed-token and context-character limits exist;
+   they do not enforce a monetary cap. The current tool protocol uses JSON text.
 3. Build Git worktree integration, semantic/LSP navigation and
    stronger OS-level execution isolation.
 4. Add general engineering delegation and desktop automation with

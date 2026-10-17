@@ -16,7 +16,7 @@ from hydra.engineering.providers import describe_providers, settings
 from hydra.engineering.tui.controller import EngineeringController
 from hydra.engineering.tui.widgets import CommandApproval, ModelSelection, Prompt, safe_text
 
-HELP = "/new  /sessions  /resume ID  /diff  /plan  /model [ID]  /provider NAME MODEL  /burp  /cancel  /help  /quit"
+HELP = "/new  /sessions  /resume ID  /diff  /plan  /model [ID]  /provider NAME MODEL  /burp  /status  /handoff  /cancel  /help  /quit"
 
 
 class SessionItem(ListItem):
@@ -193,7 +193,10 @@ class EngineeringApp(App):
             state = self.controller.session.state if self.controller.session else {}
             usage = state.get("model_usage", {})
             tokens = f" · {usage.get('input_tokens', 0)} in / {usage.get('output_tokens', 0)} out" if usage else ""
-            self.query_one("#run-status", Static).update(Text(event["status"] + tokens))
+            if usage and state.get("run", {}).get("token_usage_available") is False:
+                tokens = " · tokens unavailable"
+            reason = state.get("run", {}).get("stop_reason", "")
+            self.query_one("#run-status", Static).update(Text(event["status"] + (f" · {reason}" if reason and reason != event["status"] else "") + tokens))
             self.add_message(event["status"], event.get("summary", ""))
         elif kind == "error":
             self.query_one("#run-status", Static).update("Blocked · check provider/model configuration")
@@ -374,6 +377,24 @@ class EngineeringApp(App):
             self.query_one("#sessions-panel").display = True
         elif command == "/burp":
             self.run_worker(self.check_burp(), group="burp-status", exclusive=True, exit_on_error=False)
+        elif command in ("/status", "/handoff"):
+            if self.busy and command == "/handoff":
+                self.notify("Cancel or finish the active run before exporting its committed state.")
+            elif self.controller.session is None:
+                self.add_message("Session state", "No session selected. Start a task or select a saved session.")
+            else:
+                try:
+                    selected = self.controller.session
+                    if self.busy:
+                        from hydra.engineering.session import Session
+
+                        selected = Session(self.controller.workspace, session_id=selected.state["id"])
+                    report = selected.handoff()
+                    if command == "/status":
+                        report = {key: report[key] for key in ("session_id", "status", "revision", "verified_revision", "run")}
+                    self.add_message("Session handoff" if command == "/handoff" else "Session state", json.dumps(report, ensure_ascii=False, indent=2))
+                except (ValueError, OSError) as error:
+                    self.add_message("Invalid session state", str(error), "error")
         elif command in ("/model", "/models"):
             if self.busy:
                 self.notify("Cancel or finish the current run before changing the model.")
