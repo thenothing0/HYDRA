@@ -1,0 +1,3 @@
+# Python-based scanners; Go/system scanners are installed separately.
+wafw00f>=2.3
+dirsearch>=0.4

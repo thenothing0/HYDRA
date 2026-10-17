@@ -1,0 +1,2 @@
+# Optional AWS Bedrock transport; HTTP providers use requirements-core.txt only.
+boto3>=1.35

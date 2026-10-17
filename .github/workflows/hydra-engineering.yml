@@ -1,0 +1,73 @@
+name: HYDRA engineering agent CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+defaults:
+  run:
+    working-directory: engineering-agent
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11', '3.12']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt -r requirements-mcp.txt
+          pip install pytest-cov boto3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Syntax check
+        run: |
+          python -c "
+          import ast, pathlib, sys
+          errors = []
+          for f in pathlib.Path('hydra').rglob('*.py'):
+              try:
+                  ast.parse(f.read_text(encoding='utf-8'))
+              except SyntaxError as e:
+                  errors.append(f'{f}: {e}')
+          if errors:
+              for e in errors: print(e)
+              sys.exit(1)
+          print(f'All Python files pass syntax check')
+          "
+
+      - name: Run tests and collect coverage
+        run: pytest tests/ --tb=short --cov=hydra --cov-report=term-missing --junitxml=architecture-tests.xml
+
+      - name: Extension protocol and Firefox build
+        run: |
+          node --test extensions/hydra-browser/tests/*.test.js
+          python tools/build_firefox_extension.py
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install ruff
+      - name: Check undefined names across the application
+        run: ruff check hydra/ --select F821,F822,F823
+      - name: Check extracted component imports
+        run: ruff check hydra/security hydra/hunt/confirmation hydra/engineering/capabilities hydra/engineering/registry.py --select F401,E402

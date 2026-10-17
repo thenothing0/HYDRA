@@ -1,0 +1,884 @@
+{
+  "source": "https://github.com/dragonked2/alphacode/blob/b2969e969ccfa7eeff0cff3d9e1f7c706387b52d/src/alphacode_provider_metadata/catalog.rs",
+  "commit": "b2969e969ccfa7eeff0cff3d9e1f7c706387b52d",
+  "profiles": [
+    {
+      "id": "opencode",
+      "name": "OpenCode Zen",
+      "base_url": "https://opencode.ai/zen/v1",
+      "key_env": "OPENCODE_API_KEY",
+      "model_env": "OPENCODE_MODEL",
+      "reference_model": "minimax-m2.7",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "OPENCODE_PROFILE"
+    },
+    {
+      "id": "opencode-go",
+      "name": "OpenCode Go",
+      "base_url": "https://opencode.ai/zen/go/v1",
+      "key_env": "OPENCODE_GO_API_KEY",
+      "model_env": "OPENCODE_GO_MODEL",
+      "reference_model": "kimi-k2.5",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "OPENCODE_GO_PROFILE"
+    },
+    {
+      "id": "zai",
+      "name": "Z.AI",
+      "base_url": "https://api.z.ai/api/coding/paas/v4",
+      "key_env": "ZHIPU_API_KEY",
+      "model_env": "ZAI_MODEL",
+      "reference_model": "glm-4.5",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "ZAI_PROFILE"
+    },
+    {
+      "id": "kimi",
+      "name": "Kimi Code",
+      "base_url": "https://api.kimi.com/coding/v1",
+      "key_env": "KIMI_API_KEY",
+      "model_env": "KIMI_MODEL",
+      "reference_model": "kimi-for-coding",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "KIMI_PROFILE"
+    },
+    {
+      "id": "302ai",
+      "name": "302.AI",
+      "base_url": "https://api.302.ai/v1",
+      "key_env": "AI302_API_KEY",
+      "model_env": "302AI_MODEL",
+      "reference_model": "qwen3-235b-a22b-instruct-2507",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "AI302_PROFILE"
+    },
+    {
+      "id": "baseten",
+      "name": "Baseten",
+      "base_url": "https://inference.baseten.co/v1",
+      "key_env": "BASETEN_API_KEY",
+      "model_env": "BASETEN_MODEL",
+      "reference_model": "zai-org/GLM-4.7",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "BASETEN_PROFILE"
+    },
+    {
+      "id": "cortecs",
+      "name": "Cortecs",
+      "base_url": "https://api.cortecs.ai/v1",
+      "key_env": "CORTECS_API_KEY",
+      "model_env": "CORTECS_MODEL",
+      "reference_model": "kimi-k2.5",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "CORTECS_PROFILE"
+    },
+    {
+      "id": "tokenharbor",
+      "name": "Token Harbor",
+      "base_url": "https://tokenharbor.ai/v1",
+      "key_env": "TOKENHARBOR_API_KEY",
+      "model_env": "TOKENHARBOR_MODEL",
+      "reference_model": "tokenharbor/qwen3-max",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "TOKENHARBOR_PROFILE"
+    },
+    {
+      "id": "openrouter",
+      "name": "OpenRouter",
+      "base_url": "https://openrouter.ai/api/v1",
+      "key_env": "OPENROUTER_API_KEY",
+      "model_env": "OPENROUTER_MODEL",
+      "reference_model": null,
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "OPENROUTER_OPENAI_COMPAT_PROFILE"
+    },
+    {
+      "id": "anthropic-api",
+      "name": "Anthropic API",
+      "base_url": "https://api.anthropic.com/v1",
+      "key_env": "ANTHROPIC_API_KEY",
+      "model_env": "ANTHROPIC_API_MODEL",
+      "reference_model": null,
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "ANTHROPIC_OPENAI_COMPAT_PROFILE"
+    },
+    {
+      "id": "openai-api",
+      "name": "OpenAI API",
+      "base_url": "https://api.openai.com/v1",
+      "key_env": "OPENAI_API_KEY",
+      "model_env": "OPENAI_API_MODEL",
+      "reference_model": null,
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "OPENAI_NATIVE_OPENAI_COMPAT_PROFILE"
+    },
+    {
+      "id": "gemini-api",
+      "name": "Gemini API",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+      "key_env": "GEMINI_API_KEY",
+      "model_env": "GEMINI_API_MODEL",
+      "reference_model": "gemini-2.5-flash",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "GEMINI_OPENAI_COMPAT_PROFILE"
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "base_url": "https://api.deepseek.com",
+      "key_env": "DEEPSEEK_API_KEY",
+      "model_env": "DEEPSEEK_MODEL",
+      "reference_model": "deepseek-v4-flash",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "DEEPSEEK_PROFILE"
+    },
+    {
+      "id": "comtegra",
+      "name": "Comtegra GPU Cloud",
+      "base_url": "https://llm.comtegra.cloud/v1",
+      "key_env": "COMTEGRA_API_KEY",
+      "model_env": "COMTEGRA_MODEL",
+      "reference_model": "glm-51-nvfp4",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "COMTEGRA_PROFILE"
+    },
+    {
+      "id": "fpt",
+      "name": "FPT AI Marketplace",
+      "base_url": "https://mkp-api.fptcloud.com",
+      "key_env": "FPT_API_KEY",
+      "model_env": "FPT_MODEL",
+      "reference_model": "GLM-5.1",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "FPT_PROFILE"
+    },
+    {
+      "id": "firmware",
+      "name": "Firmware",
+      "base_url": "https://app.frogbot.ai/api/v1",
+      "key_env": "FIRMWARE_API_KEY",
+      "model_env": "FIRMWARE_MODEL",
+      "reference_model": "kimi-k2.5",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "FIRMWARE_PROFILE"
+    },
+    {
+      "id": "huggingface",
+      "name": "Hugging Face",
+      "base_url": "https://router.huggingface.co/v1",
+      "key_env": "HF_TOKEN",
+      "model_env": "HUGGINGFACE_MODEL",
+      "reference_model": "zai-org/GLM-4.7",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "HUGGING_FACE_PROFILE"
+    },
+    {
+      "id": "moonshotai",
+      "name": "Moonshot AI",
+      "base_url": "https://api.moonshot.ai/v1",
+      "key_env": "MOONSHOT_API_KEY",
+      "model_env": "MOONSHOTAI_MODEL",
+      "reference_model": "kimi-k2.5",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "MOONSHOT_PROFILE"
+    },
+    {
+      "id": "nebius",
+      "name": "Nebius Token Factory",
+      "base_url": "https://api.tokenfactory.nebius.com/v1",
+      "key_env": "NEBIUS_API_KEY",
+      "model_env": "NEBIUS_MODEL",
+      "reference_model": "openai/gpt-oss-120b",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "NEBIUS_PROFILE"
+    },
+    {
+      "id": "scaleway",
+      "name": "Scaleway",
+      "base_url": "https://api.scaleway.ai/v1",
+      "key_env": "SCALEWAY_API_KEY",
+      "model_env": "SCALEWAY_MODEL",
+      "reference_model": "qwen3-coder-30b-a3b-instruct",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "SCALEWAY_PROFILE"
+    },
+    {
+      "id": "stackit",
+      "name": "STACKIT",
+      "base_url": "https://api.openai-compat.model-serving.eu01.onstackit.cloud/v1",
+      "key_env": "STACKIT_API_KEY",
+      "model_env": "STACKIT_MODEL",
+      "reference_model": "openai/gpt-oss-120b",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "STACKIT_PROFILE"
+    },
+    {
+      "id": "groq",
+      "name": "Groq",
+      "base_url": "https://api.groq.com/openai/v1",
+      "key_env": "GROQ_API_KEY",
+      "model_env": "GROQ_MODEL",
+      "reference_model": "llama-3.1-8b-instant",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "GROQ_PROFILE"
+    },
+    {
+      "id": "mistral",
+      "name": "Mistral",
+      "base_url": "https://api.mistral.ai/v1",
+      "key_env": "MISTRAL_API_KEY",
+      "model_env": "MISTRAL_MODEL",
+      "reference_model": "devstral-medium-2507",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "MISTRAL_PROFILE"
+    },
+    {
+      "id": "perplexity",
+      "name": "Perplexity",
+      "base_url": "https://api.perplexity.ai",
+      "key_env": "PERPLEXITY_API_KEY",
+      "model_env": "PERPLEXITY_MODEL",
+      "reference_model": "sonar",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "PERPLEXITY_PROFILE"
+    },
+    {
+      "id": "togetherai",
+      "name": "Together AI",
+      "base_url": "https://api.together.xyz/v1",
+      "key_env": "TOGETHER_API_KEY",
+      "model_env": "TOGETHERAI_MODEL",
+      "reference_model": "moonshotai/Kimi-K2-Instruct",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "TOGETHER_AI_PROFILE"
+    },
+    {
+      "id": "deepinfra",
+      "name": "Deep Infra",
+      "base_url": "https://api.deepinfra.com/v1/openai",
+      "key_env": "DEEPINFRA_API_KEY",
+      "model_env": "DEEPINFRA_MODEL",
+      "reference_model": "moonshotai/Kimi-K2-Instruct",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "DEEPINFRA_PROFILE"
+    },
+    {
+      "id": "fireworks",
+      "name": "Fireworks",
+      "base_url": "https://api.fireworks.ai/inference/v1",
+      "key_env": "FIREWORKS_API_KEY",
+      "model_env": "FIREWORKS_MODEL",
+      "reference_model": "accounts/fireworks/routers/kimi-k2p5-turbo",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "FIREWORKS_PROFILE"
+    },
+    {
+      "id": "minimax",
+      "name": "MiniMax",
+      "base_url": "https://api.minimax.io/v1",
+      "key_env": "OPENAI_API_KEY",
+      "model_env": "MINIMAX_MODEL",
+      "reference_model": "MiniMax-M2.7",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "MINIMAX_PROFILE"
+    },
+    {
+      "id": "xai",
+      "name": "xAI",
+      "base_url": "https://api.x.ai/v1",
+      "key_env": "XAI_API_KEY",
+      "model_env": "XAI_MODEL",
+      "reference_model": "grok-code-fast-1",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "XAI_PROFILE"
+    },
+    {
+      "id": "lmstudio",
+      "name": "LM Studio",
+      "base_url": "http://localhost:1234/v1",
+      "key_env": "LMSTUDIO_API_KEY",
+      "model_env": "LMSTUDIO_MODEL",
+      "reference_model": null,
+      "requires_key": false,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "LMSTUDIO_PROFILE"
+    },
+    {
+      "id": "ollama",
+      "name": "Ollama",
+      "base_url": "http://localhost:11434/v1",
+      "key_env": "OLLAMA_API_KEY",
+      "model_env": "OLLAMA_MODEL",
+      "reference_model": null,
+      "requires_key": false,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "OLLAMA_PROFILE"
+    },
+    {
+      "id": "dragonmeta",
+      "name": "Dragonmeta",
+      "base_url": "http://127.0.0.1:8080/v1",
+      "key_env": "DRAGONMETA_API_KEY",
+      "model_env": "DRAGONMETA_MODEL",
+      "reference_model": "alpha",
+      "requires_key": false,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "DRAGONMETA_PROFILE"
+    },
+    {
+      "id": "gmicloud",
+      "name": "GMI Cloud",
+      "base_url": "https://api.gmi-serving.com/v1",
+      "key_env": "GMICLOUD_API_KEY",
+      "model_env": "GMICLOUD_MODEL",
+      "reference_model": "MiniMaxAI/MiniMax-M3",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "GMICLOUD_PROFILE"
+    },
+    {
+      "id": "chutes",
+      "name": "Chutes",
+      "base_url": "https://llm.chutes.ai/v1",
+      "key_env": "CHUTES_API_KEY",
+      "model_env": "CHUTES_MODEL",
+      "reference_model": null,
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "CHUTES_PROFILE"
+    },
+    {
+      "id": "zerog",
+      "name": "ZeroG",
+      "base_url": "https://router-api.0g.ai/v1",
+      "key_env": "ZEROG_API_KEY",
+      "model_env": "ZEROG_MODEL",
+      "reference_model": "qwen3.7-max",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "ZEROG_PROFILE"
+    },
+    {
+      "id": "cerebras",
+      "name": "Cerebras",
+      "base_url": "https://api.cerebras.ai/v1",
+      "key_env": "CEREBRAS_API_KEY",
+      "model_env": "CEREBRAS_MODEL",
+      "reference_model": "gpt-oss-120b",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "CEREBRAS_PROFILE"
+    },
+    {
+      "id": "alibaba-coding-plan",
+      "name": "Alibaba Cloud Coding Plan",
+      "base_url": "https://coding-intl.dashscope.aliyuncs.com/v1",
+      "key_env": "BAILIAN_CODING_PLAN_API_KEY",
+      "model_env": "ALIBABA_CODING_PLAN_MODEL",
+      "reference_model": "qwen3-coder-plus",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "ALIBABA_CODING_PLAN_PROFILE"
+    },
+    {
+      "id": "alphax-free",
+      "name": "Alphax Free",
+      "base_url": "https://api.kilo.ai/api/gateway",
+      "key_env": "ALPHAX_FREE_API_KEY",
+      "model_env": "ALPHAX_FREE_MODEL",
+      "reference_model": "kilo-auto/free",
+      "requires_key": false,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "ALPHAX_FREE_PROFILE"
+    },
+    {
+      "id": "nvidia-nim",
+      "name": "NVIDIA NIM",
+      "base_url": "https://integrate.api.nvidia.com/v1",
+      "key_env": "NVIDIA_API_KEY",
+      "model_env": "NVIDIA_NIM_MODEL",
+      "reference_model": "nvidia/llama-3.1-nemotron-ultra-253b-v1",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "NVIDIA_NIM_PROFILE"
+    },
+    {
+      "id": "xiaomi-mimo",
+      "name": "Xiaomi MiMo",
+      "base_url": "https://api.xiaomimimo.com/v1",
+      "key_env": "XIAOMI_MIMO_API_KEY",
+      "model_env": "XIAOMI_MIMO_MODEL",
+      "reference_model": "mimo-v2.5",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "XIAOMI_MIMO_PROFILE"
+    },
+    {
+      "id": "celeris",
+      "name": "Celeris",
+      "base_url": "https://inference.celeris.ai/celeris-1/v1",
+      "key_env": "CELERIS_API_KEY",
+      "model_env": "CELERIS_MODEL",
+      "reference_model": "celeris-1",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "CELERIS_PROFILE"
+    },
+    {
+      "id": "agentrouter",
+      "name": "AgentRouter",
+      "base_url": "https://agentrouter.org/v1",
+      "key_env": "AGENTROUTER_API_KEY",
+      "model_env": "AGENTROUTER_MODEL",
+      "reference_model": "gpt-5.5",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "AGENTROUTER_PROFILE"
+    },
+    {
+      "id": "tokenrouter",
+      "name": "TokenRouter",
+      "base_url": "https://api.tokenrouter.com/v1",
+      "key_env": "TOKENROUTER_API_KEY",
+      "model_env": "TOKENROUTER_MODEL",
+      "reference_model": "qwen/qwen3.8-max-free",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "TOKENROUTER_PROFILE"
+    },
+    {
+      "id": "codecraft",
+      "name": "CodeCraft API",
+      "base_url": "https://codecraftapi.com/v1",
+      "key_env": "CODECRAFT_API_KEY",
+      "model_env": "CODECRAFT_MODEL",
+      "reference_model": null,
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "CODECRAFT_PROFILE"
+    },
+    {
+      "id": "unikey",
+      "name": "UniKey",
+      "base_url": "https://www.getunikey.ai/v1",
+      "key_env": "UNIKEY_API_KEY",
+      "model_env": "UNIKEY_MODEL",
+      "reference_model": "gpt-5.2",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "UNIKEY_PROFILE"
+    },
+    {
+      "id": "openai-compatible",
+      "name": "OpenAI-compatible",
+      "base_url": "https://api.dmeta.me/v1",
+      "key_env": "OPENAI_COMPAT_API_KEY",
+      "model_env": "OPENAI_COMPATIBLE_MODEL",
+      "reference_model": "alpha",
+      "requires_key": false,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "OPENAI_COMPAT_PROFILE"
+    },
+    {
+      "id": "unorouter",
+      "name": "UnoRouter",
+      "base_url": "https://api.unorouter.com/v1",
+      "key_env": "UNOROUTER_API_KEY",
+      "model_env": "UNOROUTER_MODEL",
+      "reference_model": "gpt-oss-120b:free",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "UNOROUTER_PROFILE"
+    },
+    {
+      "id": "atria",
+      "name": "Atria Dawn",
+      "base_url": "https://api.atria-asi.ai/v1",
+      "key_env": "ATRIA_API_KEY",
+      "model_env": "ATRIA_MODEL",
+      "reference_model": "Atria-Dawn-Preview",
+      "requires_key": true,
+      "protocol": "openai_chat",
+      "status": "implemented",
+      "source_symbol": "ATRIA_PROFILE"
+    }
+  ],
+  "login_catalog": [
+    {
+      "id": "claude",
+      "name": "Anthropic/Claude",
+      "auth": "OAuth"
+    },
+    {
+      "id": "anthropic-api",
+      "name": "Anthropic API",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "auto-import",
+      "name": "Auto Import",
+      "auth": "Local"
+    },
+    {
+      "id": "alphacode",
+      "name": "Alphacode Subscription",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "auth": "OAuth"
+    },
+    {
+      "id": "openai-api",
+      "name": "OpenAI API",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "openrouter",
+      "name": "OpenRouter",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "bedrock",
+      "name": "AWS Bedrock",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "azure",
+      "name": "Azure OpenAI",
+      "auth": "Hybrid"
+    },
+    {
+      "id": "opencode",
+      "name": "OpenCode Zen",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "opencode-go",
+      "name": "OpenCode Go",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "zai",
+      "name": "Z.AI",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "kimi",
+      "name": "Kimi Code",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "gmicloud",
+      "name": "GMI Cloud",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "chutes",
+      "name": "Chutes",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "alphax-free",
+      "name": "Alphax Free",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "zerog",
+      "name": "ZeroG",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "cerebras",
+      "name": "Cerebras",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "alibaba-coding-plan",
+      "name": "Alibaba Cloud Coding Plan",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "302ai",
+      "name": "302.AI",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "baseten",
+      "name": "Baseten",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "cortecs",
+      "name": "Cortecs",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "tokenharbor",
+      "name": "Token Harbor",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "comtegra",
+      "name": "Comtegra GPU Cloud",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "fpt",
+      "name": "FPT AI Marketplace",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "firmware",
+      "name": "Firmware",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "huggingface",
+      "name": "Hugging Face",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "moonshotai",
+      "name": "Moonshot AI",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "nebius",
+      "name": "Nebius Token Factory",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "scaleway",
+      "name": "Scaleway",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "stackit",
+      "name": "STACKIT",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "groq",
+      "name": "Groq",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "mistral",
+      "name": "Mistral",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "perplexity",
+      "name": "Perplexity",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "togetherai",
+      "name": "Together AI",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "deepinfra",
+      "name": "Deep Infra",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "fireworks",
+      "name": "Fireworks",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "minimax",
+      "name": "MiniMax",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "xai",
+      "name": "xAI",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "nvidia-nim",
+      "name": "NVIDIA NIM",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "lmstudio",
+      "name": "LM Studio",
+      "auth": "Local"
+    },
+    {
+      "id": "ollama",
+      "name": "Ollama",
+      "auth": "Local"
+    },
+    {
+      "id": "dragonmeta",
+      "name": "Dragonmeta",
+      "auth": "Local"
+    },
+    {
+      "id": "tokenrouter",
+      "name": "TokenRouter",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "openai-compatible",
+      "name": "OpenAI-compatible",
+      "auth": "Hybrid"
+    },
+    {
+      "id": "unorouter",
+      "name": "UnoRouter",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "atria",
+      "name": "Atria Dawn",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "auth": "Hybrid"
+    },
+    {
+      "id": "copilot",
+      "name": "GitHub Copilot",
+      "auth": "DeviceCode"
+    },
+    {
+      "id": "gemini",
+      "name": "Google Gemini",
+      "auth": "OAuth"
+    },
+    {
+      "id": "gemini-api",
+      "name": "Gemini API",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "antigravity",
+      "name": "Antigravity",
+      "auth": "OAuth"
+    },
+    {
+      "id": "xiaomi-mimo",
+      "name": "Xiaomi MiMo",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "celeris",
+      "name": "Celeris",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "agentrouter",
+      "name": "AgentRouter",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "agentrouter-anthropic",
+      "name": "AgentRouter (Anthropic)",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "codecraft",
+      "name": "CodeCraft API",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "unikey",
+      "name": "UniKey",
+      "auth": "ApiKey"
+    },
+    {
+      "id": "google",
+      "name": "Google/Gmail",
+      "auth": "OAuth"
+    }
+  ]
+}
