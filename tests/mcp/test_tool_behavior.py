@@ -12,6 +12,7 @@ import json
 
 
 import mcp_server
+from tests._doubles import FAKE_TOOLS
 
 
 def test_subfinder_parses_subdomains():
@@ -107,5 +108,16 @@ def test_full_recon_pipeline():
 
 def test_check_tools_finds_all_fakes():
     res = json.loads(mcp_server.check_tools())
-    # All 16 simulated binaries should resolve on PATH.
-    assert res["available"] == res["total"], res["summary"]
+    # Optional real tools without an execution double need not be installed.
+    assert set(FAKE_TOOLS) <= set(res["tools"])
+    assert all(res["tools"][name]["available"] for name in FAKE_TOOLS)
+    assert res["available"] == sum(tool["available"] for tool in res["tools"].values())
+
+
+def test_check_tools_counts_missing_optional_tools(monkeypatch):
+    monkeypatch.setattr(mcp_server.shutil, "which", lambda name: f"/fixtures/{name}" if name in FAKE_TOOLS else None)
+    res = json.loads(mcp_server.check_tools())
+    assert res["available"] == len(FAKE_TOOLS)
+    assert res["total"] == len(res["tools"])
+    assert res["total"] > res["available"]
+    assert not res["tools"]["hashcat"]["available"]

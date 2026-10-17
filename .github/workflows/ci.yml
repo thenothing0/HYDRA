@@ -63,13 +63,13 @@ jobs:
           pytest tests/ --cov=hydra --cov=mcp_server --cov-report=term-missing
 
       - name: Enforce coverage on the production boundary
-        # The highest-risk surface is the live subprocess boundary. We gate it
-        # hard. (Whole-repo `hydra` coverage is reported above for visibility
-        # but not gated yet — 60 subsystems are still untested; ratchet later.)
+        # Gate the extracted live process boundary and recording at 85%.
+        # The growing MCP facade's advisory wrappers remain in the full report;
+        # its independent security/contract tests remain mandatory as well.
         run: |
           coverage report \
-            --include="mcp_server.py,hydra/observability/run_recorder.py" \
-            --fail-under=70
+            --include="hydra/mcp/process_boundary.py,hydra/observability/run_recorder.py" \
+            --fail-under=85
 
   lint:
     runs-on: ubuntu-latest
@@ -81,7 +81,7 @@ jobs:
       - run: pip install ruff
       # Enforcing on the surface the harness owns/touches (must stay clean):
       # the MCP boundary, the tests, and the Phase-2 knowledge-OS packages.
-      - run: ruff check mcp_server.py tests hydra/knowledge hydra/capabilities hydra/recon_fusion
+      - run: ruff check mcp_server.py tests hydra/knowledge hydra/capabilities hydra/recon_fusion hydra/mcp/process_boundary.py
       # Legacy package debt: reported, not gated (pre-existing; ratchet later).
       - run: ruff check hydra || true
 
@@ -117,7 +117,7 @@ jobs:
           pytest -q \
             tests/safety tests/hitl tests/engagement tests/mcp_registry \
             tests/test_authorization.py tests/test_scope.py \
-            tests/mcp/test_tool_contract.py
+            tests/mcp/test_tool_contract.py tests/mcp/test_process_boundary.py
 
   build:
     runs-on: ubuntu-latest

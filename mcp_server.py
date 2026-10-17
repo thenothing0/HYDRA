@@ -29,7 +29,7 @@ import json
 import os
 import re as _re
 import shutil
-import subprocess
+import subprocess as subprocess  # Compatibility hook for process adapters/tests.
 import sys
 import sqlite3
 import tempfile
@@ -38,6 +38,7 @@ from pathlib import Path
 from typing import List, Optional
 
 from mcp.server.fastmcp import FastMCP
+from hydra.mcp.process_boundary import execute_tool as _execute_tool
 
 # ──────────────────────────────────────────────
 #  Server Setup
@@ -232,67 +233,10 @@ def _finalize(binary: str, cmd: List[str], result: dict, elapsed: float = 0.0) -
 
 
 def _run(cmd: List[str], timeout: int = 120, stdin_data: Optional[str] = None) -> dict:
-    """Execute a real system tool via subprocess. No mocking. shell=False."""
-    binary = cmd[0]
-    path = shutil.which(binary)
-    if not path:
-        return _finalize(binary, cmd, {
-            "success": False,
-            "error": f"Tool '{binary}' not installed. Install it first.",
-            "output": "",
-        })
-
-    if USE_TOR and PROXYCHAINS_BIN:
-        cmd = [PROXYCHAINS_BIN, "-q"] + cmd
-
-    print(f"[HYDRA] {'[TOR] ' if USE_TOR else ''}Running: {' '.join(cmd)}", file=sys.stderr)
-    start = time.time()
-
-    try:
-        proc = subprocess.run(
-            cmd,
-            capture_output=True,
-            text=True,
-            timeout=timeout,
-            input=stdin_data,
-        )
-        elapsed = round(time.time() - start, 2)
-        stdout = proc.stdout
-        stderr = proc.stderr
-
-        # Truncate oversized output to prevent MCP protocol overload
-        truncated = False
-        if len(stdout) > MAX_OUTPUT_CHARS:
-            stdout = stdout[:MAX_OUTPUT_CHARS] + f"\n... [TRUNCATED — {len(proc.stdout)} total chars]"
-            truncated = True
-
-        return _finalize(binary, cmd, {
-            "success": proc.returncode == 0,
-            "output": stdout,
-            "stderr": stderr[:50000] if len(stderr) > 50000 else stderr,
-            "return_code": proc.returncode,
-            "elapsed_seconds": elapsed,
-            "truncated": truncated,
-        }, elapsed)
-    except subprocess.TimeoutExpired as e:
-        # Capture whatever the tool emitted before it was killed — crawlers
-        # (katana/gau/hakrawler) often produce useful partial output before timeout.
-        partial = e.stdout or ""
-        if isinstance(partial, bytes):
-            partial = partial.decode("utf-8", "replace")
-        truncated = False
-        if len(partial) > MAX_OUTPUT_CHARS:
-            partial = partial[:MAX_OUTPUT_CHARS] + f"\n... [TRUNCATED — partial output before {timeout}s timeout]"
-            truncated = True
-        note = f"Timeout after {timeout}s" + (" (partial output returned)" if partial else "")
-        return _finalize(binary, cmd,
-                         {"success": bool(partial), "error": note,
-                          "output": partial, "timed_out": True, "truncated": truncated},
-                         round(time.time() - start, 2))
-    except Exception as e:
-        return _finalize(binary, cmd,
-                         {"success": False, "error": str(e), "output": ""},
-                         round(time.time() - start, 2))
+    """Compatibility adapter: preserve the MCP facade's policy and telemetry hooks."""
+    return _execute_tool(cmd, timeout, stdin_data, finalize=_finalize,
+                         use_tor=USE_TOR, proxychains_bin=PROXYCHAINS_BIN,
+                         max_output_chars=MAX_OUTPUT_CHARS)
 
 
 # ══════════════════════════════════════════════
