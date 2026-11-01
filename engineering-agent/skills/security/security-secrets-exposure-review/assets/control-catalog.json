@@ -1,0 +1,16 @@
+{
+  "category": "A07",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "SECRETS_EXPOSURE-1",
+      "boundary": "Credentials and sensitive secret exposure — authoritative consumer",
+      "source_trace": "Establish secret type/owner, source/build/log location, intended audience, reachable recipient and rotation/revocation state using nonsecret metadata. Do not print or test real values against services.",
+      "controlled_verification": "Trace a supplied candidate through artifact distribution and consumer trust. Distinguish a public client identifier, test fixture and real credential using issuer/owner documentation or approved offline context. Record only redacted bytes/fingerprint and who can access the exposure.",
+      "false_positive_discriminator": "Entropy or a key-like prefix is a lead, not proof of a valid credential. A real secret in a properly protected owner vault is not unintended exposure; a stale credential may still require cleanup without current compromise claims.",
+      "remediation_acceptance": "Remove the exposure path and have the owner rotate/revoke according to the actual credential lifecycle; deleting a current file does not erase previous distributed artifacts. Retest with a synthetic marker and owner-confirmed lifecycle state."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

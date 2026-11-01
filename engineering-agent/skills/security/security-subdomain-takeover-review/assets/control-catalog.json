@@ -1,0 +1,16 @@
+{
+  "category": "A02",
+  "taxonomy_note": "Initial root-cause lens; reassess final mapping.",
+  "controls": [
+    {
+      "id": "SUBDOMAIN_TAKEOVER-1",
+      "boundary": "Dangling DNS and service ownership — authoritative consumer",
+      "source_trace": "Collect timestamped authoritative DNS, provider resource state and current provider binding/verification rules. Distinguish dangling DNS from an actually claimable resource.",
+      "controlled_verification": "Use passive evidence or an explicitly owned provider sandbox to test the ownership gate. Establish whether the external resource identifier can be allocated and bound by an unrelated account under current provider rules, without claiming a live third-party resource.",
+      "false_positive_discriminator": "A CNAME, provider error page or nonexistent resource is not enough. Provider domain verification or reserved resource identity may prevent takeover even when DNS is dangling.",
+      "remediation_acceptance": "Remove obsolete DNS or restore the correct owned resource/binding and verification. Retest authoritative records and intended service behavior; do not treat cached DNS as the sole repair result."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

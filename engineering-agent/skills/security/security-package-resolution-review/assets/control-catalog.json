@@ -1,0 +1,18 @@
+{
+  "category": "A03",
+  "domain": "supply-chain",
+  "native_context": "Dependency confusion and package-source selection",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "PACKAGE_RESOLUTION-1",
+      "boundary": "Dependency confusion and package-source selection — authoritative consumer",
+      "source_trace": "Read manifest/lockfile, index/source priorities, scopes, registry configuration and installer version. Inspect resolution without executing install hooks or publishing package names.",
+      "controlled_verification": "Use local registry metadata/fixture names or a supported resolution-only path to determine which source/version wins for one private dependency. Compare the intended private source and an untrusted candidate under the exact configured resolver; do not assume all managers rank sources identically.",
+      "false_positive_discriminator": "An unregistered public name is not proof of dependency confusion. A lockfile, source binding, private index policy or scoped package ownership may prevent the hypothesized resolution.",
+      "remediation_acceptance": "Bind packages to approved sources/ownership and preserve reproducibility/integrity. Retest intended updates and the exact ambiguous-source resolution without executing untrusted packages."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

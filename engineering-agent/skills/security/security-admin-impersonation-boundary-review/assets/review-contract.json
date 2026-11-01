@@ -1,0 +1,21 @@
+{
+  "name": "security-admin-impersonation-boundary-review",
+  "domain": "API and SaaS authority",
+  "intent": "Administrative impersonation scope and session authority",
+  "artifacts": "Impersonation initiation/exit, actor/subject claims, permitted actions and audit/session policies.",
+  "trace": "Trace which privileges come from the operator and which from the impersonated subject. Inspect escape/endpoints that accidentally retain administrative authority.",
+  "experiment": "Use owned operator and test subject accounts with synthetic resources; compare intended support actions and an explicitly forbidden administrative or subject action.",
+  "disproof": "An approved operator viewing a test account is expected; an audit label or UI banner is not the enforcement control.",
+  "repair": "Enforce explicit impersonation capabilities and lifecycle, then verify exit, revocation and audit attribution.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+  "adjacent": "security-api-bola-review; security-api-function-authorization-review; security-background-job-authorization-review",
+  "branch_decisions": "Establish whether actor and subject authorities intersect or an explicit support capability set applies. Inspect exit, nested impersonation and session refresh separately. Audit attribution helps accountability but is not the authorization gate; intended operator-only access is not a subject-originated escalation.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

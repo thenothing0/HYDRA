@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Cryptographic protocols and runtime consumers",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Ruby YAML loader mode, permitted classes and object construction trust",
+      "source_trace": "Follow lower-trust YAML through the actual loader configuration and determine whether arbitrary constructors or authority-bearing object state are accepted.",
+      "implementation_branch": "Resolve Psych/Ruby version, safe_load/unsafe_load/load behavior, permitted classes and aliases at the actual callsite. Do not assume every YAML loader constructs arbitrary objects or every permitted class is dangerous. Use a harmless custom fixture class only in an isolated harness, trace reachable callbacks, and avoid executing untrusted deserialization gadgets.",
+      "operational_method": "Retain loaded Psych gem version, actual method owner/implementation and safe_load/load/unsafe_load arguments, including permitted classes/aliases. Ruby version alone can be insufficient when the gem or wrapper differs. Trace the permitted class construction/callback and downstream use in source before selecting a harmless isolated fixture class. A generic YAML parse success or an old reference version does not demonstrate object execution in the installed loader.",
+      "controlled_verification": "Use an isolated fixture with primitive data and an inert custom class; compare allowed plain data and rejected unexpected object construction.",
+      "false_positive_discriminator": "YAML parsing itself is not unsafe object loading; a safe loader rejecting the test type disproves that specific path.",
+      "remediation_acceptance": "Use context-appropriate safe loading and explicit data validation, retesting valid aliases/types required by the feature."
+    }
+  ]
+}

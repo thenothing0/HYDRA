@@ -1,0 +1,21 @@
+{
+  "name": "security-mcp-client-registration-trust-review",
+  "domain": "AI applications and agent runtimes",
+  "intent": "MCP OAuth registration profiles and client-metadata-to-consent binding",
+  "artifacts": "MCP authorization metadata, client registration, redirect policy, user consent records and token issuer.",
+  "trace": "Trace a client identity/redirect through registration to granted resource authority, including reuse of client metadata across protected MCP resources.",
+  "experiment": "In the chosen registration profile, retain registered metadata and consent transaction for two owned clients. Compare legitimate creation/update with a changed redirect or metadata provenance and inspect the client identity receiving the resulting grant.",
+  "disproof": "Dynamic registration can be intentional; a client ID alone grants no user/resource permission.",
+  "repair": "Bind registration and consent to the intended client/resource and preserve legitimate compatible clients.",
+  "source": "https://modelcontextprotocol.io/specification/latest/basic/authorization",
+  "adjacent": "security-llm-prompt-injection-review; security-agent-tool-authorization-review; security-mcp-authorization-review",
+  "branch_decisions": "Distinguish registration metadata from user consent and from authorization-server identity. Dynamic registration can be a supported public-client flow. Pin the redirect/client relationship and broker transaction so an attacker client cannot reuse another client consent; a new valid client record by itself is not a successful impersonation or token disclosure.",
+  "operational_method": "Identify the actual registration profile first: pre-registered clients, dynamic registration or supported client-metadata documents are different trust paths. Retain client metadata provenance, redirect selection and the exact client identity displayed/recorded at consent. Compare a legitimate client update with an untrusted metadata/redirect change; open registration alone is expected under some profiles. Generic wrong-resource token validation remains the MCP authorization workflow.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "overlaps",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

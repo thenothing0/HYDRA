@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Compatibility planning lens only, not a normative cross-domain mapping. Final root-cause taxonomy may differ or remain unassigned.",
+  "native_context": "MASVS-PLATFORM; link association is separate from action authorization",
+  "domain": "mobile",
+  "controls": [
+    {
+      "id": "IOS_LINK_HANDLING-1",
+      "boundary": "iOS universal links, custom schemes and action binding — authoritative consumer",
+      "source_trace": "Read associated-domain entitlements, association file, universal/custom URL handlers and downstream account/action selection. Record actual signed build and OS behavior.",
+      "controlled_verification": "On an owned test device compare a valid link with one controlled parameter/account/action change. Observe the app's consumed destination and whether it commits a protected operation or links the wrong account. Keep browser/app transition and confirmation prerequisites visible.",
+      "false_positive_discriminator": "Registering a URL scheme or opening a page is not account takeover. A custom scheme can have weaker routing guarantees than universal links, but the protected consumer still determines impact.",
+      "remediation_acceptance": "Bind links to intended routing/account/action state and supported platform association checks. Retest legitimate links, the original parameter confusion and required confirmation behavior."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Identity and federation extensions",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "SAML metadata update provenance and effective signing-key trust",
+      "source_trace": "Determine who can replace an entity descriptor or endpoint and how new signing keys become trusted. Separate metadata authentication from assertion validation.",
+      "implementation_branch": "Metadata can be authenticated by an approved signed distribution or another deliberate pinned trust channel; unsigned is not universally unsafe. Bind entityID and rollover keys to that channel. Distinguish an administrator-approved new IdP from an attacker-controlled metadata source replacing an existing trusted entity.",
+      "operational_method": "For aggregated metadata, retain the exact signed descriptor scope and selected entityID entry, not merely a successful signature somewhere in the document. Verify the entity entry and rollover keys consumed by the SP derive from the authenticated scope/distribution policy. A locally altered unsigned sibling entry is a useful negative control; a trusted administrator intentionally approving a different IdP is privileged setup.",
+      "controlled_verification": "Use an owned IdP/SP fixture with a legitimate rollover and an unauthorized metadata source/entity substitution.",
+      "false_positive_discriminator": "An old certificate remaining during an approved rollover window is not automatically a trust bypass; record the actual acceptance policy.",
+      "remediation_acceptance": "Authenticate metadata updates and bind them to the intended entity, preserving controlled rollover and failure recovery."
+    }
+  ]
+}

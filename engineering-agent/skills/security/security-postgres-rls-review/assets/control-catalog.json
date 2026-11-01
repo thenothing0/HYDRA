@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "domain": "data",
+  "native_context": "PostgreSQL row-security policy and runtime-role isolation",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "POSTGRES_RLS-1",
+      "boundary": "PostgreSQL row-security policy and runtime-role isolation — authoritative consumer",
+      "source_trace": "Read table policies, USING/WITH CHECK, table ownership, bypass roles, security-definer functions and connection-pool tenant context. Identify the real application role.",
+      "controlled_verification": "In a disposable database run A/B synthetic row reads and writes as the actual-equivalent application role, then switch tenant context over a reused connection. Compare with an entitled role. Test both old-row visibility and proposed-row acceptance where the operation requires them.",
+      "false_positive_discriminator": "A superuser or table owner result may not represent the application role. Testing only SELECT does not establish INSERT/UPDATE confinement, and a source policy without effective role settings does not prove enforcement.",
+      "remediation_acceptance": "Apply policies to intended roles/actions and establish/reset trustworthy tenant context on pool reuse. Retest denied rows/writes, legitimate A/B operations and the original connection lifecycle."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

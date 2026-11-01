@@ -1,0 +1,21 @@
+{
+  "name": "security-http2-authority-routing-review",
+  "domain": "Browser and HTTP boundaries",
+  "intent": "Agreement between TLS identity, HTTP/2 authority and application tenant routing",
+  "artifacts": "Owned virtual-host configuration, SNI/authority handling, proxy normalization and tenant/resource authorization.",
+  "trace": "Trace connection identity and per-request authority through the reverse proxy to the final tenant selection. Identify the authoritative check rather than assuming shared infrastructure implies shared access.",
+  "experiment": "Use two owned virtual hosts and synthetic tenant responses on one isolated connection; compare intended authority and one permitted mismatch fixture.",
+  "disproof": "A different error page, shared certificate or 421 response does not demonstrate another tenant content or action.",
+  "repair": "Align authority handling and tenant checks, then verify correct routing, rejection and authorized connection reuse.",
+  "source": "https://www.rfc-editor.org/rfc/rfc9113",
+  "adjacent": "security-javascript-analysis-review; security-xss-review; security-request-smuggling-review",
+  "branch_decisions": "HTTP/2 connection coalescing can legitimately send a different authority over an existing TLS connection when its trust requirements hold. Do not require literal SNI equality universally. The defect is wrong application/tenant authority or an explicitly violated routing policy, not every multi-authority connection.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

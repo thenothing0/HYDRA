@@ -1,0 +1,16 @@
+{
+  "category": "A07",
+  "taxonomy_note": "Initial root-cause lens; reassess final mapping.",
+  "controls": [
+    {
+      "id": "OAUTH_OIDC-1",
+      "boundary": "OAuth/OIDC and account linking — authoritative consumer",
+      "source_trace": "Map authorization server, client, redirect URI, session correlation, code exchange, identity claims and account-linking decision. Record provider/library versions and public versus confidential client behavior.",
+      "controlled_verification": "Use two controlled identities and browser sessions to trace one complete login or link ceremony. Check whether the callback is bound to the initiating session, expected provider/client and intended account. For linking, compare the authenticated account receiving the link with the external subject actually proven by the exchange.",
+      "false_positive_discriminator": "A callback URL, client ID or provider login page is not a secret. Do not declare login CSRF or account takeover from a missing parameter name when the actual library provides equivalent supported binding.",
+      "remediation_acceptance": "Use the provider-supported flow and bind transaction, client, redirect and stable subject to the intended account. Retest legitimate login/linking, wrong-session/provider callback and the originally evidenced mismatch."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

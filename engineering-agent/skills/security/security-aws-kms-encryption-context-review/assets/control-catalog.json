@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "AWS service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "KMS decrypt/data-key authority across encryption contexts and services",
+      "source_trace": "Resolve effective KMS authority and whether trusted encryption context or ViaService constraints bind the intended tenant/workload. Treat encryption context as authenticated metadata, not secret data.",
+      "implementation_branch": "Encryption context is authenticated additional data, not encrypted secret storage. Follow the exact context supplied to KMS and conditions in both key and identity policies, including grants and service-mediated calls. A caller able to choose a tenant context must still be authorized to use that tenant; mere knowledge of the context is not entitlement.",
+      "operational_method": "Start from key type and exact API: encryption context applies to supported symmetric encryption operations, not every asymmetric or HMAC operation. Record the literal map sent to Encrypt/Decrypt and the condition/grant used. Distinguish EncryptionContextEquals from EncryptionContextSubset constraints and compare the caller-supplied tenant map with the policy-expected map. A local cryptographic context mismatch is not evidence that IAM separates tenants; inspect the grant/policy path independently.",
+      "controlled_verification": "Use an owned test key and synthetic ciphertext locally/in an authorized sandbox; compare rightful context and principal with a mismatched tenant context.",
+      "false_positive_discriminator": "The ability to invoke an SDK or read a key ARN is not decryption authority; cryptographic rejection alone does not test IAM separation.",
+      "remediation_acceptance": "Constrain principal/service/context authorization and verify legitimate decrypt plus cross-context denial."
+    }
+  ]
+}

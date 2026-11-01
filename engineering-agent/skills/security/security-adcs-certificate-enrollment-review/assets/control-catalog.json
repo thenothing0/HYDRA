@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Enterprise identity and privileged access",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "AD CS certificate template enrollment and identity authority",
+      "source_trace": "Determine which low-privilege principal can enroll or modify a template and what identity/purpose a resulting certificate would represent.",
+      "implementation_branch": "Evaluate template enrollment rights, subject/SAN control, issuance requirements, EKUs and CA policy together. A permissive-looking template alone does not establish a usable authentication certificate. Use exported configuration or an isolated lab to trace the exact claimed principal and relying service; do not enroll certificates impersonating real directory users.",
+      "operational_method": "Retain CA/DC build and patch level, template issuance/enrollment settings, certificate SID/strong mapping evidence and the actual relying authentication protocol. A SAN selected by a caller is not enough to decide accepted identity under current strong-mapping enforcement. Compare a deliberately mapped synthetic identity with a mapping-mismatched certificate in supplied traces or an isolated directory lab; certificate issuance, successful mapping and final service authorization are separate necessary edges. Do not request impersonation certificates for real principals.",
+      "controlled_verification": "Use an owned lab CA or configuration proof with synthetic identities; compare intended enrollment and an out-of-policy subject/purpose request.",
+      "false_positive_discriminator": "A risky-looking template flag alone does not establish effective enrollment or certificate-based authentication to a protected service.",
+      "remediation_acceptance": "Constrain enrollment/template authority and issuance identity, verifying intended certificate workflows and denied impersonation."
+    }
+  ]
+}

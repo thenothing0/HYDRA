@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "CI and package publication",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Cargo build scripts/proc macros and build-time authority",
+      "source_trace": "Trace lower-trust dependency/source selection into code executed during build, separating ordinary data dependencies from executable build hooks.",
+      "implementation_branch": "Build scripts and procedural macros execute on the build host even when the final target is a different architecture. Review registry/git/path source selection and lockfile revision with the build sandbox. A crate declaring a build script is not itself malicious; demonstrate an untrusted source gaining capabilities outside the declared build trust policy.",
+      "operational_method": "",
+      "controlled_verification": "Inspect inert owned fixtures or run only a reviewed local stub that writes a harmless marker under bounded permissions.",
+      "false_positive_discriminator": "A dependency capable of build-time code execution is not an exploit when it is intentionally trusted and correctly sourced.",
+      "remediation_acceptance": "Constrain sources and build authority, verify provenance and preserve legitimate build-script functionality."
+    }
+  ]
+}

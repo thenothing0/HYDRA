@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Identity and federation extensions",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Device Authorization Grant account/device transaction binding",
+      "source_trace": "Separate the device transaction, user confirmation and polling client. Determine which account and audience the final token represents, including user-visible confirmation.",
+      "implementation_branch": "Distinguish device_code, human user_code and the polling client; they have different audiences. A user confirmation must be tied to the intended device transaction, but cross-device confirmation is normal. Use expiry/polling errors as protocol observations, not evidence of account authentication unless a token is actually issued.",
+      "operational_method": "Identify issuer, client_id, device_code and the approved user transaction in the polling state. Public clients are identified differently from confidential clients that authenticate. Separate authorization_pending, access_denied and expired_token states from successful token issuance; a user_code displayed on another device is normal. Compare rightful polling with a client/transaction mismatch in an owned issuer fixture, without asking a real user to approve an attacker transaction.",
+      "controlled_verification": "In an owned issuer fixture confirm one device transaction, then compare another client/device transaction and expired/reused codes without guessing user codes.",
+      "false_positive_discriminator": "A deliberately portable user code is not a flaw by itself; no token issuance or wrong-account binding means the strong claim is unproved.",
+      "remediation_acceptance": "Bind the approved transaction, client and account; retest legitimate pairing, expiry and unauthorized transaction substitution."
+    }
+  ]
+}

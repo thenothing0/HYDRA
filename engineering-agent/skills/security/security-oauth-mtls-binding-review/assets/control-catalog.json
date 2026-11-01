@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Identity and federation extensions",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Certificate-bound OAuth tokens across TLS termination",
+      "source_trace": "Follow the verified peer certificate through termination into the token check. Separate a request-supplied certificate header from authenticated proxy metadata.",
+      "implementation_branch": "If TLS terminates at a proxy, establish how verified certificate identity reaches the resource and who can set equivalent headers. Compare the token certificate thumbprint with that verified identity. Distinguish rejected TLS handshake from application rejection of an otherwise authenticated wrong certificate.",
+      "operational_method": "",
+      "controlled_verification": "In an owned TLS fixture compare the bound client certificate with a second owned certificate and a synthetic forwarded-header substitution.",
+      "false_positive_discriminator": "A certificate field in a token or header is not proof of enforced sender constraint; a handshake failure before the resource is a different control.",
+      "remediation_acceptance": "Bind the resource check to verified peer identity and trusted forwarding, preserving legitimate proxy deployments."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-android-components-review",
+  "cases": [
+    {
+      "id": "supported-boundary-violation",
+      "input_requirements": "Include release manifest/build identity, OS/API, caller UID/permission model, component and operation, sanitized intent/URI input, expected caller policy and synthetic effect with a permitted control.",
+      "decision": "Confirm only when intended policy, lower-trust reachability and actual protected effect are all supported; keep simulation/source proof labeled."
+    },
+    {
+      "id": "legitimate-or-insufficient-observation",
+      "observation": "An exported component can be an intended public entry point. Opening a screen is insufficient when the sensitive operation still enforces identity and permissions.",
+      "decision": "Do not confirm from the stated observation alone. Obtain the missing boundary/effect evidence or explain the permitted behavior."
+    },
+    {
+      "id": "missing-runtime-or-authority",
+      "observation": "Source/configuration suggests this path, but a required identity, policy layer or runtime observation is unavailable.",
+      "decision": "Record a source-supported concern or hypothesis with the missing decisive check. Do not invent verification, credentials or impact."
+    },
+    {
+      "id": "remediation-regression",
+      "input_requirements": "Reduce unintended exposure or enforce the appropriate caller permission and operation-level checks. Retest the legitimate inter-app flow, denied caller and delegated capability lifecycle on the release-equivalent build.",
+      "decision": "Close only after the original prohibited behavior is prevented and the legitimate control still works on the changed build/configuration."
+    }
+  ]
+}

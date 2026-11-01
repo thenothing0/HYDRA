@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-entra-app-consent-review",
+  "cases": [
+    {
+      "id": "token-type-confusion",
+      "scenario": "A resource API accepts an app-only fixture as if it carried the required delegated user authority.",
+      "expected_decision": "Confirm the contract and actual protected operation; separate handler simulation from real token validation."
+    },
+    {
+      "id": "requested-not-granted",
+      "scenario": "A registration requests a permission, but it is not consented/granted and the API denies use.",
+      "expected_decision": "Do not report the request itself as obtained resource authority."
+    },
+    {
+      "id": "foreign-admin",
+      "scenario": "A test uses an administrator who deliberately consented broad access in their own tenant.",
+      "expected_decision": "Do not infer another tenant was compromised without a separate trust-boundary failure."
+    }
+  ]
+}

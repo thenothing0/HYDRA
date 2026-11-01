@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-background-job-authorization-review",
+  "cases": [
+    {
+      "id": "tenant-selected-in-task",
+      "scenario": "An authenticated tenant A user enqueues a task naming tenant B and the stub worker changes B's protected record.",
+      "expected_decision": "Confirm the authority break only with producer reachability, policy and persisted stub effect."
+    },
+    {
+      "id": "authorized-delayed-job",
+      "scenario": "A job explicitly authorized at enqueue completes under its documented contract after the UI session ends.",
+      "expected_decision": "Do not infer a revocation defect from session expiry alone."
+    },
+    {
+      "id": "status-id-only",
+      "scenario": "A job ID is enumerable but both status and result enforce the rightful owner.",
+      "expected_decision": "Do not report cross-tenant job data exposure without a protected disclosure or action."
+    }
+  ]
+}

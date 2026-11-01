@@ -1,0 +1,21 @@
+{
+  "name": "security-service-mesh-peer-authorization-review",
+  "domain": "Kubernetes and deployment controllers",
+  "intent": "Service-mesh mTLS peer identity and per-operation authorization",
+  "artifacts": "Peer/authentication and authorization policies, sidecar/gateway paths, service accounts and plaintext exceptions.",
+  "trace": "Follow verified workload identity into destination operation policy. mTLS transport authenticity does not alone authorize every service to invoke every method.",
+  "experiment": "Use an owned mesh fixture with two workloads and synthetic endpoints; compare allowed peer/action with another peer or bypass path.",
+  "disproof": "An encrypted connection is not authorization proof; a connectivity failure before the proxy does not test the operation rule.",
+  "repair": "Enforce peer/action policy across sidecar/gateway paths and retest intended traffic and denied peers.",
+  "source": "https://istio.io/latest/docs/concepts/security/",
+  "adjacent": "security-kubernetes-rbac-review; security-kubernetes-workload-isolation-review; security-kubernetes-network-policy-review",
+  "branch_decisions": "mTLS authenticates a workload peer; it does not automatically authorize every HTTP route or tenant. Check whether plaintext bypass ports, excluded traffic or unenrolled workloads avoid the policy enforcement point. A legitimate authenticated service reaching an intentionally shared endpoint is expected; compare the same operation under a forbidden workload identity.",
+  "operational_method": "For Istio, evaluate applicable root/namespace/workload policy composition: DENY is considered before ALLOW, and the absence of an applicable ALLOW policy differs from an applicable ALLOW set whose rules do not match. Include other configured action modes and enforcement ports before concluding the request is permitted. Compare one authenticated allowed workload and one forbidden peer on the same operation; mTLS peer identity is only the input to this policy decision.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

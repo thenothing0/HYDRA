@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "domain": "privacy",
+  "native_context": "Deletion-state propagation and residual application access",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "DELETED_DATA_ACCESS-1",
+      "boundary": "Deletion-state propagation and residual application access — authoritative consumer",
+      "source_trace": "Read the product's deletion/access promise and trace records through APIs, exports, caches, retained copies and tenant/account entitlement. Separate logical deletion from physical erasure claims.",
+      "controlled_verification": "Create a private synthetic marker, delete it through the intended flow and compare normal reads plus one evidenced alternate consumer after the documented propagation window. Use the same prohibited/entitled identity context and inspect whether retained copies remain accessible contrary to policy.",
+      "false_positive_discriminator": "Backups or legally retained records existing are not by themselves an access violation. A soft-delete flag without a retrieval path does not prove continued disclosure, and this review does not determine legal retention duties.",
+      "remediation_acceptance": "Apply the declared access/deletion contract across the affected consumers and propagation lifecycle. Retest the original accessible copy, legitimate retained/admin behavior and normal deletion."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

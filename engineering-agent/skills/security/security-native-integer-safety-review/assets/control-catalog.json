@@ -1,0 +1,17 @@
+{
+  "category": "A06",
+  "native_context": "Native integer conversion and size arithmetic",
+  "taxonomy_note": "Planning lens only; actual root-cause mapping is independent.",
+  "controls": [
+    {
+      "id": "SECURITY_NATIVE_INTEGER_SAFETY_REVIEW-1",
+      "boundary": "Native integer conversion and size arithmetic — authoritative consumer",
+      "source_trace": "Track each attacker-influenced count/length across signedness, width conversions, arithmetic, allocation and copy/iteration. Record ABI and actual operand/result types.",
+      "controlled_verification": "Using an isolated local harness, choose a small boundary case that demonstrates disagreement between validated size and used size without allocating huge memory. Record intermediate typed values and any sanitizer result. Distinguish defined unsigned wrap from signed overflow and conversion issues.",
+      "false_positive_discriminator": "A mathematical overflow prediction using the wrong promoted type is not proof. The default undefined-behavior sanitizer set does not cover every unsigned/conversion issue; a clean run is not universal validation.",
+      "remediation_acceptance": "Use checked arithmetic and validate before narrowing/allocation/use under the intended type contract. Retest maximum legitimate sizes, rejection boundary and original allocation/copy agreement."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

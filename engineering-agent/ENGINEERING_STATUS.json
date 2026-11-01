@@ -32,7 +32,10 @@
     "Independent per-run governor for tool calls, context characters, observed tokens and failure budgets",
     "Run-correlated durable events, explicit stop reasons and validated evidence-linked handoff exports",
     "Opt-in official Hacker API reporting with account/workspace/program/asset-bound expiring authorization",
-    "Five operator-owned verifier commands, reviewed-policy hashes, scoped URL checks, hashed redacted evidence and durable duplicate/unknown-write prevention"
+    "Five operator-owned verifier commands, reviewed-policy hashes, scoped URL checks, hashed redacted evidence and durable duplicate/unknown-write prevention",
+    "300 bundled authored security/OWASP skills with 2069 original resources and package/resource hashes",
+    "Progressive skill search/selection/resource reading, bounded prompt hints, durable package-pinned selection and approved Python/Node helper execution",
+    "Terminal /skills and /skill commands plus CLI skills discovery/show/run and --skill launch selection"
   ],
   "verification": {
     "suite": "output/architecture-tests.xml",
@@ -81,6 +84,25 @@
       },
       "live_account_verified": false,
       "live_submission_verified": false
+    },
+    "skills": {
+      "date": "2026-11-01",
+      "packages": 300,
+      "resources": 2069,
+      "frontmatter_validated": 300,
+      "relative_resource_links_checked": 1939,
+      "missing_relative_resource_links": 0,
+      "all_bundled_resource_hashes_checked": true,
+      "test_contract": "tests/test_engineering_skills.py and terminal tests; deterministic model, real subprocess helpers and offline CLI",
+      "local_engineering_suite": {
+        "tests": 799,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 11,
+        "passed": 788
+      },
+      "live_model_skill_quality_verified": false,
+      "git_checkout_hashes_verified": true
     }
   },
   "remaining": [

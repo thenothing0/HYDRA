@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Data publication and privacy boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Secret redaction at actual error/telemetry serialization boundaries",
+      "source_trace": "Follow a synthetic sensitive value through nested errors, URLs, headers and serializer fallbacks into the transmitted/retained event.",
+      "implementation_branch": "Find the actual serialization boundary for exception chains, structured attributes, attachments and fallback loggers. A redacted top-level message can coexist with a raw cause or breadcrumb. Use synthetic canaries with secret-like structure, confirm collector/export output and retain only the minimum redacted evidence; do not treat a regex match as proof of a real credential.",
+      "operational_method": "",
+      "controlled_verification": "Use local telemetry stubs with synthetic fixtures in distinct field encodings; compare redacted expected fields and one nested/fallback path.",
+      "false_positive_discriminator": "A redaction function existing in source is not proof it handles the emitted shape; an unrelated private tester log is not a target disclosure.",
+      "remediation_acceptance": "Redact before transmission with structured field policy and verify normal debugging fields remain useful."
+    }
+  ]
+}

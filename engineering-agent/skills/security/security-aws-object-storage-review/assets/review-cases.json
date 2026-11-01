@@ -1,0 +1,27 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-aws-object-storage-review",
+  "cases": [
+    {
+      "id": "supported-boundary-violation",
+      "input_requirements": "Include owner/scope evidence, synthetic key, intended audience/action, effective policy/config snapshots, access method and credentials state, redacted request/result and cleanup where relevant.",
+      "decision": "Confirm only when intended policy, lower-trust reachability and actual protected effect are all supported; keep simulation/source proof labeled."
+    },
+    {
+      "id": "legitimate-or-insufficient-observation",
+      "observation": "Disabled block-public-access settings, bucket existence, public marketing assets or an owner-issued signed link alone do not establish private-data exposure or write access.",
+      "decision": "Do not confirm from the stated observation alone. Obtain the missing boundary/effect evidence or explain the permitted behavior."
+    },
+    {
+      "id": "missing-runtime-or-authority",
+      "observation": "Source/configuration suggests this path, but a required identity, policy layer or runtime observation is unavailable.",
+      "decision": "Record a source-supported concern or hypothesis with the missing decisive check. Do not invent verification, credentials or impact."
+    },
+    {
+      "id": "remediation-regression",
+      "input_requirements": "Repair the effective access boundary while preserving intentional public assets and approved signed access. Retest the same object/action/actor tuple, required delivery path and denied writes with cleanup evidence.",
+      "decision": "Close only after the original prohibited behavior is prevented and the legitimate control still works on the changed build/configuration."
+    }
+  ]
+}

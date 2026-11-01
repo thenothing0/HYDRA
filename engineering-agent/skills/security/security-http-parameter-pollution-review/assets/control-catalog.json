@@ -1,0 +1,18 @@
+{
+  "category": "A05",
+  "domain": "web",
+  "native_context": "HTTP duplicate-parameter and parser agreement",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "HTTP_PARAMETER_POLLUTION-1",
+      "boundary": "HTTP duplicate-parameter and parser agreement — authoritative consumer",
+      "source_trace": "Identify the raw parameter encoding and each proxy/framework/validator/consumer parser. Record whether duplicate keys are first, last, list or rejected at each relevant layer.",
+      "controlled_verification": "In an owned fixture send one normal parameter, then one duplicate-key case derived from the parser chain. Capture both the value authorized/validated and the value consumed by the protected operation. Keep framing and unrelated parameters fixed.",
+      "false_positive_discriminator": "Duplicate acceptance is not a vulnerability when every layer agrees or the field is intentionally multi-valued. A different echoed value alone is not a violated authorization/business rule.",
+      "remediation_acceptance": "Define one supported multiplicity/normalization contract and enforce the same interpreted value at validation and use. Retest normal single and intended multi-value inputs plus the original disagreement."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

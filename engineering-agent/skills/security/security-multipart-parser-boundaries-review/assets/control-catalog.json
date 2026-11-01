@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Browser and HTTP boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Disagreement between multipart validation and the final part consumer",
+      "source_trace": "Trace the same part through validation, binding and storage/use. Determine whether duplicate parts, encoding or nested multipart changes the value used after approval.",
+      "implementation_branch": "Record first/last/list selection separately for scalar fields and files. Filename and filename* normalization may diverge from ordinary field selection. Only the value used by the protected consumer matters; a harmless duplicate ignored by both validator and consumer does not establish a bypass.",
+      "operational_method": "Preserve the raw bounded multipart body and each layer part inventory: part name/order, disposition, filename parameters, decoded value and file/field classification. Compare inventories with the value eventually authorized and consumed. Include a malformed-boundary rejection control; an echo of one selected value cannot prove all layers saw the same parts or that an alternate file part reached the protected processor.",
+      "controlled_verification": "In an owned fixture compare one valid part with a single deliberately ambiguous benign pair and observe which marker each layer uses.",
+      "false_positive_discriminator": "A duplicate accepted by all layers with the same interpretation is not a bypass; an unused parsed part has no demonstrated consumer.",
+      "remediation_acceptance": "Use one canonical parser/selection rule and verify validator and consumer receive the same approved value."
+    }
+  ]
+}

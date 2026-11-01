@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "API and SaaS authority",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Pagination cursor binding across account, tenant and filters",
+      "source_trace": "Follow the continuation token into the resumed query. Check whether it preserves or overrides tenant, sort/filter and current entitlement rather than trusting issuance context forever.",
+      "implementation_branch": "Check whether the cursor carries authority or only a position; a signed position can still be safely re-authorized. Keep initial and resumed query filters visible. Sort-key changes, deleted rows and expiry can change a page without implying cross-tenant access; require an attributed unauthorized synthetic record.",
+      "operational_method": "",
+      "controlled_verification": "Compare a legitimate next page with the same cursor under another owned actor or changed filter; inspect returned synthetic objects.",
+      "false_positive_discriminator": "An opaque or unsigned cursor is not a flaw if the resumed query re-enforces policy; an empty page proves no data access.",
+      "remediation_acceptance": "Bind or revalidate cursor context and current authorization, preserving normal pagination and stable results."
+    }
+  ]
+}

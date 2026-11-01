@@ -1,0 +1,21 @@
+{
+  "name": "security-warehouse-export-publication-review",
+  "domain": "Data publication and privacy boundaries",
+  "intent": "Warehouse query/export identity and destination publication authority",
+  "artifacts": "Query principal, row/column policies, export job configuration, destination credentials and artifact audience.",
+  "trace": "Follow the requester approved dataset/projection into an asynchronous export and the final readable destination, including user-selected storage paths.",
+  "experiment": "Use owned synthetic tables and export destinations; compare rightful export with a restricted field, tenant or destination selection.",
+  "disproof": "Permission to run a public aggregate is not permission to export private rows; job acceptance alone does not show leaked bytes.",
+  "repair": "Constrain data projection and destination authority, preserving intended export and denied unauthorized publication.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/User_Privacy_Protection_Cheat_Sheet.html",
+  "adjacent": "security-api-sensitive-fields-review; security-deleted-data-access-review; security-document-processing-review",
+  "branch_decisions": "Separate query permission, export/job identity and destination reader rights. A service account can legitimately write an export where its caller cannot directly write, provided destination selection and result entitlement are constrained. Verify one owned synthetic result and exact destination ACL; a completed query job does not establish public delivery.",
+  "operational_method": "Select one actual warehouse export engine and retain query principal, row/column policy evaluation, job/service identity, export destination and final reader ACL. Trace whether projection and tenant filters apply before the service writes the artifact, and whether caller-controlled destinations widen its audience. A generic storage-writing worker stub cannot establish a warehouse-specific policy bypass. Compare an owned restricted projection with a permitted export and inspect delivered bytes, not just job success.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

@@ -1,0 +1,21 @@
+{
+  "name": "security-search-index-entitlements-review",
+  "domain": "Data publication and privacy boundaries",
+  "intent": "Search index/query authorization and stale document entitlements",
+  "artifacts": "Ingestion identity/ACL fields, query filter construction, snippets/highlights and delete/revocation propagation.",
+  "trace": "Trace original document authority through index metadata into every returned hit/snippet/facet. Check whether caller-writable filters or stale ACLs substitute for current permission.",
+  "experiment": "Use two owned synthetic documents and users; compare permitted search with a restricted document marker before/after entitlement removal.",
+  "disproof": "A public title or aggregate count is not necessarily private content; establish the declared confidentiality of the observed signal.",
+  "repair": "Bind index/query output to current entitlement and verify snippets, exports, facets and deletion paths relevant to the finding.",
+  "source": "https://www.elastic.co/docs/deploy-manage/users-roles/cluster-or-deployment-auth/controlling-access-at-document-field-level",
+  "adjacent": "security-api-sensitive-fields-review; security-deleted-data-access-review; security-document-processing-review",
+  "branch_decisions": "Map source object permissions into indexed fields, query filters and post-fetch checks, including snippets, facets and suggestions. A stale index entry is not necessarily readable if a final entitlement check rejects it. Use a synthetic permission change and record the effective propagation contract; classify count/snippet leakage separately from full content disclosure.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

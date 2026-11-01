@@ -1,0 +1,21 @@
+{
+  "name": "security-analytics-sensitive-context-review",
+  "domain": "Data publication and privacy boundaries",
+  "intent": "Sensitive context entering analytics event properties and destinations",
+  "artifacts": "Legitimate sensitive-value source, event builders, URL/referrer capture, vendor routing and consent/data-classification policy.",
+  "trace": "Trace an actual application-issued sensitive value into an event payload and intended recipient. Separate synthetic arbitrary query forwarding from proof of sensitive production context.",
+  "experiment": "Use an owned test flow with a synthetic value issued by the real fixture consumer and an inert equal-shape control; inspect only tester data.",
+  "disproof": "A parameter named token or phone is not proof of valid credentials/PII; a random marker on an error page establishes generic forwarding only.",
+  "repair": "Remove or transform protected fields before dispatch and verify legitimate event usefulness and no sensitive value across relevant formats.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/User_Privacy_Protection_Cheat_Sheet.html",
+  "adjacent": "security-api-sensitive-fields-review; security-deleted-data-access-review; security-document-processing-review",
+  "branch_decisions": "Trace source fields through event construction, SDK hooks, batching and final destination payload. A public client identifier is distinct from a login/access token or private phone field. A synthetic value queued in memory is not yet external disclosure; establish transmission and destination role without testing credentials or sending real user data to an ad endpoint.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

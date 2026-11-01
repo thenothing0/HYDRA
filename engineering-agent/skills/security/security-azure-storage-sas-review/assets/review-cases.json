@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-azure-storage-sas-review",
+  "cases": [
+    {
+      "id": "overbroad-issuer",
+      "scenario": "An application user authorized for one fixture blob receives a container write capability outside the promised scope.",
+      "expected_decision": "Confirm the issuer entitlement and resulting extra signed operation."
+    },
+    {
+      "id": "intended-bearer",
+      "scenario": "A rightful recipient uses an intentionally shareable read-only short-lived capability for the permitted blob.",
+      "expected_decision": "Do not label the expected bearer model an authentication bypass."
+    },
+    {
+      "id": "wrong-revocation-model",
+      "scenario": "A proposed fix assumes a stored access policy can revoke every SAS type.",
+      "expected_decision": "Correct the SAS-type assumption and verify the actual supported mechanism before claiming closure."
+    }
+  ]
+}

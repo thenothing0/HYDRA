@@ -1,0 +1,21 @@
+{
+  "name": "security-flux-source-delegation-review",
+  "domain": "Kubernetes and deployment controllers",
+  "intent": "Flux source reconciliation and impersonated deployment identity",
+  "artifacts": "Source/Kustomization/HelmRelease resources, cross-namespace references, serviceAccountName and controller flags.",
+  "trace": "Trace who can reference or alter a source and which identity applies its rendered resources. Distinguish controller identity from per-reconciliation impersonation.",
+  "experiment": "Use an isolated fixture with two owned namespaces and inert manifests; compare intended source/account with a forbidden cross-namespace reference.",
+  "disproof": "A source download alone is not privileged application; record the actual apply authority and admitted objects.",
+  "repair": "Bind source references and reconciliation identities to tenants, preserving valid dependency and rollout behavior.",
+  "source": "https://fluxcd.io/flux/security/best-practices/",
+  "adjacent": "security-kubernetes-rbac-review; security-kubernetes-workload-isolation-review; security-kubernetes-network-policy-review",
+  "branch_decisions": "Trace source artifact revision/digest into the Kustomization or HelmRelease and its effective serviceAccountName/controller identity. Source read access does not equal deployment edit authority. A namespace boundary can be crossed through allowed references only if the actual controller configuration and impersonated identity permit it; inspect cross-namespace-reference policy explicitly.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

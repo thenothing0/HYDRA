@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Databases and messaging",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "etcd client authentication and key-prefix authorization",
+      "source_trace": "Follow verified client identity into effective key-prefix operations and distinguish server transport trust from enabled application authorization.",
+      "implementation_branch": "Confirm authentication is enabled and which certificate or token maps to the effective user and roles. Prefix range permissions depend on the actual byte interval, not a human-readable prefix label. A TLS connection is not an authorization check; use tiny owned keys and inspect both point and range operations without dumping the keyspace.",
+      "operational_method": "",
+      "controlled_verification": "Use an isolated etcd fixture with synthetic prefixes and two owned clients; compare rightful read/write and a restricted prefix operation.",
+      "false_positive_discriminator": "TLS connection success is not key authorization, and endpoint metadata is not confidential key-value exposure.",
+      "remediation_acceptance": "Bind client identities and prefix grants consistently across enabled interfaces and verify intended operations."
+    }
+  ]
+}

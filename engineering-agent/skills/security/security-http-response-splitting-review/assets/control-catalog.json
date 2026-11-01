@@ -1,0 +1,18 @@
+{
+  "category": "A05",
+  "domain": "web",
+  "native_context": "HTTP response header structure and CRLF handling",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "HTTP_RESPONSE_SPLITTING-1",
+      "boundary": "HTTP response header structure and CRLF handling — authoritative consumer",
+      "source_trace": "Trace untrusted input to the response-header API and actual serialized HTTP version/server stack. Separate header value validation from log or body rendering.",
+      "controlled_verification": "Use an isolated local client/server with an inert marker. Inspect raw serialization for the exact suspected line-boundary input and compare a normal header value. Determine whether extra headers/messages are actually emitted, rejected or encoded by the framework.",
+      "false_positive_discriminator": "Control characters in application logs are not wire-level response splitting. A client display artifact or an HTTP/1 hypothesis does not establish behavior over a different protocol stack.",
+      "remediation_acceptance": "Use supported header APIs and reject prohibited characters at the serialization boundary. Retest legitimate values and the original serialized anomaly on the affected stack."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

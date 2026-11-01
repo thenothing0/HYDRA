@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Databases and messaging",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Neo4j procedure/function execution and graph privilege delegation",
+      "source_trace": "Trace caller-controlled parameters through a permitted procedure into graph, file, network or process capabilities beyond the caller role.",
+      "implementation_branch": "Resolve database/graph privileges alongside EXECUTE PROCEDURE/FUNCTION, boosted execution and procedure allowlist/unrestricted settings. A procedure name alone does not establish filesystem/network capability. Inspect its implementation and the effective caller role; compare an intentionally allowed read-only procedure with the restricted operation in an isolated graph fixture.",
+      "operational_method": "Retain the procedure signature/mode, installed implementation and effective grants. Ordinary EXECUTE permits invocation under applicable caller privileges; EXECUTE BOOSTED governs elevation and does not itself permit invocation. Elevated execution needs both grants for that procedure, subject to the deployed deny/mode rules. Separately, unrestricted registration is a configuration/implementation trust decision, not the user invocation grant. Compare invocation denied, ordinary execution and authorized boosted execution on an owned graph/trace; a procedure name or loading flag alone proves no file/network capability.",
+      "controlled_verification": "Use an isolated synthetic graph and reviewed inert procedure; compare ordinary graph access with a forbidden delegated operation.",
+      "false_positive_discriminator": "Procedure installation or an allowlist entry is not an exploit without caller reachability and a protected consumer.",
+      "remediation_acceptance": "Constrain procedure implementation and execution privileges, verifying legitimate graph functionality and rejected delegation."
+    }
+  ]
+}

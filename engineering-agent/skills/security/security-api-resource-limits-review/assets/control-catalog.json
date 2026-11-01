@@ -1,0 +1,16 @@
+{
+  "category": "A06",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "API_RESOURCE_LIMITS-1",
+      "boundary": "API resource consumption and abuse limits — authoritative consumer",
+      "source_trace": "Map per-operation cost, admission point, quota identity, pagination/batching and downstream fan-out. Record the product's resource/tenant fairness contract.",
+      "controlled_verification": "Use source cost analysis and a strictly bounded local fixture to compare a normal request with one high-amplification shape justified by the implementation. Measure admitted work/counter changes at small sizes; evaluate whether quota keys can be caller-selected or fail across tenant/session boundaries.",
+      "false_positive_discriminator": "An unauthenticated or unlimited-looking endpoint is not automatically a denial-of-service vulnerability. Missing rate-limit headers do not establish absent enforcement or unacceptable cost.",
+      "remediation_acceptance": "Apply cost admission and trustworthy quota identity before expensive work, with appropriate response limits/cancellation. Retest normal workloads, original amplification and rejected-work accounting."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

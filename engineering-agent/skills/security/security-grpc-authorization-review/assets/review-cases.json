@@ -1,0 +1,27 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-grpc-authorization-review",
+  "cases": [
+    {
+      "id": "supported-boundary-violation",
+      "input_requirements": "Provide service/method/version, interceptor and gateway coverage, verified actor metadata path, synthetic object/message sequence, resulting state/data and permitted-call control.",
+      "decision": "Confirm only when intended policy, lower-trust reachability and actual protected effect are all supported; keep simulation/source proof labeled."
+    },
+    {
+      "id": "legitimate-or-insufficient-observation",
+      "observation": "Enabled reflection, a discoverable method or a successful TLS handshake is not an authorization bypass. An UNAUTHENTICATED/PERMISSION_DENIED label alone does not prove that no protected effect occurred.",
+      "decision": "Do not confirm from the stated observation alone. Obtain the missing boundary/effect evidence or explain the permitted behavior."
+    },
+    {
+      "id": "missing-runtime-or-authority",
+      "observation": "Source/configuration suggests this path, but a required identity, policy layer or runtime observation is unavailable.",
+      "decision": "Record a source-supported concern or hypothesis with the missing decisive check. Do not invent verification, credentials or impact."
+    },
+    {
+      "id": "remediation-regression",
+      "input_requirements": "Apply complete method/handler coverage and enforce the required object/stream lifecycle policy. Retest valid unary/stream traffic, denied actor/object, changed session state and gateway/direct equivalents where both are in scope.",
+      "decision": "Close only after the original prohibited behavior is prevented and the legitimate control still works on the changed build/configuration."
+    }
+  ]
+}

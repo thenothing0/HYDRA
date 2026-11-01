@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Azure service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Azure Blob container/object publication and private access paths",
+      "source_trace": "Separate intended public blob retrieval from container listing, writes and private data delivery. Evaluate SAS and identity-based access as distinct authority paths.",
+      "implementation_branch": "Resolve account-level public-access restrictions and container-level settings alongside any CDN/static-website path. Blob versus container anonymous access differ in listing behavior. An unguessable name is not authorization, but intentionally public assets are not private data exposure. Test one owned synthetic object and inspect effective policy rather than enumerating unknown object names.",
+      "operational_method": "",
+      "controlled_verification": "Use owned public and private synthetic blobs; compare anonymous retrieval/listing with intended authenticated access.",
+      "false_positive_discriminator": "A public marketing blob or guessed URL is not sensitive exposure; existence and intended confidentiality must be established.",
+      "remediation_acceptance": "Align account/container publication and issuing application policy, verifying public assets and private-data denial."
+    }
+  ]
+}

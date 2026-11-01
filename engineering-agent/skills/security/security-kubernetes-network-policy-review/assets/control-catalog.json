@@ -1,0 +1,18 @@
+{
+  "category": "A02",
+  "domain": "cloud",
+  "native_context": "Kubernetes NetworkPolicy selection and enforced connectivity",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "KUBERNETES_NETWORK_POLICY-1",
+      "boundary": "Kubernetes NetworkPolicy selection and enforced connectivity — authoritative consumer",
+      "source_trace": "Collect selected pod labels/namespaces, all applicable policies, CNI/enforcement capability and actual source-to-destination network path. Include DNS/egress requirements where relevant.",
+      "controlled_verification": "Resolve one prohibited ingress/egress tuple and one required service path using policy composition and an owned isolated reachability check where available. Check which pods each selector actually selects; a policy file with no matching pods is not evidence of protection.",
+      "false_positive_discriminator": "NetworkPolicies compose allow behavior; a restrictive-looking policy may coexist with another allowance. Host networking, service translation and CNI details can affect the claimed result.",
+      "remediation_acceptance": "Correct the evidenced selectors/ports/peers under the real CNI contract. Retest the prohibited tuple, required service/DNS path and unchanged application availability."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

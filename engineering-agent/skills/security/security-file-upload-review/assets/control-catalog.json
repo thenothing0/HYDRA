@@ -1,0 +1,16 @@
+{
+  "category": "A06",
+  "taxonomy_note": "Initial root-cause lens; reassess final mapping.",
+  "controls": [
+    {
+      "id": "FILE_UPLOAD-1",
+      "boundary": "Unsafe file upload and processing — authoritative consumer",
+      "source_trace": "Trace multipart receipt, type validation, storage key/permissions, download headers, ownership and every downstream processor. Define which consumer is supposed to interpret the file.",
+      "controlled_verification": "Use harmless uniquely marked fixtures for the actual parser/render/download path. Compare an allowed file with one boundary case derived from source or parser behavior. Observe whether it is served as active same-origin content, processed with excess authority, or readable by a prohibited account; keep each cause distinct.",
+      "false_positive_discriminator": "An accepted extension or unusual MIME value alone is not execution. A safely isolated attachment can be intentional. Successful upload does not establish retrieval or processor behavior.",
+      "remediation_acceptance": "Repair the evidenced validation/storage/publication/processor boundary, not only the client extension check. Retest valid uploads, the original consumer path and recipient/owner access."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

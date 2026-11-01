@@ -1,0 +1,21 @@
+{
+  "name": "security-java-jndi-resource-trust-review",
+  "domain": "Cryptographic protocols and runtime consumers",
+  "intent": "Java JNDI lookup authority and external object/resource handling",
+  "artifacts": "Runtime/library versions, lookup construction, provider configuration and returned object/resource consumer.",
+  "trace": "Follow lower-trust names into reachable naming providers and determine which local/network/deserialization capabilities the configured runtime permits.",
+  "experiment": "Use a local inert naming stub or source-only complete trace; do not serve object factories or execution payloads to production.",
+  "disproof": "A JNDI string or affected library name is not reachable code execution; version/configuration and consumer behavior matter.",
+  "repair": "Constrain lookup sources/providers and object handling, preserving intended naming resources.",
+  "source": "https://docs.oracle.com/javase/jndi/tutorial/",
+  "adjacent": "security-jwt-review; security-tls-peer-validation-review; security-deserialization-review",
+  "branch_decisions": "Resolve the actual JDK/provider version and configured factories, not historical default assumptions. A lookup URL can select a resource or object factory without enabling remote code loading. Trace caller control into the installed provider and downstream consumer; use an inert local provider stub instead of running a gadget or contacting an external naming server.",
+  "operational_method": "Resolve installed JDK/provider and the actual naming URL, ObjectFactory selection and returned-object consumer. Inspect effective object-factory/deserialization filters, including jdk.jndi.object.factoriesFilter where supported, and provider-specific settings; obsolete remote-codebase assumptions are not universal current behavior. An inert naming stub proves only lookup reachability. Require actual configured resolution or complete source evidence before claiming object construction, without executing gadgets or changing trust switches.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

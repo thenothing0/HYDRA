@@ -1,0 +1,21 @@
+{
+  "name": "security-gitlab-ci-protected-context-review",
+  "domain": "CI and package publication",
+  "intent": "GitLab CI source trust and protected variable/runner exposure",
+  "artifacts": "Pipeline sources, merge-request/fork context, protected refs/variables, includes and runner selection.",
+  "trace": "Trace lower-trust YAML/code/includes into jobs that receive protected material or trusted runner access. Preserve the exact event/ref permission context.",
+  "experiment": "Use an isolated pipeline fixture with a synthetic secret marker and inert job; compare trusted ref and lower-trust merge-request configuration.",
+  "disproof": "A variable name or protected runner tag is not material access if the pipeline policy withholds it.",
+  "repair": "Bind protected context to trusted source/includes and retest legitimate releases without leaking real secrets.",
+  "source": "https://docs.gitlab.com/ci/pipelines/merge_request_pipelines/",
+  "adjacent": "security-ci-artifact-provenance-review; security-package-resolution-review; security-github-actions-trust-review",
+  "branch_decisions": "Resolve project/fork identity, pipeline source, branch/tag protection and the actual conditions for protected variables and runners. Masking only changes display behavior; it does not prevent a running script from using a value. A rejected fork pipeline before secret-bearing execution is an effective boundary for that case, not proof of exposure.",
+  "operational_method": "Distinguish a fork-project pipeline from a parent-project pipeline executing configuration from a fork merge request. Retain project IDs, pipeline source, protected refs/runners and the installed-version protected-resource access settings. A fork pipeline rejected before secret admission is a denial; parent execution using untrusted fork configuration requires a separate source-to-secret-bearing-job trace. Masked output alone is not proof that the running job cannot use the secret.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

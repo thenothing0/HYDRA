@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-service-worker-review",
+  "cases": [
+    {
+      "id": "cross-account-cache",
+      "scenario": "After fixture account A logs out and B signs in, the active worker serves A's private canary to B contrary to the shared-device policy.",
+      "expected_decision": "Confirm with controller/cache/response and account-state evidence."
+    },
+    {
+      "id": "public-offline-cache",
+      "scenario": "Only deliberately public assets are shared across logins and private requests remain account-bound.",
+      "expected_decision": "Do not label ordinary offline caching a cross-account leak."
+    },
+    {
+      "id": "not-controlled",
+      "scenario": "A new worker is registered but the observed page is still controlled by an older worker.",
+      "expected_decision": "Identify the actual controller before attributing the observed behavior to the new code."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "API and SaaS authority",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Authorization of materialized batch dependency and result-reference targets",
+      "source_trace": "Trace whether an allowed batch operation authorizes each object/action, including mixed valid/invalid identifiers and omitted per-item fields.",
+      "implementation_branch": "A batch may be intentionally atomic or partial-success; record that contract before judging mixed results. Check each action/object pair, not only IDs. Duplicate items can trigger separate lifecycle issues, but a failed foreign item plus successful owned item is expected under a documented partial model.",
+      "operational_method": "Specialize in batch dependencies/result references, not ordinary mixed-owner ID arrays. Retain the dependency graph and materialized target of every subrequest, including references to an earlier result. Authorization before placeholder resolution does not establish authority over the resolved object. Compare a literal owned target, an equivalent permitted reference and a reference resolving to a forbidden object; observe each committed operation under the declared atomic/partial contract. Route simple array BOLA to the object-authorization workflow.",
+      "controlled_verification": "In an owned dependent batch, compare a literal allowed target with the same allowed target resolved through a previous result, then a result reference resolving to a forbidden object. Observe the materialized target, authorization point and committed per-item effect.",
+      "false_positive_discriminator": "Endpoint-level access or one permitted item is not authority for every batch item; a rejected entire batch is not bypass.",
+      "remediation_acceptance": "Authorize each item and define partial-failure semantics; retest mixed, allowed and duplicate-item batches."
+    }
+  ]
+}

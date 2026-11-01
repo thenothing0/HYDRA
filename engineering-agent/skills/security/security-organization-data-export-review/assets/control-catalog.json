@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "API and SaaS authority",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Authorization closure and field projection of expanded organization exports",
+      "source_trace": "Follow initiator/tenant authority through queued execution and later retrieval. Check whether role revocation or client-selected tenant affects either stage.",
+      "implementation_branch": "Split generation, storage publication and later download into separate authority decisions. A requester losing membership before worker execution may be denied then, at download, or both according to policy. A signed artifact capability has its declared lifetime; do not assume immediate revocation without the contract.",
+      "operational_method": "Specialize in export dataset closure/projection, not queue lifecycle. Build an owned fixture with an allowed root record, a restricted related record and a protected field/attachment. Trace joins, expansion options, serializer projection and artifact manifest into the exported files. Permission to request the root export must not silently authorize every joined row or hidden field. Compare the allowed projection and a forbidden expansion; route enqueue/revocation/download ownership to background-job authorization.",
+      "controlled_verification": "Export one owned root with an allowed relation, a foreign/restricted relation and a hidden field/attachment. Compare default and requested expansions against the export projection contract and inspect every output file/manifest.",
+      "false_positive_discriminator": "A job ID or publicly documented export route is not a data leak; an intentionally shared artifact needs its publication policy.",
+      "remediation_acceptance": "Bind job, data selection and artifact access to policy and retest delayed execution and download lifecycle."
+    }
+  ]
+}

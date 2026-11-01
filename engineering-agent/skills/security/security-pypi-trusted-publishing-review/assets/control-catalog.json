@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "CI and package publication",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "PyPI trusted publisher OIDC identity and release artifact selection",
+      "source_trace": "Follow accepted OIDC claims to project publication authority and ensure the uploaded distribution is from the approved immutable build.",
+      "implementation_branch": "Match the registered publisher repository, workflow and environment to the OIDC identity allowed to mint the upload token. A successful build is not evidence it selected the artifact eventually uploaded. Inspect reusable-workflow and artifact handoffs; a correctly rejected mismatch is a publisher-binding control, not proof that release contents are trustworthy.",
+      "operational_method": "",
+      "controlled_verification": "Use a local policy fixture or owned test repository without public publication; compare intended workflow identity and a claim/artifact mismatch.",
+      "false_positive_discriminator": "An OIDC token request or PyPI project name in config is not a successful publishing grant.",
+      "remediation_acceptance": "Constrain publisher claims and artifact promotion, preserving intended release and rejecting mismatched contexts."
+    }
+  ]
+}

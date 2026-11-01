@@ -1,0 +1,17 @@
+{
+  "category": "A01",
+  "native_context": "POSIX privileged file creation and path authority",
+  "taxonomy_note": "Planning lens only; actual root-cause mapping is independent.",
+  "controls": [
+    {
+      "id": "SECURITY_POSIX_FILE_PERMISSIONS_REVIEW-1",
+      "boundary": "POSIX privileged file creation and path authority — authoritative consumer",
+      "source_trace": "Record effective/real UID/GID, supplementary groups, umask, directory ownership and descriptor open/check/use. Identify who controls every parent component, not only the basename.",
+      "controlled_verification": "In an owned temporary tree use inert marker files to inspect whether the privileged-equivalent operation consumes the same inode it checked. Use supported atomic/descriptor-relative operations and a controlled link/parent replacement when relevant; never target system files.",
+      "false_positive_discriminator": "O_NOFOLLOW on a final component is not general protection for every parent. A writable directory alone needs a reachable privileged consumer and replacement/creation authority to establish the defect.",
+      "remediation_acceptance": "Bind file authority to appropriate descriptors/atomic operations and trusted parents under platform semantics. Retest normal creation, original replacement/link case and cleanup/object identity."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

@@ -1,0 +1,23 @@
+{
+  "name": "security-azure-acr-repository-scope-review",
+  "domain": "Azure service boundaries",
+  "intent": "Azure Container Registry repository-scoped publication and consumption",
+  "artifacts": "Registry permission mode, token/scope maps or role assignments, repository paths and workload image references.",
+  "trace": "Resolve allowed content/metadata actions at a repository and trace whether lower-trust publication affects an approved workload image.",
+  "experiment": "Use an owned registry/local fixture and synthetic image metadata; compare authorized repository action with a different repository or release tag.",
+  "disproof": "Registry login or pull from an intentionally shared repository is not cross-repository write or deployment compromise.",
+  "repair": "Constrain repository actions and pin deployment provenance/digest, then verify authorized producer and reader workflows.",
+  "source": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-rbac-built-in-roles-overview",
+  "adjacent": "security-entra-app-consent-review; security-azure-storage-sas-review",
+  "branch_decisions": "Distinguish registry-wide roles, repository permissions and the actual permission mode supported by this registry. A token scope map governs named repository actions, not downstream deployment trust. Determine whether a lower-trust producer can replace the digest consumed by a protected release; being able to push its own independent repository is an expected control.",
+  "operational_method": "Read roleAssignmentMode before interpreting role names. In RBAC Registry+ABAC Repository Permissions mode, legacy AcrPull/AcrPush/AcrDelete grants are not honored; inspect repository reader/writer/contributor roles and their ABAC conditions, and catalog-list/control-plane rights separately. A data role without an ABAC condition may apply registry-wide. Compare the same pull/push operation on an intended repository and a nonmatching repository using supplied policy/trace or an isolated policy fixture.",
+  "additional_sources": [
+    "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-rbac-abac-repository-permissions"
+  ],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

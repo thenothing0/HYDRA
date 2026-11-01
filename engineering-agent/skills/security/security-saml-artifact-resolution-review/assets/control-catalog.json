@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Identity and federation extensions",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "SAML artifact resolution binding to issuer, recipient and transaction",
+      "source_trace": "Trace the opaque artifact through the trusted back channel to the assertion actually consumed, including requester identity and InResponseTo/recipient checks.",
+      "implementation_branch": "Keep artifact source, authenticated resolving SP and the returned assertion transaction linked. Artifact possession alone need not authorize an unrelated resolver. Inspect the consumed assertion recipient/correlation after resolution; successful back-channel TLS by itself does not prove the correct assertion was selected.",
+      "operational_method": "Parse the supported artifact type and its source/index under the actual SAML binding before choosing the resolver. Bind the artifact, authenticated resolving SP and returned assertion to the same transaction/recipient. Retain one-use/expiry state separately from back-channel TLS. An opaque handle lookup stub cannot establish SAML source selection unless it preserves the actual artifact and resolver identity rules.",
+      "controlled_verification": "Use two owned SP transactions in a local federation fixture and compare rightful artifact resolution with swapped requester or replay.",
+      "false_positive_discriminator": "Opaque artifact syntax does not prove confidentiality or correct binding; failure at transport authentication must not be called assertion replay protection.",
+      "remediation_acceptance": "Bind artifact, SP and transaction and enforce intended reuse semantics; retest normal resolution and substitution denial."
+    }
+  ]
+}

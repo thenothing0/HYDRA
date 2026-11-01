@@ -1,0 +1,66 @@
+{
+  "category": "A01",
+  "version": "4.0.0",
+  "controls": [
+    {
+      "id": "A01-01",
+      "slug": "object-policy",
+      "boundary": "Object authorization",
+      "source_trace": "Route/resolver -> identity -> record lookup -> policy -> serialization.",
+      "controlled_verification": "Compare one private disposable record with its owner and another controlled account; inspect fields and owner-side state.",
+      "false_positive_discriminator": "Private policy must be established; opaque IDs/public records do not prove a failure.",
+      "remediation_acceptance": "Enforce policy before read/write; denied action exposes no protected fields and leaves state unchanged.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A01-02",
+      "slug": "tenant-aggregation",
+      "boundary": "Tenant queries and aggregates",
+      "source_trace": "Tenant context -> query filter -> count/group/pagination -> export.",
+      "controlled_verification": "Compare two synthetic tenants in list, count and export outputs.",
+      "false_positive_discriminator": "An empty list does not establish isolated counts or exports.",
+      "remediation_acceptance": "Apply tenant policy before aggregation/pagination; test both tenants and a legitimate export.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A01-03",
+      "slug": "privileged-lifecycle",
+      "boundary": "Setup and privileged lifecycle",
+      "source_trace": "Setup/invitation/role change -> caller authority -> persisted capability.",
+      "controlled_verification": "Use a controlled low-role account and an inert disposable invitation/role fixture.",
+      "false_positive_discriminator": "Hidden navigation is not enforcement; an already-admin caller is not privilege escalation.",
+      "remediation_acceptance": "Central policy guards every lifecycle entry point; verify resulting roles directly.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A01-04",
+      "slug": "cache-boundary",
+      "boundary": "Authorization-sensitive caching",
+      "source_trace": "Policy decision -> cache lookup/key -> response reuse across actors.",
+      "controlled_verification": "Warm a synthetic owner response, then request it from a different controlled identity.",
+      "false_positive_discriminator": "Equal bodies for intentionally public content are expected.",
+      "remediation_acceptance": "Bind cached representation to relevant identity/tenant/policy context; verify cold and warm paths.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A01-05",
+      "slug": "async-subscription",
+      "boundary": "Queues, subscriptions and batches",
+      "source_trace": "Subscription creation/batch loader/worker -> current identity -> object set.",
+      "controlled_verification": "Test one controlled subscription or batch with mixed permitted/forbidden fixture objects.",
+      "false_positive_discriminator": "Connection authentication alone does not establish per-object authorization.",
+      "remediation_acceptance": "Each object/action is authorized at the appropriate lifecycle point; denied elements do not leak.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A01-06",
+      "slug": "destination-policy",
+      "boundary": "Server-side destination policy",
+      "source_trace": "URL parse -> normalization -> DNS resolution -> redirect hops -> egress.",
+      "controlled_verification": "Use approved and disallowed owned callback fixtures; inspect every attempted destination.",
+      "false_positive_discriminator": "A caller-supplied public URL alone is not SSRF; keep internal endpoints out of the probe.",
+      "remediation_acceptance": "Reject disallowed destinations before connection, including later redirects/resolutions.",
+      "default_status": "not-tested"
+    }
+  ]
+}

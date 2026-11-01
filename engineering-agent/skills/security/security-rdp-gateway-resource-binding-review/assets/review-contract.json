@@ -1,0 +1,21 @@
+{
+  "name": "security-rdp-gateway-resource-binding-review",
+  "domain": "Enterprise identity and privileged access",
+  "intent": "RDP gateway identity, resource authorization and session lifecycle",
+  "artifacts": "Gateway authentication, connection/resource policies, target selection and session revocation rules.",
+  "trace": "Trace authenticated identity and approved target into the actual remote-session connection, including aliases and reconnect state.",
+  "experiment": "Use owned lab targets or configuration proof with synthetic identities; compare an entitled target and one forbidden target/resource alias.",
+  "disproof": "Gateway login or target discovery is not a desktop session; denial before connection is a meaningful control.",
+  "repair": "Bind connection/resource policy to normalized targets and verify permitted reconnect and revocation.",
+  "source": "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-gateway-role",
+  "adjacent": "security-windows-service-permissions-review; security-ldap-injection-review; security-posix-file-permissions-review",
+  "branch_decisions": "Distinguish gateway connection authorization, resource authorization and target host login. Passing one gateway policy does not establish access to every internal host or desktop session. Follow user/group conditions, selected resource and any session reconnection policy using supplied configuration or a lab, and preserve target authentication as a separate necessary edge.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

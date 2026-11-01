@@ -1,0 +1,21 @@
+{
+  "name": "security-oauth-dynamic-registration-review",
+  "domain": "Identity and federation extensions",
+  "intent": "Dynamic client registration metadata authority",
+  "artifacts": "Registration endpoint/policy, software statements, redirect URI rules and client metadata consumers.",
+  "trace": "Determine who may register or modify clients and whether untrusted metadata becomes a trusted redirect, fetch destination or privileged client classification.",
+  "experiment": "Use an owned local issuer and client; compare permitted registration with one unauthorized metadata mutation and inspect the effective registered client.",
+  "disproof": "Open registration can be intentional. A client identifier or reflected metadata is not client impersonation or a protected server-side fetch.",
+  "repair": "Constrain metadata and client class changes at registration/update, then verify intended public clients and rejection of privileged metadata.",
+  "source": "https://www.rfc-editor.org/rfc/rfc7591",
+  "adjacent": "security-oauth-oidc-review; security-jwt-review; security-saml-review",
+  "branch_decisions": "A software statement may authenticate selected metadata, not every caller-supplied field. Inspect registration update authority separately from creation. Open registration and public client classification may be intentional; escalating to a confidential/trusted client or changing another client requires a distinct observed grant.",
+  "operational_method": "Record any initial-access credential used for creation and the registration-access credential/client URI issued for subsequent management. Those credentials have different scopes and are not interchangeable. Compare updating the created synthetic client with attempting the same operation on a second client; successful open registration alone is not proof of cross-client update authority or confidential-client trust.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

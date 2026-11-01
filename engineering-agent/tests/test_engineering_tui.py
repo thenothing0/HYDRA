@@ -395,3 +395,23 @@ async def test_hackerone_status_is_offline_and_preserves_no_credentials_in_chat(
         assert model.calls == 0
         assert not (tmp_path / ".hydra").exists()
         assert app.options.hackerone
+
+
+@pytest.mark.asyncio
+async def test_skill_selection_is_offline_and_reaches_the_running_agent(tmp_path):
+    model = ScriptModel([action("finish", summary="Read the selected skill; no findings asserted")])
+    app = EngineeringApp(tmp_path, RunOptions(provider="ollama", model="fixture"), model_factory=lambda *_: model)
+    async with app.run_test(size=(120, 36)) as pilot:
+        app.query_one("#prompt", Prompt).load_text("/skills xss")
+        await pilot.press("enter")
+        app.query_one("#prompt", Prompt).load_text("/skill security-xss-review")
+        await pilot.press("enter")
+        assert app.options.skills == ["security-xss-review"]
+        assert model.calls == 0 and not (tmp_path / ".hydra").exists()
+        app.query_one("#prompt", Prompt).load_text("Read the selected skill")
+        await pilot.press("enter")
+        await until(lambda: app.controller.session is not None and not app.busy)
+        assert app.controller.session.state["skills"][0]["name"] == "security-xss-review"
+        app.query_one("#prompt", Prompt).load_text("/skill clear")
+        await pilot.press("enter")
+        assert app.controller.session.state["skills"] == []

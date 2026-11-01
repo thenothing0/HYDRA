@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Compatibility planning lens only, not a normative cross-domain mapping. Final root-cause taxonomy may differ or remain unassigned.",
+  "native_context": "Kubernetes authorization; RBAC permissions are additive and deployment-dependent",
+  "domain": "cloud",
+  "controls": [
+    {
+      "id": "KUBERNETES_RBAC-1",
+      "boundary": "Kubernetes RBAC and delegated workload authority — authoritative consumer",
+      "source_trace": "Collect roles/bindings, service-account identity, namespace, aggregation and admission/workload creation context. Record exact resource, subresource and verb, not just a role label.",
+      "controlled_verification": "Evaluate a specified low-privilege subject's effective action using read-only authorization inspection. If workload creation is involved, trace whether that workload can select a more privileged service account under actual admission policy; do not deploy it for proof unless separately within scope.",
+      "false_positive_discriminator": "A wildcard role fragment or ability to create a pod is not automatically cluster-admin. Admission, namespace, identity selection and downstream permissions determine the reachable authority.",
+      "remediation_acceptance": "Remove the evidenced excess binding/delegation while retaining intended controller/operator operations. Re-evaluate the prohibited action and normal workload behavior."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

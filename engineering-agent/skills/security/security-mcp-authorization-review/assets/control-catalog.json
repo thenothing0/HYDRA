@@ -1,0 +1,17 @@
+{
+  "category": "A07",
+  "native_context": "MCP resource, client and downstream token authority",
+  "taxonomy_note": "Planning lens only; actual root-cause mapping is independent.",
+  "controls": [
+    {
+      "id": "SECURITY_MCP_AUTHORIZATION_REVIEW-1",
+      "boundary": "MCP resource, client and downstream token authority — authoritative consumer",
+      "source_trace": "Record protocol/transport, MCP client/resource/authorization server identities, token resource/audience, per-client consent and downstream credential path. Treat stdio and remote transports according to their actual design.",
+      "controlled_verification": "With owned local fixtures compare the intended client/resource token and consent against a wrong-resource or wrong-client context at the real validation gate. Trace whether a proxy passes a token to an unintended downstream resource or reuses consent for an unrelated client.",
+      "false_positive_discriminator": "A trusted connection is not authority for every operation. A synthetic token fixture tests gate logic only; it does not prove a real authorization server issued or a remote server accepted the same token.",
+      "remediation_acceptance": "Validate resource/client/actor context, bind consent and use appropriate downstream delegation under the current protocol contract. Retest intended integration, wrong audience/client and revoked consent."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

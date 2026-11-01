@@ -1,0 +1,21 @@
+{
+  "name": "security-gcp-pubsub-push-identity-review",
+  "domain": "Google Cloud service boundaries",
+  "intent": "Pub/Sub authenticated push identity and subscription binding",
+  "artifacts": "Push subscription config, service account, JWT validation/audience and event handler.",
+  "trace": "Trace verified push identity into the trusted subscription/tenant and downstream action. A payload subscription field is not independently authenticated.",
+  "experiment": "Use an owned endpoint/local push fixture; compare expected service-account/audience with a valid token for another owned sender or a payload substitution.",
+  "disproof": "An HTTP acknowledgment or JSON event acceptance does not prove a protected action; inspect the synthetic effect.",
+  "repair": "Bind verified push identity/audience and event scope, then verify legitimate delivery, retries and rejection.",
+  "source": "https://cloud.google.com/pubsub/docs/authenticate-push-subscriptions",
+  "adjacent": "security-gcp-iam-review; security-firestore-rules-review",
+  "branch_decisions": "Validate the push token issuer, audience and intended service-account identity under the configured endpoint. The JSON subscription field is not independently authenticated merely because it appears in the body. An authentic push identity shared across subscriptions may still need application resource binding; a token replay without an unauthorized consumer effect remains a narrower observation.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

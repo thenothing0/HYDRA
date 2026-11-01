@@ -1,0 +1,21 @@
+{
+  "name": "security-browser-permissions-policy-review",
+  "domain": "Browser and HTTP boundaries",
+  "intent": "Delegated browser capabilities across embeds using effective Permissions Policy",
+  "artifacts": "Top-level and frame response policies, iframe allow/sandbox attributes, origin chain, user grants and capability consumer.",
+  "trace": "Identify the exact browser feature and how ancestor policy plus frame delegation constrains it. Separate user permission, secure-context requirements and policy denial.",
+  "experiment": "In owned origins invoke only a synthetic or non-sensitive feature check with intended and untrusted embeds; record policy-denied versus user-denied outcomes.",
+  "disproof": "An absent policy or permission prompt does not prove access to camera/location or any actual sensitive resource.",
+  "repair": "Limit delegation to intended origins and retest allowed embedding and policy rejection without changing user grants to manufacture a result.",
+  "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Permissions_Policy",
+  "adjacent": "security-javascript-analysis-review; security-xss-review; security-request-smuggling-review",
+  "branch_decisions": "A parent policy denying a feature cannot be broadened merely by a permissive iframe allow attribute. Record the frame origin, sandbox and user grant separately. Querying a permission status is not obtaining protected sensor data; verify the particular API operation and its policy-denied outcome.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

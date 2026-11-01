@@ -1,0 +1,66 @@
+{
+  "category": "A04",
+  "version": "4.0.0",
+  "controls": [
+    {
+      "id": "A04-01",
+      "slug": "asset-protection",
+      "boundary": "Sensitive-data protection",
+      "source_trace": "Collection -> transit -> cache/storage/export/backup -> deletion.",
+      "controlled_verification": "Use synthetic values and observable boundaries; internal storage remains unknown without evidence.",
+      "false_positive_discriminator": "Do not infer encryption-at-rest from HTTPS or cloud branding.",
+      "remediation_acceptance": "Required properties hold across the actual data lifecycle, with documented key access.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A04-02",
+      "slug": "peer-validation",
+      "boundary": "Peer identity and TLS trust",
+      "source_trace": "Client connection -> trust store -> certificate/hostname check -> downstream service.",
+      "controlled_verification": "Observe the relevant authorized endpoint or test client with a dedicated trusted fixture CA.",
+      "false_positive_discriminator": "An edge connection says nothing about downstream verification; self-signed test trust can be deliberate.",
+      "remediation_acceptance": "Invalid peer identity is rejected; a correctly trusted legitimate peer still connects.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A04-03",
+      "slug": "password-storage",
+      "boundary": "Password record and migration",
+      "source_trace": "Password encoding API -> salt/work settings -> stored record -> verify/rehash.",
+      "controlled_verification": "Use controlled records supplied through source/test access; black-box inference stays limited.",
+      "false_positive_discriminator": "A string prefix and tiny timing sample are not an algorithm/work-factor audit.",
+      "remediation_acceptance": "Current applicable guidance is documented; valid logins migrate safely and invalid passwords fail.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A04-04",
+      "slug": "nonce-integrity",
+      "boundary": "Mode, nonce and authenticated failure",
+      "source_trace": "High-level crypto API -> key scope -> nonce lifecycle -> decrypt consumer.",
+      "controlled_verification": "Alter synthetic ciphertext only in an approved fixture and inspect pre-use rejection.",
+      "false_positive_discriminator": "Random-looking output does not prove entropy or nonce uniqueness.",
+      "remediation_acceptance": "Nonce requirements hold and integrity failure releases no usable plaintext or side effect.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A04-05",
+      "slug": "key-provenance",
+      "boundary": "Key generation and custody",
+      "source_trace": "Entropy source -> generation/import -> key store/access -> consumer.",
+      "controlled_verification": "Inspect supplied configuration/source and provenance; never try discovered keys externally.",
+      "false_positive_discriminator": "A code constant may be public/nonsecurity; establish key purpose and exposure.",
+      "remediation_acceptance": "Security-relevant keys have suitable provenance and access; earlier weak material is replaced.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A04-06",
+      "slug": "key-rotation",
+      "boundary": "Rotation and compromise response",
+      "source_trace": "Format/key ID -> old/new readers -> re-encryption -> retirement/revocation.",
+      "controlled_verification": "Exercise synthetic old/new records and failure cases in a local migration fixture.",
+      "false_positive_discriminator": "Updating a generator does not repair secrets produced earlier.",
+      "remediation_acceptance": "New writes use intended key; approved old reads work during migration; retired material loses authority.",
+      "default_status": "not-tested"
+    }
+  ]
+}

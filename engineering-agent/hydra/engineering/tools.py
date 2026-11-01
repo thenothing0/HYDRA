@@ -6,7 +6,8 @@ import sys
 from pathlib import Path
 from hydra.engineering.registry import ToolRegistry
 from hydra.engineering.process import ProcessRunner
-from hydra.engineering.capabilities import files, process, session, browser, burp, hackerone
+from hydra.engineering.capabilities import files, process, session, browser, burp, hackerone, skills as skill_tools
+from hydra.engineering.skills import SkillCatalog, SkillSelection
 
 CAPABILITIES = {
     "files": files.FileCapability,
@@ -15,6 +16,7 @@ CAPABILITIES = {
     "browser": browser.BrowserCapability,
     "burp": burp.BurpCapability,
     "hackerone": hackerone.HackerOneCapability,
+    "skills": skill_tools.SkillsCapability,
 }
 BROWSER_TOOLS = browser.SCHEMAS
 TOOLS = {
@@ -52,6 +54,7 @@ class EngineeringTools:
         burp_url=None,
         approve_burp=None,
         hackerone=False,
+        skills=None,
     ):
         self.session = session
         self.workspace = session.workspace
@@ -65,6 +68,8 @@ class EngineeringTools:
         self.burp_url = burp_url
         self.approve_burp = approve_burp or self.approve
         self.hackerone_enabled = hackerone
+        self.skill_catalog = SkillCatalog()
+        self.skill_selection = SkillSelection(self.skill_catalog, session, skills)
         self.registry = ToolRegistry()
         for name, pack in CAPABILITIES.items():
             if name == "browser" and not self.browser_enabled:

@@ -1,0 +1,16 @@
+{
+  "category": "A07",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "SESSION_LIFECYCLE-1",
+      "boundary": "Session fixation and lifecycle controls — authoritative consumer",
+      "source_trace": "Read session issuance/rotation, cookie/token binding, refresh-family state and logout/revocation. Determine what invalidation the product promises after login, privilege change, reset and logout.",
+      "controlled_verification": "Track two owned sessions and exact identifiers across one declared transition. Compare the prior session's access to a protected fixture before/after that transition, then check the new intended session. For fixation, prove that an attacker-influenced preauth identifier survives into a victim-authorized session; identifier equality alone is incomplete.",
+      "false_positive_discriminator": "A stateless token remaining valid until its documented short expiry is not automatically a broken logout promise. A browser deleting its cookie is different from server-side revocation.",
+      "remediation_acceptance": "Implement the declared rotation/revocation boundary and atomically constrain refresh reuse where required. Retest the original prior credential, replacement session and unrelated valid sessions under that policy."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

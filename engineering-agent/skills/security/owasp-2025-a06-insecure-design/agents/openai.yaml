@@ -1,0 +1,4 @@
+interface:
+  display_name: "OWASP A06: Insecure Design"
+  short_description: "Review and remediate OWASP A06:2025 risks"
+  default_prompt: "Use $owasp-2025-a06-insecure-design to review this project, document supported findings, and verify requested fixes."

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Enterprise identity and privileged access",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Kerberos delegation configuration and service-to-service identity scope",
+      "source_trace": "Trace which service identity may act for which user toward which target, separating ticket issuance from accepted protected operations.",
+      "implementation_branch": "Distinguish unconstrained, traditional constrained and resource-based constrained delegation with actual account flags and service principals. A delegation setting is not proof the actor controls the delegating principal or can obtain a usable ticket. Trace the permitted service/identity transition from supplied configuration without capturing or replaying production tickets.",
+      "operational_method": "Map actual mode artifacts: unconstrained delegation uses the TRUSTED_FOR_DELEGATION account flag; traditional constrained delegation uses the service account msDS-AllowedToDelegateTo SPN list, with protocol-transition prerequisites such as TRUSTED_TO_AUTH_FOR_DELEGATION where applicable. Resource-based constrained delegation instead uses the target msDS-AllowedToActOnBehalfOfOtherIdentity security descriptor. Do not impose one mode flag on every other mode. Retain protected/nondelegable-user restrictions, principal/SPN mapping and authority to edit the controlling object. Trace supplied configuration to KDC ticket issuance and final service authorization; a flag or ticket alone is not a protected action.",
+      "controlled_verification": "Use owned lab principals and a harmless test service, or perform configuration-only analysis when ticket testing is outside scope.",
+      "false_positive_discriminator": "A delegation flag or SPN is not demonstrated arbitrary domain access; protected-user constraints and target policy may stop the path.",
+      "remediation_acceptance": "Limit delegation to intended services/users and retest legitimate service flows and forbidden target selection."
+    }
+  ]
+}

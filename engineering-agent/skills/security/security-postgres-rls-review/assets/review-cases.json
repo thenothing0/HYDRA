@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-postgres-rls-review",
+  "cases": [
+    {
+      "id": "pooled-context-leak",
+      "scenario": "A request for tenant B on a reused application connection sees tenant A rows because trusted context was not reset.",
+      "expected_decision": "Confirm from real runtime role/pool trace and synthetic rows, not an owner-only query."
+    },
+    {
+      "id": "owner-inspection",
+      "scenario": "An authorized table owner sees all rows while the application role correctly enforces tenant policy.",
+      "expected_decision": "Do not infer an application tenant bypass from owner inspection."
+    },
+    {
+      "id": "select-only",
+      "scenario": "Tenant reads are denied but insert/update checks and connection reuse were not examined.",
+      "expected_decision": "Report the tested read boundary only; do not certify all row-security operations."
+    }
+  ]
+}

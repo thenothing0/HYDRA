@@ -1,0 +1,23 @@
+{
+  "name": "security-mcp-http-session-origin-review",
+  "domain": "AI applications and agent runtimes",
+  "intent": "MCP HTTP transport revision, origin and request/stream authority binding",
+  "artifacts": "Implemented protocol revision, HTTP/body metadata, Origin/authentication checks, proxy routing and any legacy session/stream ownership.",
+  "trace": "Select the implemented HTTP transport profile, then follow validated request identity and transport metadata into tool execution and the correct response stream. Apply session ownership only to a session-bearing legacy profile.",
+  "experiment": "Use an owned mock for the selected profile: compare authorized request, absent-Origin authenticated nonbrowser request and invalid present Origin. For legacy sessions compare wrong-owner routing; for 2026-07-28 compare mirrored-header/body mismatch and per-request stream ownership.",
+  "disproof": "An ignored legacy session header on a stateless modern profile, an authenticated nonbrowser request without Origin or absence of standalone GET streams is not itself a bypass; require a violated applicable authority rule.",
+  "repair": "Enforce the selected revision request/origin/identity and stream binding rules, then retest legitimate requests and the specific forbidden context without imposing legacy session mechanics on the modern profile.",
+  "source": "https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http",
+  "adjacent": "security-llm-prompt-injection-review; security-agent-tool-authorization-review; security-mcp-authorization-review",
+  "branch_decisions": "Separate legacy session-bearing Streamable HTTP from the stateless 2026-07-28 revision before interpreting transport state. A session identifier is never a substitute for request authentication; a modern implementation need not create one. Validate a present Origin independently from legitimate nonbrowser absence and resolve mirrored metadata under the applicable profile.",
+  "operational_method": "Select the implemented protocol revision before testing. Legacy Streamable HTTP revisions 2025-03-26 through 2025-11-25 can have protocol sessions; review authenticated session ownership and stream routing there. Revision2026-07-28 removes protocol sessions and the standalone GET stream: do not demand a session or treat an ignored Mcp-Session-Id as bypass. For that profile compare MCP-Protocol-Version and mirrored method/name/annotated-parameter headers with body metadata and request fields under its validation rules. Each request still needs applicable authentication and present-Origin validation; absent Origin can be a legitimate non-browser case.",
+  "additional_sources": [
+    "https://modelcontextprotocol.io/specification/2025-11-25/basic/transports"
+  ],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

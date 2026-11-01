@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Mobile platform integrations",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "iOS pasteboard data classification and intended sharing lifetime",
+      "source_trace": "Determine whether protected app data is deliberately copied and which audience/lifetime policy applies, including local-only and expiration choices.",
+      "implementation_branch": "Identify general versus named pasteboard, local-only/expiration settings and the recipient access behavior of the tested iOS version. A paste permission prompt or user-initiated paste changes the threat model. Show a synthetic classified value reachable by the specified unintended recipient; copying a deliberately shared value is expected functionality.",
+      "operational_method": "",
+      "controlled_verification": "Use owned test apps/device or a source fixture with synthetic values; compare intended user copy and an unexpected background copy path.",
+      "false_positive_discriminator": "User-requested copying is not automatically a leak, and a paste permission prompt alone does not prove another app obtained data.",
+      "remediation_acceptance": "Limit unintended writes/sharing lifetime and verify legitimate copy/paste behavior under the supported OS."
+    }
+  ]
+}

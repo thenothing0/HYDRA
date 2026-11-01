@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-email-header-injection-review",
+  "cases": [
+    {
+      "id": "extra-recipient",
+      "scenario": "Caller text causes the local sink envelope to gain a recipient that the application contract forbids.",
+      "expected_decision": "Confirm the routing boundary only from the envelope and input-to-builder path."
+    },
+    {
+      "id": "library-rejection",
+      "scenario": "A structured header API rejects CR/LF before queueing and no message is produced.",
+      "expected_decision": "Treat the candidate as blocked, not successful delivery."
+    },
+    {
+      "id": "header-only",
+      "scenario": "A visible Bcc-like line appears in a debug string but transport recipients are unknown.",
+      "expected_decision": "Do not claim unauthorized email delivery without envelope/transport evidence."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Enterprise identity and privileged access",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "sudo policy matching, delegated arguments and executable provenance",
+      "source_trace": "Resolve the exact matched command and who controls its executable, parameters, configuration and working-directory dependencies.",
+      "implementation_branch": "Apply the installed sudo version matching rules to the exact executable and arguments before analyzing helper behavior. Wildcards, regular expressions, environment controls and writable executable/parent paths have distinct implications. A matcher granting a command is expected when policy intends it; the defect is an unauthorized semantic effect reachable through that permitted helper.",
+      "operational_method": "Retain installed sudo version, effective includes/order/tags, RunAs identity, canonical executable and how that version matches the command argument string. Resolve wildcard versus supported regex semantics rather than assuming shell argv matching. Inspect writable executable/parent paths, permitted environment and helper dependencies. A local argv recorder proves arguments only; validate the actual sudo matching decision from supplied policy/output or an isolated policy fixture before attributing the helper semantic effect.",
+      "controlled_verification": "Use an isolated local policy fixture or inert argv-recording stub under owned identities; do not execute privileged escape payloads.",
+      "false_positive_discriminator": "A sudo entry is intentional delegation; demonstrate unintended authority beyond its actual command and argument contract.",
+      "remediation_acceptance": "Constrain the delegated operation and mutable inputs, verifying authorized commands and rejected argument/environment changes."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "security-oidc-subject-linking-review",
+  "domain": "Identity and federation extensions",
+  "intent": "Pairwise subject and sector/client migration into existing local accounts",
+  "artifacts": "External identity registry, account-linking rules, email verification policy and existing authenticated linking flow.",
+  "trace": "Trace the external stable identity pair into local account selection. Determine whether email/domain/display-name changes can select an unrelated account or skip linking consent.",
+  "experiment": "Model an owned client/sector migration with approved old-subject to new-subject mapping, then substitute an unrelated subject sharing only email/display metadata. Compare final local account/authority selection, not login success alone.",
+  "disproof": "Matching verified email can be an explicitly supported linking policy; demonstrate a violated requirement rather than imposing a universal prohibition.",
+  "repair": "Bind identities according to the declared linking policy and require the appropriate existing-account proof; retest collisions and intended links.",
+  "source": "https://openid.net/specs/openid-connect-core-1_0.html",
+  "adjacent": "security-oauth-oidc-review; security-jwt-review; security-saml-review",
+  "branch_decisions": "Use issuer plus subject as the external identity anchor and inspect the declared linking exception, if any. Email can change or be recycled; a verified-email flag describes a claim, not proof of control of an existing local account. Check re-linking and unlinking, not only first login.",
+  "operational_method": "Specialize in pairwise-subject/sector or client migration rather than ordinary email linking. Retain old and new issuer/client/sector context, immutable external subject and the approved migration mapping. A changed pairwise sub can legitimately identify the same user only through an authorized mapping; never infer that mapping from a recycled email. Compare approved migration with a new unrelated subject sharing the old display/email label and verify that existing local authority is not reassigned.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "overlaps",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

@@ -1,0 +1,18 @@
+{
+  "category": "A06",
+  "domain": "business",
+  "native_context": "Payment amount, recipient and order-state integrity",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "PAYMENT_INTEGRITY-1",
+      "boundary": "Payment amount, recipient and order-state integrity — authoritative consumer",
+      "source_trace": "Map trusted catalog/order amount/currency/recipient, payment provider event, order binding and paid-state transition. Use a provider sandbox or inert local payment fixture.",
+      "controlled_verification": "Compare a legitimate order payment with one caller-controlled mismatch derived from source: amount, currency, order or recipient. Inspect trusted provider event verification and the durable order ledger. An accepted checkout request is not proof of settled/fulfilled state.",
+      "false_positive_discriminator": "A client price used only for display is not price tampering. A signed provider event can still be bound to the wrong order, while a rejected mismatched event defeats that specific hypothesis.",
+      "remediation_acceptance": "Compute authoritative order values server-side and bind verified payment evidence to the exact order/recipient/state with idempotency. Retest legitimate settlement, original mismatch and bounded duplicate event."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

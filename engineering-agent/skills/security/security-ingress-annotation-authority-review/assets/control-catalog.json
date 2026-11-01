@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Kubernetes and deployment controllers",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Ingress annotations/templates controlling privileged proxy behavior",
+      "source_trace": "Trace an allowed ingress writer field into routing, file access or configuration evaluated by a higher-privilege controller.",
+      "implementation_branch": "Identify the installed ingress controller and enabled annotation/template features. The same annotation name can be ignored by a different controller. Separate permission to create Ingress objects from ability to alter global controller configuration; only trace input into generated configuration when a lower-trust actor can set it and the controller actually consumes it.",
+      "operational_method": "For ingress-nginx, collect the effective controller ConfigMap, snippet enablement, risk admission settings and installed controller version. Retain the generated configuration or rejection diagnostic for the specific annotation. A submitted annotation that is ignored or rejected does not reach the proxy parser. Compare a harmless admitted annotation with the disputed privileged directive in an isolated renderer, and keep permission to edit the controller ConfigMap separate from permission to create an Ingress.",
+      "controlled_verification": "Use an isolated controller fixture and inert routing marker; compare permitted routing and one policy-forbidden annotation effect.",
+      "false_positive_discriminator": "Controller support for powerful annotations is not tenant escalation unless a lower-trust writer can reach the protected effect.",
+      "remediation_acceptance": "Constrain annotations/ingress writers and generated configuration, retesting intended routes and rejected privileged directives."
+    }
+  ]
+}

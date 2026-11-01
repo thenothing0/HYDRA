@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "domain": "integration",
+  "native_context": "GitHub App installation-to-customer and repository authority",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "GITHUB_APP_AUTHORITY-1",
+      "boundary": "GitHub App installation-to-customer and repository authority — authoritative consumer",
+      "source_trace": "Read customer-to-installation mapping, installation token minting, repository selection, requested token permissions and the caller's own account authority.",
+      "controlled_verification": "With owned local installation fixtures, compare a permitted repository action with a caller-selected installation/repository belonging to another customer. Trace how the service chooses installation identity and narrows the token before the GitHub API operation.",
+      "false_positive_discriminator": "A GitHub App installation legitimately has app authority distinct from a user token. A broad app permission alone does not prove one customer can invoke another customer's installation.",
+      "remediation_acceptance": "Bind caller/customer/installation/repository/action at the service and mint the least required token scope. Retest intended customer operations and the original substituted installation/resource."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

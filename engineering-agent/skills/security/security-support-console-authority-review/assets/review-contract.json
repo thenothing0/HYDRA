@@ -1,0 +1,21 @@
+{
+  "name": "security-support-console-authority-review",
+  "domain": "API and SaaS authority",
+  "intent": "Customer-approved support capabilities bound to privileged backend operations",
+  "artifacts": "Support role matrix, customer selector, backend service credentials and approval/audit hooks.",
+  "trace": "Follow operator-selected customer identifiers to privileged reads/writes. Identify per-customer/product/action limits and whether a general support role silently bypasses them.",
+  "experiment": "Use a synthetic customer approval bound to one operator/action/version, then change customer, purpose or operation before an inert backend consumer. Compare actual allowed operation with rejected mismatches under any declared emergency override.",
+  "disproof": "Privileged service credentials behind the console do not prove a user bypass unless the console delegates them beyond its operator policy.",
+  "repair": "Enforce operator/customer/action authorization before service calls and verify legitimate support workflows remain usable.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+  "adjacent": "security-api-bola-review; security-api-function-authorization-review; security-background-job-authorization-review",
+  "branch_decisions": "Distinguish read-only investigation, customer-approved changes and emergency roles. A backend service credential may be legitimate, provided each operation checks the support operator policy. Customer selection through a URL or search result must not silently become authority to reset factors, export private data or alter payments.",
+  "operational_method": "Inspect one concrete customer-approved support capability from issuance to backend use: operator, customer, purpose/action, resource version and expiry. Compare the approval tuple with the actual privileged service operation rather than merely recording a ticket number. Reusing an export approval to reset MFA or changing customer after approval is a different grant. A legitimate emergency role must be evaluated under its documented override contract, not an invented universal customer-consent rule.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "overlaps",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

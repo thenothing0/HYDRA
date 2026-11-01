@@ -1,0 +1,21 @@
+{
+  "name": "security-gcp-secretmanager-version-authority-review",
+  "domain": "Google Cloud service boundaries",
+  "intent": "Secret Manager version access and conditional IAM scope",
+  "artifacts": "Principal bindings/conditions, secret/version identifiers, workload consumer and owner revocation policy.",
+  "trace": "Separate metadata, secret-version access and permission to change IAM/version state. Evaluate the actual resource/condition context used by the workload.",
+  "experiment": "Use an owned secret with a synthetic value and compare intended principal/version with a restricted owned principal.",
+  "disproof": "A secret name or version listing is not access to secret bytes; a missing version is not authorization evidence.",
+  "repair": "Constrain access and delegation to intended secrets/versions and retest permitted rotation workflows.",
+  "source": "https://cloud.google.com/secret-manager/docs/access-control",
+  "adjacent": "security-gcp-iam-review; security-firestore-rules-review",
+  "branch_decisions": "Resolve the full project/secret/version and any alias at access time. Metadata/list permissions and secret-version payload access differ. An alias such as latest can change during rotation; compare the authorized resource and actual selected version, including conditional IAM context, rather than assuming permission on one version generalizes to all secret data.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

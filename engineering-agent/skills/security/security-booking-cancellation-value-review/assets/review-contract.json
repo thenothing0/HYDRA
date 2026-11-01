@@ -1,0 +1,21 @@
+{
+  "name": "security-booking-cancellation-value-review",
+  "domain": "Commerce and business state",
+  "intent": "Booking cancellation eligibility and refund/credit conservation",
+  "artifacts": "Booking ownership, cancellation deadlines, penalty/credit rules and downstream inventory/refund actions.",
+  "trace": "Trace the cancellation actor, effective time and booking version into both inventory release and financial consequence.",
+  "experiment": "Use owned sandbox bookings; compare valid cancellation with a late or foreign cancellation and inspect credit plus booking state.",
+  "disproof": "A canceled UI label without credit or resource effect is insufficient; honor actual grace and timezone policy.",
+  "repair": "Make cancellation and associated credit/release transitions consistent and verify deadlines, retries and partial failures.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Transaction_Authorization_Cheat_Sheet.html",
+  "adjacent": "security-payment-integrity-review; security-workflow-transitions-review; security-race-conditions-review",
+  "branch_decisions": "Record whose clock/timezone controls the deadline and whether the booking version includes rescheduling or partial fulfillment. A late request may be permitted by explicit grace or operator override. Verify financial credit and inventory release independently rather than reading only a cancellation status.",
+  "operational_method": "Write the cancellation matrix for unused, partially fulfilled, rescheduled and expired bookings using the actual grace/penalty policy. Bind the approved booking version and authoritative timezone/deadline to the refund and inventory release. Repeat the same synthetic cancellation delivery and verify both credit and released inventory stay within that matrix; one successful status without either committed effect is insufficient.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

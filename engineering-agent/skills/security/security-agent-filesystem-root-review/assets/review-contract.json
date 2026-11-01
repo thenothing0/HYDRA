@@ -1,0 +1,21 @@
+{
+  "name": "security-agent-filesystem-root-review",
+  "domain": "AI applications and agent runtimes",
+  "intent": "Agent broker file-root capabilities and grant-generation revocation",
+  "artifacts": "File-tool schema, allowed roots, symlink/parent handling, broker identity and approval scope.",
+  "trace": "Follow model-supplied paths through normalization and descriptor/open logic. Compare the final object to the user-authorized workspace rather than only a textual prefix.",
+  "experiment": "Grant a disposable file-root capability for markerA, then narrow/revoke it and reuse the old broker handle under the declared generation policy. Compare a fresh permitted handle and the stale context without accessing real private files.",
+  "disproof": "A prompt asking for an outside path is not access; an external file read by setup code must not be attributed to the agent tool.",
+  "repair": "Enforce final file-object authority and retest legitimate nested paths, link/rename races in local fixtures and explicit user grants.",
+  "source": "https://genai.owasp.org/llm-top-10/",
+  "adjacent": "security-llm-prompt-injection-review; security-agent-tool-authorization-review; security-mcp-authorization-review",
+  "branch_decisions": "Resolve paths at the actual file operation, including parent symlinks, directory handles and races between check and use. A lexical startswith check can misclassify sibling names, while sandboxed mount isolation may deny the path independently. Use disposable local roots and marker files; privileged fixture creation of a symlink is not proof the untrusted actor can create it.",
+  "operational_method": "Specialize in broker-issued workspace/root capabilities: grant ID, canonical root, allowed operations, user/task ownership and revocation generation. Resolve the actual file descriptor/path at use and compare it with the current capability; an old tool handle must not silently retain authority after a narrowed grant if policy revokes it. Test disposable marker roots and a stale broker handle. Ordinary traversal/link mechanics without a changing agent grant belong in filesystem review.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "overlaps",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

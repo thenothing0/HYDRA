@@ -1,0 +1,21 @@
+{
+  "name": "security-gcp-storage-object-acls-review",
+  "domain": "Google Cloud service boundaries",
+  "intent": "Cloud Storage effective publication across IAM, ACL and bucket modes",
+  "artifacts": "Bucket access mode, IAM, applicable object ACLs, public-access prevention and specific object intent.",
+  "trace": "Resolve the effective access path for one principal/object and distinguish object retrieval, listing and modification under the configured bucket mode.",
+  "experiment": "Use owned public/private synthetic objects and compare anonymous and intended principal operations at known paths.",
+  "disproof": "A public bucket label or metadata alone is not disclosure of a confidential object; disabled ACL paths must not be treated as effective grants.",
+  "repair": "Align publication mode and effective grants, verifying intentional public content and private-object denial.",
+  "source": "https://cloud.google.com/storage/docs/access-control",
+  "adjacent": "security-gcp-iam-review; security-firestore-rules-review",
+  "branch_decisions": "Branch on uniform bucket-level access: enabled UBLA disables ACL grants. With UBLA disabled, applicable IAM and ACL grants act in parallel; checking only one can miss an allow. Resolve inherited public-access prevention (PAP): it blocks allUsers/allAuthenticatedUsers grants but does not revoke signed URLs authorized through their signer. Such a URL succeeding is not a PAP bypass; review issuer entitlement separately. A stale public ACL alone proves no current exposure. Compare direct anonymous access, entitled identity access and any separately authorized signed capability.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

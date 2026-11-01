@@ -82,6 +82,8 @@ there is no secret-key entry field, and keys are never requested in chat.
 | `/provider NAME MODEL` | Select an implemented provider/model |
 | `/burp` | Check the Burp MCP server and list its tools |
 | `/hackerone` | Show the local automatic-reporting policy and recent receipts |
+| `/skills QUERY` | Search the 300 bundled security/OWASP skills |
+| `/skill NAME` / `/skill clear` | Select a skill or clear active instructions |
 | `/status` | Show the selected session's run limits, usage and stop reason |
 | `/handoff` | Show a validated handoff of committed session state |
 | `/cancel` / Ctrl+C | Cancel the active run |
@@ -106,6 +108,11 @@ Start with `--hackerone` to expose HackerOne tools. Account credentials, an
 operator-authorized program/asset and finding-specific verifiers are configured
 separately. Only a completed validation plan can trigger automatic submission;
 `--allow-run` does not bypass those gates. See [HACKERONE.md](HACKERONE.md).
+
+Skills are available with every engineering provider. `--skill NAME` preloads an
+entrypoint; the model can also use `skill_search`, `skill_use` and `skill_read`
+during a task. References load on demand, and helpers use the command approval
+flow. See [skill usage, import provenance and limits](skills/README.md).
 
 Run limits apply to this interface too: `--max-tool-calls`, `--max-tokens`,
 `--max-context-chars` and `--max-failures`. Token limits use observed provider

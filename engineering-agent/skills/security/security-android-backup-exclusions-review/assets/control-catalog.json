@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Mobile platform integrations",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Android backup/device-transfer rules for declared sensitive app data",
+      "source_trace": "Determine which files participate in actual backup and device transfer paths, separating platform versions and debug tooling.",
+      "implementation_branch": "Branch on Android version, cloud backup versus device-to-device transfer and the installed build rules. A single allowBackup value does not describe every transport/version. Determine whether the threat model grants backup extraction access and whether restored data remains useful under keystore/account binding, without collecting production app backups.",
+      "operational_method": "Resolve OS/target build and supported transport before selecting fullBackupContent or dataExtractionRules and its applicable cloud/device-transfer/cross-platform section. Missing rules in a supported mode can differ from an explicit exclusion; allowBackup=false is not a universal guarantee across OEM transfer paths. Retain the effective build rules and an owned synthetic backup/restore artifact for the selected mode. Do not infer current cross-platform behavior from an old two-transport fixture.",
+      "controlled_verification": "Use an emulator/test account and synthetic secret marker; inspect an owned supported backup or restored app without extracting real-user data.",
+      "false_positive_discriminator": "A file in private app storage is not automatically excluded from every transfer; unsupported adb backup behavior cannot prove current platform exposure.",
+      "remediation_acceptance": "Exclude or protect sensitive persisted data under the actual backup modes and verify legitimate restoration."
+    }
+  ]
+}

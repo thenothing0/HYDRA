@@ -1,0 +1,21 @@
+{
+  "name": "security-mysql-account-grants-review",
+  "domain": "Databases and messaging",
+  "intent": "MySQL effective account/host matching and stored-object privileges",
+  "artifacts": "Server version, matched user/host account, role activation, grants and definer/invoker objects.",
+  "trace": "Resolve the actual authenticated account and effective active roles before following a stored routine/view into protected tables.",
+  "experiment": "Use an isolated database with two owned users and synthetic rows; compare intended access and a controlled definer-object invocation.",
+  "disproof": "A broad grant on a different host account or inactive role is not effective access for the tested connection.",
+  "repair": "Constrain matched account and stored-object authority, testing normal routines and restricted table operations.",
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/access-control.html",
+  "adjacent": "security-postgres-rls-review; security-redis-acl-review; security-kafka-acl-review",
+  "branch_decisions": "Resolve the matched user@host account, active roles and direct grants before invoking stored-object authority. SQL SECURITY DEFINER may deliberately delegate a narrow operation; inspect definer identity, object body and caller-controlled arguments only when that path is reachable. A client-supplied username alone does not identify the effective server account.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

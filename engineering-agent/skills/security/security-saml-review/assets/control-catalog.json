@@ -1,0 +1,16 @@
+{
+  "category": "A07",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "SAML-1",
+      "boundary": "SAML assertion and federation binding — authoritative consumer",
+      "source_trace": "Read the service provider's actual XML/signature library, metadata trust, selected assertion, recipient/audience and request correlation. Identify the element whose verified subject becomes the session.",
+      "controlled_verification": "Using owned local signing fixtures, trace whether the application consumes exactly the signed/validated assertion and the intended recipient/audience/time context. Compare a valid fixture, an invalid-signature fixture and an assertion for another local service provider; do not execute arbitrary XML gadgets.",
+      "false_positive_discriminator": "A signed XML element somewhere in the document is not proof that the consumed identity is signed. Conversely, parsing XML or accepting multiple elements is not alone a wrapping exploit without selection and identity effect.",
+      "remediation_acceptance": "Use supported library verification/selection and bind the consumed assertion to the intended service/session policy. Retest normal federation, invalid signature and the specific selection mismatch on the relevant library build."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

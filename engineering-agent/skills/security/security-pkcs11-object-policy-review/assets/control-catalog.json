@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Cryptographic protocols and runtime consumers",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "PKCS#11 object attributes, sessions and permitted key operations",
+      "source_trace": "Trace lower-trust templates/handles into key creation, wrapping or use and determine whether operation attributes reflect the intended key purpose.",
+      "implementation_branch": "Inspect session role, object class and CKA_SENSITIVE/EXTRACTABLE plus permitted usage/mechanisms; historical ALWAYS_SENSITIVE/NEVER_EXTRACTABLE attributes describe lifecycle constraints. Trusted wrapping and object templates can change effective policy. Software-token tests establish that implementation only, not physical HSM enforcement, and a permitted signature operation does not prove raw key extraction.",
+      "operational_method": "Review C_CreateObject, C_CopyObject and C_SetAttributeValue separately. Retain CKA_COPYABLE/MODIFIABLE and the allowed transitions for sensitivity/extractability under the selected specification and module; making a key more restrictive differs from relaxing it, and historical attributes track lifecycle. Use disposable software-token keys only when that implementation is the test target. Compare allowed attribute changes with a denied relaxation; a signature operation is neither copying nor raw extraction.",
+      "controlled_verification": "Use a local software token with synthetic keys and a reviewed operation sequence; compare allowed use and a policy-forbidden template/operation.",
+      "false_positive_discriminator": "A key handle or token login is not export authority; do not extrapolate a software-token behavior to an untested HSM.",
+      "remediation_acceptance": "Constrain object templates and role operations, testing legitimate key use, wrapping rules and lifecycle."
+    }
+  ]
+}

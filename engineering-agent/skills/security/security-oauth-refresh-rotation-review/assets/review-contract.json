@@ -1,0 +1,21 @@
+{
+  "name": "security-oauth-refresh-rotation-review",
+  "domain": "Identity and federation extensions",
+  "intent": "Refresh-token family rotation, reuse response and atomicity",
+  "artifacts": "Rotation storage/model, family revocation policy, session relationships and deterministic owned concurrency fixture.",
+  "trace": "Track issuance, replacement and revocation as one transition. Determine whether reuse rejects only one request or invalidates the intended family and downstream sessions.",
+  "experiment": "Replay one previously consumed synthetic refresh token and inspect family state; use deterministic local barriers for a race rather than live request bursts.",
+  "disproof": "Two locally issued access tokens are not necessarily a defect if policy explicitly allows overlap; record actual reuse policy and validity.",
+  "repair": "Implement atomic family transitions and the declared reuse response, then verify normal refresh and reuse handling.",
+  "source": "https://www.rfc-editor.org/rfc/rfc9700",
+  "adjacent": "security-oauth-oidc-review; security-jwt-review; security-saml-review",
+  "branch_decisions": "Record the issuer policy for token-family reuse, allowed concurrency and any grace window. Do not assume every access token must be revoked on refresh reuse. Inspect atomic replacement and the exact descendants still usable after a detected replay, using synthetic local state rather than live token guessing.",
+  "operational_method": "Trace family ID, predecessor, replacement token and commit/delivery state. If rotation commits but the response is lost, a retry can be legitimate under an explicit grace/idempotency contract; distinguish it from two independently successful descendants exceeding policy. Use deterministic local interleaving and transport-loss simulation, then record which family members remain usable without treating every reuse event as proven theft.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

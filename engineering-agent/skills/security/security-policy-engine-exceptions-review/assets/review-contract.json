@@ -1,0 +1,21 @@
+{
+  "name": "security-policy-engine-exceptions-review",
+  "domain": "Kubernetes and deployment controllers",
+  "intent": "Gatekeeper/Kyverno policy exception and mutation trust",
+  "artifacts": "Installed engine/version, constraint/policy and exception resources, mutation order and namespace labels.",
+  "trace": "Trace who may change exceptions, selectors or authority-bearing labels and whether mutation creates a post-validation privilege difference.",
+  "experiment": "Use an owned local cluster with a harmless policy marker; compare an approved exception and a lower-trust exception/label change.",
+  "disproof": "An explicit administrator-controlled exception is intended authority; policy names alone do not prove enforcement.",
+  "repair": "Constrain exception writers and evaluate the final admitted object, preserving intended workload exceptions.",
+  "source": "https://kyverno.io/docs/exceptions/",
+  "adjacent": "security-kubernetes-rbac-review; security-kubernetes-workload-isolation-review; security-kubernetes-network-policy-review",
+  "branch_decisions": "Identify the engine/version and whether a namespace, label or exception object exempts a resource. Check who can create that exception and whether admission protects the exemption metadata. Mutation and validation ordering can change the final admitted object; a policy report in audit mode is not an enforced deny control.",
+  "operational_method": "Choose the actual engine before constructing the exception case. For Kyverno inspect PolicyException availability, exception namespace/admission rules and which policies/rules it matches. For Gatekeeper inspect the applicable exclusion configuration and excluded namespaces/processes, rather than inventing a Kyverno-style object. Record the restricted actor allowed to alter the exemption and the final admission decision for one otherwise forbidden owned object; audit-only reports are not enforced denial.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

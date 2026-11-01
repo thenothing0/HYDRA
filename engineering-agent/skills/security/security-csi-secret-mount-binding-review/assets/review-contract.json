@@ -1,0 +1,21 @@
+{
+  "name": "security-csi-secret-mount-binding-review",
+  "domain": "Kubernetes and deployment controllers",
+  "intent": "CSI external-secret mount identity and workload/resource selection",
+  "artifacts": "CSI provider config, pod/service-account identity, SecretProviderClass writers and external resource policy.",
+  "trace": "Trace who chooses external secret identifiers and which workload identity the provider uses at mount/refresh.",
+  "experiment": "Use a local provider stub with synthetic secrets; compare rightful pod/service-account mount and a foreign resource or provider-class substitution.",
+  "disproof": "A successful controller/admin mount does not show an unprivileged pod can read another secret.",
+  "repair": "Bind provider configuration and external resource authority to the intended workload, verifying mount and rotation.",
+  "source": "https://secrets-store-csi-driver.sigs.k8s.io/",
+  "adjacent": "security-kubernetes-rbac-review; security-kubernetes-workload-isolation-review; security-kubernetes-network-policy-review",
+  "branch_decisions": "Map pod service account, SecretProviderClass namespace and provider-specific workload identity into the requested external secret. Mount permission and permission to sync a Kubernetes Secret can differ. A privileged operator changing the pod identity is setup authority, not an app-originated exploit; inspect whether an actual restricted workload can select another identity or resource.",
+  "operational_method": "Choose provider and authentication mode explicitly: node identity, pod identity and workload federation select different principals. Collect SecretProviderClass parameters, pod service account and the effective identity-selection path. A fixture that grants every pod the same fake node identity cannot establish workload isolation. Compare two synthetic secret identifiers under the same actual restricted workload identity and verify provider admission before treating a mounted path as secret exposure.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

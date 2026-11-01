@@ -1,0 +1,21 @@
+{
+  "name": "security-aws-ecr-image-authority-review",
+  "domain": "AWS service boundaries",
+  "intent": "ECR image publication, tag mutation and deployment consumption",
+  "artifacts": "Repository policies, push/pull principals, tag immutability, digest/signature checks and deployment resolver.",
+  "trace": "Trace a lower-trust image producer into the exact digest used by a privileged workload; distinguish readable images from writable release identity.",
+  "experiment": "Use an owned local registry/sandbox repository and inert image metadata; compare approved digest selection with a forbidden tag replacement.",
+  "disproof": "Public image pull is not deployment compromise. A mutable tag is insufficient without a reachable untrusted write and trusting consumer.",
+  "repair": "Constrain publication and bind deployment to approved provenance/digest, preserving legitimate release updates.",
+  "source": "https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-policies.html",
+  "adjacent": "security-aws-iam-review; security-aws-object-storage-review; security-aws-workload-identity-review",
+  "branch_decisions": "Resolve the digest ultimately pulled by the workload; a mutable tag alone does not prove a protected deployment consumes attacker bytes. Separate repository push/delete policy, replication and deployment promotion authority. Signature/provenance verification must bind the consumed digest and authorized producer, and a legitimate release job remains a positive control.",
+  "operational_method": "GetAuthorizationToken authenticates a registry client but does not independently grant repository pull/push. Resolve permissions for actual layer upload, PutImage, retrieval and deletion on the selected repository. Record tag mutability, the pushed digest and the exact digest selected by deployment. An owned repository push is a baseline; the disputed path must change a protected repository or consumed release digest under the restricted principal.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

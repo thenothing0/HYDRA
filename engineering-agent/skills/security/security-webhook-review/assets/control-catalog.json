@@ -1,0 +1,16 @@
+{
+  "category": "A08",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "WEBHOOK-1",
+      "boundary": "Webhook authenticity, replay and processing — authoritative consumer",
+      "source_trace": "Identify provider protocol/version, exact-byte signature verification, endpoint secret/key selection, event/account binding and replay/idempotency state. Separate inbound webhooks from outbound URL fetchers.",
+      "controlled_verification": "With owned synthetic events compare a valid event, tampered raw body and bounded duplicate delivery. Inspect durable protected state and whether the verified event account/object matches the local recipient. Preserve raw bytes used for signing rather than reserializing JSON for the test.",
+      "false_positive_discriminator": "A 200 acknowledgement is not a protected commit. Signature verification alone does not prove order/account binding or idempotency, and provider timestamp/retry rules are not interchangeable.",
+      "remediation_acceptance": "Use the provider-supported raw-byte verification and bind event/account/object/action before idempotent commitment. Retest legitimate retries, tampering and the original wrong binding."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

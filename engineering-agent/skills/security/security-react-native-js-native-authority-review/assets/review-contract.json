@@ -1,0 +1,21 @@
+{
+  "name": "security-react-native-js-native-authority-review",
+  "domain": "Mobile platform integrations",
+  "intent": "React Native JavaScript-to-native module capability boundaries",
+  "artifacts": "Native module methods, JS bundle/content trust, argument validation and platform permission/caller context.",
+  "trace": "Determine whether lower-trust JS/content can reach privileged native methods and choose resources/actions beyond its authorized feature.",
+  "experiment": "Use an owned app fixture with an inert native operation and synthetic JS input; compare intended calls and a forbidden resource selection.",
+  "disproof": "A powerful native module exposed to fully trusted application JS is not itself a defect; establish a lower-trust caller path.",
+  "repair": "Constrain module arguments and capabilities at the native boundary and retest intended application use.",
+  "source": "https://reactnative.dev/docs/native-platform",
+  "adjacent": "security-android-components-review; security-ios-link-handling-review; security-mobile-local-data-review",
+  "branch_decisions": "Define whether JavaScript is trusted bundled code or lower-trust remotely supplied content. A native method exposed to the trusted application runtime is not automatically a web-origin bridge. Trace the actual entry from WebView/messages/updates into module arguments, native permissions and object checks before claiming another origin can invoke it.",
+  "operational_method": "Resolve legacy bridge versus New Architecture/TurboModule registration, the actual exported native method and per-platform argument conversion. Find the lower-trust entry into that method before treating bundled application JS as an attacker. Compare a legitimate native invocation with a malformed/foreign-resource value at the real conversion boundary using an owned app fixture; a generic mock bridge cannot prove installed module exposure.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

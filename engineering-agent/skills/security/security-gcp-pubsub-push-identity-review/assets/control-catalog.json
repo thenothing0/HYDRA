@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Google Cloud service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Pub/Sub authenticated push identity and subscription binding",
+      "source_trace": "Trace verified push identity into the trusted subscription/tenant and downstream action. A payload subscription field is not independently authenticated.",
+      "implementation_branch": "Validate the push token issuer, audience and intended service-account identity under the configured endpoint. The JSON subscription field is not independently authenticated merely because it appears in the body. An authentic push identity shared across subscriptions may still need application resource binding; a token replay without an unauthorized consumer effect remains a narrower observation.",
+      "operational_method": "",
+      "controlled_verification": "Use an owned endpoint/local push fixture; compare expected service-account/audience with a valid token for another owned sender or a payload substitution.",
+      "false_positive_discriminator": "An HTTP acknowledgment or JSON event acceptance does not prove a protected action; inspect the synthetic effect.",
+      "remediation_acceptance": "Bind verified push identity/audience and event scope, then verify legitimate delivery, retries and rejection."
+    }
+  ]
+}

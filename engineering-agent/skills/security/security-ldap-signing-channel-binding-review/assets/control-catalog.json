@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Enterprise identity and privileged access",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "LDAP signing/channel-binding enforcement for directory authentication",
+      "source_trace": "Determine what authenticity/integrity properties the actual bind path enforces, distinguishing TLS peer validation from binding the authenticated session.",
+      "implementation_branch": "Separate simple bind over TLS, SASL signing and TLS channel-binding requirements for the actual client/server combination. Signing policy and channel-binding policy cover different relay/tampering paths. A rejected unsigned bind is a useful specific control; it does not prove every TLS client validates the directory peer or supplies the required binding.",
+      "operational_method": "",
+      "controlled_verification": "Use an owned directory lab or configuration trace with synthetic accounts; compare a supported protected bind and a deliberately unsupported protection mode.",
+      "false_positive_discriminator": "A listening LDAP port or successful anonymous metadata read is not credential relay or authenticated directory access.",
+      "remediation_acceptance": "Enforce the required bind protections and verify normal directory clients and rejected weaker paths."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "CI and package publication",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Buildkite agent hooks, dynamic pipelines and secret-bearing execution",
+      "source_trace": "Trace editable dynamic steps or repository hooks into an agent with protected credentials or persistent state.",
+      "implementation_branch": "Identify which hooks come from agent configuration, plugins or the checked repository and when each runs relative to secret injection and checkout. Dynamic pipeline upload can delegate new steps; inspect who supplies those steps and queue/agent selection. A trusted agent administrator altering a hook is not an untrusted repository escape.",
+      "operational_method": "",
+      "controlled_verification": "Use a local/isolated agent fixture with a synthetic secret and inert hook; compare trusted queue/job and lower-trust uploaded step.",
+      "false_positive_discriminator": "A queue name or dynamic pipeline capability is not a defect without a violated trust boundary.",
+      "remediation_acceptance": "Separate agent queues/trust and constrain hooks/plugins/secrets, verifying cleanup and approved dynamic workflows."
+    }
+  ]
+}

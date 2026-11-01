@@ -1,0 +1,21 @@
+{
+  "name": "security-azure-servicebus-sas-scope-review",
+  "domain": "Azure service boundaries",
+  "intent": "Service Bus SAS policy scope and message operation authority",
+  "artifacts": "Namespace/entity SAS rules, token lifetime/resource URI, sender/listener roles and consumer trust.",
+  "trace": "Determine which queue/topic operation the credential permits and whether a client-scoped token reaches another entity or management operation.",
+  "experiment": "Use an owned namespace fixture with synthetic messages; compare intended send/listen and a forbidden entity/operation.",
+  "disproof": "A connection string label does not establish its permissions; management metadata is different from message contents.",
+  "repair": "Issue entity/operation-scoped capabilities and validate consumer identity independently, then test renewal and restricted entities.",
+  "source": "https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-sas",
+  "adjacent": "security-entra-app-consent-review; security-azure-storage-sas-review",
+  "branch_decisions": "Identify the namespace/entity resource URI and Listen, Send or Manage rights attached to the signing policy. A valid SAS token for one entity must not be assumed to authorize the entire namespace. Separate token issuance by an application from broker enforcement, and test receive versus send only with synthetic queues/topics in a supplied sandbox.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

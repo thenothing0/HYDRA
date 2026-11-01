@@ -1,0 +1,17 @@
+{
+  "category": "A02",
+  "native_context": "Mail-domain authorization and DMARC identifier alignment",
+  "taxonomy_note": "Planning lens only; actual root-cause mapping is independent.",
+  "controls": [
+    {
+      "id": "SECURITY_EMAIL_DOMAIN_AUTHENTICATION_REVIEW-1",
+      "boundary": "Mail-domain authorization and DMARC identifier alignment — authoritative consumer",
+      "source_trace": "Collect exact author/envelope/signing domains, timestamped DNS and sanitized authentication results from a trusted receiver. Record receiver/version policy and legitimate senders.",
+      "controlled_verification": "From supplied mail or an owned local receiver, evaluate SPF/DKIM authentication separately from DMARC identifier alignment. Compare a legitimate aligned sender with an unaligned identity fixture and determine which receiver result is authoritative; a sender-supplied Authentication-Results header is not trusted evidence.",
+      "false_positive_discriminator": "Missing records, monitoring policy or SPF pass for an unaligned envelope domain do not demonstrate an accepted aligned forgery. Display-name similarity and forwarding have different prerequisites.",
+      "remediation_acceptance": "Correct the evidenced sender/alignment/policy with staged owner validation of legitimate mail. Retest approved senders and the controlled invalid identity under the relevant receiver contract."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

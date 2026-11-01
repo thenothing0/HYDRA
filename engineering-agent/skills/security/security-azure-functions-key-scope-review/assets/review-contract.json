@@ -1,0 +1,21 @@
+{
+  "name": "security-azure-functions-key-scope-review",
+  "domain": "Azure service boundaries",
+  "intent": "Azure Functions host/function keys and application action authority",
+  "artifacts": "Trigger auth levels, function/host key distribution, key consumers and handler authorization.",
+  "trace": "Identify what the key actually admits and whether a caller with an intended narrow key reaches another function or protected business operation.",
+  "experiment": "Use an owned function fixture with synthetic effects; compare an intended function key and a restricted function/action.",
+  "disproof": "A publishable endpoint or a key parameter is not account administration authority; a handler can still enforce its own actor policy.",
+  "repair": "Restrict key distribution/scope and handler permissions, then verify intended trigger calls and cross-function denial.",
+  "source": "https://learn.microsoft.com/en-us/azure/azure-functions/function-keys-how-to",
+  "adjacent": "security-entra-app-consent-review; security-azure-storage-sas-review",
+  "branch_decisions": "Identify function, host and administrative/master key scope without copying key material into reports. A function key may intentionally authenticate a shared integration; it does not identify an end user. Compare invocation admission with handler authorization, and account for an explicitly anonymous trigger or an alternate authenticated gateway before classifying key reachability.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

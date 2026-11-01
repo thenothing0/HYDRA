@@ -1,0 +1,16 @@
+{
+  "category": "A02",
+  "taxonomy_note": "Initial root-cause lens; reassess final mapping.",
+  "controls": [
+    {
+      "id": "XXE-1",
+      "boundary": "XML external entities and parser capabilities — authoritative consumer",
+      "source_trace": "Identify the actual parser factory/options and every XML entrypoint, including document converters and secondary parses. Record whether DTDs, external general/parameter entities or schemas can resolve resources.",
+      "controlled_verification": "Use a local parser fixture with an owned inert file or callback and a normal XML control. Observe actual resolver/file access at the parser, keeping entities and document size bounded. If an import preprocesses XML, trace the parser after preprocessing too.",
+      "false_positive_discriminator": "The presence of a DOCTYPE or an old parser dependency is not external resolution. A DNS event alone may establish resolution but not file disclosure or internal-service access.",
+      "remediation_acceptance": "Use supported parser configuration that disables unneeded external resolution, or a tightly controlled resolver when required. Retest legitimate documents and the evidenced resolution path at every affected parser instance."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

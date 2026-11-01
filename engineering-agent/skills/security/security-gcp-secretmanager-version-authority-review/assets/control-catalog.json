@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Google Cloud service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Secret Manager version access and conditional IAM scope",
+      "source_trace": "Separate metadata, secret-version access and permission to change IAM/version state. Evaluate the actual resource/condition context used by the workload.",
+      "implementation_branch": "Resolve the full project/secret/version and any alias at access time. Metadata/list permissions and secret-version payload access differ. An alias such as latest can change during rotation; compare the authorized resource and actual selected version, including conditional IAM context, rather than assuming permission on one version generalizes to all secret data.",
+      "operational_method": "",
+      "controlled_verification": "Use an owned secret with a synthetic value and compare intended principal/version with a restricted owned principal.",
+      "false_positive_discriminator": "A secret name or version listing is not access to secret bytes; a missing version is not authorization evidence.",
+      "remediation_acceptance": "Constrain access and delegation to intended secrets/versions and retest permitted rotation workflows."
+    }
+  ]
+}

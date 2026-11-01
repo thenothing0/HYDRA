@@ -1,0 +1,4 @@
+interface:
+  display_name: "OWASP A10: Mishandling of Exceptional Conditions"
+  short_description: "Review and remediate OWASP A10:2025 risks"
+  default_prompt: "Use $owasp-2025-a10-exceptional-conditions to review this project, document supported findings, and verify requested fixes."

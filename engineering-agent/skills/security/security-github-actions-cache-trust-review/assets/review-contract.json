@@ -1,0 +1,21 @@
+{
+  "name": "security-github-actions-cache-trust-review",
+  "domain": "CI and package publication",
+  "intent": "GitHub Actions cache producer identity and privileged consumption",
+  "artifacts": "Cache keys/restore prefixes, branch/event scoping, producer permissions and trusted consuming job.",
+  "trace": "Follow a lower-trust producer artifact into a privileged job that treats restored bytes as code or authoritative metadata.",
+  "experiment": "Use a local cache model or isolated repository with inert markers; compare the intended cache producer with a permitted lower-trust key/restore context.",
+  "disproof": "A broad restore prefix is not cache poisoning without a producer path and security-relevant consumer.",
+  "repair": "Bind cache trust to producer/context or validate consumed artifacts, preserving legitimate safe reuse.",
+  "source": "https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows",
+  "adjacent": "security-ci-artifact-provenance-review; security-package-resolution-review; security-github-actions-trust-review",
+  "branch_decisions": "Apply GitHub cache ref visibility before modeling a poisoned key: a cache created for a pull-request merge ref is not automatically restorable by main under the same key. Trace default-branch visibility, restore-prefix selection and the privileged consumer. If platform scope prevents restoration, the proposed cross-ref chain fails at that edge.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

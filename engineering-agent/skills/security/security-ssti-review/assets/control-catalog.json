@@ -1,0 +1,16 @@
+{
+  "category": "A05",
+  "taxonomy_note": "Initial root-cause lens; reassess final mapping.",
+  "controls": [
+    {
+      "id": "SSTI-1",
+      "boundary": "Server-side template injection — authoritative consumer",
+      "source_trace": "Trace template source selection/compilation separately from ordinary template data. Record engine/version, sandbox configuration, reachable expressions and deployment context.",
+      "controlled_verification": "Use a local inert arithmetic/string marker through the real template compilation path. Compare user text passed as a data value with user text interpreted as template source. Inspect whether a later render/recompile step promotes previously stored content to source.",
+      "false_positive_discriminator": "A template delimiter appearing in output is not evaluation. Ordinary escaped data substitution and client-side rendering are different boundaries. An evaluated harmless expression does not by itself demonstrate OS execution.",
+      "remediation_acceptance": "Keep caller content as data and restrict template-source authority according to the feature. Retest normal templates, legitimate user text and the original evaluation path; a sandbox claim requires the actual engine contract."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

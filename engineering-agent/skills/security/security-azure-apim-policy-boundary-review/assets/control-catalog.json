@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Azure service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "API Management policy transformations and backend identity authority",
+      "source_trace": "Trace identity after policy inheritance/condition branches and whether caller-controlled headers survive as trusted backend claims.",
+      "implementation_branch": "Evaluate effective policy inheritance at global, product, API and operation levels, including base placement and policy expressions. Authentication at the gateway can be legitimate only if the backend trusts an unforgeable gateway path or validates identity independently. A rewritten caller header matters when the backend consumes it as authority, not when it is merely logged.",
+      "operational_method": "Collect the subscription used by the request and whether it is product-, API- or all-API-scoped before applying product-level policy. Build the effective inherited policy for that operation, including base placement, and inspect whether the backend accepts direct requests or caller-forgeable identity headers. Compare the same protected action through the real applicable gateway path and an owned direct-backend fixture; a policy merely present in another product is not an active check.",
+      "controlled_verification": "Use an owned APIM/backend fixture; compare a legitimate request with one identity/header or route branch variation and inspect the backend principal.",
+      "false_positive_discriminator": "A subscription key or successful gateway response does not prove backend authentication or cross-tenant access.",
+      "remediation_acceptance": "Normalize identity at the trusted gateway boundary and enforce backend resource policy, retaining valid API products."
+    }
+  ]
+}

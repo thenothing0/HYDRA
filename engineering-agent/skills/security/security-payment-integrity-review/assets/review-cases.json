@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-payment-integrity-review",
+  "cases": [
+    {
+      "id": "underpaid-order",
+      "scenario": "A synthetic 100-unit order is marked fully paid after a one-unit stub settlement.",
+      "expected_decision": "Confirm only if the required amount/binding and actual entitlement transition are evidenced; keep the payment provider simulated."
+    },
+    {
+      "id": "display-only-change",
+      "scenario": "A caller changes the UI total, but server totals and fulfilled entitlement remain correct.",
+      "expected_decision": "Do not report server-side underpayment from the UI change."
+    },
+    {
+      "id": "missing-ledger",
+      "scenario": "The callback returns success, but authoritative order/ledger state is unavailable.",
+      "expected_decision": "Keep fulfillment/underpayment impact unverified and request the decisive state observation."
+    }
+  ]
+}

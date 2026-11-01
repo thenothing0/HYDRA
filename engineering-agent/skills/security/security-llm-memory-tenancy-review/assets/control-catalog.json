@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "AI applications and agent runtimes",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Persistent agent memory ownership, retrieval and update authority",
+      "source_trace": "Trace who may persist or modify memory and which user/tenant receives it after later retrieval, including merged or summarized memories.",
+      "implementation_branch": "Resolve who owns a memory item and who may insert, update, retrieve or delete it. A shared team memory may intentionally cross individual accounts; compare against its declared audience. Follow stable tenant/user identifiers through retrieval filters, summarization and cache reuse, including account switching, rather than equating semantic similarity with an ownership grant.",
+      "operational_method": "Retain provenance and permitted audience for each input item contributing to a summary or merged memory. The derived object audience must follow the declared intersection/declassification policy, not whichever namespace stores the summary. Compare a permitted team summary with one including a restricted synthetic item, then revoke/delete its source entitlement and inspect derived-memory reuse. A direct namespace filter alone does not establish derived-data isolation.",
+      "controlled_verification": "Use two owned actors with distinct synthetic memory markers; compare permitted recall and a controlled foreign namespace/update request.",
+      "false_positive_discriminator": "A model recalling public shared knowledge is expected; similarity alone does not prove a specific private memory was retrieved.",
+      "remediation_acceptance": "Bind memory writes/retrieval/retention to current actor authority and verify deletion and entitled recall."
+    }
+  ]
+}

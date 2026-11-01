@@ -1,0 +1,17 @@
+{
+  "category": "A01",
+  "native_context": "API response-property authorization",
+  "taxonomy_note": "Planning lens only; actual root-cause mapping is independent.",
+  "controls": [
+    {
+      "id": "SECURITY_API_SENSITIVE_FIELDS_REVIEW-1",
+      "boundary": "API response-property authorization — authoritative consumer",
+      "source_trace": "Inspect serializer/projection definitions, resolver fields, API schema and the field visibility rule for each actor. Separate read authority from field write authority.",
+      "controlled_verification": "Use an object actor A may legitimately read. Populate a synthetic private field as its owner and request the ordinary view, expanded view and the one alternate serializer evidenced in source. Check raw wire output and nested relationships, not just the rendered UI. Repeat as the actor entitled to that field.",
+      "false_positive_discriminator": "An internal field name in a schema is inventory. A null, masked or absent value does not demonstrate exposure. Reading an entirely forbidden object is BOLA; modifying a protected property is mass assignment.",
+      "remediation_acceptance": "Use explicit actor-aware response projections at serialization and export boundaries. Test allowed public fields, the denied private marker and authorized private-field access after the change."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

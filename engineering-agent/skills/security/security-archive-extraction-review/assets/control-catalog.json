@@ -1,0 +1,16 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "ARCHIVE_EXTRACTION-1",
+      "boundary": "Archive extraction and Zip Slip boundaries — authoritative consumer",
+      "source_trace": "Inspect archive format/library, member path handling, links, extraction root, overwrite policy and expansion/file-count limits. Record worker identity and publication path.",
+      "controlled_verification": "Build a tiny owned archive containing a normal member and one outside-root or link-mediated member justified by the library semantics. Extract only into a disposable tree and inspect actual file destinations. Check limits with small deterministic fixtures, not a decompression bomb.",
+      "false_positive_discriminator": "An unsafe member name in an archive is not a write if the extractor rejects or confines it. File traversal, link authority and unbounded expansion are separate mechanisms and may need distinct findings.",
+      "remediation_acceptance": "Validate effective destinations for members and links before write, constrain overwrite/expansion and preserve valid archives. Retest normal extraction, the exact escape path and cleanup after rejection."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

@@ -1,0 +1,21 @@
+{
+  "name": "security-cors-preflight-lifecycle-review",
+  "domain": "Browser and HTTP boundaries",
+  "intent": "Preflight caching and credentialed CORS across an actual policy transition",
+  "artifacts": "OPTIONS and actual response traces, credential mode, origin allowlist, Vary/cache behavior and policy transition fixture.",
+  "trace": "Determine which decision is cached by the browser and which remains enforced on the actual response/server operation. Track method/header/origin and profile identity.",
+  "experiment": "In an owned fixture compare fresh and previously preflighted contexts before and after narrowing permission; observe actual browser reads and committed synthetic effects.",
+  "disproof": "A cached successful OPTIONS response does not alone expose a credentialed body or authorize a state change.",
+  "repair": "Enforce the actual request/response boundary and retest both cached and fresh browser paths.",
+  "source": "https://fetch.spec.whatwg.org/",
+  "adjacent": "security-javascript-analysis-review; security-xss-review; security-request-smuggling-review",
+  "branch_decisions": "Classify browser-readable protected data separately from a cookie-authenticated mutation. The browser preflight cache differs from an HTTP response cache; simple requests need no preflight. Actual credentials and SameSite admission still matter. Cached preflight permission does not remove response CORS checks; if only a PUT commits, investigate server authorization/CSRF and compare fresh, cached and expired states.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

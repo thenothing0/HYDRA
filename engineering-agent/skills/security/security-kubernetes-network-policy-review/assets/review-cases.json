@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-kubernetes-network-policy-review",
+  "cases": [
+    {
+      "id": "additive-allow",
+      "scenario": "A broad second policy permits a prohibited synthetic source even though another policy appears restrictive.",
+      "expected_decision": "Confirm from the complete selector/allow set and actual tuple result."
+    },
+    {
+      "id": "no-enforcer",
+      "scenario": "A local policy file is correct but the test cluster has no enforcing network plugin.",
+      "expected_decision": "Describe the missing enforcement; do not claim a policy algorithm bypass."
+    },
+    {
+      "id": "service-translation-unknown",
+      "scenario": "Only an external service IP was tested and backend translation/CNI semantics are unknown.",
+      "expected_decision": "Keep pod-boundary attribution unverified until the actual path is established."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Identity and federation extensions",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Account merge authority and transferred entitlements",
+      "source_trace": "Trace which identity authorizes source and destination and when resources, MFA/recovery settings and sessions move. Identify stale proof or one-sided confirmation.",
+      "implementation_branch": "Prove authority over both source and destination under the product policy, including proofs captured before an account switch. Decide which sessions, recovery factors and balances may transfer. An atomic resource transfer without correct identity binding is still unsafe; correct binding without partial-state cleanup is a separate invariant.",
+      "operational_method": "",
+      "controlled_verification": "Use two owned synthetic accounts with distinct resources; compare a properly confirmed merge with a missing or wrong-account confirmation.",
+      "false_positive_discriminator": "An alias/display-name change is not an account merge; access to already-owned resources proves no new entitlement.",
+      "remediation_acceptance": "Bind both account proofs and perform atomic policy-defined transfer; verify cancellation, recovery settings and session treatment."
+    }
+  ]
+}

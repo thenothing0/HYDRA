@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Data publication and privacy boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Warehouse query/export identity and destination publication authority",
+      "source_trace": "Follow the requester approved dataset/projection into an asynchronous export and the final readable destination, including user-selected storage paths.",
+      "implementation_branch": "Separate query permission, export/job identity and destination reader rights. A service account can legitimately write an export where its caller cannot directly write, provided destination selection and result entitlement are constrained. Verify one owned synthetic result and exact destination ACL; a completed query job does not establish public delivery.",
+      "operational_method": "Select one actual warehouse export engine and retain query principal, row/column policy evaluation, job/service identity, export destination and final reader ACL. Trace whether projection and tenant filters apply before the service writes the artifact, and whether caller-controlled destinations widen its audience. A generic storage-writing worker stub cannot establish a warehouse-specific policy bypass. Compare an owned restricted projection with a permitted export and inspect delivered bytes, not just job success.",
+      "controlled_verification": "Use owned synthetic tables and export destinations; compare rightful export with a restricted field, tenant or destination selection.",
+      "false_positive_discriminator": "Permission to run a public aggregate is not permission to export private rows; job acceptance alone does not show leaked bytes.",
+      "remediation_acceptance": "Constrain data projection and destination authority, preserving intended export and denied unauthorized publication."
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "category": "A06",
+  "domain": "business",
+  "native_context": "Coupon, credit and benefit redemption limits",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "COUPON_REDEMPTION-1",
+      "boundary": "Coupon, credit and benefit redemption limits — authoritative consumer",
+      "source_trace": "Read benefit eligibility, account/order binding, stacking, one-use constraints and debit/credit ledger behavior. Record expiry and legitimate multi-use rules.",
+      "controlled_verification": "In an owned synthetic account/order redeem one benefit, then one bounded prohibited repeat or stacking case justified by policy. Compare durable redemption and benefit/debit totals, including error responses and retries. Use local deterministic concurrency only if a race is the actual hypothesis.",
+      "false_positive_discriminator": "Multiple successful responses do not prove multiple credits. A deliberately reusable coupon is not a one-use bypass. Separate accounting, eligibility and concurrency root causes.",
+      "remediation_acceptance": "Enforce eligibility and atomic benefit/debit/idempotency at the ledger boundary. Retest valid redemption, the original repeat/stack and failure rollback."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

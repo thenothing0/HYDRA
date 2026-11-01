@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Identity and federation extensions",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "SCIM connector tenant, account and group-membership authority",
+      "source_trace": "Trace external identifiers and connector authority into local account/group operations, especially replace/remove membership and disabled-user handling.",
+      "implementation_branch": "PATCH add/remove/replace and bulk semantics need the actual schema/path interpretation, especially group members and user active state. A connector may legitimately administer all users in its own tenant. Test cross-tenant mapping, immutable identity and deprovisioned-session effects as separate assertions.",
+      "operational_method": "Retain the ordered PATCH operation list and filtered path interpretation, especially group members and active state. Distinguish connector externalId lookup from server-assigned id and inspect which tenant namespace each uses. Compare the before/after synthetic membership set, not only the final status code; a valid same-tenant administrative connector operation remains a positive control.",
+      "controlled_verification": "Use two owned tenants and synthetic users/groups; compare the rightful connector with cross-tenant identifier or PATCH membership substitution.",
+      "false_positive_discriminator": "An externalId collision is not account compromise unless it selects or alters the wrong local principal.",
+      "remediation_acceptance": "Bind connectors and operations to tenant/principal policy and verify create/update/deactivate plus unrelated tenant preservation."
+    }
+  ]
+}

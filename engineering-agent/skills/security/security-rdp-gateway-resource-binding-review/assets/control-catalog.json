@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Enterprise identity and privileged access",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "RDP gateway identity, resource authorization and session lifecycle",
+      "source_trace": "Trace authenticated identity and approved target into the actual remote-session connection, including aliases and reconnect state.",
+      "implementation_branch": "Distinguish gateway connection authorization, resource authorization and target host login. Passing one gateway policy does not establish access to every internal host or desktop session. Follow user/group conditions, selected resource and any session reconnection policy using supplied configuration or a lab, and preserve target authentication as a separate necessary edge.",
+      "operational_method": "",
+      "controlled_verification": "Use owned lab targets or configuration proof with synthetic identities; compare an entitled target and one forbidden target/resource alias.",
+      "false_positive_discriminator": "Gateway login or target discovery is not a desktop session; denial before connection is a meaningful control.",
+      "remediation_acceptance": "Bind connection/resource policy to normalized targets and verify permitted reconnect and revocation."
+    }
+  ]
+}

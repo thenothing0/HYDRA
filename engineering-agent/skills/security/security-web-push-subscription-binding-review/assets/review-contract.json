@@ -1,0 +1,21 @@
+{
+  "name": "security-web-push-subscription-binding-review",
+  "domain": "API and SaaS authority",
+  "intent": "Web Push subscription ownership and delivery authorization",
+  "artifacts": "Subscription registration/update handlers, endpoint/key storage, user/device mapping and message sender.",
+  "trace": "Determine who can attach, replace or delete a subscription and which user data the sender chooses independently of client-supplied recipient identifiers.",
+  "experiment": "Use owned subscriptions or a local push stub; compare rightful registration with another owned user/device binding and inspect a harmless delivered marker.",
+  "disproof": "A subscription endpoint is not a login token; public VAPID keys or a successful registration status alone prove no message leakage.",
+  "repair": "Bind registration and delivery to authenticated ownership, preserving multi-device lifecycle and logout removal.",
+  "source": "https://www.rfc-editor.org/rfc/rfc8030",
+  "adjacent": "security-api-bola-review; security-api-function-authorization-review; security-background-job-authorization-review",
+  "branch_decisions": "A PushSubscription includes an endpoint and encryption material, while a public application-server key has a different role. Verify which identity can update a stored subscription and which user payload is selected for delivery. Successful endpoint registration is not proof the provider accepted or delivered sensitive content.",
+  "operational_method": "Track endpoint/encryption material ownership across logout and account switch in the same browser profile. Record the authenticated server registration/update caller, previous owner, new owner and payload recipient selected by the sender. A subscription endpoint being accepted is not delivery proof. Use synthetic notifications and verify an old account marker is not sent to a subscription newly bound to another account unless explicitly permitted.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

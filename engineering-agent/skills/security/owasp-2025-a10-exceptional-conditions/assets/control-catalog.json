@@ -1,0 +1,66 @@
+{
+  "category": "A10",
+  "version": "4.0.0",
+  "controls": [
+    {
+      "id": "A10-01",
+      "slug": "unknown-decision",
+      "boundary": "Unknown security decision",
+      "source_trace": "Dependency/config -> decision return/error -> authorization fallback -> mutation.",
+      "controlled_verification": "Inject timeout/None/error in a local stub and inspect state.",
+      "false_positive_discriminator": "503 alone is not proof no mutation occurred.",
+      "remediation_acceptance": "Unknown permission never grants the protected capability; legitimate decisions still work.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A10-02",
+      "slug": "optional-dispatch",
+      "boundary": "Disabled or absent capability",
+      "source_trace": "Untrusted method/selector -> optional handler/config -> dereference.",
+      "controlled_verification": "Exercise an absent feature and a supported-feature control locally.",
+      "false_positive_discriminator": "A healthy configured branch does not cover absent configuration.",
+      "remediation_acceptance": "Unsupported selection rejects safely without panic or insecure fallback.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A10-03",
+      "slug": "partial-transaction",
+      "boundary": "Failure around commit",
+      "source_trace": "State update -> durable commit -> outbound side effect -> response.",
+      "controlled_verification": "Inject failure before/after a disposable commit boundary and inspect ledgers.",
+      "false_positive_discriminator": "Lost response after a successful commit is not rollback.",
+      "remediation_acceptance": "Atomicity or documented compensation restores the required business/security invariant.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A10-04",
+      "slug": "idempotency-binding",
+      "boundary": "Retry identity and conflict",
+      "source_trace": "Principal/operation/request fingerprint -> idempotency key -> unique result.",
+      "controlled_verification": "Repeat the same operation, then attempt conflicting reuse on controlled data.",
+      "false_positive_discriminator": "Same string key with different actor/body is not the same operation.",
+      "remediation_acceptance": "Same request reuses one result; conflicting reuse rejects; workers enforce atomic uniqueness.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A10-05",
+      "slug": "cleanup-cancellation",
+      "boundary": "Cleanup and cancellation",
+      "source_trace": "Resource acquisition -> exception/cancellation -> cleanup -> next request.",
+      "controlled_verification": "Use bounded disposable resources and explicit local cancellation/failure.",
+      "false_positive_discriminator": "Do not demonstrate leakage by exhausting live service resources.",
+      "remediation_acceptance": "Resources and transactions reach the intended state and a later valid request succeeds.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A10-06",
+      "slug": "retry-budget",
+      "boundary": "Retry and degradation policy",
+      "source_trace": "Typed failure -> retry eligibility -> backoff/budget -> secure degraded mode.",
+      "controlled_verification": "Use a deterministic stub to count attempts and observe final state.",
+      "false_positive_discriminator": "Retrying a non-idempotent effect can worsen the incident.",
+      "remediation_acceptance": "Attempts are bounded and justified; final behavior preserves the security decision and recovery contract.",
+      "default_status": "not-tested"
+    }
+  ]
+}

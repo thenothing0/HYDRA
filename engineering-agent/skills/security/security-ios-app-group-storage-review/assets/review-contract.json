@@ -1,0 +1,21 @@
+{
+  "name": "security-ios-app-group-storage-review",
+  "domain": "Mobile platform integrations",
+  "intent": "iOS App Group container authority across app and extension identities",
+  "artifacts": "Signed entitlements, app/extension provisioning, group container paths and file/key access lifecycle.",
+  "trace": "Trace which signed components can reach shared data and whether lower-trust extension input changes another component protected state.",
+  "experiment": "Use owned signed test targets and synthetic shared data; compare intended extension exchange with an out-of-policy action/resource selection.",
+  "disproof": "A shared group identifier is not proof that an unrelated app can access it; entitlement enforcement remains essential.",
+  "repair": "Constrain shared data and per-operation authority within entitled components, preserving legitimate extensions.",
+  "source": "https://developer.apple.com/documentation/xcode/configuring-app-groups",
+  "adjacent": "security-android-components-review; security-ios-link-handling-review; security-mobile-local-data-review",
+  "branch_decisions": "Use signed entitlements of each app/extension and the actual shared container identifier. App Group sharing is intentional among authorized members; the boundary may instead be account switching or an untrusted extension capability. A directory name seen in source is not proof of installed access or cross-team container entitlement.",
+  "operational_method": "Separate App Group file-container access from Keychain access-group entitlements; sharing one does not imply the other. Retain signed entitlements, the actual container API/path, file protection class and extension/application identity. Compare a synthetic account switch or extension read against the declared audience/lifecycle. Merely showing that authorized group members share a container is expected behavior, not cross-team privilege.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

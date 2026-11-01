@@ -1,0 +1,18 @@
+{
+  "category": "A02",
+  "taxonomy_note": "Compatibility planning lens only, not a normative cross-domain mapping. Final root-cause taxonomy may differ or remain unassigned.",
+  "native_context": "Pod Security Standards; choose the applicable Kubernetes version and OS",
+  "domain": "cloud",
+  "controls": [
+    {
+      "id": "KUBERNETES_WORKLOAD_ISOLATION-1",
+      "boundary": "Kubernetes workload admission and host isolation — authoritative consumer",
+      "source_trace": "Read the admitted pod spec for all init/sidecar/app containers, host mounts/namespaces, security context and enforced admission policy. Record node/runtime and workload identity.",
+      "controlled_verification": "Inspect whether a lower-trust submitter can obtain the host/device/capability access alleged by the finding. Use read-only evidence or an owned isolated replica; trace admission result to the effective container configuration rather than a manifest that was never admitted.",
+      "false_positive_discriminator": "A missing hardening recommendation is not automatically a reachable escape. A privileged-looking source manifest rejected by admission does not prove deployed authority.",
+      "remediation_acceptance": "Enforce the required isolation at admission/runtime and remove unnecessary host authority while preserving required workloads. Retest the original submitted configuration and an approved deployment."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

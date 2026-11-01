@@ -1,0 +1,21 @@
+{
+  "name": "security-aws-secretsmanager-resource-policy-review",
+  "domain": "AWS service boundaries",
+  "intent": "Secrets Manager resource-policy and version access across principals",
+  "artifacts": "Secret resource policy, identity policy, KMS dependency, version labels and replication settings.",
+  "trace": "Evaluate the actual principal and resource/condition context, then distinguish metadata read, secret-value read and changing a version/staging label.",
+  "experiment": "Use a secret containing only an owned synthetic marker; compare the intended role with another owned role and inspect the exact requested version.",
+  "disproof": "List/describe permission is not GetSecretValue authority, and a KMS denial must not be attributed to a different resource policy.",
+  "repair": "Narrow effective value/version authority and retest allowed retrieval, restricted principals and version lifecycle.",
+  "source": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_resource-policies.html",
+  "adjacent": "security-aws-iam-review; security-aws-object-storage-review; security-aws-workload-identity-review",
+  "branch_decisions": "Resolve the requested secret ARN and VersionId/VersionStage, including which versions a policy actually permits. Cross-account access can require both secret and customer-managed KMS-key authority. A readable policy or a GetSecretValue denial caused by KMS does not prove another actor can retrieve plaintext; preserve the blocked edge and inspect rotation identities separately.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

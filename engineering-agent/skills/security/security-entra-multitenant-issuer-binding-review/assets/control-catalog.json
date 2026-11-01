@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Azure service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Entra tenant-independent issuer templates and tenant-stable principal mapping",
+      "source_trace": "Trace which external tenants may authenticate and which local organization their principals may access. Do not confuse cryptographic validity with tenant admission.",
+      "implementation_branch": "Bind tid, issuer and client/resource audience using the actual multi-tenant validation rules and tenant enrollment policy. A token signed by a Microsoft key can still originate from an unintended tenant. Supporting multiple tenants is legitimate; show a protected tenant operation accepted for an unassociated identity rather than treating common metadata endpoints as a defect.",
+      "operational_method": "For tenant-independent metadata, resolve the configured issuer template using the validated tid under the selected token-version/issuer rules; do not accept an arbitrary issuer merely because its signing key is in a shared Microsoft key set. Inspect signing-key issuer restrictions and map identity using the intended tenant-stable identifiers, such as tid plus oid where that is the API contract. Compare identical local-looking subject/object values from two tenants and verify the tenant enrollment decision. General consent grants remain the Entra consent workflow.",
+      "controlled_verification": "Use two synthetic tenant issuer-template/tid contexts with colliding local-looking principal fields. Compare approved tenant-stable identity mapping with mismatched issuer/key-issuer context before a protected local consumer.",
+      "false_positive_discriminator": "Multi-tenant login can be intentional; a valid external tenant token is not a bypass without forbidden local access.",
+      "remediation_acceptance": "Bind issuer/tenant/role admission to local policy and verify authorized onboarding and cross-tenant denial."
+    }
+  ]
+}

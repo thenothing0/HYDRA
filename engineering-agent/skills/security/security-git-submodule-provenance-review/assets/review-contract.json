@@ -1,0 +1,21 @@
+{
+  "name": "security-git-submodule-provenance-review",
+  "domain": "CI and package publication",
+  "intent": "Git submodule revision/source trust in a privileged build",
+  "artifacts": ".gitmodules changes, recursive checkout options, pinned commits, URL rewriting and build consumer.",
+  "trace": "Trace who can change the submodule URL/revision and whether the approved parent revision actually binds the bytes later built.",
+  "experiment": "Use inert owned repositories and a local checkout; compare pinned intended content with an untrusted URL/ref update without running builds.",
+  "disproof": "The presence of submodules is not a supply-chain flaw; approved immutable submodule content can be valid.",
+  "repair": "Bind submodule source and revision to reviewed provenance, retesting recursive updates and approved release behavior.",
+  "source": "https://git-scm.com/docs/git-submodule",
+  "adjacent": "security-ci-artifact-provenance-review; security-package-resolution-review; security-github-actions-trust-review",
+  "branch_decisions": "Bind .gitmodules URL changes, the committed gitlink SHA, recursive submodules and any update --remote behavior. A pinned SHA narrows content identity but does not prove an approved producer or safe build scripts. Rewriting a local URL is privileged fixture setup unless the protected build actually consumes an attacker-editable configuration source.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

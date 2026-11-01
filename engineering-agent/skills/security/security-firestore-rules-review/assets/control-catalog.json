@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "domain": "cloud",
+  "native_context": "Cloud Firestore rules, caller identity and document mutations",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "FIRESTORE_RULES-1",
+      "boundary": "Cloud Firestore rules, caller identity and document mutations — authoritative consumer",
+      "source_trace": "Read deployed rules, query shape, document paths, authentication claims and authoritative membership fields. Distinguish client SDK rules from privileged server SDK/IAM access.",
+      "controlled_verification": "Use a local rules emulator or owned fixtures with A/B tenants. Compare a normal A query/read with a B document/query and inspect whether caller-writable document fields can manufacture the membership condition. Exercise writes against both existing and proposed document state where relevant.",
+      "false_positive_discriminator": "Rules do not filter an arbitrary result set like application code; query compatibility matters. A server SDK bypassing client rules is expected and needs its own IAM/application authorization analysis.",
+      "remediation_acceptance": "Bind document/query/write authority to trusted identity and protected membership state. Retest allowed query shapes, denied cross-tenant reads and writes that try to change authority fields."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

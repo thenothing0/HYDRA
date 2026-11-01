@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Google Cloud service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Firebase custom-token minting and caller-to-UID/claims binding",
+      "source_trace": "Trace how an authenticated application caller can select Firebase uid or privileged claims. Validate upstream identity before the trusted minting operation.",
+      "implementation_branch": "The issuer must derive UID and privileged claims from an authorized identity mapping, not accept them as caller assertions. Custom tokens are exchanged for Firebase ID tokens; do not confuse their audiences and validation roles. A server/Admin SDK bypassing client rules is expected unless an untrusted caller can exercise that server authority.",
+      "operational_method": "",
+      "controlled_verification": "Use an emulator/local issuer fixture with two synthetic identities; compare rightful token identity and a caller-selected foreign uid/role.",
+      "false_positive_discriminator": "Public Firebase configuration is not minting authority; an unused custom claim is not a demonstrated privilege grant.",
+      "remediation_acceptance": "Bind minting to verified identity and permitted claims, then test final rules/consumer authority and legitimate sign-in."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "security-azure-keyvault-data-authority-review",
+  "domain": "Azure service boundaries",
+  "intent": "Key Vault control-plane versus secret/key data-plane permissions",
+  "artifacts": "Vault permission model, RBAC/access policies, network constraints, version handling and requested data operation.",
+  "trace": "Resolve the actual principal and management versus data permissions. Follow which actions expose secret values or allow signing/decryption rather than only listing metadata.",
+  "experiment": "Use an owned vault with synthetic content; compare the intended data operation and a restricted owned role/version.",
+  "disproof": "Vault discovery or management-plane read is not secret-value access; report the specific successful data operation.",
+  "repair": "Limit data-plane authority and delegation changes, retesting value access, versions and permitted operations.",
+  "source": "https://learn.microsoft.com/en-us/azure/key-vault/general/rbac-guide",
+  "adjacent": "security-entra-app-consent-review; security-azure-storage-sas-review",
+  "branch_decisions": "Identify the vault permission model: Azure RBAC and legacy access policies have different evaluation paths. Control-plane visibility is distinct from secret values or key cryptographic operations, but a policy-management grant may create a delegation path. Evaluate that path from supplied assignments/source without granting roles or retrieving real secrets merely to demonstrate it.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

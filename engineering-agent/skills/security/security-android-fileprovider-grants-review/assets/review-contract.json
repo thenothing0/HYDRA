@@ -1,0 +1,21 @@
+{
+  "name": "security-android-fileprovider-grants-review",
+  "domain": "Mobile platform integrations",
+  "intent": "FileProvider root selection and temporary URI permission scope",
+  "artifacts": "Provider paths/exports, grant flags, share intent targets and actual file open logic.",
+  "trace": "Trace which app receives which URI and whether it can access files beyond the intended shared object through path/root or grant handling.",
+  "experiment": "Use owned emulator apps and synthetic files inside/outside a share root; compare intended URI access and one unauthorized file request.",
+  "disproof": "A content URI or broad-looking path XML is not arbitrary file access without an effective granted/open path.",
+  "repair": "Constrain roots and URI grants, then retest legitimate shares, grant lifetime and outside-file denial.",
+  "source": "https://developer.android.com/reference/androidx/core/content/FileProvider",
+  "adjacent": "security-android-components-review; security-ios-link-handling-review; security-mobile-local-data-review",
+  "branch_decisions": "Trace configured roots, canonical path resolution, manifest export/grant settings and individual Intent/ClipData grants. A broad root is potential reach, not proof an attacker has a usable URI grant. Separate read from write and persisted versus temporary access; use owned marker files and verify the effective recipient operation and grant revocation.",
+  "operational_method": "Record provider root mapping, canonical file, actual recipient and grant flags on Intent/ClipData, including prefix scope where supported. Separate read/write and actual supported persistability; a client requesting persistence does not make every provider grant persistable. Compare a marker URI with a sibling/outside-root URI and observe permissions after the documented temporary-grant lifetime/revocation event. Exported=false alone does not invalidate an explicitly issued grant.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

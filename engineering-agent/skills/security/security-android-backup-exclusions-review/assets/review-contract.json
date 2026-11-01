@@ -1,0 +1,23 @@
+{
+  "name": "security-android-backup-exclusions-review",
+  "domain": "Mobile platform integrations",
+  "intent": "Android backup/device-transfer rules for declared sensitive app data",
+  "artifacts": "App/OS version, backup and extraction rules, data locations, build flags and owned backup/restore fixture.",
+  "trace": "Determine which files participate in actual backup and device transfer paths, separating platform versions and debug tooling.",
+  "experiment": "Use an emulator/test account and synthetic secret marker; inspect an owned supported backup or restored app without extracting real-user data.",
+  "disproof": "A file in private app storage is not automatically excluded from every transfer; unsupported adb backup behavior cannot prove current platform exposure.",
+  "repair": "Exclude or protect sensitive persisted data under the actual backup modes and verify legitimate restoration.",
+  "source": "https://developer.android.com/identity/data/autobackup",
+  "adjacent": "security-android-components-review; security-ios-link-handling-review; security-mobile-local-data-review",
+  "branch_decisions": "Branch on Android version, cloud backup versus device-to-device transfer and the installed build rules. A single allowBackup value does not describe every transport/version. Determine whether the threat model grants backup extraction access and whether restored data remains useful under keystore/account binding, without collecting production app backups.",
+  "operational_method": "Resolve OS/target build and supported transport before selecting fullBackupContent or dataExtractionRules and its applicable cloud/device-transfer/cross-platform section. Missing rules in a supported mode can differ from an explicit exclusion; allowBackup=false is not a universal guarantee across OEM transfer paths. Retain the effective build rules and an owned synthetic backup/restore artifact for the selected mode. Do not infer current cross-platform behavior from an old two-transport fixture.",
+  "additional_sources": [
+    "https://developer.android.com/identity/data/autobackup"
+  ],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

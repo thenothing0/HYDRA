@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-email-change-review",
+  "cases": [
+    {
+      "id": "premature-recovery",
+      "scenario": "Before required confirmation, a pending fixture address receives a usable reset for the original account.",
+      "expected_decision": "Confirm only if the account recovery authority and missing required proof are evidenced."
+    },
+    {
+      "id": "pending-label",
+      "scenario": "The UI shows the pending address but login and recovery stay bound to the verified address.",
+      "expected_decision": "Do not claim takeover from the display change."
+    },
+    {
+      "id": "different-purpose",
+      "scenario": "A verification token is accepted as a change token only in a mocked handler, not the deployed path.",
+      "expected_decision": "Keep deployment exploitability unverified and identify the actual validator/consumer needed."
+    }
+  ]
+}

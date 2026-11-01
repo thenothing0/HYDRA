@@ -1,0 +1,21 @@
+{
+  "name": "security-xs-leaks-observability-review",
+  "domain": "Browser and HTTP boundaries",
+  "intent": "Cross-site state inference through a concrete browser observation channel",
+  "artifacts": "Suspected sensitive binary state, attacker-observable load/timing/size signal, frame policy and browser isolation settings.",
+  "trace": "Separate protected state from noise and from values already public to the observer. Resolve the precise request and browser event visible without reading a cross-origin body.",
+  "experiment": "Use two owned accounts/states and a bounded randomized local comparison with a public control; preserve raw observations and uncertainty rather than extracting real-user state.",
+  "disproof": "A single faster response or a same-origin debugger read is not a cross-site inference capability; unstable separation remains inconclusive.",
+  "repair": "Retest the same observation channel after isolation/cache/response changes and verify legitimate clients still receive their own data.",
+  "source": "https://xsleaks.dev/",
+  "adjacent": "security-javascript-analysis-review; security-xss-review; security-request-smuggling-review",
+  "branch_decisions": "Randomize synthetic state order and record cache/service-worker warm-up and network variance. Distinguish an observable load/error event from reading its body. A consistent signal must identify protected state beyond public metadata; an automation-only timing or read channel is not available to an ordinary cross-origin page.",
+  "operational_method": "Define the observation channel, bounded sample budget and decision rule before collecting timings. Randomize two synthetic private states, retain a public/no-state control and reserve a separate confirmation sequence so a threshold is not selected on the same noise it claims to distinguish. Report uncertainty when the separation does not persist; no real-user state extraction is needed.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

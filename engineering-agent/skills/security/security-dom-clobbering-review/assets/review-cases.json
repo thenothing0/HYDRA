@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-dom-clobbering-review",
+  "cases": [
+    {
+      "id": "config-replaced",
+      "scenario": "Allowed fixture markup replaces a presumed configuration object and changes an instrumented trusted destination.",
+      "expected_decision": "Confirm the demonstrated configuration/destination boundary; do not invent script execution."
+    },
+    {
+      "id": "scoped-state",
+      "scenario": "An identical markup ID exists but code reads a lexical configuration variable and the consumer stays correct.",
+      "expected_decision": "Do not report a reachable clobbering defect on this path."
+    },
+    {
+      "id": "property-only",
+      "scenario": "window.example resolves to an element, but no sensitive code reads it.",
+      "expected_decision": "Record the primitive only if useful; claimed security consequence remains unsupported."
+    }
+  ]
+}

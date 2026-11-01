@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "CI and package publication",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Jenkins job/agent trust and controller or credential delegation",
+      "source_trace": "Follow who can edit pipeline code and select an agent/credential into actual privileged operations, including workspace reuse between trust classes.",
+      "implementation_branch": "Distinguish controller execution, trusted shared libraries and agent workspace execution. Credentials scoped to a folder/job are still available to scripts deliberately authorized in that job. Inspect job configuration and agent label restrictions before assuming an untrusted contributor can land on a sensitive agent; ordinary workspace access is not controller compromise.",
+      "operational_method": "Labels select scheduling candidates; they are not a node-use authorization boundary. Collect the installed enforcement mechanism, such as effective job restrictions independent of label expressions, and the actual job execution identity/node Build permission rules where configured. Inspect Agent-to-Controller Access Control for remoting requests from a lower-trust agent, not a reversed controller-to-agent control; also inspect workspace reuse/concurrent executors during credential binding. Compare allowed versus forbidden job placement before secret injection using supplied configuration and an inert marker. No plugin installation or access to another build credentials is implied.",
+      "controlled_verification": "Use an isolated Jenkins/local runner fixture with inert markers; compare an intended trusted job and a lower-trust job requesting the protected context.",
+      "false_positive_discriminator": "A credential identifier visible in a Jenkinsfile is not proof that the job can retrieve or use it.",
+      "remediation_acceptance": "Separate trust classes and constrain job/agent/credential delegation; verify approved builds and denied context acquisition."
+    }
+  ]
+}

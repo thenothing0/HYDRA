@@ -1,0 +1,16 @@
+{
+  "category": "A05",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "COMMAND_INJECTION-1",
+      "boundary": "OS command and argument injection — authoritative consumer",
+      "source_trace": "Trace executable selection, shell use, argv boundaries, option handling, environment and working directory. Identify what the external utility does with each caller-controlled argument.",
+      "controlled_verification": "Replace the executable with an inert local argv recorder using the same application construction path. Compare a normal filename with the suspected shell/option-boundary input, then inspect the actual argv and utility semantics. A recorder proves argument construction, not arbitrary command execution by the real utility.",
+      "false_positive_discriminator": "No shell does not mean no risk: a utility can interpret dangerous options or execute delegated functionality. Conversely, shell punctuation inside a single literal argument is not proof it became shell syntax.",
+      "remediation_acceptance": "Avoid unnecessary shell parsing, fix executable/option authority and use supported argument separators where the actual utility supports them. Retest normal paths, original boundary case and required options in a bounded replica."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

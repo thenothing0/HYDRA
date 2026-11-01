@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "API and SaaS authority",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Authorization under multi-region or replica entitlement lag",
+      "source_trace": "Trace stale membership/session state into a protected decision after an authoritative change. Separate accepted bounded lag from undocumented continued access.",
+      "implementation_branch": "Use the documented revocation completion time and actual routing/replica identity. A stale UI claim is not server authorization. An explicitly permitted grace interval is an expected state; an observed protected effect beyond it may identify missing propagation rather than a universal authentication bypass.",
+      "operational_method": "Retain decision provenance: replica/cache identity, entitlement generation read, routing/failover choice and protected consumer timestamp. A stale value shown in a log is not necessarily the value used for authorization. Under the declared propagation contract, compare the same revoked synthetic identity on fresh and stale paths and identify whether cache invalidation, decision-time recheck or replica routing is the missing enforcement edge.",
+      "controlled_verification": "Use a deterministic owned two-replica fixture with delayed entitlement propagation and one synthetic protected operation before/after the allowed window.",
+      "false_positive_discriminator": "Any replication delay is not automatically a vulnerability; identify the policy and observed protected effect beyond it.",
+      "remediation_acceptance": "Use policy-appropriate consistency/invalidation and verify revocation, failover and entitled regional traffic."
+    }
+  ]
+}

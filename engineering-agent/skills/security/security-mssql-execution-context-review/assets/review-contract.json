@@ -1,0 +1,23 @@
+{
+  "name": "security-mssql-execution-context-review",
+  "domain": "Databases and messaging",
+  "intent": "SQL Server execution context, ownership chains and delegated modules",
+  "artifacts": "Logins/users, module EXECUTE AS/signatures, ownership chaining, database trust settings and target object.",
+  "trace": "Follow caller execution into modules and cross-database operations using the actual effective principal and ownership path.",
+  "experiment": "Use an isolated SQL Server fixture with synthetic tables and two owned principals; compare approved module use and an out-of-policy object access.",
+  "disproof": "A module that legitimately elevates for a narrowly defined operation is not arbitrary privilege escalation.",
+  "repair": "Constrain module inputs/context and cross-database delegation, preserving the intended stored operation.",
+  "source": "https://learn.microsoft.com/en-us/sql/t-sql/statements/execute-as-transact-sql",
+  "adjacent": "security-postgres-rls-review; security-redis-acl-review; security-kafka-acl-review",
+  "branch_decisions": "Resolve EXECUTE AS CALLER/OWNER/principal, ownership chaining, module signing and cross-database trust separately. Permission to execute a module can deliberately delegate its fixed action. Evaluate whether its actual resource/projection violates the caller policy, whether the module is fixed or influenced by lower-trust parameters/editing; do not require editable input before reviewing fixed-module data disclosure.",
+  "operational_method": "A fixed module can expose forbidden tenant rows even when its inputs and definition cannot be edited; inspect its returned projection and actual caller policy. Separate ordinary ownership chaining from dynamic SQL, which breaks that chain, EXECUTE AS identity substitution and certificate-signing additive permissions. For cross-database access retain trust/signature/user mappings on both databases and whether the module was re-signed after changes. Compare one restricted caller result with the same caller direct-query denial; this may establish intended narrow delegation or an overbroad fixed module.",
+  "additional_sources": [
+    "https://learn.microsoft.com/en-us/sql/connect/ado-net/sql/writing-secure-dynamic-sql?view=sql-server-ver17"
+  ],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

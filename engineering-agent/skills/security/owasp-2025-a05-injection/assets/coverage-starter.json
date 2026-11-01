@@ -1,0 +1,41 @@
+{
+  "category": "A05",
+  "coverage": [
+    {
+      "id": "A05-01",
+      "boundary": "SQL/NoSQL query data",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A05-02",
+      "boundary": "Query structural selectors",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A05-03",
+      "boundary": "HTML and DOM rendering",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A05-04",
+      "boundary": "Commands and arguments",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A05-05",
+      "boundary": "Template, expression and filter sinks",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A05-06",
+      "boundary": "Second-order interpreter use",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    }
+  ]
+}

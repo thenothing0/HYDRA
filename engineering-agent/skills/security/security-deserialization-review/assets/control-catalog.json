@@ -1,0 +1,16 @@
+{
+  "category": "A08",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "DESERIALIZATION-1",
+      "boundary": "Unsafe object deserialization — authoritative consumer",
+      "source_trace": "Trace input bytes through format detection, decompression, nested decoding and runtime object/type construction. Record trust/signature checks before deserialization and available type restrictions.",
+      "controlled_verification": "In an isolated fixture use an inert type/constructor marker to determine whether caller-selected types or hooks are instantiated. Inspect formats statically when loading would run code; gadget execution is unnecessary to prove an unsafe trust boundary.",
+      "false_positive_discriminator": "JSON parsing into plain data is not automatically unsafe deserialization. A signed envelope only changes the conclusion if signature verification and the authorized producer boundary actually protect these exact bytes before loading.",
+      "remediation_acceptance": "Use a data-only format or supported restricted loading with explicit schema/type authority. Retest normal data, rejected unexpected types and nested decoder paths."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

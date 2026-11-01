@@ -1,0 +1,18 @@
+{
+  "category": "A06",
+  "domain": "data",
+  "native_context": "Regular-expression matching cost and bounded input control",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "REDOS-1",
+      "boundary": "Regular-expression matching cost and bounded input control — authoritative consumer",
+      "source_trace": "Read the exact regex, flags/engine, caller-controlled subject or pattern, maximum length and call frequency. Trace reachability and timeouts at the actual consumer.",
+      "controlled_verification": "Use an isolated process with an explicit short timeout and small input ceiling. Compare a normal subject and a few bounded near-match lengths derived from the regex structure, recording engine/version and elapsed behavior. Stop at the first meaningful budget breach; no live-service load is needed.",
+      "false_positive_discriminator": "A nested quantifier is a lead, not universal catastrophic cost. Engine optimization, bounded input and unreachable matching can defeat the hypothesis. A few timings do not establish an asymptotic proof.",
+      "remediation_acceptance": "Use an equivalent safer expression/engine or appropriate input/work limits for the actual contract. Retest valid matches, nonmatches and the original expensive case under the same budget."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

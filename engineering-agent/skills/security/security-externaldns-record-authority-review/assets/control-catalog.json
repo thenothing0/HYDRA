@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Kubernetes and deployment controllers",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "ExternalDNS source-object control and DNS zone delegation",
+      "source_trace": "Follow a resource annotation/hostname into DNS changes under the controller identity. Determine tenant/zone boundaries and collision/takeover behavior.",
+      "implementation_branch": "Resolve controller sources, domain filters, namespace/label selectors and provider credentials. A TXT ownership record coordinates controllers; it is not universally an authorization boundary against a cluster actor who controls admitted sources. Show which owned zone/record the restricted source can influence and distinguish provider-side IAM denial from a controller filtering decision.",
+      "operational_method": "",
+      "controlled_verification": "Use a local provider stub or owned test zone; compare a permitted record with an out-of-tenant name requested by a lower-trust resource writer.",
+      "false_positive_discriminator": "A requested hostname or dry-run log is not an actual DNS change; never claim or overwrite unrelated domains.",
+      "remediation_acceptance": "Bind source writers to permitted zones/names and verify conflict handling, deletion and legitimate reconciliation."
+    }
+  ]
+}

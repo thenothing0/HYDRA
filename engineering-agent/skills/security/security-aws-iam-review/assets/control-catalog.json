@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Compatibility planning lens only, not a normative cross-domain mapping. Final root-cause taxonomy may differ or remain unassigned.",
+  "native_context": "AWS IAM policy semantics; do not flatten into a generic allow/deny union",
+  "domain": "cloud",
+  "controls": [
+    {
+      "id": "AWS_IAM-1",
+      "boundary": "AWS IAM effective permission and authority review — authoritative consumer",
+      "source_trace": "Collect the specified principal/action/resource/context, identity and resource policies, trust/delegation path and applicable session, boundary and organization constraints. Use policy/version provenance.",
+      "controlled_verification": "Resolve one concrete action against an owned resource using read-only policy analysis or a permitted simulator. Trace any role assumption separately from the assumed role's effective action. Compare an intended allowed action with the suspected excess grant and actual required conditions.",
+      "false_positive_discriminator": "A wildcard Allow is not effective permission by itself. Explicit denials, boundaries, organization policies and service-specific authorization semantics can change the result; a simulator may omit runtime context.",
+      "remediation_acceptance": "Narrow the evidenced effective permission or trust condition while preserving required workloads. Retest allowed operations and the original principal/action/resource tuple under the relevant constraints."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

@@ -1,0 +1,21 @@
+{
+  "name": "security-azure-apim-policy-boundary-review",
+  "domain": "Azure service boundaries",
+  "intent": "API Management policy transformations and backend identity authority",
+  "artifacts": "Effective inherited APIM policies, JWT validation, rewrite/set-header actions and backend authorization.",
+  "trace": "Trace identity after policy inheritance/condition branches and whether caller-controlled headers survive as trusted backend claims.",
+  "experiment": "Use an owned APIM/backend fixture; compare a legitimate request with one identity/header or route branch variation and inspect the backend principal.",
+  "disproof": "A subscription key or successful gateway response does not prove backend authentication or cross-tenant access.",
+  "repair": "Normalize identity at the trusted gateway boundary and enforce backend resource policy, retaining valid API products.",
+  "source": "https://learn.microsoft.com/en-us/azure/api-management/api-management-policies",
+  "adjacent": "security-entra-app-consent-review; security-azure-storage-sas-review",
+  "branch_decisions": "Evaluate effective policy inheritance at global, product, API and operation levels, including base placement and policy expressions. Authentication at the gateway can be legitimate only if the backend trusts an unforgeable gateway path or validates identity independently. A rewritten caller header matters when the backend consumes it as authority, not when it is merely logged.",
+  "operational_method": "Collect the subscription used by the request and whether it is product-, API- or all-API-scoped before applying product-level policy. Build the effective inherited policy for that operation, including base placement, and inspect whether the backend accepts direct requests or caller-forgeable identity headers. Compare the same protected action through the real applicable gateway path and an owned direct-backend fixture; a policy merely present in another product is not an active check.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

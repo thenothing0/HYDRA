@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Compatibility planning lens only, not a normative cross-domain mapping. Final root-cause taxonomy may differ or remain unassigned.",
+  "native_context": "Amazon S3 bucket/object/access-point authorization and public-access controls",
+  "domain": "cloud",
+  "controls": [
+    {
+      "id": "AWS_OBJECT_STORAGE-1",
+      "boundary": "Amazon S3 object access and publication boundaries — authoritative consumer",
+      "source_trace": "Read bucket/access-point/object policies, public-access controls, ownership/ACL settings and the signed-URL issuer where relevant. Establish exact object sensitivity and caller identity.",
+      "controlled_verification": "On an owned bucket with synthetic objects, compare the expected recipient with a prohibited anonymous/other-account read or write only as permitted. For signed URLs, trace who may mint a URL for which object/action and its lifetime; do not list or download unrelated bucket contents.",
+      "false_positive_discriminator": "A public website object can be intentionally readable. A public-looking policy may be constrained by effective controls. A valid recipient using an intended signed URL is not proof of excess authority.",
+      "remediation_acceptance": "Repair the effective bucket/object or URL-issuer boundary and preserve required publishing. Retest the exact denied tuple and intended owner/recipient access, including relevant access points."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

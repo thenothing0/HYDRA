@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "API and SaaS authority",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Administrative impersonation scope and session authority",
+      "source_trace": "Trace which privileges come from the operator and which from the impersonated subject. Inspect escape/endpoints that accidentally retain administrative authority.",
+      "implementation_branch": "Establish whether actor and subject authorities intersect or an explicit support capability set applies. Inspect exit, nested impersonation and session refresh separately. Audit attribution helps accountability but is not the authorization gate; intended operator-only access is not a subject-originated escalation.",
+      "operational_method": "",
+      "controlled_verification": "Use owned operator and test subject accounts with synthetic resources; compare intended support actions and an explicitly forbidden administrative or subject action.",
+      "false_positive_discriminator": "An approved operator viewing a test account is expected; an audit label or UI banner is not the enforcement control.",
+      "remediation_acceptance": "Enforce explicit impersonation capabilities and lifecycle, then verify exit, revocation and audit attribution."
+    }
+  ]
+}

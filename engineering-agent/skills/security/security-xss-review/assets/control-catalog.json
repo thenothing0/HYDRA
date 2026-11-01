@@ -1,0 +1,16 @@
+{
+  "category": "A05",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "XSS-1",
+      "boundary": "Cross-site scripting: reflected, stored and DOM \u00e2\u20ac\u201d authoritative consumer",
+      "source_trace": "Trace a controlled value from storage/URL/message through transformations to its final DOM/template context. Record origin, browser, CSP/Trusted Types enforcement, victim role and who can deliver the value.",
+      "controlled_verification": "Use an inert local browser marker at the actual consumer, with no data exfiltration. Compare text rendering against HTML/attribute/URL/JS interpretation as applicable. For stored content, use a separate controlled viewer to establish reach beyond the submitting account. Inspect parsed DOM and execution, not only the original response text.",
+      "false_positive_discriminator": "Escaped reflection and markup assigned as text to an ordinary text-bearing element are not XSS. A script/style consumer or later reparse requires its own interpretation review; the API name alone is not a universal safety guarantee. A dangerous-looking sink may receive only trusted constants. Self-only behavior and CSP-blocked execution need their real prerequisites and supported impact, not an invented account takeover.",
+      "remediation_acceptance": "Use a safe consumer or context-appropriate encoding/sanitization for the required rich-content contract. Test the original data flow, legitimate formatting and one alternate transformation evidenced in source."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

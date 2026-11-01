@@ -1,0 +1,16 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Initial root-cause lens; reassess final mapping.",
+  "controls": [
+    {
+      "id": "PATH_TRAVERSAL-1",
+      "boundary": "Path traversal and unsafe file access — authoritative consumer",
+      "source_trace": "Trace caller path/identifier through decoding, joins, normalization, filesystem resolution and file open. Record the intended root, OS semantics and who can alter parent directories/links.",
+      "controlled_verification": "Use a temporary owned tree with one allowed file and one denied marker outside the intended subdirectory. Exercise the real path construction/open path and compare the opened object, not just a normalized string. If links are relevant, inspect their ownership/creation authority separately.",
+      "false_positive_discriminator": "A traversal-looking string rejected before open is not file access. A lexical prefix match can disagree with filesystem containment, but an unreachable file path in dead code is not an exposed read.",
+      "remediation_acceptance": "Enforce the intended object boundary with supported canonical/descriptor APIs and appropriate link policy. Retest normal nested files, the original escape and denied marker without reading system files."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

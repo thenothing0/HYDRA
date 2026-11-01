@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-coupon-redemption-review",
+  "cases": [
+    {
+      "id": "double-credit",
+      "scenario": "A documented one-use fixture coupon increases the test ledger twice on sequential redemption.",
+      "expected_decision": "Confirm the excess benefit from durable ledger changes, not response count."
+    },
+    {
+      "id": "idempotent-retry",
+      "scenario": "Two requests return success but resolve to the same redemption record and one credit.",
+      "expected_decision": "Treat as a valid retry if it meets the contract."
+    },
+    {
+      "id": "unknown-campaign-rule",
+      "scenario": "Repeated use works, but no policy establishes a limit or forbidden stacking.",
+      "expected_decision": "Describe the missing rule; do not invent a financial loss or limit."
+    }
+  ]
+}

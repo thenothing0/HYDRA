@@ -1,0 +1,21 @@
+{
+  "name": "security-vpn-federation-session-review",
+  "domain": "Enterprise identity and privileged access",
+  "intent": "VPN gateway identity/posture mapping into tunnel and resource authority",
+  "artifacts": "VPN/SP federation config, assertion validation, MFA assurance mapping and gateway session policies.",
+  "trace": "Trace issuer authentication context into VPN authorization and session refresh/reconnect, including local fallback identities.",
+  "experiment": "Using supplied gateway mappings or an owned gateway fixture, trace one synthetic federation identity and posture result into local VPN role, tunnel issuance and one permitted resource. Compare an assurance/posture mismatch or revoked reconnect under the actual profile.",
+  "disproof": "A successful IdP login or missing UI MFA prompt does not prove gateway assurance downgrade; the assertion/session may already carry required assurance.",
+  "repair": "Bind federation context and gateway session policy, verifying intended reconnect and required assurance.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/SAML_Security_Cheat_Sheet.html",
+  "adjacent": "security-windows-service-permissions-review; security-ldap-injection-review; security-posix-file-permissions-review",
+  "branch_decisions": "Map federated assertion assurance to the gateway session, device posture and resource policy. The IdP session and the VPN tunnel can have different documented lifetimes. A valid SSO response alone does not demonstrate internal network access; confirm only the owned permitted service path and classify revocation delay against the declared contract.",
+  "operational_method": "Specialize in one supplied gateway/protocol profile: assertion/token validation, mapped local VPN role, device/posture identity, tunnel issuance and permitted resource ACL. Compare the IdP identity/assurance with the actual tunnel/session record and one owned service access result, including reassessment on reconnect or posture change where the contract requires it. A generic SAML fixture cannot define gateway enforcement; absent gateway mapping is an explicit blocker, not proof of internal access.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "overlaps",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

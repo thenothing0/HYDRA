@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "CI and package publication",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "GitHub Actions cache producer identity and privileged consumption",
+      "source_trace": "Follow a lower-trust producer artifact into a privileged job that treats restored bytes as code or authoritative metadata.",
+      "implementation_branch": "Apply GitHub cache ref visibility before modeling a poisoned key: a cache created for a pull-request merge ref is not automatically restorable by main under the same key. Trace default-branch visibility, restore-prefix selection and the privileged consumer. If platform scope prevents restoration, the proposed cross-ref chain fails at that edge.",
+      "operational_method": "",
+      "controlled_verification": "Use a local cache model or isolated repository with inert markers; compare the intended cache producer with a permitted lower-trust key/restore context.",
+      "false_positive_discriminator": "A broad restore prefix is not cache poisoning without a producer path and security-relevant consumer.",
+      "remediation_acceptance": "Bind cache trust to producer/context or validate consumed artifacts, preserving legitimate safe reuse."
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "OWASP A08: Software or Data Integrity Failures"
+  short_description: "Review and remediate OWASP A08:2025 risks"
+  default_prompt: "Use $owasp-2025-a08-software-data-integrity to review this project, document supported findings, and verify requested fixes."

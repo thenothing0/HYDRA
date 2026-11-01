@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-mfa-lifecycle-review",
+  "cases": [
+    {
+      "id": "partial-session",
+      "scenario": "A session issued after password entry but before required MFA can change an enrolled factor.",
+      "expected_decision": "Confirm if the protected change violates the documented proof requirement and persists."
+    },
+    {
+      "id": "approved-recovery",
+      "scenario": "An owner-provisioned one-use recovery code correctly restores access and cannot be reused.",
+      "expected_decision": "Do not label the designed recovery as an MFA bypass."
+    },
+    {
+      "id": "status-flag-only",
+      "scenario": "A response says MFA enabled, but actual enrollment and subsequent challenge behavior are unknown.",
+      "expected_decision": "Keep the factor-state claim unverified until durable/login behavior is observed."
+    }
+  ]
+}

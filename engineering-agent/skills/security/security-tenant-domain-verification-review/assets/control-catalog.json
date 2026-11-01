@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "API and SaaS authority",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Custom-domain ownership proof and tenant routing lifecycle",
+      "source_trace": "Trace who controls the verification token and whether old proof can claim a different tenant/domain or survive intended ownership removal.",
+      "implementation_branch": "Distinguish hostname normalization, current proof ownership and the tenant allowed to claim it. Old verification tokens may be invalidated or remain valid by declared policy. A dangling DNS target is not proof that a provider will accept a new claim; use only an owned domain/fixture for that transition.",
+      "operational_method": "Record which DNS/HTTP proof method was accepted and how alternate methods interact. An HTTP challenge hosted by the same unverified SaaS tenant can make ownership proof circular; locate the independent domain-controlled endpoint before trusting it. Compare an owned domain under each supported method, stale proof and reassignment, without claiming another party hostname or registering its dangling resource.",
+      "controlled_verification": "Use only owned domains or a local resolver fixture; compare correct proof with another owned tenant challenge and a stale ownership transition.",
+      "false_positive_discriminator": "A DNS CNAME or validation error does not prove claimability; never claim an unowned production domain to strengthen the report.",
+      "remediation_acceptance": "Bind proof to normalized domain, tenant and current transaction, then verify renewal/removal and rightful onboarding."
+    }
+  ]
+}

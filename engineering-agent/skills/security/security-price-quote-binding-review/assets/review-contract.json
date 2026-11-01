@@ -1,0 +1,21 @@
+{
+  "name": "security-price-quote-binding-review",
+  "domain": "Commerce and business state",
+  "intent": "Immutable quote capabilities and permitted quantity/recipient consumption",
+  "artifacts": "Quote issuer/store, included product/quantity/customer/currency fields and purchase confirmation.",
+  "trace": "Determine which quote fields the server trusts and whether a quote can be reused for a different customer, quantity or expired pricing context.",
+  "experiment": "Issue an owned immutable quote capability, consume it under intended recipient/quantity/lifetime, then compare another recipient, changed quantity or forbidden repeated consumption. Preserve a deliberately honored guaranteed old price as a control.",
+  "disproof": "A cached price is not underpayment unless the authoritative purchase accepts the forbidden quote context.",
+  "repair": "Bind quote scope and validity to confirmation, preserving legitimate guaranteed-price windows.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Transaction_Authorization_Cheat_Sheet.html",
+  "adjacent": "security-payment-integrity-review; security-workflow-transitions-review; security-race-conditions-review",
+  "branch_decisions": "A quote may intentionally lock a price for a defined lifetime; expiry alone does not settle reuse after an approved extension. Determine which product/customer/quantity dimensions it covers. A rejected changed quote is a useful denial, not evidence that every unrelated quote field is protected.",
+  "operational_method": "Specialize in quote capability lifecycle: immutable quote/version, recipient/customer, covered product/quantity, currency, validity and consumption state. Identify which fields are authenticated or looked up server-side and which the checkout recomputes. Compare a legitimate guaranteed stale price with unauthorized reuse for another customer/quantity or a second consumption contrary to policy. Keep an old accepted guarantee separate from a modified quote; ordinary payment-amount authority remains the payment-integrity workflow.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "overlaps",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

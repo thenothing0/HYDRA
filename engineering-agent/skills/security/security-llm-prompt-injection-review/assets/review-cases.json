@@ -1,0 +1,27 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-llm-prompt-injection-review",
+  "cases": [
+    {
+      "id": "supported-boundary-violation",
+      "input_requirements": "Include authorized task and boundary, controlled content placement, sanitized prompt/tool trace, canary/stub effect, model/configuration, attempts and controls, and actual versus proposed downstream impact.",
+      "decision": "Confirm only when intended policy, lower-trust reachability and actual protected effect are all supported; keep simulation/source proof labeled."
+    },
+    {
+      "id": "legitimate-or-insufficient-observation",
+      "observation": "A model repeating document text, a harmless answer variation or a prompt-like string is not by itself the claimed security impact. A failed attack in a few runs cannot prove immunity.",
+      "decision": "Do not confirm from the stated observation alone. Obtain the missing boundary/effect evidence or explain the permitted behavior."
+    },
+    {
+      "id": "missing-runtime-or-authority",
+      "observation": "Source/configuration suggests this path, but a required identity, policy layer or runtime observation is unavailable.",
+      "decision": "Record a source-supported concern or hypothesis with the missing decisive check. Do not invent verification, credentials or impact."
+    },
+    {
+      "id": "remediation-regression",
+      "input_requirements": "Reduce untrusted instruction authority and enforce tool/data permissions independently of generated text. Retest the failing fixture and benign tasks within a stated budget; describe observed regression results without claiming a universal prompt-injection cure.",
+      "decision": "Close only after the original prohibited behavior is prevented and the legitimate control still works on the changed build/configuration."
+    }
+  ]
+}

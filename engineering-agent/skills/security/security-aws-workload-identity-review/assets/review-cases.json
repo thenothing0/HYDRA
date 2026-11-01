@@ -1,0 +1,27 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-aws-workload-identity-review",
+  "cases": [
+    {
+      "id": "supported-boundary-violation",
+      "input_requirements": "Include trust-policy snapshot, issuer claim contract, intended workload and attacker-controlled counterpart, condition evaluation, token redaction, actual versus simulated result and resulting role authority limits.",
+      "decision": "Confirm only when intended policy, lower-trust reachability and actual protected effect are all supported; keep simulation/source proof labeled."
+    },
+    {
+      "id": "legitimate-or-insufficient-observation",
+      "observation": "OIDC use, temporary credentials or a broad-looking subject pattern alone do not prove unauthorized role assumption. The issuer must actually issue the required signed claims to the claimed actor.",
+      "decision": "Do not confirm from the stated observation alone. Obtain the missing boundary/effect evidence or explain the permitted behavior."
+    },
+    {
+      "id": "missing-runtime-or-authority",
+      "observation": "Source/configuration suggests this path, but a required identity, policy layer or runtime observation is unavailable.",
+      "decision": "Record a source-supported concern or hypothesis with the missing decisive check. Do not invent verification, credentials or impact."
+    },
+    {
+      "id": "remediation-regression",
+      "input_requirements": "Bind federation to the intended issuer and workload conditions and narrow role authority. Retest a valid workload, wrong audience/subject and relevant alternate workflow context without changing production trust during assessment.",
+      "decision": "Close only after the original prohibited behavior is prevented and the legitimate control still works on the changed build/configuration."
+    }
+  ]
+}

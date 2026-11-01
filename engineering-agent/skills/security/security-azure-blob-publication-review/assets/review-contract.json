@@ -1,0 +1,21 @@
+{
+  "name": "security-azure-blob-publication-review",
+  "domain": "Azure service boundaries",
+  "intent": "Azure Blob container/object publication and private access paths",
+  "artifacts": "Account public-access settings, container policy, object identity and application publication contract.",
+  "trace": "Separate intended public blob retrieval from container listing, writes and private data delivery. Evaluate SAS and identity-based access as distinct authority paths.",
+  "experiment": "Use owned public and private synthetic blobs; compare anonymous retrieval/listing with intended authenticated access.",
+  "disproof": "A public marketing blob or guessed URL is not sensitive exposure; existence and intended confidentiality must be established.",
+  "repair": "Align account/container publication and issuing application policy, verifying public assets and private-data denial.",
+  "source": "https://learn.microsoft.com/en-us/azure/storage/blobs/anonymous-read-access-configure",
+  "adjacent": "security-entra-app-consent-review; security-azure-storage-sas-review",
+  "branch_decisions": "Resolve account-level public-access restrictions and container-level settings alongside any CDN/static-website path. Blob versus container anonymous access differ in listing behavior. An unguessable name is not authorization, but intentionally public assets are not private data exposure. Test one owned synthetic object and inspect effective policy rather than enumerating unknown object names.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

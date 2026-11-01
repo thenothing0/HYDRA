@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Kubernetes and deployment controllers",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Admission webhook selection, authentication and failure behavior",
+      "source_trace": "Determine which operations/resources reach the webhook and whether equivalent API paths or webhook failures admit an object violating the intended invariant.",
+      "implementation_branch": "Resolve webhook rules, namespace/object selectors, match conditions, failurePolicy and reinvocation behavior for the actual API operation. A fail-open timeout is material only when a required admission restriction is thereby skipped. Operator-supplied webhook configuration is privileged setup; do not label that setup itself an unprivileged bypass or cause production timeouts.",
+      "operational_method": "",
+      "controlled_verification": "Use an isolated cluster fixture with inert pods/config and compare compliant object, policy violation and controlled webhook unavailability.",
+      "false_positive_discriminator": "A fail-open setting is not a demonstrated dangerous admission without an in-scope violated workload policy; an excluded object may be intentional.",
+      "remediation_acceptance": "Align matching and failure behavior with the enforced invariant and retest availability recovery and legitimate admissions."
+    }
+  ]
+}

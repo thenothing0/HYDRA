@@ -1,0 +1,21 @@
+{
+  "name": "security-agent-oauth-delegation-review",
+  "domain": "AI applications and agent runtimes",
+  "intent": "Agent broker downstream account selection and token-exchange delegation",
+  "artifacts": "User/client grants, token audience/resource, tool routing, tenant/account selection and downstream API call.",
+  "trace": "Determine whether a tool request can select a different user/account/resource while the broker reuses a more privileged downstream token.",
+  "experiment": "Use two owned provider connection handles and one broker client consent, then switch the selected account/resource or actor chain before an inert downstream consumer. Compare exact consent-preserving selection with the prohibited connection.",
+  "disproof": "An authenticated broker or broad token in its vault is not a bypass if every tool operation correctly constrains the caller.",
+  "repair": "Bind tool caller, consented resource and downstream action, testing revocation and authorized multi-account use.",
+  "source": "https://genai.owasp.org/llm-top-10/",
+  "adjacent": "security-llm-prompt-injection-review; security-agent-tool-authorization-review; security-mcp-authorization-review",
+  "branch_decisions": "Map the broker client, consenting user, downstream resource and requested scopes into the token used by the tool. Consent to one service/tenant does not automatically authorize another. A broad token may be intentional but still needs per-user tool-action checks; inspect token exchange and audience binding without using real delegated tokens against unrelated services.",
+  "operational_method": "Specialize in broker account selection and token exchange: initiating client/user, selected downstream connection, resource/audience, scopes and any actor/subject chain. Compare two owned connection handles for the same provider and a changed account after consent. A broker must apply the actual per-client consent/action policy before selecting the token; merely returning a correctly signed token for the wrong stored connection can violate authority without any token forgery.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "overlaps",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

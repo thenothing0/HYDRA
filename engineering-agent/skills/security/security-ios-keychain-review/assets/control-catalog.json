@@ -1,0 +1,17 @@
+{
+  "category": "A04",
+  "native_context": "iOS Keychain item accessibility and sharing authority",
+  "taxonomy_note": "Planning lens only; actual root-cause mapping is independent.",
+  "controls": [
+    {
+      "id": "SECURITY_IOS_KEYCHAIN_REVIEW-1",
+      "boundary": "iOS Keychain item accessibility and sharing authority — authoritative consumer",
+      "source_trace": "Inspect item class/accessibility/access-control attributes, query keys, signed access-group entitlements and account lifecycle. Establish required locked/background/recovery behavior.",
+      "controlled_verification": "Use synthetic items in owned signed test apps/device states. Compare intended retrieval with the prohibited app/account/lock state and record which query/access group selected the item. Simulator or modified-device results retain those prerequisites.",
+      "false_positive_discriminator": "A shared group or item surviving uninstall is not automatically disclosure. A UI lock is different from Keychain access control, and source entitlement text is not proof of signed release entitlements.",
+      "remediation_acceptance": "Use appropriate platform attributes and narrow group/account queries while preserving required background/recovery flows. Retest lock states, account switch and authorized sharing."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

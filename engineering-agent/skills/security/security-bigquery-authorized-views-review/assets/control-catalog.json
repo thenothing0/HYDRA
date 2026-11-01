@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Google Cloud service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "BigQuery authorized view/routine data projection and delegation",
+      "source_trace": "Follow whether a caller can modify an authorized view/routine or use its projection to access data beyond the intended exposure contract.",
+      "implementation_branch": "Determine whether a view, routine or authorized dataset grants deliberate access to a projection without source-table read rights. Track who can modify that trusted object and its SQL. A user querying the intended view is expected; the defect is excess rows/columns or untrusted modification that changes the delegated projection.",
+      "operational_method": "Record whether delegation targets one authorized view, one authorized routine or an authorized dataset that can include future views. Identify who may create/replace the delegated object and which dataset/table projection it can query. Compare a fixed permitted projection with a changed projection authored by the actual restricted editor. Metadata visibility is not source-table read access; authorized creation within a delegated dataset can be a separate authority path from editing a single view.",
+      "controlled_verification": "Use owned synthetic datasets and compare intended view output with a controlled modification or restricted direct-table query.",
+      "false_positive_discriminator": "Reading an intentionally public aggregate is expected; table metadata or a denied direct query does not prove excessive view authority.",
+      "remediation_acceptance": "Constrain authorized-resource modification and projection, then verify intended queries and protected fields remain unavailable."
+    }
+  ]
+}

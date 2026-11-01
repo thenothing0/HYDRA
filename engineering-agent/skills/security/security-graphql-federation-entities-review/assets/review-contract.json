@@ -1,0 +1,21 @@
+{
+  "name": "security-graphql-federation-entities-review",
+  "domain": "API and SaaS authority",
+  "intent": "GraphQL federation entity representation trust",
+  "artifacts": "Gateway/subgraph identity propagation, entity representation resolver and service-to-service authorization.",
+  "trace": "Follow __typename/key representations into the actual entity loader and tenant policy. Separate gateway authentication from direct subgraph reachability.",
+  "experiment": "Use two owned entity records and a local gateway/subgraph fixture; compare rightful resolution with a foreign synthetic representation.",
+  "disproof": "An entity key in a schema is not access; a direct subgraph blocked by service authentication does not establish a reachable public defect.",
+  "repair": "Bind entity resolution to requester/tenant authority and verify both gateway and permitted service paths.",
+  "source": "https://www.apollographql.com/docs/federation/entities",
+  "adjacent": "security-api-bola-review; security-api-function-authorization-review; security-background-job-authorization-review",
+  "branch_decisions": "Identify whether the subgraph trusts a gateway-authenticated principal or an unauthenticated representation. An entity key is an object locator, not a tenant grant. Preserve the same requester context when comparing gateway and direct-subgraph paths; an internal service call is not automatically attacker reachable.",
+  "operational_method": "Inspect the subgraph context constructor and which authenticated gateway/end-user/tenant claims it receives. Retain the entity representation fields actually resolved; a gateway service identity must not substitute for user entitlement when resolving an untrusted representation. Compare the same synthetic entity through gateway and directly reachable subgraph paths using the same intended user authority, and leave direct reachability unproved if it is absent.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

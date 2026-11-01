@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "AWS service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Secrets Manager resource-policy and version access across principals",
+      "source_trace": "Evaluate the actual principal and resource/condition context, then distinguish metadata read, secret-value read and changing a version/staging label.",
+      "implementation_branch": "Resolve the requested secret ARN and VersionId/VersionStage, including which versions a policy actually permits. Cross-account access can require both secret and customer-managed KMS-key authority. A readable policy or a GetSecretValue denial caused by KMS does not prove another actor can retrieve plaintext; preserve the blocked edge and inspect rotation identities separately.",
+      "operational_method": "",
+      "controlled_verification": "Use a secret containing only an owned synthetic marker; compare the intended role with another owned role and inspect the exact requested version.",
+      "false_positive_discriminator": "List/describe permission is not GetSecretValue authority, and a KMS denial must not be attributed to a different resource policy.",
+      "remediation_acceptance": "Narrow effective value/version authority and retest allowed retrieval, restricted principals and version lifecycle."
+    }
+  ]
+}

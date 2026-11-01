@@ -1,0 +1,21 @@
+{
+  "name": "security-bigquery-authorized-views-review",
+  "domain": "Google Cloud service boundaries",
+  "intent": "BigQuery authorized view/routine data projection and delegation",
+  "artifacts": "Dataset/view/routine IAM, authorized-resource grants, query identity and underlying protected fields.",
+  "trace": "Follow whether a caller can modify an authorized view/routine or use its projection to access data beyond the intended exposure contract.",
+  "experiment": "Use owned synthetic datasets and compare intended view output with a controlled modification or restricted direct-table query.",
+  "disproof": "Reading an intentionally public aggregate is expected; table metadata or a denied direct query does not prove excessive view authority.",
+  "repair": "Constrain authorized-resource modification and projection, then verify intended queries and protected fields remain unavailable.",
+  "source": "https://cloud.google.com/bigquery/docs/authorized-views",
+  "adjacent": "security-gcp-iam-review; security-firestore-rules-review",
+  "branch_decisions": "Determine whether a view, routine or authorized dataset grants deliberate access to a projection without source-table read rights. Track who can modify that trusted object and its SQL. A user querying the intended view is expected; the defect is excess rows/columns or untrusted modification that changes the delegated projection.",
+  "operational_method": "Record whether delegation targets one authorized view, one authorized routine or an authorized dataset that can include future views. Identify who may create/replace the delegated object and which dataset/table projection it can query. Compare a fixed permitted projection with a changed projection authored by the actual restricted editor. Metadata visibility is not source-table read access; authorized creation within a delegated dataset can be a separate authority path from editing a single view.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

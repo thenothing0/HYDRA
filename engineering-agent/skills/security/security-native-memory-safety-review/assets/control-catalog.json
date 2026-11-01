@@ -1,0 +1,17 @@
+{
+  "category": "A06",
+  "native_context": "Native bounds, ownership and object lifetime",
+  "taxonomy_note": "Planning lens only; actual root-cause mapping is independent.",
+  "controls": [
+    {
+      "id": "SECURITY_NATIVE_MEMORY_SAFETY_REVIEW-1",
+      "boundary": "Native bounds, ownership and object lifetime — authoritative consumer",
+      "source_trace": "Trace input-controlled sizes/indexes and object ownership through allocation, transfer, free and dereference. Record C/C++ build flags, ABI and reachable parser/entrypoint.",
+      "controlled_verification": "Create a small local harness around the actual function with nonsecret bounded input. Use an available sanitizer/debugger to tie the failing access to object bounds/lifetime and preserve stack/source evidence. Compare a valid neighboring input and the repaired ownership/bounds behavior.",
+      "false_positive_discriminator": "A crash is not automatically exploitable code execution. A sanitizer report in an unreachable harness path needs application reachability separately; absence of a report is not a safety proof.",
+      "remediation_acceptance": "Repair the ownership/length invariant at its source, not merely suppress the symptom. Retest the original failure, valid edge inputs and cleanup using the same build identity."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

@@ -1,0 +1,27 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-rag-authorization-review",
+  "cases": [
+    {
+      "id": "supported-boundary-violation",
+      "input_requirements": "Record tenant/actor/document policy, ingestion and filter trace, unique canary source, returned chunks/context/citation paths, entitlement-change timing and allowed-access control.",
+      "decision": "Confirm only when intended policy, lower-trust reachability and actual protected effect are all supported; keep simulation/source proof labeled."
+    },
+    {
+      "id": "legitimate-or-insufficient-observation",
+      "observation": "A plausible answer or guessed document title is not proof of private document retrieval. Establish the exact synthetic content/source and entitlement; deliberately shared corpus data may be intended.",
+      "decision": "Do not confirm from the stated observation alone. Obtain the missing boundary/effect evidence or explain the permitted behavior."
+    },
+    {
+      "id": "missing-runtime-or-authority",
+      "observation": "Source/configuration suggests this path, but a required identity, policy layer or runtime observation is unavailable.",
+      "decision": "Record a source-supported concern or hypothesis with the missing decisive check. Do not invent verification, credentials or impact."
+    },
+    {
+      "id": "remediation-regression",
+      "input_requirements": "Enforce current entitlement at every relevant retrieval/delivery boundary with trusted tenant binding and appropriate invalidation. Retest allowed retrieval, denied tenant/role, revoked membership and stale/cache paths using the same synthetic corpus.",
+      "decision": "Close only after the original prohibited behavior is prevented and the legitimate control still works on the changed build/configuration."
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "domain": "cloud",
+  "native_context": "Azure Storage SAS issuance, capability scope and lifetime",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "AZURE_STORAGE_SAS-1",
+      "boundary": "Azure Storage SAS issuance, capability scope and lifetime — authoritative consumer",
+      "source_trace": "Identify service/account/user-delegation SAS type, issuing principal, exact resource/permissions, validity and applicable revocation mechanism. Inspect authorization before URL issuance.",
+      "controlled_verification": "With owned synthetic storage, compare a recipient entitled to one object/action with a request to mint a broader token or use it for a different object/action. Record signed scope and actual accepted operation; keep SAS values redacted and avoid unrelated data.",
+      "false_positive_discriminator": "A SAS is designed as a bearer capability. Its presence in a rightful recipient's URL is not a leak by itself. Revocation and stored-access-policy support differ by SAS type.",
+      "remediation_acceptance": "Narrow issuer authorization, signed resource/permissions and lifetime using the supported type-specific controls. Retest intended access, denied scope and the documented invalidation path."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

@@ -1,0 +1,16 @@
+{
+  "category": "A06",
+  "taxonomy_note": "Initial root-cause lens; reassess final mapping.",
+  "controls": [
+    {
+      "id": "RACE_CONDITIONS-1",
+      "boundary": "Concurrency and atomic business invariants — authoritative consumer",
+      "source_trace": "Identify the shared invariant, read/check/commit locations, transaction isolation, lock/idempotency scope and retry behavior. Use a bounded local fixture for state-changing concurrency.",
+      "controlled_verification": "Instrument the real operation with barriers to interleave two requests at the suspected check/use window. Compare serial execution and the controlled interleaving, observing the durable invariant rather than successful response counts. Record the schedule and final ledger/state.",
+      "false_positive_discriminator": "Two 200 responses can correspond to one idempotent commit. A race in a simplified model is not proof the production transaction permits that schedule; retain that limitation.",
+      "remediation_acceptance": "Make the invariant atomic using the platform's supported transaction/constraint/idempotency mechanism. Repeat the original schedule, serial legitimate use and retry/rollback control."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

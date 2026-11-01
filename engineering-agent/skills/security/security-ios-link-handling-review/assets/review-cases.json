@@ -1,0 +1,27 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-ios-link-handling-review",
+  "cases": [
+    {
+      "id": "supported-boundary-violation",
+      "input_requirements": "Record entitlement/association evidence, build/OS, external link source, handler path, normalization and selected account/action, observed synthetic result and valid-link control.",
+      "decision": "Confirm only when intended policy, lower-trust reachability and actual protected effect are all supported; keep simulation/source proof labeled."
+    },
+    {
+      "id": "legitimate-or-insufficient-observation",
+      "observation": "A custom scheme registration or universal link opening an app does not demonstrate a security issue. A link association determines routing; sensitive action authority needs separate evidence.",
+      "decision": "Do not confirm from the stated observation alone. Obtain the missing boundary/effect evidence or explain the permitted behavior."
+    },
+    {
+      "id": "missing-runtime-or-authority",
+      "observation": "Source/configuration suggests this path, but a required identity, policy layer or runtime observation is unavailable.",
+      "decision": "Record a source-supported concern or hypothesis with the missing decisive check. Do not invent verification, credentials or impact."
+    },
+    {
+      "id": "remediation-regression",
+      "input_requirements": "Validate the parsed route and parameters and enforce action/account authority independently of link delivery. Retest legitimate links, rejected destinations/actions and session changes across relevant handler paths.",
+      "decision": "Close only after the original prohibited behavior is prevented and the legitimate control still works on the changed build/configuration."
+    }
+  ]
+}

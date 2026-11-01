@@ -1,0 +1,21 @@
+{
+  "name": "security-gcp-cloudbuild-trigger-trust-review",
+  "domain": "Google Cloud service boundaries",
+  "intent": "Cloud Build trigger/source trust and build service-account delegation",
+  "artifacts": "Trigger event/source rules, build config substitution, service account, approvals and output artifact.",
+  "trace": "Trace lower-trust source/config/variables into a build running with deployment or secret authority and ensure approval is bound to the actual revision.",
+  "experiment": "Use an isolated owned build fixture with inert output; compare trusted release and a lower-trust source/config change.",
+  "disproof": "A build service-account name in config is not usable authority if trigger/approval controls reject the untrusted run.",
+  "repair": "Bind trusted source and approvals to execution, scope build identity and verify legitimate publication.",
+  "source": "https://docs.cloud.google.com/software-supply-chain-security/docs/safeguard-builds",
+  "adjacent": "security-gcp-iam-review; security-firestore-rules-review",
+  "branch_decisions": "Bind trigger source/ref, configuration file location and build service account. A trigger editor may indirectly control privileged build execution even without a direct service-account token. Inspect approval and repository-connection boundaries; do not infer that a PR can select a privileged account merely because a configuration field names it.",
+  "operational_method": "Identify trigger creator/editor, required iam.serviceAccounts.actAs authority, configured trigger build account and actual worker execution account. Retain the resolved source/ref and build configuration from the admitted trigger run. A service-account name in untrusted YAML is only a request until platform admission accepts it. The local model must preserve the account-selection gate, and a denied trigger edit must not become a claim that the worker executed under that account.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

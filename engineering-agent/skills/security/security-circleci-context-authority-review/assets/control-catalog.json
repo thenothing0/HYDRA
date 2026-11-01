@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "CI and package publication",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "CircleCI context secrets and workflow approval/source binding",
+      "source_trace": "Determine whether a lower-trust config revision can execute a context-bearing job or change the artifact after an approval.",
+      "implementation_branch": "Inspect context restrictions, project identity and approval job placement against the exact workflow revision. An approval event is not sufficient if a later untrusted script substitution changes what runs with the context. Fork/branch settings and expression restrictions may deny context access before execution; retain that denial as a specific negative control.",
+      "operational_method": "Record which approving actor is permitted by a restricted context security group and which project/expression restrictions the context-bearing job must satisfy. Workflow approval and context access are distinct decisions. Compare an approved job whose actor/context eligibility fails with an eligible actor using the same source revision. Do not treat a green approval node as proof that secrets were injected or that the approver authorized a later substituted script.",
+      "controlled_verification": "Use an isolated config/local execution fixture with synthetic context values and inert publication; compare authorized and untrusted source contexts.",
+      "false_positive_discriminator": "A context name in config or an approval click is not proof the consumed revision was trusted.",
+      "remediation_acceptance": "Bind contexts and approval to actual trusted job inputs, retesting legitimate release and fork/branch separation."
+    }
+  ]
+}

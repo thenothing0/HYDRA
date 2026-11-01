@@ -1,0 +1,21 @@
+{
+  "name": "security-payout-beneficiary-lifecycle-review",
+  "domain": "Commerce and business state",
+  "intent": "Payout beneficiary changes and confirmation-to-execution binding",
+  "artifacts": "Beneficiary registration/verification, cooldown/approval policy, payout queue and final destination selection.",
+  "trace": "Trace which beneficiary version was approved and which version the queued payout resolves, especially edits after confirmation.",
+  "experiment": "Use a sandbox beneficiary fixture with synthetic destinations; compare approved payout with a post-approval destination change.",
+  "disproof": "An edited display label is not changed funds routing; show the effective destination used by the sandbox execution.",
+  "repair": "Bind payout approval to immutable beneficiary intent and retest allowed updates, cooldown and execution.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Transaction_Authorization_Cheat_Sheet.html",
+  "adjacent": "security-payment-integrity-review; security-workflow-transitions-review; security-race-conditions-review",
+  "branch_decisions": "Determine whether confirmation approves a beneficiary identity or an immutable beneficiary version. A queued payout resolving a later changed destination can violate a version-bound approval. A label change with the same account identifier is not altered routing; verify the actual sandbox destination.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

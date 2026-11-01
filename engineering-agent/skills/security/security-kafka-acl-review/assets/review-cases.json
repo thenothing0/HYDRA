@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-kafka-acl-review",
+  "cases": [
+    {
+      "id": "group-authority",
+      "scenario": "A fixture principal consumes prohibited tenant records using a broadly matched topic/group grant.",
+      "expected_decision": "Confirm actual protected reads and the full principal/resource policy path."
+    },
+    {
+      "id": "metadata-only",
+      "scenario": "A principal observes a permitted topic name but produce/consume of protected records is denied.",
+      "expected_decision": "Do not equate metadata visibility with message disclosure."
+    },
+    {
+      "id": "authorizer-unknown",
+      "scenario": "ACL files are supplied but the active broker authorizer and listener identity mapping are unknown.",
+      "expected_decision": "Keep effective access unresolved until runtime configuration is established."
+    }
+  ]
+}

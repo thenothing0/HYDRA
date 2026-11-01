@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "domain": "desktop",
+  "native_context": "Electron renderer-to-main IPC and native capabilities",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "ELECTRON_IPC-1",
+      "boundary": "Electron renderer-to-main IPC and native capabilities — authoritative consumer",
+      "source_trace": "Open BrowserWindow settings, preload/contextBridge exposure, IPC registration and main-process handlers. Record sender/frame/origin and which navigations can supply renderer content.",
+      "controlled_verification": "Using an owned local renderer, invoke one inert privileged operation from the intended UI and an untrusted frame/context. Trace argument/resource authority at the main-process consumer; a narrowly exposed bridge may still delegate excessive power.",
+      "false_positive_discriminator": "contextIsolation or disabled nodeIntegration alone is not proof that IPC is authorized. A handler name in preload is inventory until an untrusted sender can reach a protected effect.",
+      "remediation_acceptance": "Expose minimal typed operations and validate sender/context plus resource/action authority at consumption. Retest intended app UI, untrusted frame and originally evidenced navigation path."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

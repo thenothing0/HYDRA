@@ -1,0 +1,21 @@
+{
+  "name": "security-sqlite-extension-loading-review",
+  "domain": "Databases and messaging",
+  "intent": "SQLite extension-loading authority in an embedded application",
+  "artifacts": "Embedding runtime, extension-loading configuration, SQL entrypoints and process/file privileges.",
+  "trace": "Determine whether lower-trust SQL or configuration can select an executable extension under the application process identity.",
+  "experiment": "Use a local reviewed stub or source trace proving load reachability; never load an untrusted binary merely to validate a concern.",
+  "disproof": "SQLite library presence or SQL input alone is insufficient if extension loading is disabled or inaccessible.",
+  "repair": "Disable unneeded extension loading or constrain its trusted caller/source, preserving required embedded database operations.",
+  "source": "https://www.sqlite.org/loadext.html",
+  "adjacent": "security-postgres-rls-review; security-redis-acl-review; security-kafka-acl-review",
+  "branch_decisions": "Distinguish native sqlite3 extension-loading enablement from SQL load_extension availability and the wrapper connection flags. Ordinary SQL injection does not automatically imply extension execution. The host must expose loading and a reachable library source; inspect the exact connection and use an inert local stub rather than loading an untrusted native binary.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

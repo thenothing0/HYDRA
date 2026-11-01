@@ -1,0 +1,21 @@
+{
+  "name": "security-sudo-command-policy-review",
+  "domain": "Enterprise identity and privileged access",
+  "intent": "sudo policy matching, delegated arguments and executable provenance",
+  "artifacts": "Effective sudoers/includes, runas settings, allowed arguments/environment and script/binary ownership.",
+  "trace": "Resolve the exact matched command and who controls its executable, parameters, configuration and working-directory dependencies.",
+  "experiment": "Use an isolated local policy fixture or inert argv-recording stub under owned identities; do not execute privileged escape payloads.",
+  "disproof": "A sudo entry is intentional delegation; demonstrate unintended authority beyond its actual command and argument contract.",
+  "repair": "Constrain the delegated operation and mutable inputs, verifying authorized commands and rejected argument/environment changes.",
+  "source": "https://www.sudo.ws/docs/man/sudoers.man/",
+  "adjacent": "security-windows-service-permissions-review; security-ldap-injection-review; security-posix-file-permissions-review",
+  "branch_decisions": "Apply the installed sudo version matching rules to the exact executable and arguments before analyzing helper behavior. Wildcards, regular expressions, environment controls and writable executable/parent paths have distinct implications. A matcher granting a command is expected when policy intends it; the defect is an unauthorized semantic effect reachable through that permitted helper.",
+  "operational_method": "Retain installed sudo version, effective includes/order/tags, RunAs identity, canonical executable and how that version matches the command argument string. Resolve wildcard versus supported regex semantics rather than assuming shell argv matching. Inspect writable executable/parent paths, permitted environment and helper dependencies. A local argv recorder proves arguments only; validate the actual sudo matching decision from supplied policy/output or an isolated policy fixture before attributing the helper semantic effect.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

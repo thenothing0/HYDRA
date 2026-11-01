@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "AI applications and agent runtimes",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "MCP OAuth registration profiles and client-metadata-to-consent binding",
+      "source_trace": "Trace a client identity/redirect through registration to granted resource authority, including reuse of client metadata across protected MCP resources.",
+      "implementation_branch": "Distinguish registration metadata from user consent and from authorization-server identity. Dynamic registration can be a supported public-client flow. Pin the redirect/client relationship and broker transaction so an attacker client cannot reuse another client consent; a new valid client record by itself is not a successful impersonation or token disclosure.",
+      "operational_method": "Identify the actual registration profile first: pre-registered clients, dynamic registration or supported client-metadata documents are different trust paths. Retain client metadata provenance, redirect selection and the exact client identity displayed/recorded at consent. Compare a legitimate client update with an untrusted metadata/redirect change; open registration alone is expected under some profiles. Generic wrong-resource token validation remains the MCP authorization workflow.",
+      "controlled_verification": "In the chosen registration profile, retain registered metadata and consent transaction for two owned clients. Compare legitimate creation/update with a changed redirect or metadata provenance and inspect the client identity receiving the resulting grant.",
+      "false_positive_discriminator": "Dynamic registration can be intentional; a client ID alone grants no user/resource permission.",
+      "remediation_acceptance": "Bind registration and consent to the intended client/resource and preserve legitimate compatible clients."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Databases and messaging",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "MySQL effective account/host matching and stored-object privileges",
+      "source_trace": "Resolve the actual authenticated account and effective active roles before following a stored routine/view into protected tables.",
+      "implementation_branch": "Resolve the matched user@host account, active roles and direct grants before invoking stored-object authority. SQL SECURITY DEFINER may deliberately delegate a narrow operation; inspect definer identity, object body and caller-controlled arguments only when that path is reachable. A client-supplied username alone does not identify the effective server account.",
+      "operational_method": "",
+      "controlled_verification": "Use an isolated database with two owned users and synthetic rows; compare intended access and a controlled definer-object invocation.",
+      "false_positive_discriminator": "A broad grant on a different host account or inactive role is not effective access for the tested connection.",
+      "remediation_acceptance": "Constrain matched account and stored-object authority, testing normal routines and restricted table operations."
+    }
+  ]
+}

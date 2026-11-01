@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Browser and HTTP boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Navigation authority through real window.opener and named-window relationships",
+      "source_trace": "Establish how a lower-trust page retains an opener or reuses a named context, then which permitted cross-origin navigation operation reaches a trusted tab.",
+      "implementation_branch": "Separate a newly opened blank target, an existing named window and a popup later navigating off origin. Confirm the opener survives the effective COOP group transition. Do not assume every target=_blank creates an opener, or that a popup blocker denial proves protection after an actual permitted popup opens.",
+      "operational_method": "",
+      "controlled_verification": "Use owned origins and visible benign navigation markers; compare the actual opener-linked path against an identical noopener or isolated-window control.",
+      "false_positive_discriminator": "Modern implicit noopener, COOP separation or a null opener can invalidate a source-only concern; generic frameability is a different boundary.",
+      "remediation_acceptance": "Remove unneeded opener authority and retest the actual popup flow, including required return messaging."
+    }
+  ]
+}

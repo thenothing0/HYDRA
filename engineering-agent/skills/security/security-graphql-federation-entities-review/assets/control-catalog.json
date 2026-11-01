@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "API and SaaS authority",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "GraphQL federation entity representation trust",
+      "source_trace": "Follow __typename/key representations into the actual entity loader and tenant policy. Separate gateway authentication from direct subgraph reachability.",
+      "implementation_branch": "Identify whether the subgraph trusts a gateway-authenticated principal or an unauthenticated representation. An entity key is an object locator, not a tenant grant. Preserve the same requester context when comparing gateway and direct-subgraph paths; an internal service call is not automatically attacker reachable.",
+      "operational_method": "Inspect the subgraph context constructor and which authenticated gateway/end-user/tenant claims it receives. Retain the entity representation fields actually resolved; a gateway service identity must not substitute for user entitlement when resolving an untrusted representation. Compare the same synthetic entity through gateway and directly reachable subgraph paths using the same intended user authority, and leave direct reachability unproved if it is absent.",
+      "controlled_verification": "Use two owned entity records and a local gateway/subgraph fixture; compare rightful resolution with a foreign synthetic representation.",
+      "false_positive_discriminator": "An entity key in a schema is not access; a direct subgraph blocked by service authentication does not establish a reachable public defect.",
+      "remediation_acceptance": "Bind entity resolution to requester/tenant authority and verify both gateway and permitted service paths."
+    }
+  ]
+}

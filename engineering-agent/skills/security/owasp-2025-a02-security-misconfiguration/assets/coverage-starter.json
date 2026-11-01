@@ -1,0 +1,41 @@
+{
+  "category": "A02",
+  "coverage": [
+    {
+      "id": "A02-01",
+      "boundary": "Initialization, upgrade and restore",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A02-02",
+      "boundary": "Configuration precedence",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A02-03",
+      "boundary": "Debug and administrative exposure",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A02-04",
+      "boundary": "Ingress and forwarded-header trust",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A02-05",
+      "boundary": "Parser capability settings",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A02-06",
+      "boundary": "Storage and client security policy",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    }
+  ]
+}

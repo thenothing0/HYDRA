@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Google Cloud service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Workload Identity Federation provider claims and service-account delegation",
+      "source_trace": "Trace external issuer claims into effective principals and distinguish provider admission from permission to impersonate a service account.",
+      "implementation_branch": "Evaluate issuer, audience, attribute mapping and provider conditions before IAM principal/principalSet bindings. Attribute values such as repository name can be reassigned; immutable producer IDs may have different trust properties. Direct resource access and service-account impersonation are separate grants; a successful token exchange alone establishes neither final permission.",
+      "operational_method": "",
+      "controlled_verification": "Use an owned local claim-policy fixture or isolated test provider with two synthetic workloads; compare intended subject and a controlled claim mismatch.",
+      "false_positive_discriminator": "Token exchange success alone does not establish target resource access; the impersonation/resource policy may still deny.",
+      "remediation_acceptance": "Bind issuer attributes and delegation to the intended workload, then verify approved jobs and unrelated workload denial."
+    }
+  ]
+}

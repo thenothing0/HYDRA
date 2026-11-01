@@ -1,0 +1,27 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-aws-iam-review",
+  "cases": [
+    {
+      "id": "supported-boundary-violation",
+      "input_requirements": "Provide sanitized principal/session form, action/resource/context tuple, applicable policy snapshots and versions, evaluation path, missing layers, intended role contract and any bounded observed operation.",
+      "decision": "Confirm only when intended policy, lower-trust reachability and actual protected effect are all supported; keep simulation/source proof labeled."
+    },
+    {
+      "id": "legitimate-or-insufficient-observation",
+      "observation": "A permissive-looking policy fragment is not the complete effective permission set. Missing policy layers or simulator support must remain uncertainty, and broad administration may be explicitly intended.",
+      "decision": "Do not confirm from the stated observation alone. Obtain the missing boundary/effect evidence or explain the permitted behavior."
+    },
+    {
+      "id": "missing-runtime-or-authority",
+      "observation": "Source/configuration suggests this path, but a required identity, policy layer or runtime observation is unavailable.",
+      "decision": "Record a source-supported concern or hypothesis with the missing decisive check. Do not invent verification, credentials or impact."
+    },
+    {
+      "id": "remediation-regression",
+      "input_requirements": "Narrow the evidenced authority at the appropriate policy boundary and preserve needed service behavior. Reevaluate denied and required tuples, alternate session/resource principals and the original deployment context after change.",
+      "decision": "Close only after the original prohibited behavior is prevented and the legitimate control still works on the changed build/configuration."
+    }
+  ]
+}

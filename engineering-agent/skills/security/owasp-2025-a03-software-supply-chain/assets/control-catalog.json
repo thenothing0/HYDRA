@@ -1,0 +1,66 @@
+{
+  "category": "A03",
+  "version": "4.0.0",
+  "controls": [
+    {
+      "id": "A03-01",
+      "slug": "deployed-component",
+      "boundary": "Advisory applicability",
+      "source_trace": "Final image/bundle -> resolved dependency graph -> affected feature/config.",
+      "controlled_verification": "Use supplied runtime/client evidence and publisher advisory; report invisible backend graph as unknown.",
+      "false_positive_discriminator": "Version presence is not complete reachability evidence; unsupported software is a separate risk.",
+      "remediation_acceptance": "Ship a supported fixed graph; verify the actual final artifact rather than only manifest text.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A03-02",
+      "slug": "source-resolution",
+      "boundary": "Registry and namespace resolution",
+      "source_trace": "Name/scope -> resolver precedence -> locked source -> installation.",
+      "controlled_verification": "Inspect supplied lock/source metadata or explicitly exposed client asset identity.",
+      "false_positive_discriminator": "Do not publish a conflicting package; source inference from a name is insufficient.",
+      "remediation_acceptance": "Intended trusted source is selected reproducibly; private names cannot resolve through unintended sources.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A03-03",
+      "slug": "build-trust",
+      "boundary": "Untrusted build inputs",
+      "source_trace": "Trigger/PR context -> checkout revision -> executed script -> secrets/permissions.",
+      "controlled_verification": "Use local workflow review and an isolated inert demonstration if needed.",
+      "false_positive_discriminator": "Read-only isolated builds differ from privileged execution of untrusted contributions.",
+      "remediation_acceptance": "Untrusted code never inherits unauthorized publishing credentials or release authority.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A03-04",
+      "slug": "artifact-origin",
+      "boundary": "Release artifact identity",
+      "source_trace": "Approved revision/build -> artifact origin/digest/provenance -> deployment.",
+      "controlled_verification": "Compare approved out-of-band identity with supplied artifact bytes.",
+      "false_positive_discriminator": "An adjacent attacker-supplied checksum does not establish origin.",
+      "remediation_acceptance": "Reject unknown/changed artifacts before consumption; reconcile shipped identity with approved release.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A03-05",
+      "slug": "tooling-surface",
+      "boundary": "Build tools, actions and images",
+      "source_trace": "IDE/build plugin/action/container -> version/pin -> lifecycle behavior.",
+      "controlled_verification": "Review supplied build configuration; do not run unknown hooks to discover behavior.",
+      "false_positive_discriminator": "A moving tag alone needs the relevant trust/update policy before severity assignment.",
+      "remediation_acceptance": "Required dependencies/tooling have controlled origin, update ownership and proportionate privileges.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A03-06",
+      "slug": "upgrade-delivery",
+      "boundary": "Fix, exception and deployment",
+      "source_trace": "Advisory -> smallest supported upgrade/mitigation -> lockfile -> rebuilt artifact.",
+      "controlled_verification": "Validate delivered component identity and feature tests from supplied evidence.",
+      "false_positive_discriminator": "A scanner disappearing after dependency removal is not proof of a clean final image.",
+      "remediation_acceptance": "Affected path is repaired in the shipped build; temporary exceptions state owner, scope and expiry.",
+      "default_status": "not-tested"
+    }
+  ]
+}

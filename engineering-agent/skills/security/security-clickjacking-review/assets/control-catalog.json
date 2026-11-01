@@ -1,0 +1,16 @@
+{
+  "category": "A06",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "CLICKJACKING-1",
+      "boundary": "Clickjacking and framed sensitive actions — authoritative consumer",
+      "source_trace": "Inspect framing policy on the exact sensitive page, its session behavior inside a frame and any confirmation/reauthentication step. Define the protected UI action.",
+      "controlled_verification": "In an owned framing page, verify the victim test account can actually load and interact with the sensitive UI under the real browser credential policy. Use an inert state change and record the interaction required. Compare direct legitimate use and framing after the fix.",
+      "false_positive_discriminator": "A missing header or frameable public landing page is not proof that a protected operation can be induced. UI needing a separate unspoofable confirmation may change the supported impact.",
+      "remediation_acceptance": "Set an appropriate CSP frame-ancestors policy on affected responses and preserve approved embedding requirements. Test the actual page and legitimate embedded integration if one exists."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

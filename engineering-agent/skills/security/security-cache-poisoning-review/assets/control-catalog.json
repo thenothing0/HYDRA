@@ -1,0 +1,16 @@
+{
+  "category": "A06",
+  "taxonomy_note": "Initial root-cause lens; reassess final mapping.",
+  "controls": [
+    {
+      "id": "CACHE_POISONING-1",
+      "boundary": "Web cache poisoning and deception — authoritative consumer",
+      "source_trace": "Map cache key, Vary behavior, cacheability, normalization, origin inputs and account partitioning at the actual cache. Distinguish poisoning from private-response reuse/deception.",
+      "controlled_verification": "Use an isolated cache namespace or replica and a unique fixture path. Prime with the single suspect unkeyed input, then request as a separate clean controlled client without that input. Observe the poisoned marker, cache source and expected lifetime; purge owned fixture entries afterward.",
+      "false_positive_discriminator": "Reflection visible only to the priming request is not poisoning. A cache miss or correct Vary separation defeats that test. Shared private data and attacker-altered public content have different impacts.",
+      "remediation_acceptance": "Align response influence with cache keys or remove unsafe cacheability at the evidenced layer. Retest clean-client reuse, legitimate cache hits and private account separation where relevant."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

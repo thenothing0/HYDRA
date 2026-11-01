@@ -1,0 +1,18 @@
+{
+  "category": "A05",
+  "domain": "web",
+  "native_context": "DOM named-property collisions and security consumers",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "DOM_CLOBBERING-1",
+      "boundary": "DOM named-property collisions and security consumers — authoritative consumer",
+      "source_trace": "Open the sanitizer/render path and each id/name-based global, form or collection lookup used by navigation, script configuration or privileged actions.",
+      "controlled_verification": "In an owned local page insert the allowed inert named element that collides with the actual lookup. Record the runtime type/value before and after and follow it into the security-sensitive consumer. A collision matters only if the consumer accepts the substituted object/string and changes a protected decision.",
+      "false_positive_discriminator": "Duplicate element names without an affected consumer are an HTML correctness issue. A local variable holding a trusted constant may shadow the browser global and defeat the hypothesis.",
+      "remediation_acceptance": "Use explicit references and type/origin validation at the affected consumer; align allowed rich content with the feature. Retest ordinary named elements and the original collision in relevant browsers."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

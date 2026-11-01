@@ -1,0 +1,41 @@
+{
+  "category": "A04",
+  "coverage": [
+    {
+      "id": "A04-01",
+      "boundary": "Sensitive-data protection",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A04-02",
+      "boundary": "Peer identity and TLS trust",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A04-03",
+      "boundary": "Password record and migration",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A04-04",
+      "boundary": "Mode, nonce and authenticated failure",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A04-05",
+      "boundary": "Key generation and custody",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A04-06",
+      "boundary": "Rotation and compromise response",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    }
+  ]
+}

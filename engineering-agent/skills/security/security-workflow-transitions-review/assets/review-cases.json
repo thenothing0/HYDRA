@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-workflow-transitions-review",
+  "cases": [
+    {
+      "id": "approval-skipped",
+      "scenario": "A fixture request moves from draft to fulfilled although the documented approver never approved it.",
+      "expected_decision": "Confirm only from actor/state/effect evidence and the actual approval rule."
+    },
+    {
+      "id": "ui-only-navigation",
+      "scenario": "The final page loads but the record remains draft and no fulfillment occurs.",
+      "expected_decision": "Do not claim completed workflow circumvention."
+    },
+    {
+      "id": "optional-step",
+      "scenario": "A skipped step is explicitly optional and the remaining security prerequisites are enforced.",
+      "expected_decision": "Treat as intended behavior unless a different supported invariant is violated."
+    }
+  ]
+}

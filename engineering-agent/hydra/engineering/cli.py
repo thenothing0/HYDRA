@@ -39,6 +39,7 @@ def parser():
         command.add_argument("--max-failures", type=int, default=5)
         command.add_argument("--burp-url", help="Official Burp MCP SSE endpoint on loopback (or BURP_MCP_URL)")
         command.add_argument("--hackerone", action="store_true", help="Enable HackerOne tools; submission still requires an authorized validation plan")
+        command.add_argument("--skill", action="append", dest="skills", help="Load a bundled skill by name; repeat up to three times")
         command.add_argument("--read-only", action="store_true")
         command.add_argument(
             "--browser",
@@ -79,6 +80,27 @@ def parser():
     burp = sub.add_parser("burp", help="Check the official Burp MCP extension and list its tools")
     burp.add_argument("--workspace", default=".")
     burp.add_argument("--url")
+    skills = sub.add_parser("skills", help="Discover/read bundled skills and run approved helpers")
+    skill_commands = skills.add_subparsers(dest="skills_command", required=True)
+    for name in ("list", "search", "show", "run"):
+        command = skill_commands.add_parser(name)
+        command.add_argument("--workspace", default=".")
+        if name in ("list", "search"):
+            command.add_argument("--json", action="store_true")
+        if name == "search":
+            command.add_argument("query")
+            command.add_argument("--limit", type=int, default=10)
+        if name in ("show", "run"):
+            command.add_argument("name")
+        if name == "show":
+            command.add_argument("resource", nargs="?", default="SKILL.md")
+            command.add_argument("--start", type=int, default=1)
+            command.add_argument("--lines", type=int, default=200)
+        if name == "run":
+            command.add_argument("--allow-run", action="store_true")
+            command.add_argument("--timeout", type=int, default=60)
+            command.add_argument("script")
+            command.add_argument("arguments", nargs=argparse.REMAINDER)
     hackerone = sub.add_parser("hackerone", help="Configure and inspect evidence-gated HackerOne reporting")
     reporting = hackerone.add_subparsers(dest="hackerone_command", required=True)
     for name in ("status", "programs", "scopes", "program", "authorize", "submit"):
@@ -192,6 +214,7 @@ async def start_run(args, workspace, session=None, goal=None, model=None):
         burp_url=getattr(args, "burp_url", None),
         approve_burp=approve,
         hackerone=getattr(args, "hackerone", False),
+        skills=getattr(args, "skills", None),
     )
     session.state["verification_command"] = tools.verify_command
     session.save()
@@ -230,6 +253,30 @@ async def main(argv=None):
     if getattr(args, "allow_browser_actions", False) and not args.browser:
         raise ValueError("--allow-browser-actions requires --browser")
     workspace = Workspace(args.workspace)
+    if args.command == "skills":
+        from hydra.engineering.skills import SkillCatalog
+
+        catalog = SkillCatalog()
+        if args.skills_command in ("list", "search"):
+            entries = catalog.list() if args.skills_command == "list" else catalog.search(args.query, args.limit)
+            if args.json:
+                print(json.dumps({"total": len(catalog.entries), "skills": entries}, ensure_ascii=False, indent=2))
+            else:
+                for item in entries:
+                    print(f"{item['name']}\n  {item['description']}")
+                print(f"\n{len(entries)} shown / {len(catalog.entries)} bundled skills")
+            return 0
+        if args.skills_command == "show":
+            print(json.dumps(catalog.read(args.name, args.resource, args.start, args.lines), ensure_ascii=False, indent=2))
+            return 0
+        session = Session(workspace, goal=f"Run bundled helper: {args.name}/{args.script}")
+        tools = EngineeringTools(session, approve=(lambda argv: True) if args.allow_run else approve)
+        arguments = args.arguments[1:] if args.arguments[:1] == ["--"] else args.arguments
+        result = await tools.execute("skill_run", {"name": args.name, "script": args.script,
+                                                  "arguments": arguments, "timeout": args.timeout})
+        session.event("result", tool="skill_run", result=result)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0 if result.get("success") else 1
     if args.command == "hackerone":
         from hydra.engineering.hackerone_api import HackerOneClient, program_handle
         from hydra.engineering.hackerone_reporting import HackerOneReporting, fingerprint

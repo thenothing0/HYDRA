@@ -1,0 +1,17 @@
+{
+  "category": "A04",
+  "native_context": "Password verifier storage, migration and resource policy",
+  "taxonomy_note": "Planning lens only; actual root-cause mapping is independent.",
+  "controls": [
+    {
+      "id": "SECURITY_PASSWORD_STORAGE_REVIEW-1",
+      "boundary": "Password verifier storage, migration and resource policy — authoritative consumer",
+      "source_trace": "Trace enroll/verify/reset/rehash to the actual library and stored verifier parameters/version. Record salts, pepper boundary, input-length/Unicode handling and legacy migration.",
+      "controlled_verification": "Use nonsecret fixture passwords and verifiers. Compare correct/incorrect verification and a successful legacy rehash, measuring only a bounded local sample under the intended resource budget. Inspect what happens when configured parameters or input exceed supported limits.",
+      "false_positive_discriminator": "A hash-looking string is not proof of a password KDF or adequate work factor. A recommendation mismatch alone does not establish an online compromise. Never collect production password hashes or crack passwords for this review.",
+      "remediation_acceptance": "Use supported current password-verifier configuration and safe migration after successful verification. Retest valid/invalid passwords, rehash and declared input/resource limits."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

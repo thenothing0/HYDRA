@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Browser and HTTP boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Preflight caching and credentialed CORS across an actual policy transition",
+      "source_trace": "Determine which decision is cached by the browser and which remains enforced on the actual response/server operation. Track method/header/origin and profile identity.",
+      "implementation_branch": "Classify browser-readable protected data separately from a cookie-authenticated mutation. The browser preflight cache differs from an HTTP response cache; simple requests need no preflight. Actual credentials and SameSite admission still matter. Cached preflight permission does not remove response CORS checks; if only a PUT commits, investigate server authorization/CSRF and compare fresh, cached and expired states.",
+      "operational_method": "",
+      "controlled_verification": "In an owned fixture compare fresh and previously preflighted contexts before and after narrowing permission; observe actual browser reads and committed synthetic effects.",
+      "false_positive_discriminator": "A cached successful OPTIONS response does not alone expose a credentialed body or authorize a state change.",
+      "remediation_acceptance": "Enforce the actual request/response boundary and retest both cached and fresh browser paths."
+    }
+  ]
+}

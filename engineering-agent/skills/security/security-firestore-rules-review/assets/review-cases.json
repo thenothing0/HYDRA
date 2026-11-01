@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-firestore-rules-review",
+  "cases": [
+    {
+      "id": "owner-reassignment",
+      "scenario": "A client can rewrite a fixture document's protected tenant field and then read another tenant's content under the intended ownership contract.",
+      "expected_decision": "Confirm the mutation and resulting authority with client-rule evidence."
+    },
+    {
+      "id": "admin-sdk",
+      "scenario": "An owner-authorized server SDK reads documents under service credentials while clients are correctly denied.",
+      "expected_decision": "Do not classify expected server authorization as a client-rules bypass."
+    },
+    {
+      "id": "query-not-filter",
+      "scenario": "A query that could include unauthorized documents is rejected by rules.",
+      "expected_decision": "Treat rejection as enforced access, not a need to return a filtered subset."
+    }
+  ]
+}

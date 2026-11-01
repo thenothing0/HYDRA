@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Identity and federation extensions",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Pushed Authorization Request binding to client, transaction and expiry",
+      "source_trace": "Trace who creates and redeems a request_uri, which client/parameters it binds, and how replay or expiry is enforced at authorization.",
+      "implementation_branch": "Check the same request_uri at creation and redemption, including authenticated client binding and lifetime. A request_uri is not an arbitrary resource URL the client should fetch. Treat repeated authorization attempts according to issuer policy/specification rather than assuming every second use is forbidden.",
+      "operational_method": "Distinguish public client identification from confidential client authentication at PAR; do not require a secret for every client. Retain the authenticated/identified client, persisted parameters and request_uri at redemption. Apply the applicable one-use expectation and explicitly supported browser-reload exception rather than an unrestricted reuse policy. Compare correct client redemption, a different client and a permitted reload under the actual issuer profile.",
+      "controlled_verification": "Use two owned clients in an issuer fixture; compare the rightful redemption with a client-swapped or expired reference and inspect resulting authorization state.",
+      "false_positive_discriminator": "A random request_uri error or a 403 at PAR is not an authorization bypass; a nested redirect string alone is not a redirect consumer.",
+      "remediation_acceptance": "Bind the pushed request to the authenticated client and lifetime, then retest intended authorization and substitution denial."
+    }
+  ]
+}

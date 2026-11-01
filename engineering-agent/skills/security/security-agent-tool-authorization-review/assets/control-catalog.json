@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Compatibility planning lens only, not a normative cross-domain mapping. Final root-cause taxonomy may differ or remain unassigned.",
+  "native_context": "OWASP LLM06:2025; verify authority at the tool/service boundary",
+  "domain": "ai",
+  "controls": [
+    {
+      "id": "AGENT_TOOL_AUTHORIZATION-1",
+      "boundary": "AI agent tool capability and delegated authority — authoritative consumer",
+      "source_trace": "Map user/tenant authority, tool capabilities, delegated identities, approval state and the exact external operation. Separate model intent from the enforcement gate that can commit it.",
+      "controlled_verification": "Use an inert local tool recorder. Compare an authorized action tuple with one changed recipient/resource/amount after approval or delegation. Observe whether the executor binds approval to the same actor, target and parameters actually committed, including retries.",
+      "false_positive_discriminator": "A model suggesting an unwanted call is not a committed unauthorized action. A broad tool schema may be constrained by an effective server gate; model refusal alone is not a security enforcement boundary.",
+      "remediation_acceptance": "Enforce caller/action/resource authority at execution and bind any required approval to the immutable operation. Retest intended actions, the original substituted parameter and replay/idempotency behavior."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

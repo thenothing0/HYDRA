@@ -1,0 +1,16 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Initial root-cause lens; reassess final mapping.",
+  "controls": [
+    {
+      "id": "WEBSOCKET-1",
+      "boundary": "WebSocket session and message authorization — authoritative consumer",
+      "source_trace": "Inspect handshake credential/origin processing, subscription registry, message dispatch and session revocation behavior. Identify the protected message operation and object.",
+      "controlled_verification": "With two controlled accounts, subscribe A to A's private fixture, then request B's channel over the same socket. Observe B's synthetic event or denied subscription. For browser cross-site access, use an owned alternate origin and the actual cookie/handshake behavior, rather than a command-line client that bypasses browser constraints.",
+      "false_positive_discriminator": "A successful upgrade is not access to a protected channel. An origin check does not replace per-message authorization, and token-authenticated nonbrowser designs need their own origin/credential model.",
+      "remediation_acceptance": "Enforce trusted identity plus subscription/message resource policy and the declared revocation lifetime. Retest an entitled channel, the denied channel and any originally evidenced post-logout behavior."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

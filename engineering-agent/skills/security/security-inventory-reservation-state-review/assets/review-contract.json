@@ -1,0 +1,21 @@
+{
+  "name": "security-inventory-reservation-state-review",
+  "domain": "Commerce and business state",
+  "intent": "Inventory reservation ownership, expiry and allocation transitions",
+  "artifacts": "Reservation token/owner, stock counter, expiry worker and checkout commit/release logic.",
+  "trace": "Follow reserved units through confirm, expiry and cancellation; check whether a caller can confirm another reservation or obtain allocation twice.",
+  "experiment": "Use a tiny local stock fixture with two owned customers; compare rightful confirmation with stale/foreign reservation and inspect allocation state.",
+  "disproof": "A reservation accepted by the UI is not a fulfilled allocation; documented overbooking must be distinguished from the asserted invariant.",
+  "repair": "Bind reservation owner and atomic stock transitions, testing expiry/confirm ordering with deterministic local barriers.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Transaction_Authorization_Cheat_Sheet.html",
+  "adjacent": "security-payment-integrity-review; security-workflow-transitions-review; security-race-conditions-review",
+  "branch_decisions": "Separate stock reservation from final allocation and fulfillment. The expiry-versus-confirm order should be deterministic in the local fixture. A restored reservation counter with an uncommitted checkout proves no extra allocation; deliberate oversell/backorder policy must be documented before asserting conservation.",
+  "operational_method": "Write the owned state table: available stock becomes held on reserve, held becomes allocated on confirm, and held returns to available on expiry/release. Under a no-oversell fixture, available+held+allocated stays equal to initial stock; adapt for documented backorders. Schedule confirm versus expiry deterministically, then repeat release delivery and inspect authoritative counters/allocations. A UI stock label or a rejected confirmation is not extra fulfillment.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

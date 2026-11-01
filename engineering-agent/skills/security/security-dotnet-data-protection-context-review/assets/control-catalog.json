@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Cryptographic protocols and runtime consumers",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "ASP.NET Core Data Protection key-ring and purpose isolation",
+      "source_trace": "Trace which applications/tenants share keys and purposes and whether one protected payload is accepted in another authorization context.",
+      "implementation_branch": "Shared keys and application names can deliberately enable SSO. Compare intended security domains, application discriminator and the full purpose chain, plus key-ring read/write authority. Unprotect success alone is not an authorization grant: verify how the consumer interprets tenant, identity and purpose before asserting that another application can impersonate a protected user.",
+      "operational_method": "",
+      "controlled_verification": "Use two local owned apps with synthetic protected tokens; compare intended unprotect and a cross-app/purpose attempt.",
+      "false_positive_discriminator": "Sharing a key ring can be intentional for a single security boundary; successful decryption is not a privilege grant unless the consumer accepts the payload context.",
+      "remediation_acceptance": "Separate key access/purposes according to the intended boundary and retest legitimate migration and token use."
+    }
+  ]
+}

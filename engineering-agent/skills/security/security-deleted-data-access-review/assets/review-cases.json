@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-deleted-data-access-review",
+  "cases": [
+    {
+      "id": "export-after-revocation",
+      "scenario": "After the documented deletion completion, an unprivileged fixture user still downloads the deleted private canary through an old export endpoint.",
+      "expected_decision": "Confirm the violated access contract and actual copy; do not claim all backups or media remain exposed."
+    },
+    {
+      "id": "retained-owner-copy",
+      "scenario": "An owner-restricted archival copy remains under an explicitly documented retention policy and cannot be reached by prohibited actors.",
+      "expected_decision": "Do not infer public exposure or a legal violation from retention alone."
+    },
+    {
+      "id": "no-contract",
+      "scenario": "A UI hides a record but no requirement establishes purge or access-revocation timing.",
+      "expected_decision": "Record the missing contract and exact observed behavior; avoid inventing a deletion guarantee."
+    }
+  ]
+}

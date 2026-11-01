@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "findings": [
+    {
+      "id": "F001",
+      "title": "",
+      "asset": "",
+      "vulnerability": "",
+      "summary": "",
+      "preconditions": "",
+      "expected": "",
+      "observed": "",
+      "impact": "",
+      "root_cause": "",
+      "remediation": "",
+      "severity": "undetermined",
+      "severity_rationale": "",
+      "confidence": "",
+      "limitations": "",
+      "content_reviewed": false,
+      "status": "unverified",
+      "steps": [],
+      "requests": [],
+      "evidence": [],
+      "route": {
+        "status": "unresolved",
+        "platform": "vendor",
+        "asset": "",
+        "program_status": "unknown",
+        "ownership_verified": false,
+        "asset_in_scope": false,
+        "vulnerability_in_scope": false,
+        "access_verified": false,
+        "scope_rationale": "",
+        "checked_at": "",
+        "submission_url": "",
+        "sources": [],
+        "required_custom_fields": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "AWS service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Cognito identity-pool role selection and effective workload authority",
+      "source_trace": "Follow a presented identity into selected role and resulting session restrictions. Distinguish authentication success from excessive AWS permissions granted by that role.",
+      "implementation_branch": "Identify identity pools separately from user-pool login. Determine whether authenticated, unauthenticated or claim-mapped roles are selected and what the resulting STS session actually permits. A client-visible pool ID is not a secret. Evaluate audience/subject/authentication-state trust and ambiguous role rules before interpreting a successful identity or credential issuance as excess privilege.",
+      "operational_method": "Collect identity-pool aud and amr conditions from the role trust policy, the login provider claim mapping, role-mapping rules, ambiguous-role resolution and any allowed CustomRoleArn choice. Follow the selected role into the resulting session permissions. Use two synthetic claim sets differing in the decisive rule input, with an unauthenticated claim-state control; an identity ID or successful login is not proof that the privileged role was selected.",
+      "controlled_verification": "Use an owned identity pool/test roles with harmless resources; compare intended identity class with a controlled provider/role-mapping variation.",
+      "false_positive_discriminator": "An unauthenticated identity ID can be intended; no sensitive AWS action is proved by obtaining it alone.",
+      "remediation_acceptance": "Constrain role selection/trust and effective permissions, verifying intended guest and authenticated capabilities."
+    }
+  ]
+}

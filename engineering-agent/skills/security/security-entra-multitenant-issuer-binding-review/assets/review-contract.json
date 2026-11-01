@@ -1,0 +1,21 @@
+{
+  "name": "security-entra-multitenant-issuer-binding-review",
+  "domain": "Azure service boundaries",
+  "intent": "Entra tenant-independent issuer templates and tenant-stable principal mapping",
+  "artifacts": "Supported account types, issuer validation, tid/subject mapping, app roles and tenant allow/onboarding policy.",
+  "trace": "Trace which external tenants may authenticate and which local organization their principals may access. Do not confuse cryptographic validity with tenant admission.",
+  "experiment": "Use two synthetic tenant issuer-template/tid contexts with colliding local-looking principal fields. Compare approved tenant-stable identity mapping with mismatched issuer/key-issuer context before a protected local consumer.",
+  "disproof": "Multi-tenant login can be intentional; a valid external tenant token is not a bypass without forbidden local access.",
+  "repair": "Bind issuer/tenant/role admission to local policy and verify authorized onboarding and cross-tenant denial.",
+  "source": "https://learn.microsoft.com/en-us/entra/identity-platform/access-tokens",
+  "adjacent": "security-entra-app-consent-review; security-azure-storage-sas-review",
+  "branch_decisions": "Bind tid, issuer and client/resource audience using the actual multi-tenant validation rules and tenant enrollment policy. A token signed by a Microsoft key can still originate from an unintended tenant. Supporting multiple tenants is legitimate; show a protected tenant operation accepted for an unassociated identity rather than treating common metadata endpoints as a defect.",
+  "operational_method": "For tenant-independent metadata, resolve the configured issuer template using the validated tid under the selected token-version/issuer rules; do not accept an arbitrary issuer merely because its signing key is in a shared Microsoft key set. Inspect signing-key issuer restrictions and map identity using the intended tenant-stable identifiers, such as tid plus oid where that is the API contract. Compare identical local-looking subject/object values from two tenants and verify the tenant enrollment decision. General consent grants remain the Entra consent workflow.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "overlaps",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

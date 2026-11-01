@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Mobile platform integrations",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Android App Links domain verification and sensitive link routing",
+      "source_trace": "Trace verified domain/path matching into application actions, keeping OS routing and in-app parameter authorization distinct.",
+      "implementation_branch": "Use the installed package signing certificate and actual OS domain-verification state, not manifest intent alone. Verified HTTPS links and custom schemes have different routing guarantees. A link reaching the intended app still requires transaction/resource authorization; failed verification does not prove an attacker app receives sensitive data under the tested user defaults.",
+      "operational_method": "On Android11/API30 and lower, default App Links verification depends on matching Digital Asset Links for all declared hosts. Android12 introduced the updated verifier/per-host state; record actual OS, target/compat state and user routing choices. For an owned installed app, collect pm get-app-links or DomainVerificationManager state on supported versions, signing certificate and the actual delivered URL/consumer. A user-selected association differs from a domain-verified state, and a manifest or failed verification alone does not prove another app received protected data.",
+      "controlled_verification": "Use owned test domains/emulators and an inert account fixture; compare intended verified link and an unverified/domain-mismatched link.",
+      "false_positive_discriminator": "An intent filter or failed verification alone is not account takeover; establish a reachable protected consumer.",
+      "remediation_acceptance": "Bind verified origins and in-app action policy, retesting intended links and rejected untrusted routing."
+    }
+  ]
+}

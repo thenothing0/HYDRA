@@ -1,0 +1,18 @@
+{
+  "category": "A05",
+  "domain": "data",
+  "native_context": "Email header structure and envelope-recipient authority",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "EMAIL_HEADER_INJECTION-1",
+      "boundary": "Email header structure and envelope-recipient authority — authoritative consumer",
+      "source_trace": "Open header/envelope builders, address parsing, template interpolation and the mail transport serialization. Separate display names, header recipients and actual envelope recipients.",
+      "controlled_verification": "Use a local mail sink and synthetic addresses. Submit the exact suspected line-boundary or address-structure input and inspect serialized MIME headers plus the envelope recipient list. Compare a legitimate quoted/display-name address that the feature supports.",
+      "false_positive_discriminator": "A newline rejected by the mail library or safely encoded in the body is not recipient injection. An extra displayed header does not prove an extra envelope recipient or accepted downstream interpretation.",
+      "remediation_acceptance": "Use structured address/header APIs and reject inappropriate control characters at the correct field. Retest intended international/display-name input and the original serialized recipient/header effect."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

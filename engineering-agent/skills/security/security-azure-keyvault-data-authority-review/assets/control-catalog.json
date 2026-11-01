@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Azure service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Key Vault control-plane versus secret/key data-plane permissions",
+      "source_trace": "Resolve the actual principal and management versus data permissions. Follow which actions expose secret values or allow signing/decryption rather than only listing metadata.",
+      "implementation_branch": "Identify the vault permission model: Azure RBAC and legacy access policies have different evaluation paths. Control-plane visibility is distinct from secret values or key cryptographic operations, but a policy-management grant may create a delegation path. Evaluate that path from supplied assignments/source without granting roles or retrieving real secrets merely to demonstrate it.",
+      "operational_method": "",
+      "controlled_verification": "Use an owned vault with synthetic content; compare the intended data operation and a restricted owned role/version.",
+      "false_positive_discriminator": "Vault discovery or management-plane read is not secret-value access; report the specific successful data operation.",
+      "remediation_acceptance": "Limit data-plane authority and delegation changes, retesting value access, versions and permitted operations."
+    }
+  ]
+}

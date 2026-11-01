@@ -1,0 +1,16 @@
+{
+  "category": "A05",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "XPATH_INJECTION-1",
+      "boundary": "XPath query injection — authoritative consumer",
+      "source_trace": "Open XPath expression construction, namespace setup, variable bindings and the XML document/query consumer. Distinguish query construction from parser entity resolution.",
+      "controlled_verification": "Use a tiny local XML fixture with public and private synthetic nodes. Compare a literal account/search value with the suspected expression input and inspect which nodes the evaluator selects. Follow later string interpolation even if the original XML storage was safe.",
+      "false_positive_discriminator": "An XML parse error or entity-resolution issue is not XPath injection. Quoting characters in input prove nothing if the value is bound as a variable in the actual evaluator.",
+      "remediation_acceptance": "Bind supported XPath variables or select from trusted expression structures and handle namespaces explicitly. Retest legitimate punctuation and the exact unauthorized node-selection case."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

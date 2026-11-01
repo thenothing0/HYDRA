@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Identity and federation extensions",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "JWT-secured authorization response trust and transaction binding",
+      "source_trace": "Follow the signed authorization response through validation to code exchange and final session. Preserve the difference between authentic issuer data and correct client/transaction binding.",
+      "implementation_branch": "Separate response signature/encryption processing from transaction state and authorization-code exchange. Verify issuer/audience and registered response mode/algorithms in context. A valid response for another owned client is a useful mismatch control; a malformed unsigned object rejected before parsing tests no transaction-binding property.",
+      "operational_method": "Bind the verified response to one initiating browser transaction and consume its state according to the client replay policy. Keep code exchange tied to the expected issuer/client, redirect URI and PKCE transaction as applicable. Compare two concurrent transactions for the same client, not only different audiences. A valid signed response delivered to the wrong local transaction must not silently complete that other session.",
+      "controlled_verification": "Use an owned client/issuer fixture and compare a valid response with a response for another owned client or expired transaction.",
+      "false_positive_discriminator": "Correct JWT signature verification alone is not a full callback check; an error without a minted session rejects the attack hypothesis.",
+      "remediation_acceptance": "Bind issuer, audience and transaction before exchange/session creation; retest valid, wrong-client and replay paths."
+    }
+  ]
+}

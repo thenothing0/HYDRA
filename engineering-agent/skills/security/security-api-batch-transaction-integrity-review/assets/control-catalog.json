@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "API and SaaS authority",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Atomic security invariants across composed API operations",
+      "source_trace": "Identify a policy that must remain true across operations and whether an early permitted mutation persists when a later prerequisite fails.",
+      "implementation_branch": "Write the exact invariant crossing the transaction before constructing the fixture. A documented best-effort API does not imply financial atomicity, and a transaction rollback does not undo external side effects automatically. Inspect database and external stub state separately when the operation spans both.",
+      "operational_method": "",
+      "controlled_verification": "Use a small local synthetic batch with a deliberate second-step denial and inspect final state, alongside a legitimate successful batch.",
+      "false_positive_discriminator": "A documented partial-success API is not automatically broken; establish the intended all-or-nothing security invariant.",
+      "remediation_acceptance": "Align transaction/compensation behavior with the invariant and retest failures at each material boundary."
+    }
+  ]
+}

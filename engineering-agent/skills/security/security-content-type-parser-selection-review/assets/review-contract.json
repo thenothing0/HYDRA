@@ -1,0 +1,21 @@
+{
+  "name": "security-content-type-parser-selection-review",
+  "domain": "Browser and HTTP boundaries",
+  "intent": "Content-Type and body-decoder disagreement at security checks",
+  "artifacts": "Route decoder selection, accepted media types, validation middleware, raw bytes and final business consumer.",
+  "trace": "Follow whether authentication, CSRF or schema checks inspect the same representation later consumed by the handler. Include content-type parameters and fallback decoders only when reachable.",
+  "experiment": "Use two harmless representations of one owned operation and compare the authorized baseline with one policy-relevant decoder variation.",
+  "disproof": "Merely accepting JSON and form data is not a flaw; a decoder error or unchanged denial does not show a security boundary crossed.",
+  "repair": "Make accepted formats explicit and apply the security check to the consumed representation; retest intended formats and ambiguous rejection.",
+  "source": "https://www.rfc-editor.org/rfc/rfc9110",
+  "adjacent": "security-javascript-analysis-review; security-xss-review; security-request-smuggling-review",
+  "branch_decisions": "Check accepted charset/structured-suffix and fallback decoding using the installed framework. A simple content type accepted as JSON can matter to CSRF only if the real authentication and state-change path allows it. Separate decoder disagreement, authorization failure and same-origin response-read claims.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

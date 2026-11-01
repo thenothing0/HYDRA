@@ -1,0 +1,17 @@
+{
+  "category": "A01",
+  "native_context": "HTTP 403 and intermediary authorization bypass assessment",
+  "taxonomy_note": "Planning lens only; actual root-cause mapping is independent.",
+  "controls": [
+    {
+      "id": "SECURITY_HTTP_403_AUTHORIZATION_REVIEW-1",
+      "boundary": "403 assessment: denial → mismatch → protected effect — authoritative consumer",
+      "source_trace": "Identify the component producing the denial and the protected handler/effect. Collect the same low-privilege actor's baseline plus an entitled control, including durable state when the action writes.",
+      "controlled_verification": "Choose one discrepancy supported by source/configuration: for example a prefix guard checking raw paths before the application normalizes them. Compare the raw and consumed representation with the same actor and target object. Observe the actual protected marker or commit and inspect state even if the variant returns an error.",
+      "false_positive_discriminator": "A 200 SPA shell, login form, public route or different handler is not a bypass. Defeating an edge filter without reaching unauthorized application behavior supports only that narrower observation.",
+      "remediation_acceptance": "Apply operation policy to the normalized resource at the authoritative consumer and remove caller control of trusted routing/identity. Verify rejection before commitment, the original denied request and normal entitled use."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

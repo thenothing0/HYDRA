@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Compatibility planning lens only, not a normative cross-domain mapping. Final root-cause taxonomy may differ or remain unassigned.",
+  "native_context": "AWS STS web-identity role trust; not end-user OAuth login",
+  "domain": "cloud",
+  "controls": [
+    {
+      "id": "AWS_WORKLOAD_IDENTITY-1",
+      "boundary": "AWS workload OIDC role trust and claim binding — authoritative consumer",
+      "source_trace": "Inspect OIDC issuer configuration, role trust policy, subject/audience conditions and the CI job's actual token claim shape. Separate trust to assume a role from permissions after assumption.",
+      "controlled_verification": "Compare claim sets for the intended repository/environment and a prohibited owned fixture context. Determine whether trust distinguishes repository, branch/environment and event context as required by deployment policy. A locally simulated claim comparison is not an actual AWS role session.",
+      "false_positive_discriminator": "A trusted issuer URL alone does not bind a particular workflow. A broad subject pattern may be intentional for a multi-repo role; establish the required boundary and other effective conditions.",
+      "remediation_acceptance": "Bind trust to the intended issuer/audience/subject context and limit the role's effective authority. Retest legitimate deployment and the originally prohibited claim context."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

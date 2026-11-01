@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "domain": "cloud",
+  "native_context": "Google Cloud effective IAM and inherited resource authority",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "GCP_IAM-1",
+      "boundary": "Google Cloud effective IAM and inherited resource authority — authoritative consumer",
+      "source_trace": "Gather principal/permission/resource, hierarchy, inherited allow/deny and principal-boundary/condition context where applicable. Trace service-account delegation as its own authority path.",
+      "controlled_verification": "Resolve one specified action on an owned resource using supported read-only analysis. For a service account, distinguish who can obtain/use its identity from what that identity can do, including required intermediate permissions and conditions.",
+      "false_positive_discriminator": "An inherited role name alone is not an effective action proof. Conditional bindings and denials may defeat a path; reachability to an intermediate service account must not be assumed.",
+      "remediation_acceptance": "Narrow the specific effective binding/delegation and preserve required workload operations. Re-evaluate the original tuple and a legitimate operation under the same hierarchy/context."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

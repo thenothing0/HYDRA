@@ -1,0 +1,18 @@
+{
+  "category": "A02",
+  "domain": "data",
+  "native_context": "Untrusted image/document worker capabilities and isolation",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "DOCUMENT_PROCESSING-1",
+      "boundary": "Untrusted image/document worker capabilities and isolation — authoritative consumer",
+      "source_trace": "Open converter invocation, effective parser/delegate policy, container/sandbox configuration, working directory, output publication and resource budgets. Identify actual format support.",
+      "controlled_verification": "Use tiny owned documents with inert local resource markers and a normal conversion control. In an isolated worker observe file/network/delegate attempts and resulting output authority. A configuration file is relevant only if that process actually loads it.",
+      "false_positive_discriminator": "A supported document feature or delegate binary on disk is not proof of reachable execution. A sandboxed resolver denial establishes attempted access, not successful host-file disclosure.",
+      "remediation_acceptance": "Restrict required parsers/delegates and isolate file/network/identity/resource access at the worker. Retest legitimate conversions, the original prohibited access and partial-output cleanup."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Mobile platform integrations",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Android effective cleartext and trust-anchor policy by build/domain",
+      "source_trace": "Resolve which domain/build policy the real client uses, including custom trust managers that bypass declarative configuration.",
+      "implementation_branch": "Resolve build variant, target SDK, domain-config inheritance, debug overrides and the network stack actually making the request. Native or third-party clients may not honor the XML policy. A debug trust anchor is not a release weakness without release applicability; show effective cleartext/peer acceptance with an owned endpoint and the real client path.",
+      "operational_method": "",
+      "controlled_verification": "Use an emulator and owned local endpoint with synthetic data; compare expected TLS validation and an intentionally invalid test certificate.",
+      "false_positive_discriminator": "A debug-only trust anchor is not a release flaw; an HTTP string unused by the application is not sensitive cleartext transmission.",
+      "remediation_acceptance": "Apply correct release/domain trust policy and retest actual client validation and legitimate TLS."
+    }
+  ]
+}

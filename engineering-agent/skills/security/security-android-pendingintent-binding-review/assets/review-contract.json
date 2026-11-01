@@ -1,0 +1,21 @@
+{
+  "name": "security-android-pendingintent-binding-review",
+  "domain": "Mobile platform integrations",
+  "intent": "PendingIntent mutability and delegated component/action authority",
+  "artifacts": "PendingIntent construction flags, base intent fields, recipients and component permissions.",
+  "trace": "Follow which fields a lower-trust recipient can fill or change and whether the resulting operation executes with the creator authority.",
+  "experiment": "Use a local emulator with owned sender/receiver apps and an inert marker operation; compare intended invocation and one mutable-field substitution.",
+  "disproof": "A mutable PendingIntent can be required for a legitimate feature; demonstrate an unintended protected operation rather than the flag alone.",
+  "repair": "Minimize delegated mutability and bind components/actions, verifying intended callbacks and rejected substitutions.",
+  "source": "https://developer.android.com/privacy-and-security/risks/pending-intent",
+  "adjacent": "security-android-components-review; security-ios-link-handling-review; security-mobile-local-data-review",
+  "branch_decisions": "Inspect identity matching, requestCode, component, flags and reuse; extras alone do not generally distinguish token identity. Creator-side UPDATE_CURRENT differs from recipient fill-in authority. RemoteInput can legitimately require mutability. Determine which fields a real recipient can supply and which creator operation results; exported=false does not cancel an already-issued delegation.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-http-parameter-pollution-review",
+  "cases": [
+    {
+      "id": "checked-used-divergence",
+      "scenario": "Authorization checks synthetic tenant A while the business handler uses the duplicate tenant B and returns B data.",
+      "expected_decision": "Confirm the disagreement only with both layer traces and the protected data result."
+    },
+    {
+      "id": "consistent-list",
+      "scenario": "The schema intentionally accepts a list and authorization covers every consumed element.",
+      "expected_decision": "Treat as intended multi-value behavior."
+    },
+    {
+      "id": "parse-error",
+      "scenario": "A duplicate parameter causes a rejected parse with no state change.",
+      "expected_decision": "Do not label an error alone as authorization bypass or request smuggling."
+    }
+  ]
+}

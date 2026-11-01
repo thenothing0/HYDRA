@@ -1,0 +1,18 @@
+{
+  "category": "A07",
+  "domain": "identity",
+  "native_context": "Registered-email change and account recovery binding",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "EMAIL_CHANGE-1",
+      "boundary": "Registered-email change and account recovery binding — authoritative consumer",
+      "source_trace": "Read authenticated change initiation, pending-address storage, confirmation token consumption and the address used for reset/login/notifications before confirmation.",
+      "controlled_verification": "As a controlled account owner, propose a second owned address and inspect whether unconfirmed data already becomes a recovery identity. Compare token account/address/purpose binding and a normal confirmation. Use only owned inboxes and synthetic accounts.",
+      "false_positive_discriminator": "A pending address in an API response is not proof it receives recovery authority. Intentional notifications to both old and new addresses do not establish takeover.",
+      "remediation_acceptance": "Keep pending and verified identity separate and bind confirmation to the exact account/address transition. Retest expired/replaced pending changes, valid confirmation and recovery before/after it."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

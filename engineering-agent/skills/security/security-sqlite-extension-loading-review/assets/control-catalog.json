@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Databases and messaging",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "SQLite extension-loading authority in an embedded application",
+      "source_trace": "Determine whether lower-trust SQL or configuration can select an executable extension under the application process identity.",
+      "implementation_branch": "Distinguish native sqlite3 extension-loading enablement from SQL load_extension availability and the wrapper connection flags. Ordinary SQL injection does not automatically imply extension execution. The host must expose loading and a reachable library source; inspect the exact connection and use an inert local stub rather than loading an untrusted native binary.",
+      "operational_method": "",
+      "controlled_verification": "Use a local reviewed stub or source trace proving load reachability; never load an untrusted binary merely to validate a concern.",
+      "false_positive_discriminator": "SQLite library presence or SQL input alone is insufficient if extension loading is disabled or inaccessible.",
+      "remediation_acceptance": "Disable unneeded extension loading or constrain its trusted caller/source, preserving required embedded database operations."
+    }
+  ]
+}

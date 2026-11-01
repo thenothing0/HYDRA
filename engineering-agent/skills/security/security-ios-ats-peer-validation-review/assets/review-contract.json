@@ -1,0 +1,21 @@
+{
+  "name": "security-ios-ats-peer-validation-review",
+  "domain": "Mobile platform integrations",
+  "intent": "App Transport Security exceptions and actual TLS client validation",
+  "artifacts": "Info.plist ATS settings, per-domain exceptions, URLSession/custom network clients and release build.",
+  "trace": "Resolve which request uses which TLS policy and whether custom challenge handling changes peer validation independently of ATS.",
+  "experiment": "Use an owned endpoint and synthetic data on a test device/simulator; compare valid TLS and a mismatched test peer.",
+  "disproof": "An ATS exception alone is not a demonstrated secret leak or accepted invalid peer; non-applicable network stacks require separate evidence.",
+  "repair": "Apply the intended peer/transport policy in the actual client and verify legitimate network operations.",
+  "source": "https://developer.apple.com/documentation/bundleresources/information-property-list/nsapptransportsecurity",
+  "adjacent": "security-android-components-review; security-ios-link-handling-review; security-mobile-local-data-review",
+  "branch_decisions": "ATS exceptions and custom trust callbacks affect different parts of the effective connection policy. Resolve URLSession/web/native library behavior and the production plist. An exception allowing HTTP is not proof a sensitive request uses it, while a custom accept-all trust callback may matter even with apparently strict plist settings.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

@@ -1,0 +1,18 @@
+{
+  "category": "A07",
+  "domain": "identity",
+  "native_context": "MFA enrollment, replacement, recovery and downgrade",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "MFA_LIFECYCLE-1",
+      "boundary": "MFA enrollment, replacement, recovery and downgrade — authoritative consumer",
+      "source_trace": "Map pre-MFA and full sessions, factor enrollment/replacement, backup-code storage and recovery/alternate login. Record the required assurance for each sensitive action.",
+      "controlled_verification": "Create an owned MFA account. With its password-stage session, attempt only an inert action whose policy requires full MFA, then compare with a completed-MFA session. Inspect whether factor replacement or recovery accidentally upgrades an incomplete session; test a single owned backup code for its declared one-use semantics.",
+      "false_positive_discriminator": "A designed recovery flow is not a bypass merely because it uses a different factor. UI flags do not establish enrolled state or enforcement. Evaluate the actual assurance contract and durable factor/session effect.",
+      "remediation_acceptance": "Enforce required assurance at the protected operation and bind enrollment/replacement/recovery to the intended account and challenge. Retest partial/full sessions and legitimate owner recovery."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

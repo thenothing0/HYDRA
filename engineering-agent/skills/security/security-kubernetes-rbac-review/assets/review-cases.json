@@ -1,0 +1,27 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-kubernetes-rbac-review",
+  "cases": [
+    {
+      "id": "supported-boundary-violation",
+      "input_requirements": "Record subject/groups, namespace, complete applicable binding/rule path, cluster/version context, exact verb/resource tuple, other controls and static-versus-observed authority with a required-use control.",
+      "decision": "Confirm only when intended policy, lower-trust reachability and actual protected effect are all supported; keep simulation/source proof labeled."
+    },
+    {
+      "id": "legitimate-or-insufficient-observation",
+      "observation": "A ClusterRole definition alone gives no subject permission without a binding. Namespace-scoped workload creation may delegate additional authority, but the actual admission/runtime restrictions need review.",
+      "decision": "Do not confirm from the stated observation alone. Obtain the missing boundary/effect evidence or explain the permitted behavior."
+    },
+    {
+      "id": "missing-runtime-or-authority",
+      "observation": "Source/configuration suggests this path, but a required identity, policy layer or runtime observation is unavailable.",
+      "decision": "Record a source-supported concern or hypothesis with the missing decisive check. Do not invent verification, credentials or impact."
+    },
+    {
+      "id": "remediation-regression",
+      "input_requirements": "Reduce the evidenced binding/rule or delegated authority without altering required system roles blindly. Retest required API calls and forbidden namespace/cluster actions, including all grants to the subject.",
+      "decision": "Close only after the original prohibited behavior is prevented and the legitimate control still works on the changed build/configuration."
+    }
+  ]
+}

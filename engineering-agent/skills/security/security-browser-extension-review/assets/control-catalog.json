@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "domain": "web",
+  "native_context": "Browser-extension messages and privileged capability gates",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "BROWSER_EXTENSION-1",
+      "boundary": "Browser-extension messages and privileged capability gates — authoritative consumer",
+      "source_trace": "Read manifest permissions, content/page bridges, runtime listeners and privileged background handlers. Record sender tab/frame/origin and which contexts can reach the listener.",
+      "controlled_verification": "From an owned untrusted page, exercise the documented bridge with an inert request for a fixture resource. Trace sender provenance through to the privileged action. Compare the intended extension page and the untrusted page, keeping the resource/action constant.",
+      "false_positive_discriminator": "Broad permissions alone do not show a reachable confused deputy. A content-script message must not be treated as an extension-page message merely because it carries an extension-selected action name.",
+      "remediation_acceptance": "Authorize action/resource against validated sender context and narrow delegated capabilities. Retest expected extension UI, denied page/frame and the actual browser release/build."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

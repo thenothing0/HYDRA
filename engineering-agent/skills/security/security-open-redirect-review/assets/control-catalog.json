@@ -1,0 +1,16 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Initial root-cause lens; reassess final mapping.",
+  "controls": [
+    {
+      "id": "OPEN_REDIRECT-1",
+      "boundary": "Redirect destination validation — authoritative consumer",
+      "source_trace": "Trace redirect destination input, parsing, canonicalization, allowlist and the flow using the redirect. Record whether it participates in a sensitive callback or merely general navigation.",
+      "controlled_verification": "Use an owned benign destination and the expected same-origin destination. Observe the actual browser/server Location resolution after transformations. For a claimed token or account chain, trace the additional sensitive flow separately rather than assuming any external redirect leaks credentials.",
+      "false_positive_discriminator": "An external-link feature may intentionally navigate off-site. A displayed URL or rejected destination is not a redirect. Phishing potential does not by itself demonstrate account takeover.",
+      "remediation_acceptance": "Use approved destination identifiers or robust parsing against the feature's allowed origin/path policy. Retest legitimate navigation and the exact originally accepted disallowed destination."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

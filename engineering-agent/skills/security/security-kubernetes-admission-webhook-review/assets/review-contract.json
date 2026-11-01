@@ -1,0 +1,21 @@
+{
+  "name": "security-kubernetes-admission-webhook-review",
+  "domain": "Kubernetes and deployment controllers",
+  "intent": "Admission webhook selection, authentication and failure behavior",
+  "artifacts": "Webhook configuration, rules/selectors/match policy, timeout/failure policy and admitted object.",
+  "trace": "Determine which operations/resources reach the webhook and whether equivalent API paths or webhook failures admit an object violating the intended invariant.",
+  "experiment": "Use an isolated cluster fixture with inert pods/config and compare compliant object, policy violation and controlled webhook unavailability.",
+  "disproof": "A fail-open setting is not a demonstrated dangerous admission without an in-scope violated workload policy; an excluded object may be intentional.",
+  "repair": "Align matching and failure behavior with the enforced invariant and retest availability recovery and legitimate admissions.",
+  "source": "https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/",
+  "adjacent": "security-kubernetes-rbac-review; security-kubernetes-workload-isolation-review; security-kubernetes-network-policy-review",
+  "branch_decisions": "Resolve webhook rules, namespace/object selectors, match conditions, failurePolicy and reinvocation behavior for the actual API operation. A fail-open timeout is material only when a required admission restriction is thereby skipped. Operator-supplied webhook configuration is privileged setup; do not label that setup itself an unprivileged bypass or cause production timeouts.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

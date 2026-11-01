@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Enterprise identity and privileged access",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Active Directory effective object control and delegated identity changes",
+      "source_trace": "Resolve the effective principal right on the exact object and trace it into a protected attribute, membership or credential operation.",
+      "implementation_branch": "Evaluate inherited ACE applicability, deny/allow semantics, group membership and protected-object behavior for the exact property/control right. GenericWrite and ownership/control rights can have different material effects. Read-only ACL exports can establish a delegation path, but a successful directory login or one permissive ACE alone does not prove arbitrary domain-wide control.",
+      "operational_method": "Resolve the object/property GUID, inherited-object type and inherit-only/applicability flags for each relevant ACE. Evaluate the actual token group set and effective descriptor, including protected-object inheritance behavior, before interpreting GenericWrite/ownership/control rights. Bind one permitted directory operation and one forbidden property/control right to that effective access decision. An isolated permissive ACE or membership display is not a complete domain-control path.",
+      "controlled_verification": "Use owned lab objects and synthetic principals or configuration-only proof; compare legitimate delegated management and a prohibited object/attribute.",
+      "false_positive_discriminator": "An ACE name without inheritance/group resolution is not effective control; read access or a denied write is not escalation.",
+      "remediation_acceptance": "Constrain delegation and inheritance while preserving intended administration, then verify actual allowed/denied rights."
+    }
+  ]
+}

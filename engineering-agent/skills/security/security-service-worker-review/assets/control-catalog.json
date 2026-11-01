@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "domain": "web",
+  "native_context": "Service worker scope, lifecycle and private response storage",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "SERVICE_WORKER-1",
+      "boundary": "Service worker scope, lifecycle and private response storage — authoritative consumer",
+      "source_trace": "Inspect worker registration scope, controlled clients, fetch routing, cache keys and account/logout/update policy. Distinguish worker CacheStorage from intermediary HTTP caches.",
+      "controlled_verification": "Cache a private synthetic account-A response via the normal feature, then perform the declared logout/account-switch flow and request the same resource as B/offline. Observe the source and marker of the returned response. Separately trace untrusted control of worker script URL or registration scope only if the application exposes such a path.",
+      "false_positive_discriminator": "A worker being registered or private data being available offline to its rightful account is not itself a leak. Browser storage partitioning, scope and lifecycle prerequisites must match the tested context.",
+      "remediation_acceptance": "Bind private cache entries and lifecycle cleanup to the declared account policy; use trusted worker code/registration inputs. Retest intended offline behavior, logout/account switch and the evidenced update path."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

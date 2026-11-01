@@ -1,0 +1,18 @@
+{
+  "category": "A02",
+  "domain": "supply-chain",
+  "native_context": "Terraform state/plan confidentiality and artifact recipients",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "TERRAFORM_STATE-1",
+      "boundary": "Terraform state/plan confidentiality and artifact recipients — authoritative consumer",
+      "source_trace": "Inspect state/plan backend and artifact distribution, access policy, versioning/logging and provider/resource behavior. Identify who can obtain which saved bytes.",
+      "controlled_verification": "Using an owned nonsecret fixture or supplied redacted state, trace whether a sensitive value remains in saved state/plan and whether the alleged recipient can read it. Compare display redaction with actual storage; record encryption/access context separately.",
+      "false_positive_discriminator": "The sensitive attribute normally affects presentation and is not a universal omission guarantee. Presence in properly protected owner state is not by itself unintended disclosure.",
+      "remediation_acceptance": "Restrict backend/artifact access and use supported omission/ephemeral patterns where applicable to the actual provider/version. Retest normal apply/plan and the original unintended distribution path."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

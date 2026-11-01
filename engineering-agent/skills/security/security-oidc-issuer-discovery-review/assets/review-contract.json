@@ -1,0 +1,21 @@
+{
+  "name": "security-oidc-issuer-discovery-review",
+  "domain": "Identity and federation extensions",
+  "intent": "OIDC discovery metadata and issuer selection trust",
+  "artifacts": "Discovery/registration flow, tenant-to-issuer registry, metadata cache, key retrieval and callback issuer validation.",
+  "trace": "Follow who selects issuer metadata and where its issuer, endpoints and keys become trusted. Keep owned discovery fixtures separate from arbitrary external fetch probing.",
+  "experiment": "Use two owned issuers with distinct keys and subjects; compare the configured issuer with metadata or callback from the other issuer.",
+  "disproof": "Fetching public metadata is normal; a discovered URL alone does not prove SSRF or login mix-up.",
+  "repair": "Pin issuer/client context through discovery, caching and callback validation; verify legitimate tenant onboarding and cross-issuer rejection.",
+  "source": "https://openid.net/specs/openid-connect-discovery-1_0.html",
+  "adjacent": "security-oauth-oidc-review; security-jwt-review; security-saml-review",
+  "branch_decisions": "Keep configured issuer identity stable across metadata caching and endpoint/key selection. Supporting several tenants is legitimate if each authorization transaction retains its issuer/client binding. A metadata fetch that merely redirects or fails is not a demonstrated login mix-up or server fetch authority violation.",
+  "operational_method": "Compare the configured expected issuer and returned iss using the selected OIDC exact issuer rules; do not normalize away a path, case-sensitive component or trailing slash as a convenience. Record discovery/key cache keys and the authorization transaction issuer. Two owned issuers with similar metadata URLs or colliding tenant cache entries distinguish metadata availability from a trust substitution.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

@@ -1,0 +1,27 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-container-build-secrets-review",
+  "cases": [
+    {
+      "id": "supported-boundary-violation",
+      "input_requirements": "Provide reviewed build trace, artifact recipients, synthetic marker locations and hashes, final-versus-intermediate layer distinction, log/cache scope and required build behavior.",
+      "decision": "Confirm only when intended policy, lower-trust reachability and actual protected effect are all supported; keep simulation/source proof labeled."
+    },
+    {
+      "id": "legitimate-or-insufficient-observation",
+      "observation": "Deleting a secret in a later layer does not demonstrate removal from earlier artifacts. A secret mount declaration also does not establish that build commands avoid persisting its contents.",
+      "decision": "Do not confirm from the stated observation alone. Obtain the missing boundary/effect evidence or explain the permitted behavior."
+    },
+    {
+      "id": "missing-runtime-or-authority",
+      "observation": "Source/configuration suggests this path, but a required identity, policy layer or runtime observation is unavailable.",
+      "decision": "Record a source-supported concern or hypothesis with the missing decisive check. Do not invent verification, credentials or impact."
+    },
+    {
+      "id": "remediation-regression",
+      "input_requirements": "Use the supported secret delivery method and prevent persistence in distributable outputs. Retest the full image/cache/log recipients; owner-managed rotation is separate if a real credential was previously exposed.",
+      "decision": "Close only after the original prohibited behavior is prevented and the legitimate control still works on the changed build/configuration."
+    }
+  ]
+}

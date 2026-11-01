@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "AWS service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Systems Manager command/session delegation to managed instances",
+      "source_trace": "Trace who chooses a document/target and whether permitted parameters delegate unintended process or instance authority. Separate SendCommand from session or document-update permissions.",
+      "implementation_branch": "Separate SendCommand, StartSession and document creation/update/default-version selection. Evaluate target conditions against actual mutable instance tags and the selected document version. IAM permission to invoke a document does not sanitize its parameters: inspect the installed agent/document interpolation behavior. Session shell access and one constrained document action carry different effective authority.",
+      "operational_method": "",
+      "controlled_verification": "Use an isolated owned managed-node fixture or source-policy proof with an inert command document; compare intended target/document and an out-of-policy selection.",
+      "false_positive_discriminator": "Access to an instance inventory is not command execution. Never test with destructive shell commands or unrelated production instances.",
+      "remediation_acceptance": "Bind document/target/parameter authority and verify permitted diagnostics and rejected delegation."
+    }
+  ]
+}

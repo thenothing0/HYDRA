@@ -1,0 +1,21 @@
+{
+  "name": "security-oauth-request-object-review",
+  "domain": "Identity and federation extensions",
+  "intent": "Signed OAuth request object validation and outer-parameter precedence",
+  "artifacts": "Request-object issuer/audience/key policy, outer request parameters, duplicate handling and authorization decision.",
+  "trace": "Resolve signature trust and the authoritative source of client, redirect, scope and transaction fields when signed and unsigned parameters coexist.",
+  "experiment": "In an owned issuer fixture keep a valid request object constant and vary one unsigned conflicting field; observe which value drives authorization.",
+  "disproof": "A signed JWT string is not proof of correct binding, but a rejected conflict is not a bypass either.",
+  "repair": "Validate request-object context and authoritative parameter handling; verify legitimate signed requests and rejection or safe signed precedence for conflicting inputs under the selected profile.",
+  "source": "https://www.rfc-editor.org/rfc/rfc9101",
+  "adjacent": "security-oauth-oidc-review; security-jwt-review; security-saml-review",
+  "branch_decisions": "Select the exact JAR/profile and its signed-only requirements, outer client_id consistency and permitted outer-only parameters. Check issuer/audience/time, registered key and duplicate handling. Safe signed precedence can be correct; not every conflict requires rejection. Request objects, fetched request_uri objects, PAR and JARM are separate mechanisms, not interchangeable validation results.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

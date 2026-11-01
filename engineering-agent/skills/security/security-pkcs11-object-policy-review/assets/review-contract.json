@@ -1,0 +1,21 @@
+{
+  "name": "security-pkcs11-object-policy-review",
+  "domain": "Cryptographic protocols and runtime consumers",
+  "intent": "PKCS#11 object attributes, sessions and permitted key operations",
+  "artifacts": "Token/module version, session/login roles, key attributes/templates and wrapper operation policy.",
+  "trace": "Trace lower-trust templates/handles into key creation, wrapping or use and determine whether operation attributes reflect the intended key purpose.",
+  "experiment": "Use a local software token with synthetic keys and a reviewed operation sequence; compare allowed use and a policy-forbidden template/operation.",
+  "disproof": "A key handle or token login is not export authority; do not extrapolate a software-token behavior to an untested HSM.",
+  "repair": "Constrain object templates and role operations, testing legitimate key use, wrapping rules and lifecycle.",
+  "source": "https://docs.oasis-open.org/pkcs11/pkcs11-base/v3.0/os/pkcs11-base-v3.0-os.html",
+  "adjacent": "security-jwt-review; security-tls-peer-validation-review; security-deserialization-review",
+  "branch_decisions": "Inspect session role, object class and CKA_SENSITIVE/EXTRACTABLE plus permitted usage/mechanisms; historical ALWAYS_SENSITIVE/NEVER_EXTRACTABLE attributes describe lifecycle constraints. Trusted wrapping and object templates can change effective policy. Software-token tests establish that implementation only, not physical HSM enforcement, and a permitted signature operation does not prove raw key extraction.",
+  "operational_method": "Review C_CreateObject, C_CopyObject and C_SetAttributeValue separately. Retain CKA_COPYABLE/MODIFIABLE and the allowed transitions for sensitivity/extractability under the selected specification and module; making a key more restrictive differs from relaxing it, and historical attributes track lifecycle. Use disposable software-token keys only when that implementation is the test target. Compare allowed attribute changes with a denied relaxation; a signature operation is neither copying nor raw extraction.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

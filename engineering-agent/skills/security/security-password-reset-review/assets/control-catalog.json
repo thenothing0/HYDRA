@@ -1,0 +1,16 @@
+{
+  "category": "A07",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "PASSWORD_RESET-1",
+      "boundary": "Account recovery and password-reset binding — authoritative consumer",
+      "source_trace": "Trace reset request, recipient selection, token generation/storage, validation, password commit and session policy. Record which account and purpose a token is bound to.",
+      "controlled_verification": "With two controlled accounts and a local/owned mailbox, request A's reset and compare the token's validated account with any caller-supplied account/recipient field at consumption. Complete one intended reset, then make a bounded reuse attempt against the same fixture token. Inspect account credential state, not just response text.",
+      "false_positive_discriminator": "A reset email arriving or a token being visible to its intended recipient is normal. A generic success response can hide rejection. Password policy or mail enumeration observations are different root causes.",
+      "remediation_acceptance": "Bind recipient, account, purpose, lifetime and one-time consumption atomically. Retest wrong-account consumption, reuse and valid recovery; assess session invalidation against the product's declared contract."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

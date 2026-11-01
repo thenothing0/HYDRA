@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Identity and federation extensions",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "OIDC discovery metadata and issuer selection trust",
+      "source_trace": "Follow who selects issuer metadata and where its issuer, endpoints and keys become trusted. Keep owned discovery fixtures separate from arbitrary external fetch probing.",
+      "implementation_branch": "Keep configured issuer identity stable across metadata caching and endpoint/key selection. Supporting several tenants is legitimate if each authorization transaction retains its issuer/client binding. A metadata fetch that merely redirects or fails is not a demonstrated login mix-up or server fetch authority violation.",
+      "operational_method": "Compare the configured expected issuer and returned iss using the selected OIDC exact issuer rules; do not normalize away a path, case-sensitive component or trailing slash as a convenience. Record discovery/key cache keys and the authorization transaction issuer. Two owned issuers with similar metadata URLs or colliding tenant cache entries distinguish metadata availability from a trust substitution.",
+      "controlled_verification": "Use two owned issuers with distinct keys and subjects; compare the configured issuer with metadata or callback from the other issuer.",
+      "false_positive_discriminator": "Fetching public metadata is normal; a discovered URL alone does not prove SSRF or login mix-up.",
+      "remediation_acceptance": "Pin issuer/client context through discovery, caching and callback validation; verify legitimate tenant onboarding and cross-issuer rejection."
+    }
+  ]
+}

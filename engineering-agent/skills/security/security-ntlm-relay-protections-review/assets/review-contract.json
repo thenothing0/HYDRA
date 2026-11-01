@@ -1,0 +1,21 @@
+{
+  "name": "security-ntlm-relay-protections-review",
+  "domain": "Enterprise identity and privileged access",
+  "intent": "NTLM service binding, signing and relay-resistance configuration",
+  "artifacts": "Permitted authentication paths, target protocol signing/channel-binding/extended-protection settings and identity policy.",
+  "trace": "Identify an actual trusted-authentication relay path and target binding requirements from configuration. Keep credential coercion/relay execution outside ordinary review.",
+  "experiment": "Use only an owned isolated authentication fixture or supplied configuration evidence to compare enforced and absent target binding.",
+  "disproof": "NTLM enabled or signing optional at one host is not proof of an exploitable relay chain with a suitable source and target.",
+  "repair": "Enforce appropriate channel/service binding or remove the unnecessary path, verifying supported legitimate clients.",
+  "source": "https://learn.microsoft.com/en-us/windows-server/security/kerberos/ntlm-overview",
+  "adjacent": "security-windows-service-permissions-review; security-ldap-injection-review; security-posix-file-permissions-review",
+  "branch_decisions": "Branch by receiving protocol: signing, extended protection/channel binding and service configuration are not interchangeable defenses. The absence of one setting does not prove a relay chain without an available authentication source and accepted destination. Use configuration and owned protocol fixtures; do not coerce production users or collect NTLM exchanges.",
+  "operational_method": "Build a receiving-protocol matrix for the actual path: SMB signing, LDAP signing/channel binding and HTTP extended protection/TLS termination are different checks. Record server enforcement, client support and whether a proxy terminates or forwards the authenticated channel. An absent setting is a lead until a feasible source/destination and accepted operation are shown. Use configuration and isolated owned fixtures; no production authentication coercion or relay is required.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

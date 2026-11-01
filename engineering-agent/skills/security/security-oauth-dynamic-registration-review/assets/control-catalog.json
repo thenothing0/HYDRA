@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Identity and federation extensions",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Dynamic client registration metadata authority",
+      "source_trace": "Determine who may register or modify clients and whether untrusted metadata becomes a trusted redirect, fetch destination or privileged client classification.",
+      "implementation_branch": "A software statement may authenticate selected metadata, not every caller-supplied field. Inspect registration update authority separately from creation. Open registration and public client classification may be intentional; escalating to a confidential/trusted client or changing another client requires a distinct observed grant.",
+      "operational_method": "Record any initial-access credential used for creation and the registration-access credential/client URI issued for subsequent management. Those credentials have different scopes and are not interchangeable. Compare updating the created synthetic client with attempting the same operation on a second client; successful open registration alone is not proof of cross-client update authority or confidential-client trust.",
+      "controlled_verification": "Use an owned local issuer and client; compare permitted registration with one unauthorized metadata mutation and inspect the effective registered client.",
+      "false_positive_discriminator": "Open registration can be intentional. A client identifier or reflected metadata is not client impersonation or a protected server-side fetch.",
+      "remediation_acceptance": "Constrain metadata and client class changes at registration/update, then verify intended public clients and rejection of privileged metadata."
+    }
+  ]
+}

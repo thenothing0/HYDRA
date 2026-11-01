@@ -1,0 +1,4 @@
+interface:
+  display_name: "OWASP A05: Injection"
+  short_description: "Review and remediate OWASP A05:2025 risks"
+  default_prompt: "Use $owasp-2025-a05-injection to review this project, document supported findings, and verify requested fixes."

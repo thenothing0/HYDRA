@@ -1,0 +1,21 @@
+{
+  "name": "security-grpc-reflection-exposure-review",
+  "domain": "API and SaaS authority",
+  "intent": "gRPC reflection/schema visibility and its incremental confidentiality impact",
+  "artifacts": "Reflection registration, service descriptors, transport auth/interceptors and an attributable owned service.",
+  "trace": "Distinguish a discoverable descriptor from callable protected methods or genuinely confidential embedded options/comments. Resolve reflection authentication separately.",
+  "experiment": "Compare the descriptor visible to an unauthenticated fixture client with intended public API documentation and a restricted method invocation.",
+  "disproof": "Reflection enabled or a method name exposed is not an authorization bypass; protected RPCs may still be correctly denied.",
+  "repair": "Restrict truly sensitive schema publication if required and preserve intended tooling; retest descriptors and RPC authority independently.",
+  "source": "https://grpc.io/docs/guides/reflection/",
+  "adjacent": "security-api-bola-review; security-api-function-authorization-review; security-background-job-authorization-review",
+  "branch_decisions": "Reflection may intentionally publish a public schema; classify actual descriptor content before severity. Authentication interceptors may apply differently to reflection and business RPCs. A reflected method is inventory until the real principal can call it or confidential descriptor content itself is shown.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

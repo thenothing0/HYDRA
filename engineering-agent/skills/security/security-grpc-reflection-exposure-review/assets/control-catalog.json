@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "API and SaaS authority",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "gRPC reflection/schema visibility and its incremental confidentiality impact",
+      "source_trace": "Distinguish a discoverable descriptor from callable protected methods or genuinely confidential embedded options/comments. Resolve reflection authentication separately.",
+      "implementation_branch": "Reflection may intentionally publish a public schema; classify actual descriptor content before severity. Authentication interceptors may apply differently to reflection and business RPCs. A reflected method is inventory until the real principal can call it or confidential descriptor content itself is shown.",
+      "operational_method": "",
+      "controlled_verification": "Compare the descriptor visible to an unauthenticated fixture client with intended public API documentation and a restricted method invocation.",
+      "false_positive_discriminator": "Reflection enabled or a method name exposed is not an authorization bypass; protected RPCs may still be correctly denied.",
+      "remediation_acceptance": "Restrict truly sensitive schema publication if required and preserve intended tooling; retest descriptors and RPC authority independently."
+    }
+  ]
+}

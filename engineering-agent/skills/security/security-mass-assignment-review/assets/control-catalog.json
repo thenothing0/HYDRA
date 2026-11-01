@@ -1,0 +1,16 @@
+{
+  "category": "A08",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "MASS_ASSIGNMENT-1",
+      "boundary": "API object-property authorization and binding — authoritative consumer",
+      "source_trace": "Trace request body to DTO, binder, model update and persistence. Inspect nested objects, update/patch variants and server-maintained fields such as role, owner, verified state or price.",
+      "controlled_verification": "As a permitted profile editor, change an allowed display name and one protected synthetic authority field in the same controlled request. Read the durable record through an authoritative view and exercise only an inert operation depending on that field. Repeat with a field the API intentionally allows to ensure the body was processed.",
+      "false_positive_discriminator": "Echoing the submitted protected field is not persistence; accepting unknown JSON but discarding it is not an authority change. A deliberately self-editable preference is not a security-sensitive property.",
+      "remediation_acceptance": "Map writable fields explicitly per action/actor and derive authority fields from trusted state. Retest nested and alternate update paths plus normal profile editing; avoid blanket rejection that breaks documented extensibility."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

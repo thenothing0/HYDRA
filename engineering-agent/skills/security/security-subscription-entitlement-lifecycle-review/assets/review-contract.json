@@ -1,0 +1,21 @@
+{
+  "name": "security-subscription-entitlement-lifecycle-review",
+  "domain": "Commerce and business state",
+  "intent": "Subscription state changes and actual product capability grants",
+  "artifacts": "Provider events, plan mapping, trial/grace/cancel state and enforcement at protected product operations.",
+  "trace": "Trace plan identity and payment state into server capability checks, including downgrade/cancellation and delayed webhook replay.",
+  "experiment": "In an owned billing fixture compare an active entitled action with the same action after an effective downgrade or canceled synthetic subscription.",
+  "disproof": "A retained badge or documented grace period is not a privilege bypass; show an action forbidden by the declared plan policy.",
+  "repair": "Reconcile provider events and server entitlements, then verify allowed grace, downgrade and replay behavior.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Transaction_Authorization_Cheat_Sheet.html",
+  "adjacent": "security-payment-integrity-review; security-workflow-transitions-review; security-race-conditions-review",
+  "branch_decisions": "Use the effective plan transition and documented grace period, not only a payment-provider event timestamp. Events may be delayed or out of order. Identify the protected server capability and whether a later authoritative event correctly reconciles it; a retained badge or invoice alone is not product access.",
+  "operational_method": "Record authoritative event identity/version, provider state and the entitlement reducer rule. Feed owned events in order, then deliver an older active event after a newer cancellation and observe which generation controls the protected capability. Do not order unrelated events solely by arrival timestamp. Grace periods and corrective reconciliation are product policy; a stale badge is not continued server entitlement.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

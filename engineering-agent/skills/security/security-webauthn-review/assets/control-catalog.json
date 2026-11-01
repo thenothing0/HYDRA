@@ -1,0 +1,18 @@
+{
+  "category": "A07",
+  "domain": "identity",
+  "native_context": "WebAuthn registration and assertion verification",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "WEBAUTHN-1",
+      "boundary": "WebAuthn registration and assertion verification — authoritative consumer",
+      "source_trace": "Inspect registration/authentication option generation, challenge persistence/consumption, RP/origin configuration, verification library and credential-to-account storage.",
+      "controlled_verification": "Use owned test authenticators/accounts. Compare a normal ceremony with an expired/reused challenge and a response associated with the wrong local account. Trace verified credential identity and required user verification to the account session; preserve actual authenticator and browser prerequisites.",
+      "false_positive_discriminator": "A counter anomaly alone is not universal proof of a cloned passkey. Platform/synced credential behavior and the relying party's threat model matter; do not infer authentication bypass from decoded client data.",
+      "remediation_acceptance": "Use supported verification of the intended RP/origin/challenge and bind credential/account/purpose with one-use transaction state. Retest valid registration/login, the evidenced wrong binding and the declared user-verification requirement."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

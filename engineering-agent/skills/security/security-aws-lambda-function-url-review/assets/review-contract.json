@@ -1,0 +1,21 @@
+{
+  "name": "security-aws-lambda-function-url-review",
+  "domain": "AWS service boundaries",
+  "intent": "Lambda Function URL authentication and application authorization",
+  "artifacts": "Function URL auth type, resource policy, IAM invocation context, event parsing and application gate.",
+  "trace": "Identify whether public invocation is intended and which protected action the handler performs. Distinguish IAM URL admission from per-user/object authorization inside the function.",
+  "experiment": "Use an owned function with a synthetic response/action; compare intended caller and one restricted context without enumerating other functions.",
+  "disproof": "A public function URL or CORS header is not a vulnerability when only public content is returned.",
+  "repair": "Enforce the intended URL and handler authority, then retest legitimate invocation and restricted operations.",
+  "source": "https://docs.aws.amazon.com/lambda/latest/dg/urls-auth.html",
+  "adjacent": "security-aws-iam-review; security-aws-object-storage-review; security-aws-workload-identity-review",
+  "branch_decisions": "Resolve AuthType and the applicable URL permission model. For URLs subject to the October 2025 requirements, evaluate both lambda:InvokeFunctionUrl and lambda:InvokeFunction; one allow is insufficient. Under AWS_IAM include same-account versus cross-account identity/resource policies and effective denies. NONE removes IAM caller authentication but still requires the public resource-policy grants. Inspect lambda:InvokedViaFunctionUrl on InvokeFunction permission: a URL-only grant does not authorize direct Invoke. Handler tenant/object checks remain separate, and an intentionally public response is not a vulnerability.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Browser and HTTP boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Content-Type and body-decoder disagreement at security checks",
+      "source_trace": "Follow whether authentication, CSRF or schema checks inspect the same representation later consumed by the handler. Include content-type parameters and fallback decoders only when reachable.",
+      "implementation_branch": "Check accepted charset/structured-suffix and fallback decoding using the installed framework. A simple content type accepted as JSON can matter to CSRF only if the real authentication and state-change path allows it. Separate decoder disagreement, authorization failure and same-origin response-read claims.",
+      "operational_method": "",
+      "controlled_verification": "Use two harmless representations of one owned operation and compare the authorized baseline with one policy-relevant decoder variation.",
+      "false_positive_discriminator": "Merely accepting JSON and form data is not a flaw; a decoder error or unchanged denial does not show a security boundary crossed.",
+      "remediation_acceptance": "Make accepted formats explicit and apply the security check to the consumed representation; retest intended formats and ambiguous rejection."
+    }
+  ]
+}

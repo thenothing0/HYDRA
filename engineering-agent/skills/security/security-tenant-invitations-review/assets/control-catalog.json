@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "domain": "identity",
+  "native_context": "Tenant invitation, recipient and membership-role binding",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "TENANT_INVITATIONS-1",
+      "boundary": "Tenant invitation, recipient and membership-role binding — authoritative consumer",
+      "source_trace": "Trace inviter capability, invited recipient, tenant, proposed role, token storage and acceptance. Read how expired/revoked invites and existing membership are handled.",
+      "controlled_verification": "Using two owned tenants and inboxes, issue a low-role invitation and inspect whether acceptance can substitute its tenant, recipient or role. Compare the persisted membership with the signed/stored grant. For stale invitations, evaluate the stated revocation/role-change policy rather than assuming an invitation expires on every admin change.",
+      "false_positive_discriminator": "Forwardable invitations may be intentional for some products; a recipient binding claim needs the actual policy. An accepted HTTP response without membership creation is not a role escalation.",
+      "remediation_acceptance": "Resolve acceptance authority from the trusted invite record, enforce current inviter/grant rules as specified and consume atomically. Retest correct acceptance, mismatched identity/tenant and replay."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

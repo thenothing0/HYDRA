@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "AWS service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "S3 SigV4 issued capabilities: signed fields, signer lifetime and object version",
+      "source_trace": "Trace the caller-selected resource and operation to the signer identity and effective capability. Determine whether the requester is authorized for that exact object before signing.",
+      "implementation_branch": "Evaluate the caller policy at the signing application separately from the signing principal permissions. The bearer URL may intentionally permit an unauthenticated recipient. Bind operation, bucket, key, required headers and expiry; inspect whether a later object replacement changes what a still-valid download URL serves. A locally generated signature does not prove the application grants it to a restricted caller.",
+      "operational_method": "Evaluate the actual SigV4 capability, not just issuer entitlement: method, canonical object key, optional versionId, signed headers, signer credential type and credential expiry. A temporary signer session can expire before X-Amz-Expires; a version-bound GET differs from a mutable unversioned key. For upload issuance, distinguish presigned PUT headers from POST policy conditions and check the stored object/version the application later consumes. Preserve the application request and redacted canonical signing inputs; a valid signature or successful public-object read does not demonstrate another caller may obtain the capability. Route general bucket publication to the S3 access-policy workflow.",
+      "controlled_verification": "Inspect a redacted owned SigV4 signing request with temporary signer expiry, signed headers and optional versionId. Compare intended capability with altered method/key/header/version or expiry assumptions using offline canonical inputs; claim redemption only if an authorized fixture actually observes it.",
+      "false_positive_discriminator": "A transferable presigned URL is intentional. Its mere use by its bearer is not a bypass of the signer endpoint.",
+      "remediation_acceptance": "Authorize requester/resource/operation before signing and retest scope, expiry and intended downloads."
+    }
+  ]
+}

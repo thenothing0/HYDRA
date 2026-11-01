@@ -1,0 +1,17 @@
+{
+  "category": "A08",
+  "native_context": "Model/checkpoint trust and executable deserialization",
+  "taxonomy_note": "Planning lens only; actual root-cause mapping is independent.",
+  "controls": [
+    {
+      "id": "SECURITY_MODEL_ARTIFACT_LOADING_REVIEW-1",
+      "boundary": "Model/checkpoint trust and executable deserialization — authoritative consumer",
+      "source_trace": "Inspect loader/library version, artifact format, remote-code options, repository revision/digest and producer trust. Follow conversion or nested loading paths, not just the file extension.",
+      "controlled_verification": "Inspect unknown artifacts statically with supported data-only tooling; use an inert owned artifact if a load test is necessary. Determine whether load-time object construction or repository code runs before trust verification. Never load a downloaded unknown checkpoint to inspect whether it is dangerous.",
+      "false_positive_discriminator": "A filename ending in a familiar extension is not a loader guarantee. A safer option/default is version-specific and is not a universal sandbox against all resource or code risks.",
+      "remediation_acceptance": "Use appropriate data-only/restricted formats and verified provenance with explicit remote-code authority. Retest intended model loading and the original untrusted code/object boundary in isolation."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

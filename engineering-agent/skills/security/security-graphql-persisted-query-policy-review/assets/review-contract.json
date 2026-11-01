@@ -1,0 +1,21 @@
+{
+  "name": "security-graphql-persisted-query-policy-review",
+  "domain": "API and SaaS authority",
+  "intent": "Persisted GraphQL operation admission and authorization",
+  "artifacts": "Persisted operation registry, hash lookup/registration, fallback full-query handling and resolver authorization.",
+  "trace": "Trace who may introduce a query and whether registry admission is being mistaken for field/object authorization. Inspect alternate full-query and version paths.",
+  "experiment": "In an owned schema compare an approved operation with one unregistered harmless operation and a restricted synthetic field.",
+  "disproof": "Accepting arbitrary queries can be intentional; a known query hash does not grant resolver access and introspection alone proves no protected read.",
+  "repair": "Enforce the declared admission policy and resolver authority independently, preserving approved client versions.",
+  "source": "https://graphql.org/learn/security/",
+  "adjacent": "security-api-bola-review; security-api-function-authorization-review; security-background-job-authorization-review",
+  "branch_decisions": "Separate automatic persisted-query registration from a strict allowlist: accepting a full query on a cache miss may be normal APQ. Admission hashes do not remove resolver authorization. Verify the configured profile before treating unregistered query execution as an allowlist bypass.",
+  "operational_method": "Retain the actual operation bytes, hash algorithm, computed hash, registry generation and principal permitted to register an operation. Compare a correct registry entry with a body/hash mismatch and a caller trying to replace a trusted operation ID. APQ fallback to full query may be intentional; neither a hash cache hit nor registration permission removes resolver/field authorization.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

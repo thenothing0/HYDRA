@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Data publication and privacy boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Sensitive context entering analytics event properties and destinations",
+      "source_trace": "Trace an actual application-issued sensitive value into an event payload and intended recipient. Separate synthetic arbitrary query forwarding from proof of sensitive production context.",
+      "implementation_branch": "Trace source fields through event construction, SDK hooks, batching and final destination payload. A public client identifier is distinct from a login/access token or private phone field. A synthetic value queued in memory is not yet external disclosure; establish transmission and destination role without testing credentials or sending real user data to an ad endpoint.",
+      "operational_method": "",
+      "controlled_verification": "Use an owned test flow with a synthetic value issued by the real fixture consumer and an inert equal-shape control; inspect only tester data.",
+      "false_positive_discriminator": "A parameter named token or phone is not proof of valid credentials/PII; a random marker on an error page establishes generic forwarding only.",
+      "remediation_acceptance": "Remove or transform protected fields before dispatch and verify legitimate event usefulness and no sensitive value across relevant formats."
+    }
+  ]
+}

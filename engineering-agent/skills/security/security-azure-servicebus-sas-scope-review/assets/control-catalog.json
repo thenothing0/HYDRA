@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Azure service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Service Bus SAS policy scope and message operation authority",
+      "source_trace": "Determine which queue/topic operation the credential permits and whether a client-scoped token reaches another entity or management operation.",
+      "implementation_branch": "Identify the namespace/entity resource URI and Listen, Send or Manage rights attached to the signing policy. A valid SAS token for one entity must not be assumed to authorize the entire namespace. Separate token issuance by an application from broker enforcement, and test receive versus send only with synthetic queues/topics in a supplied sandbox.",
+      "operational_method": "",
+      "controlled_verification": "Use an owned namespace fixture with synthetic messages; compare intended send/listen and a forbidden entity/operation.",
+      "false_positive_discriminator": "A connection string label does not establish its permissions; management metadata is different from message contents.",
+      "remediation_acceptance": "Issue entity/operation-scoped capabilities and validate consumer identity independently, then test renewal and restricted entities."
+    }
+  ]
+}

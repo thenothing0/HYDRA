@@ -1,0 +1,21 @@
+{
+  "name": "security-oauth-mtls-binding-review",
+  "domain": "Identity and federation extensions",
+  "intent": "Certificate-bound OAuth tokens across TLS termination",
+  "artifacts": "Issuer cnf certificate binding, proxy client-certificate forwarding, resource validation and trusted-header policy.",
+  "trace": "Follow the verified peer certificate through termination into the token check. Separate a request-supplied certificate header from authenticated proxy metadata.",
+  "experiment": "In an owned TLS fixture compare the bound client certificate with a second owned certificate and a synthetic forwarded-header substitution.",
+  "disproof": "A certificate field in a token or header is not proof of enforced sender constraint; a handshake failure before the resource is a different control.",
+  "repair": "Bind the resource check to verified peer identity and trusted forwarding, preserving legitimate proxy deployments.",
+  "source": "https://www.rfc-editor.org/rfc/rfc8705",
+  "adjacent": "security-oauth-oidc-review; security-jwt-review; security-saml-review",
+  "branch_decisions": "If TLS terminates at a proxy, establish how verified certificate identity reaches the resource and who can set equivalent headers. Compare the token certificate thumbprint with that verified identity. Distinguish rejected TLS handshake from application rejection of an otherwise authenticated wrong certificate.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

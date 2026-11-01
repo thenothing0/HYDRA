@@ -1,0 +1,21 @@
+{
+  "name": "security-dotnet-data-protection-context-review",
+  "domain": "Cryptographic protocols and runtime consumers",
+  "intent": "ASP.NET Core Data Protection key-ring and purpose isolation",
+  "artifacts": "Key storage/access, application discriminator, purpose chain, token consumer and deployment slots.",
+  "trace": "Trace which applications/tenants share keys and purposes and whether one protected payload is accepted in another authorization context.",
+  "experiment": "Use two local owned apps with synthetic protected tokens; compare intended unprotect and a cross-app/purpose attempt.",
+  "disproof": "Sharing a key ring can be intentional for a single security boundary; successful decryption is not a privilege grant unless the consumer accepts the payload context.",
+  "repair": "Separate key access/purposes according to the intended boundary and retest legitimate migration and token use.",
+  "source": "https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/introduction",
+  "adjacent": "security-jwt-review; security-tls-peer-validation-review; security-deserialization-review",
+  "branch_decisions": "Shared keys and application names can deliberately enable SSO. Compare intended security domains, application discriminator and the full purpose chain, plus key-ring read/write authority. Unprotect success alone is not an authorization grant: verify how the consumer interprets tenant, identity and purpose before asserting that another application can impersonate a protected user.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

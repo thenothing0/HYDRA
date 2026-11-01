@@ -1,0 +1,21 @@
+{
+  "name": "security-llm-semantic-cache-tenancy-review",
+  "domain": "AI applications and agent runtimes",
+  "intent": "Semantic response cache reuse across identities and private context",
+  "artifacts": "Cache key/embedding inputs, principal/tenant labels, response contents, TTL and cache-hit telemetry.",
+  "trace": "Determine whether semantically similar prompts reuse responses generated with another user private context or permissions.",
+  "experiment": "Use an owned local cache with synthetic private markers, identical public wording and distinct users; compare cache hit and uncached controls.",
+  "disproof": "Similar model outputs or an answer to public facts is not evidence of cross-user cache reuse without attribution.",
+  "repair": "Scope cache entries to authorized context or public results and retest safe hits plus private-context isolation.",
+  "source": "https://genai.owasp.org/llm-top-10/",
+  "adjacent": "security-llm-prompt-injection-review; security-agent-tool-authorization-review; security-mcp-authorization-review",
+  "branch_decisions": "A vector match threshold determines similarity, not authority. Inspect whether the cache key or post-hit check binds tenant, entitlement, private context and model/tool policy. An intentionally public answer reused across users is a positive control; the material result is another identity receiving a synthetic private answer or action result it cannot independently obtain.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

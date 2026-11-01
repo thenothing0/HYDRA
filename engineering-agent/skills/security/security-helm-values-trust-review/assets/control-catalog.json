@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Kubernetes and deployment controllers",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Helm values and post-render transformations crossing deployment authority",
+      "source_trace": "Follow lower-trust values into security-sensitive rendered fields or post-render execution. Distinguish intended operator configuration from an untrusted tenant parameter.",
+      "implementation_branch": "Rendered manifests are the security-relevant output, including dependencies, tpl evaluation and post-render changes. Values may intentionally grant chart configuration authority but must not silently exceed a caller contract. Render in an isolated non-cluster environment first; template evaluation and any external renderer are executable build inputs, not passive YAML parsing.",
+      "operational_method": "",
+      "controlled_verification": "Render an owned inert chart with permitted values and one untrusted security-field change; inspect the final manifest and release policy without installing it.",
+      "false_positive_discriminator": "A chart supporting privileged options is not a vulnerability when only a trusted cluster operator controls them.",
+      "remediation_acceptance": "Constrain exposed values and final admission policy, verifying legitimate rendering and blocked privilege changes."
+    }
+  ]
+}

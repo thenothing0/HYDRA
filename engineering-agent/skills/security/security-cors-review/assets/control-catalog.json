@@ -1,0 +1,16 @@
+{
+  "category": "A02",
+  "taxonomy_note": "Initial root-cause lens; reassess final mapping.",
+  "controls": [
+    {
+      "id": "CORS-1",
+      "boundary": "Cross-origin response access — authoritative consumer",
+      "source_trace": "Read origin decision logic and the actual credential model. Identify a protected response the alternate browser origin should not read, not just an endpoint with headers.",
+      "controlled_verification": "Use an owned alternate origin in a browser and controlled account. First verify the legitimate origin can read a private fixture marker, then attempt that read from the alternate origin with the actual cookies/tokens and preflight path. Record whether script can access the protected body; separate server receipt from browser-readable response.",
+      "false_positive_discriminator": "Wildcard access to public data is not a confidentiality violation. A command-line response containing permissive headers does not establish browser credential attachment or readable private bytes.",
+      "remediation_acceptance": "Apply exact approved-origin and credential policy across normal/error/redirect responses as required by the feature. Retest allowed origin, denied origin and cache variation behavior where responses vary by Origin."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

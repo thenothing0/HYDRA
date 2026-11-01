@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Kubernetes and deployment controllers",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Service-mesh mTLS peer identity and per-operation authorization",
+      "source_trace": "Follow verified workload identity into destination operation policy. mTLS transport authenticity does not alone authorize every service to invoke every method.",
+      "implementation_branch": "mTLS authenticates a workload peer; it does not automatically authorize every HTTP route or tenant. Check whether plaintext bypass ports, excluded traffic or unenrolled workloads avoid the policy enforcement point. A legitimate authenticated service reaching an intentionally shared endpoint is expected; compare the same operation under a forbidden workload identity.",
+      "operational_method": "For Istio, evaluate applicable root/namespace/workload policy composition: DENY is considered before ALLOW, and the absence of an applicable ALLOW policy differs from an applicable ALLOW set whose rules do not match. Include other configured action modes and enforcement ports before concluding the request is permitted. Compare one authenticated allowed workload and one forbidden peer on the same operation; mTLS peer identity is only the input to this policy decision.",
+      "controlled_verification": "Use an owned mesh fixture with two workloads and synthetic endpoints; compare allowed peer/action with another peer or bypass path.",
+      "false_positive_discriminator": "An encrypted connection is not authorization proof; a connectivity failure before the proxy does not test the operation rule.",
+      "remediation_acceptance": "Enforce peer/action policy across sidecar/gateway paths and retest intended traffic and denied peers."
+    }
+  ]
+}

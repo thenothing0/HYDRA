@@ -1,0 +1,21 @@
+{
+  "name": "security-llm-memory-tenancy-review",
+  "domain": "AI applications and agent runtimes",
+  "intent": "Persistent agent memory ownership, retrieval and update authority",
+  "artifacts": "Memory write API, namespace/identity keys, retrieval filters, summarization and deletion lifecycle.",
+  "trace": "Trace who may persist or modify memory and which user/tenant receives it after later retrieval, including merged or summarized memories.",
+  "experiment": "Use two owned actors with distinct synthetic memory markers; compare permitted recall and a controlled foreign namespace/update request.",
+  "disproof": "A model recalling public shared knowledge is expected; similarity alone does not prove a specific private memory was retrieved.",
+  "repair": "Bind memory writes/retrieval/retention to current actor authority and verify deletion and entitled recall.",
+  "source": "https://genai.owasp.org/llm-top-10/",
+  "adjacent": "security-llm-prompt-injection-review; security-agent-tool-authorization-review; security-mcp-authorization-review",
+  "branch_decisions": "Resolve who owns a memory item and who may insert, update, retrieve or delete it. A shared team memory may intentionally cross individual accounts; compare against its declared audience. Follow stable tenant/user identifiers through retrieval filters, summarization and cache reuse, including account switching, rather than equating semantic similarity with an ownership grant.",
+  "operational_method": "Retain provenance and permitted audience for each input item contributing to a summary or merged memory. The derived object audience must follow the declared intersection/declassification policy, not whichever namespace stores the summary. Compare a permitted team summary with one including a restricted synthetic item, then revoke/delete its source entitlement and inspect derived-memory reuse. A direct namespace filter alone does not establish derived-data isolation.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

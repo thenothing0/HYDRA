@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-terraform-state-review",
+  "cases": [
+    {
+      "id": "public-plan-artifact",
+      "scenario": "A saved fixture plan containing a private marker is readable by an actor explicitly excluded from the artifact policy.",
+      "expected_decision": "Confirm artifact confidentiality failure and reader path, not credential validity."
+    },
+    {
+      "id": "sensitive-display",
+      "scenario": "CLI output hides a value while the owner-restricted state intentionally retains it.",
+      "expected_decision": "Document the behavior; no unauthorized disclosure follows from retention alone."
+    },
+    {
+      "id": "feature-unknown",
+      "scenario": "A proposed omission control requires a provider feature unavailable in the deployed version.",
+      "expected_decision": "Keep remediation unverified until compatible behavior and historical artifacts are checked."
+    }
+  ]
+}

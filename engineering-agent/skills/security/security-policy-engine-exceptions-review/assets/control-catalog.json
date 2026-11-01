@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Kubernetes and deployment controllers",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Gatekeeper/Kyverno policy exception and mutation trust",
+      "source_trace": "Trace who may change exceptions, selectors or authority-bearing labels and whether mutation creates a post-validation privilege difference.",
+      "implementation_branch": "Identify the engine/version and whether a namespace, label or exception object exempts a resource. Check who can create that exception and whether admission protects the exemption metadata. Mutation and validation ordering can change the final admitted object; a policy report in audit mode is not an enforced deny control.",
+      "operational_method": "Choose the actual engine before constructing the exception case. For Kyverno inspect PolicyException availability, exception namespace/admission rules and which policies/rules it matches. For Gatekeeper inspect the applicable exclusion configuration and excluded namespaces/processes, rather than inventing a Kyverno-style object. Record the restricted actor allowed to alter the exemption and the final admission decision for one otherwise forbidden owned object; audit-only reports are not enforced denial.",
+      "controlled_verification": "Use an owned local cluster with a harmless policy marker; compare an approved exception and a lower-trust exception/label change.",
+      "false_positive_discriminator": "An explicit administrator-controlled exception is intended authority; policy names alone do not prove enforcement.",
+      "remediation_acceptance": "Constrain exception writers and evaluate the final admitted object, preserving intended workload exceptions."
+    }
+  ]
+}

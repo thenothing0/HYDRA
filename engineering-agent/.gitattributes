@@ -3,3 +3,6 @@
 *.png binary
 *.zip binary
 *.xpi binary
+
+# Imported resources are content-addressed snapshots; preserve their original bytes.
+skills/security/** -text -eol whitespace=cr-at-eol

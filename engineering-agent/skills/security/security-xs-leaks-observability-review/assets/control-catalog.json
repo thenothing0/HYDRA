@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Browser and HTTP boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Cross-site state inference through a concrete browser observation channel",
+      "source_trace": "Separate protected state from noise and from values already public to the observer. Resolve the precise request and browser event visible without reading a cross-origin body.",
+      "implementation_branch": "Randomize synthetic state order and record cache/service-worker warm-up and network variance. Distinguish an observable load/error event from reading its body. A consistent signal must identify protected state beyond public metadata; an automation-only timing or read channel is not available to an ordinary cross-origin page.",
+      "operational_method": "Define the observation channel, bounded sample budget and decision rule before collecting timings. Randomize two synthetic private states, retain a public/no-state control and reserve a separate confirmation sequence so a threshold is not selected on the same noise it claims to distinguish. Report uncertainty when the separation does not persist; no real-user state extraction is needed.",
+      "controlled_verification": "Use two owned accounts/states and a bounded randomized local comparison with a public control; preserve raw observations and uncertainty rather than extracting real-user state.",
+      "false_positive_discriminator": "A single faster response or a same-origin debugger read is not a cross-site inference capability; unstable separation remains inconclusive.",
+      "remediation_acceptance": "Retest the same observation channel after isolation/cache/response changes and verify legitimate clients still receive their own data."
+    }
+  ]
+}

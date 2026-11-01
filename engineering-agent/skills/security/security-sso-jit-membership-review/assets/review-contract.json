@@ -1,0 +1,21 @@
+{
+  "name": "security-sso-jit-membership-review",
+  "domain": "Identity and federation extensions",
+  "intent": "SSO just-in-time organization and role assignment",
+  "artifacts": "Tenant discovery, assertion/claim mapping, verified domain policy and provisioning/role assignment implementation.",
+  "trace": "Follow issuer-controlled and user-controlled attributes into organization selection and role grants. Determine which IdPs are trusted for which tenant authority.",
+  "experiment": "Use owned tenants/IdPs with a controlled domain or role collision and inspect resulting membership/capabilities server-side.",
+  "disproof": "Creating an ordinary account through an allowed IdP is expected; a domain string without a granted membership is not tenant takeover.",
+  "repair": "Constrain issuer-to-tenant/role mappings and retest authorized JIT entry and unauthorized membership assignment.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Multi_Tenant_Security_Cheat_Sheet.html",
+  "adjacent": "security-oauth-oidc-review; security-jwt-review; security-saml-review",
+  "branch_decisions": "An email-domain string is not necessarily verified domain control. Establish which issuer is trusted to assert which organization and role. Existing-user account linking and new-user JIT admission are distinct transitions; accepting a new low-privilege user does not prove administrative membership or existing-account takeover.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

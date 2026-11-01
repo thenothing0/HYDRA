@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Data publication and privacy boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Search index/query authorization and stale document entitlements",
+      "source_trace": "Trace original document authority through index metadata into every returned hit/snippet/facet. Check whether caller-writable filters or stale ACLs substitute for current permission.",
+      "implementation_branch": "Map source object permissions into indexed fields, query filters and post-fetch checks, including snippets, facets and suggestions. A stale index entry is not necessarily readable if a final entitlement check rejects it. Use a synthetic permission change and record the effective propagation contract; classify count/snippet leakage separately from full content disclosure.",
+      "operational_method": "",
+      "controlled_verification": "Use two owned synthetic documents and users; compare permitted search with a restricted document marker before/after entitlement removal.",
+      "false_positive_discriminator": "A public title or aggregate count is not necessarily private content; establish the declared confidentiality of the observed signal.",
+      "remediation_acceptance": "Bind index/query output to current entitlement and verify snippets, exports, facets and deletion paths relevant to the finding."
+    }
+  ]
+}

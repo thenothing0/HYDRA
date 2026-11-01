@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Browser and HTTP boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Delegated browser capabilities across embeds using effective Permissions Policy",
+      "source_trace": "Identify the exact browser feature and how ancestor policy plus frame delegation constrains it. Separate user permission, secure-context requirements and policy denial.",
+      "implementation_branch": "A parent policy denying a feature cannot be broadened merely by a permissive iframe allow attribute. Record the frame origin, sandbox and user grant separately. Querying a permission status is not obtaining protected sensor data; verify the particular API operation and its policy-denied outcome.",
+      "operational_method": "",
+      "controlled_verification": "In owned origins invoke only a synthetic or non-sensitive feature check with intended and untrusted embeds; record policy-denied versus user-denied outcomes.",
+      "false_positive_discriminator": "An absent policy or permission prompt does not prove access to camera/location or any actual sensitive resource.",
+      "remediation_acceptance": "Limit delegation to intended origins and retest allowed embedding and policy rejection without changing user grants to manufacture a result."
+    }
+  ]
+}

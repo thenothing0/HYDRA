@@ -1,0 +1,16 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Initial root-cause lens; reassess final mapping.",
+  "controls": [
+    {
+      "id": "GRAPHQL-1",
+      "boundary": "GraphQL authorization and execution controls — authoritative consumer",
+      "source_trace": "Inspect schema and resolver mappings for a protected node, global node lookup, nested relationship, mutation and subscription. Establish policy on the resolved object and sensitive fields.",
+      "controlled_verification": "Resolve private synthetic node B through the ordinary field and the global node/relationship path as actor A. Use the same B identifier and A context. For a subscription, inspect how identity and entitlement changes are applied to later events; do not assume handshake authorization covers each resource.",
+      "false_positive_discriminator": "Introspection, aliases, batching and query depth are features. They establish a vulnerability only when tied to unauthorized bytes/effects or an evidenced resource-budget failure. Keep distinct resolver root causes in separate reports.",
+      "remediation_acceptance": "Apply the relevant object/field/function policy at the resolver or shared data boundary; ensure loaders and caches retain actor/tenant isolation. Retest the original path, another path to the same node and an entitled query."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

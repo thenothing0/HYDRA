@@ -1,0 +1,66 @@
+{
+  "category": "A08",
+  "version": "4.0.0",
+  "controls": [
+    {
+      "id": "A08-01",
+      "slug": "signed-bytes",
+      "boundary": "Exact-byte authenticity",
+      "source_trace": "External bytes -> canonical/signed representation -> verification -> consumer.",
+      "controlled_verification": "Change one protected fixture field and inspect rejection before effects.",
+      "false_positive_discriminator": "Encoding/checksums from the same untrusted source do not establish authenticity.",
+      "remediation_acceptance": "Verification covers consumed meaning and happens before trusted processing.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A08-02",
+      "slug": "signer-authority",
+      "boundary": "Trusted signer and key selection",
+      "source_trace": "Key source -> allowed signer -> artifact/message purpose -> policy.",
+      "controlled_verification": "Use a different synthetic authority for an otherwise valid fixture.",
+      "false_positive_discriminator": "A mathematically valid signature is not signer authorization.",
+      "remediation_acceptance": "Only approved authorities for the intended purpose can produce accepted content.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A08-03",
+      "slug": "nested-deserialization",
+      "boundary": "Nested object construction",
+      "source_trace": "Outer wrapper -> nested decoder -> type resolution/hooks -> privileged use.",
+      "controlled_verification": "Use source traces and inert type/schema violations.",
+      "false_positive_discriminator": "A signed wrapper does not make unsafe object construction safe.",
+      "remediation_acceptance": "External bytes cannot select dangerous constructors or hooks outside the constrained data contract.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A08-04",
+      "slug": "field-binding",
+      "boundary": "Server-managed property binding",
+      "source_trace": "Input schema -> model/DTO mapping -> caller writable fields -> persistence.",
+      "controlled_verification": "Submit a harmless forbidden property to a controlled record and read it back.",
+      "false_positive_discriminator": "Parsing or ignoring an extra property is not successful mass assignment.",
+      "remediation_acceptance": "Only permitted properties change; explicit server-managed state remains authoritative.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A08-05",
+      "slug": "freshness-replay",
+      "boundary": "Freshness and one-time processing",
+      "source_trace": "Authenticated content -> time/operation ID -> atomic replay store -> side effect.",
+      "controlled_verification": "Replay only an operation declared one-time, within controlled scope.",
+      "false_positive_discriminator": "Message authenticity alone does not imply replay resistance.",
+      "remediation_acceptance": "Duplicate/stale authority cannot repeat an effect where the contract forbids it.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A08-06",
+      "slug": "update-consumption",
+      "boundary": "Plugin/update/artifact consumption",
+      "source_trace": "Trusted update identity -> download/storage -> verification -> executable load.",
+      "controlled_verification": "Inspect supplied artifacts and benign local installer fixtures.",
+      "false_positive_discriminator": "A source URL alone is not evidence of unsafe updating.",
+      "remediation_acceptance": "Unapproved/modified bytes reject before load; rollback/downgrade behavior matches policy.",
+      "default_status": "not-tested"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "security-script-integrity-review",
+  "domain": "Browser and HTTP boundaries",
+  "intent": "Subresource integrity and script provenance at mutable external script loads",
+  "artifacts": "HTML/module loading graph, integrity/crossorigin attributes, runtime script loader, owned dependency mirror and failure handling.",
+  "trace": "Follow which external bytes execute, including fallback loaders and dynamically added scripts. Establish who can change the resource before assigning compromise impact.",
+  "experiment": "On an owned mirror replace one script with a harmless altered marker and compare the intended hash match, mismatch rejection and fallback behavior.",
+  "disproof": "Missing SRI alone is not a demonstrated vendor compromise; a changed script that never executes is not a provenance failure.",
+  "repair": "Pin or independently verify intended resources and retest normal loading, rejection and every fallback capable of executing code.",
+  "source": "https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity",
+  "adjacent": "security-javascript-analysis-review; security-xss-review; security-request-smuggling-review",
+  "branch_decisions": "Check module/preload and dynamic-loader paths independently; a verified initial script can load unverified descendants. For cross-origin resources include the actual CORS mode in the fixture. Establish a lower-trust publisher and executing fallback before claiming dependency compromise rather than missing defense in depth.",
+  "operational_method": "When integrity metadata contains several supported algorithms, derive the strongest supported algorithm and compare against its candidate digest set; matching a weaker digest does not rescue a failed stronger supported set. Retain exact fetched response bytes and the actual browser load result. Separate unsupported algorithms, CORS rejection and integrity failure in diagnostics before attributing an altered-script execution to SRI.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

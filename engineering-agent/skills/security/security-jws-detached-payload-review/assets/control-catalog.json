@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Cryptographic protocols and runtime consumers",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Detached JWS payload bytes and signature-to-consumer agreement",
+      "source_trace": "Determine which exact bytes are authenticated and whether normalization/decoding makes the application act on different content than was verified.",
+      "implementation_branch": "Separate ordinary detached JWS from unencoded-payload b64=false; the latter requires correct b64/crit processing. Signature validity and identical byte digests do not ensure equivalent JSON meaning if duplicate members have first/last parser differences. Bind accepted algorithm/key and parse the verified bytes consistently, rejecting ambiguous structures where the application contract requires uniqueness.",
+      "operational_method": "",
+      "controlled_verification": "Use local synthetic signed messages and harmless paired payloads differing at one transformation boundary; record verifier and consumer digests.",
+      "false_positive_discriminator": "A valid signature on an unchanged intended payload is expected; a serialization rejection is not message substitution.",
+      "remediation_acceptance": "Bind verification to the exact consumed representation and supported header policy, preserving legitimate detached payloads."
+    }
+  ]
+}

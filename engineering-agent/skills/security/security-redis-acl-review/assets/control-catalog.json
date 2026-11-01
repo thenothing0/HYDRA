@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "domain": "data",
+  "native_context": "Redis command/key/channel authorization and effective ACLs",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "REDIS_ACL-1",
+      "boundary": "Redis command/key/channel authorization and effective ACLs — authoritative consumer",
+      "source_trace": "Collect Redis version, effective ACL user/selectors, command/key patterns, Pub/Sub rules and actual application command forms. Distinguish key authority from channel authority.",
+      "controlled_verification": "Using an owned instance/fixture, compare an allowed tenant key and channel with prohibited tenant markers under the same ACL user. Inspect commands that accept multiple keys and the version-specific ACL evaluation path; avoid destructive flush/config operations.",
+      "false_positive_discriminator": "A broad command category is not alone a cross-tenant read if key patterns constrain the operation. Key patterns do not automatically prove Pub/Sub channel isolation.",
+      "remediation_acceptance": "Narrow command, key and channel authority using supported version-specific ACLs. Retest legitimate app commands, denied cross-tenant keys/channels and any originally evidenced multi-key path."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

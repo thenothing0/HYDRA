@@ -1,0 +1,21 @@
+{
+  "name": "security-helm-values-trust-review",
+  "domain": "Kubernetes and deployment controllers",
+  "intent": "Helm values and post-render transformations crossing deployment authority",
+  "artifacts": "Chart templates/dependencies, values sources, release principal and post-render commands.",
+  "trace": "Follow lower-trust values into security-sensitive rendered fields or post-render execution. Distinguish intended operator configuration from an untrusted tenant parameter.",
+  "experiment": "Render an owned inert chart with permitted values and one untrusted security-field change; inspect the final manifest and release policy without installing it.",
+  "disproof": "A chart supporting privileged options is not a vulnerability when only a trusted cluster operator controls them.",
+  "repair": "Constrain exposed values and final admission policy, verifying legitimate rendering and blocked privilege changes.",
+  "source": "https://helm.sh/docs/chart_template_guide/values_files/",
+  "adjacent": "security-kubernetes-rbac-review; security-kubernetes-workload-isolation-review; security-kubernetes-network-policy-review",
+  "branch_decisions": "Rendered manifests are the security-relevant output, including dependencies, tpl evaluation and post-render changes. Values may intentionally grant chart configuration authority but must not silently exceed a caller contract. Render in an isolated non-cluster environment first; template evaluation and any external renderer are executable build inputs, not passive YAML parsing.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

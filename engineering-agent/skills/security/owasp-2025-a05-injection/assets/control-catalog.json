@@ -1,0 +1,66 @@
+{
+  "category": "A05",
+  "version": "4.0.0",
+  "controls": [
+    {
+      "id": "A05-01",
+      "slug": "query-values",
+      "boundary": "SQL/NoSQL query data",
+      "source_trace": "Input -> decoding -> query builder -> bound values -> selected fixture data.",
+      "controlled_verification": "Compare legitimate and inert syntax-changing terms on synthetic records.",
+      "false_positive_discriminator": "Errors or WAF blocks alone do not establish changed interpreter semantics.",
+      "remediation_acceptance": "Untrusted values remain data; valid punctuation/Unicode keep working.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A05-02",
+      "slug": "query-structure",
+      "boundary": "Query structural selectors",
+      "source_trace": "Sort/field/operator/date-part selector -> mapping -> raw ORM or backend API.",
+      "controlled_verification": "Use permitted and unmapped selectors against a controlled feature.",
+      "false_positive_discriminator": "Value parameterization does not automatically protect identifiers/operators.",
+      "remediation_acceptance": "Only trusted structural choices reach the interpreter; unsupported choices reject safely.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A05-03",
+      "slug": "browser-context",
+      "boundary": "HTML and DOM rendering",
+      "source_trace": "Stored/reflected input -> transforms -> template/DOM sink -> actual context.",
+      "controlled_verification": "Prove a harmless controlled DOM effect in an isolated account/page.",
+      "false_positive_discriminator": "Reflection as escaped text is not XSS; do not read real session data.",
+      "remediation_acceptance": "Context-correct handling prevents execution while preserving required text/rich content.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A05-04",
+      "slug": "process-options",
+      "boundary": "Commands and arguments",
+      "source_trace": "Executable selection -> shell/argument API -> option parsing -> invoked operation.",
+      "controlled_verification": "Use a stub executable or local instrumentation to inspect the argument vector.",
+      "false_positive_discriminator": "Array arguments can still expose dangerous caller-selected options.",
+      "remediation_acceptance": "Executable/structure and unsafe options remain trusted; data arguments cannot gain command authority.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A05-05",
+      "slug": "template-expression",
+      "boundary": "Template, expression and filter sinks",
+      "source_trace": "Input -> template/filter construction -> evaluation engine -> output.",
+      "controlled_verification": "Use inert local sentinel interpretation and a legitimate control.",
+      "false_positive_discriminator": "A delimiter in output is not proof it was evaluated.",
+      "remediation_acceptance": "External content is rendered as data or handled by a deliberately constrained supported feature.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A05-06",
+      "slug": "stored-second-order",
+      "boundary": "Second-order interpreter use",
+      "source_trace": "Write/import -> stored value -> background job/report/export -> interpreter.",
+      "controlled_verification": "Save an inert sentinel then inspect its later consumer in a disposable fixture.",
+      "false_positive_discriminator": "A safe insertion path does not prove safe later interpretation.",
+      "remediation_acceptance": "All reachable later consumers preserve data/instruction separation.",
+      "default_status": "not-tested"
+    }
+  ]
+}

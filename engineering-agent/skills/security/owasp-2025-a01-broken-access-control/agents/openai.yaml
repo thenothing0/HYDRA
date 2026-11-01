@@ -1,0 +1,4 @@
+interface:
+  display_name: "OWASP A01: Broken Access Control"
+  short_description: "Review and remediate OWASP A01:2025 risks"
+  default_prompt: "Use $owasp-2025-a01-broken-access-control to review this project, document supported findings, and verify requested fixes."

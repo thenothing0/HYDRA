@@ -1,0 +1,21 @@
+{
+  "name": "security-flutter-platform-channel-authority-review",
+  "domain": "Mobile platform integrations",
+  "intent": "Flutter platform-channel message identity and native operation binding",
+  "artifacts": "Method/EventChannel handlers, plugin/native code, untrusted input sources and engine/isolate lifecycle.",
+  "trace": "Trace an externally influenced Dart/channel argument into the native consumer and its resource/operation checks.",
+  "experiment": "Use an owned app/local channel stub with synthetic values; compare the allowed method/resource and a reachable unauthorized selection.",
+  "disproof": "A channel method name or plugin permission is not an attacker entrypoint without a source path.",
+  "repair": "Validate native operation authority and channel lifecycle, preserving legitimate plugin features and rejecting untrusted selections.",
+  "source": "https://docs.flutter.dev/platform-integration/platform-channels",
+  "adjacent": "security-android-components-review; security-ios-link-handling-review; security-mobile-local-data-review",
+  "branch_decisions": "Platform channels carry application-runtime messages and do not inherently authenticate a web origin. Establish the lower-trust Dart/plugin/embedder entry point and the native handler identity first. A handler accepting arbitrary paths is relevant only if an untrusted actor reaches it outside intended app authority; inspect each platform implementation separately.",
+  "operational_method": "Retain channel name, codec, native registration and owning engine/binary messenger; for EventChannel include listen/cancel ownership and subscription lifetime. Follow the actual lower-trust Dart/plugin/embedder entry into native argument conversion and protected operation. Compare an intended request and a stale/wrong-engine or foreign-resource context in the supplied app path. An arbitrary handler stub establishes no installed channel reachability.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

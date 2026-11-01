@@ -1,0 +1,21 @@
+{
+  "name": "security-api-schema-fallback-review",
+  "domain": "API and SaaS authority",
+  "intent": "Security validation under API version or schema fallback",
+  "artifacts": "Version negotiation, schema selection, compatibility adapters, default fields and final operation consumer.",
+  "trace": "Trace whether a fallback parses or defaults security-relevant fields differently from the policy validator, including missing/unknown versions.",
+  "experiment": "Compare the legitimate version with one supported fallback in an owned operation using harmless distinct markers and the same actor.",
+  "disproof": "Multiple API versions are normal; a parser error or equivalent authorized behavior is not a bypass.",
+  "repair": "Apply the same invariant after canonicalization and test current, supported legacy and unsupported-version rejection.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+  "adjacent": "security-api-bola-review; security-api-function-authorization-review; security-background-job-authorization-review",
+  "branch_decisions": "Check where version negotiation occurs relative to authentication, canonicalization and validation. Defaults for absent fields can differ from explicit null or unknown enums. A supported legacy format is legitimate; the relevant result is whether the same forbidden operation reaches a protected consumer through a different decoder.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

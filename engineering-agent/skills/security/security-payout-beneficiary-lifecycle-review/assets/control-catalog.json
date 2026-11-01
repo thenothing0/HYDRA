@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Commerce and business state",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Payout beneficiary changes and confirmation-to-execution binding",
+      "source_trace": "Trace which beneficiary version was approved and which version the queued payout resolves, especially edits after confirmation.",
+      "implementation_branch": "Determine whether confirmation approves a beneficiary identity or an immutable beneficiary version. A queued payout resolving a later changed destination can violate a version-bound approval. A label change with the same account identifier is not altered routing; verify the actual sandbox destination.",
+      "operational_method": "",
+      "controlled_verification": "Use a sandbox beneficiary fixture with synthetic destinations; compare approved payout with a post-approval destination change.",
+      "false_positive_discriminator": "An edited display label is not changed funds routing; show the effective destination used by the sandbox execution.",
+      "remediation_acceptance": "Bind payout approval to immutable beneficiary intent and retest allowed updates, cooldown and execution."
+    }
+  ]
+}

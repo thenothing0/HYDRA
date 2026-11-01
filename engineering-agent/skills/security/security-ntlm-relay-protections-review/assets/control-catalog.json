@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Enterprise identity and privileged access",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "NTLM service binding, signing and relay-resistance configuration",
+      "source_trace": "Identify an actual trusted-authentication relay path and target binding requirements from configuration. Keep credential coercion/relay execution outside ordinary review.",
+      "implementation_branch": "Branch by receiving protocol: signing, extended protection/channel binding and service configuration are not interchangeable defenses. The absence of one setting does not prove a relay chain without an available authentication source and accepted destination. Use configuration and owned protocol fixtures; do not coerce production users or collect NTLM exchanges.",
+      "operational_method": "Build a receiving-protocol matrix for the actual path: SMB signing, LDAP signing/channel binding and HTTP extended protection/TLS termination are different checks. Record server enforcement, client support and whether a proxy terminates or forwards the authenticated channel. An absent setting is a lead until a feasible source/destination and accepted operation are shown. Use configuration and isolated owned fixtures; no production authentication coercion or relay is required.",
+      "controlled_verification": "Use only an owned isolated authentication fixture or supplied configuration evidence to compare enforced and absent target binding.",
+      "false_positive_discriminator": "NTLM enabled or signing optional at one host is not proof of an exploitable relay chain with a suitable source and target.",
+      "remediation_acceptance": "Enforce appropriate channel/service binding or remove the unnecessary path, verifying supported legitimate clients."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "CI and package publication",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "npm trusted-publisher identity and alternate package publication paths",
+      "source_trace": "Trace which repository/workflow/environment can publish the package and whether provenance corresponds to the exact consumed artifact rather than a different run.",
+      "implementation_branch": "Separate publisher authentication, package ownership, artifact integrity and provenance subject identity. An attestation can accurately describe a malicious but authorized build; it does not replace source trust. Bind the actual registry tarball digest to the expected repository/workflow identity, and do not publish a test package or install untrusted lifecycle scripts for verification.",
+      "operational_method": "Inspect the package registered trusted-publisher identity: CI provider, repository/project, workflow and any configured environment. Bind that identity to the OIDC exchange and actual package/version publication; provenance subject digest matching is a separate check. Record remaining legacy automation tokens or publish paths that bypass the intended publisher restriction. Use supplied registry/publisher records and offline artifacts; do not publish a package or infer source review from an accurate attestation.",
+      "controlled_verification": "Compare the package registered trusted-publisher CI identity with a mismatched repository/workflow/environment and an alternate legacy publishing credential path using supplied configuration and offline artifacts. Do not publish or install a package.",
+      "false_positive_discriminator": "A provenance badge or package metadata field alone is not verified release trust; do not publish a conflicting public package to test it.",
+      "remediation_acceptance": "Bind publication to intended workflow identity and verify artifact provenance at the release consumer."
+    }
+  ]
+}

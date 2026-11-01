@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Mobile platform integrations",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "React Native JavaScript-to-native module capability boundaries",
+      "source_trace": "Determine whether lower-trust JS/content can reach privileged native methods and choose resources/actions beyond its authorized feature.",
+      "implementation_branch": "Define whether JavaScript is trusted bundled code or lower-trust remotely supplied content. A native method exposed to the trusted application runtime is not automatically a web-origin bridge. Trace the actual entry from WebView/messages/updates into module arguments, native permissions and object checks before claiming another origin can invoke it.",
+      "operational_method": "Resolve legacy bridge versus New Architecture/TurboModule registration, the actual exported native method and per-platform argument conversion. Find the lower-trust entry into that method before treating bundled application JS as an attacker. Compare a legitimate native invocation with a malformed/foreign-resource value at the real conversion boundary using an owned app fixture; a generic mock bridge cannot prove installed module exposure.",
+      "controlled_verification": "Use an owned app fixture with an inert native operation and synthetic JS input; compare intended calls and a forbidden resource selection.",
+      "false_positive_discriminator": "A powerful native module exposed to fully trusted application JS is not itself a defect; establish a lower-trust caller path.",
+      "remediation_acceptance": "Constrain module arguments and capabilities at the native boundary and retest intended application use."
+    }
+  ]
+}

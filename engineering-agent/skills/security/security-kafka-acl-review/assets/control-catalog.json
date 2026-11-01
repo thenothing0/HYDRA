@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "domain": "data",
+  "native_context": "Kafka principal, topic/group and transactional authorization",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "KAFKA_ACL-1",
+      "boundary": "Kafka principal, topic/group and transactional authorization — authoritative consumer",
+      "source_trace": "Read principal mapping, authentication, effective broker/controller authorizer configuration, ACL patterns and topic/group/transactional-resource use. Record cluster/version.",
+      "controlled_verification": "On an owned fixture cluster or supplied authorization trace, compare an intended produce/consume operation with a prohibited topic or consumer-group operation under the same principal. Resolve literal/prefixed pattern and operation semantics for that exact resource.",
+      "false_positive_discriminator": "A topic ACL alone does not establish consumer-group authority. A permissive-looking ACL fragment may not be effective under the actual authorizer and other decisions.",
+      "remediation_acceptance": "Bind principal, resource pattern and operations to the tenant contract and preserve necessary client behavior. Retest allowed produce/consume, denied cross-tenant tuple and group lifecycle."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

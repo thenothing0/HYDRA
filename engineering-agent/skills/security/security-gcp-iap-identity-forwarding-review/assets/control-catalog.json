@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Google Cloud service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Identity-Aware Proxy assertion validation and origin reachability",
+      "source_trace": "Trace a verified IAP assertion into application identity, including issuer/audience and whether direct origin requests can supply equivalent unverified headers.",
+      "implementation_branch": "Check the signed IAP assertion and its exact protected-resource audience; email/identity headers alone may be forgeable on a direct backend path. Determine whether network/ingress restrictions actually prevent that path before declaring bypass. A legitimate request through IAP is a positive control, not proof that all origin routes validate the assertion.",
+      "operational_method": "",
+      "controlled_verification": "Use an owned proxy/backend fixture; compare intended IAP request and direct synthetic identity-header input.",
+      "false_positive_discriminator": "An email header name or unreachable origin is not authentication bypass; verify a protected synthetic response under the forged identity.",
+      "remediation_acceptance": "Validate assertions and origin ingress consistently, preserving authorized proxy traffic and rejecting direct impersonation."
+    }
+  ]
+}

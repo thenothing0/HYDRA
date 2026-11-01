@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-http-response-splitting-review",
+  "cases": [
+    {
+      "id": "new-header",
+      "scenario": "A local replica serializes caller input as a second X-Lab header despite the input contract allowing only a value.",
+      "expected_decision": "Confirm header-structure injection; reserve response-splitting impact for its own observed boundary."
+    },
+    {
+      "id": "escaped-value",
+      "scenario": "The server rejects the delimiter or emits a harmless literal representation with no new field.",
+      "expected_decision": "Treat the proposed structural effect as blocked."
+    },
+    {
+      "id": "unrelated-framing",
+      "scenario": "A proxy disagreement concerns request body length rather than response headers.",
+      "expected_decision": "Route to request-smuggling analysis; do not reclassify it as this finding."
+    }
+  ]
+}

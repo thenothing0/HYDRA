@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "CI and package publication",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "GitLab CI source trust and protected variable/runner exposure",
+      "source_trace": "Trace lower-trust YAML/code/includes into jobs that receive protected material or trusted runner access. Preserve the exact event/ref permission context.",
+      "implementation_branch": "Resolve project/fork identity, pipeline source, branch/tag protection and the actual conditions for protected variables and runners. Masking only changes display behavior; it does not prevent a running script from using a value. A rejected fork pipeline before secret-bearing execution is an effective boundary for that case, not proof of exposure.",
+      "operational_method": "Distinguish a fork-project pipeline from a parent-project pipeline executing configuration from a fork merge request. Retain project IDs, pipeline source, protected refs/runners and the installed-version protected-resource access settings. A fork pipeline rejected before secret admission is a denial; parent execution using untrusted fork configuration requires a separate source-to-secret-bearing-job trace. Masked output alone is not proof that the running job cannot use the secret.",
+      "controlled_verification": "Use an isolated pipeline fixture with a synthetic secret marker and inert job; compare trusted ref and lower-trust merge-request configuration.",
+      "false_positive_discriminator": "A variable name or protected runner tag is not material access if the pipeline policy withholds it.",
+      "remediation_acceptance": "Bind protected context to trusted source/includes and retest legitimate releases without leaking real secrets."
+    }
+  ]
+}

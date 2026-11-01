@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Compatibility planning lens only, not a normative cross-domain mapping. Final root-cause taxonomy may differ or remain unassigned.",
+  "native_context": "HTML cross-document/channel messaging; validate origin, peer and message contract",
+  "domain": "web",
+  "controls": [
+    {
+      "id": "BROWSER_POSTMESSAGE-1",
+      "boundary": "Browser postMessage peer and capability trust — authoritative consumer",
+      "source_trace": "Inspect message listeners, expected origins, window/source handles, channel transfer and action schemas. Determine whether a frame can navigate after a trust decision.",
+      "controlled_verification": "Use two owned local origins: the expected peer and an unauthorized peer. Send the same inert privileged-action request and record whether the receiver commits it or returns protected fixture data. Test exact origin/source binding at the action and reply boundary; for transferred ports, trace who obtained the capability.",
+      "false_positive_discriminator": "A missing origin comparison is not conclusive if a separately trusted port/source capability enforces the policy. A wildcard reply exposing only public handshake data is not a confidential-data leak.",
+      "remediation_acceptance": "Bind the approved peer/channel to each sensitive action and recipient; validate message shape and resource authority. Retest the legitimate peer and the unauthorized origin, including the evidenced navigation lifecycle."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

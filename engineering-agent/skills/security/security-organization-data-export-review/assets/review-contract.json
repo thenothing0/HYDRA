@@ -1,0 +1,21 @@
+{
+  "name": "security-organization-data-export-review",
+  "domain": "API and SaaS authority",
+  "intent": "Authorization closure and field projection of expanded organization exports",
+  "artifacts": "Export request, selected data scope, background identity, artifact publication and download capability issuer.",
+  "trace": "Follow initiator/tenant authority through queued execution and later retrieval. Check whether role revocation or client-selected tenant affects either stage.",
+  "experiment": "Export one owned root with an allowed relation, a foreign/restricted relation and a hidden field/attachment. Compare default and requested expansions against the export projection contract and inspect every output file/manifest.",
+  "disproof": "A job ID or publicly documented export route is not a data leak; an intentionally shared artifact needs its publication policy.",
+  "repair": "Bind job, data selection and artifact access to policy and retest delayed execution and download lifecycle.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+  "adjacent": "security-api-bola-review; security-api-function-authorization-review; security-background-job-authorization-review",
+  "branch_decisions": "Split generation, storage publication and later download into separate authority decisions. A requester losing membership before worker execution may be denied then, at download, or both according to policy. A signed artifact capability has its declared lifetime; do not assume immediate revocation without the contract.",
+  "operational_method": "Specialize in export dataset closure/projection, not queue lifecycle. Build an owned fixture with an allowed root record, a restricted related record and a protected field/attachment. Trace joins, expansion options, serializer projection and artifact manifest into the exported files. Permission to request the root export must not silently authorize every joined row or hidden field. Compare the allowed projection and a forbidden expansion; route enqueue/revocation/download ownership to background-job authorization.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "overlaps",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

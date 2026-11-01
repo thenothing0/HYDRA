@@ -1,0 +1,21 @@
+{
+  "name": "security-telemetry-error-redaction-review",
+  "domain": "Data publication and privacy boundaries",
+  "intent": "Secret redaction at actual error/telemetry serialization boundaries",
+  "artifacts": "Error builders, request/response attachments, redaction rules, source-map upload and log sink access.",
+  "trace": "Follow a synthetic sensitive value through nested errors, URLs, headers and serializer fallbacks into the transmitted/retained event.",
+  "experiment": "Use local telemetry stubs with synthetic fixtures in distinct field encodings; compare redacted expected fields and one nested/fallback path.",
+  "disproof": "A redaction function existing in source is not proof it handles the emitted shape; an unrelated private tester log is not a target disclosure.",
+  "repair": "Redact before transmission with structured field policy and verify normal debugging fields remain useful.",
+  "source": "https://opentelemetry.io/docs/security/handling-sensitive-data/",
+  "adjacent": "security-api-sensitive-fields-review; security-deleted-data-access-review; security-document-processing-review",
+  "branch_decisions": "Find the actual serialization boundary for exception chains, structured attributes, attachments and fallback loggers. A redacted top-level message can coexist with a raw cause or breadcrumb. Use synthetic canaries with secret-like structure, confirm collector/export output and retain only the minimum redacted evidence; do not treat a regex match as proof of a real credential.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

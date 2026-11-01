@@ -1,0 +1,21 @@
+{
+  "name": "security-android-network-security-config-review",
+  "domain": "Mobile platform integrations",
+  "intent": "Android effective cleartext and trust-anchor policy by build/domain",
+  "artifacts": "Network Security Config, manifest flags, target SDK, debug/release resources and actual HTTP client.",
+  "trace": "Resolve which domain/build policy the real client uses, including custom trust managers that bypass declarative configuration.",
+  "experiment": "Use an emulator and owned local endpoint with synthetic data; compare expected TLS validation and an intentionally invalid test certificate.",
+  "disproof": "A debug-only trust anchor is not a release flaw; an HTTP string unused by the application is not sensitive cleartext transmission.",
+  "repair": "Apply correct release/domain trust policy and retest actual client validation and legitimate TLS.",
+  "source": "https://developer.android.com/privacy-and-security/security-config",
+  "adjacent": "security-android-components-review; security-ios-link-handling-review; security-mobile-local-data-review",
+  "branch_decisions": "Resolve build variant, target SDK, domain-config inheritance, debug overrides and the network stack actually making the request. Native or third-party clients may not honor the XML policy. A debug trust anchor is not a release weakness without release applicability; show effective cleartext/peer acceptance with an owned endpoint and the real client path.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

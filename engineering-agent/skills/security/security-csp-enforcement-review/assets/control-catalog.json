@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Browser and HTTP boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Effective Content Security Policy enforcement across headers, HTML policies and frame contexts",
+      "source_trace": "Resolve the policy applying to the protected document and sink. Separate Report-Only from enforcement; combine multiple enforced policies as simultaneous restrictions. Follow nonce creation and propagation into the actual inserted script.",
+      "implementation_branch": "If several enforced policies are present, test the intersection, not the most permissive header in isolation. Attribute the tested policy to the actual document/frame. A nonce read by privileged automation is not an attacker-readable nonce; strict-dynamic and parser-inserted versus dynamic scripts need separate consumer evidence.",
+      "operational_method": "Retain response headers and the position/time of each meta-delivered policy relative to the challenged resource. A meta policy does not retrospectively block earlier content and cannot express every header-delivered directive. Identify unsupported/ignored directives from the actual engine diagnostics. Compare insertion after activation with the same harmless marker before activation; only the applicable enforced policy can serve as the tested security gate.",
+      "controlled_verification": "In an owned fixture, compare the legitimate nonce-bearing bootstrap with one inert untrusted script marker at the same sink and capture whether execution occurs.",
+      "false_positive_discriminator": "An unsafe-looking directive or report-only violation is not a bypass; CSP absence alone does not establish an injection path.",
+      "remediation_acceptance": "Retest allowed bootstrap and rejected untrusted insertion under the repaired effective policies and the same browser context."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-document-processing-review",
+  "cases": [
+    {
+      "id": "delegate-reached",
+      "scenario": "A permitted fixture format invokes a local stub delegate that the owner policy forbids for this worker.",
+      "expected_decision": "Confirm the unintended capability reachability; stub execution does not prove arbitrary remote code execution."
+    },
+    {
+      "id": "effective-rejection",
+      "scenario": "The deployed policy rejects the prohibited decoder before any delegate or publication effect.",
+      "expected_decision": "Treat the candidate path as blocked and retain a valid-format control."
+    },
+    {
+      "id": "version-only",
+      "scenario": "An advisory names a library installed somewhere but its reachable worker path is unknown.",
+      "expected_decision": "Record a dependency concern without claiming a confirmed processing exploit."
+    }
+  ]
+}

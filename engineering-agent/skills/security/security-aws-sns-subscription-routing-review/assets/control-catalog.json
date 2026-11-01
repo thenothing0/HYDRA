@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "AWS service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "SNS publish/subscription authority and sensitive destination routing",
+      "source_trace": "Determine who may subscribe or change a destination and whether confirmation proves endpoint control plus tenant entitlement, rather than only reachability.",
+      "implementation_branch": "Distinguish publish permission, Subscribe permission, endpoint confirmation and consumer authenticity checks. A confirmed endpoint is not proof that every subscriber is entitled to the message data. Trace topic policy, filter policy and any envelope signature into the actual consumer; do not send live customer notifications or infer plaintext exposure from topic metadata alone.",
+      "operational_method": "Identify delivery protocol before choosing the validation oracle. HTTP/S delivery uses the actual SNS envelope/signature and subscription-confirmation contract; SQS delivery depends on queue admission policy and may use raw message delivery. Raw delivery must not be rejected merely for lacking an HTTP envelope. Record topic, subscription endpoint owner, protocol and raw/enveloped mode, then trace one synthetic notification to the intended recipient and a forbidden-route control.",
+      "controlled_verification": "Use owned synthetic topic messages and destinations; compare intended subscription with another owned tenant/destination request.",
+      "false_positive_discriminator": "A subscription confirmation token or public topic ARN is not data exposure until unauthorized delivery or alteration is established.",
+      "remediation_acceptance": "Bind subscription management to intended recipients and retest confirmation, filtering, deletion and actual delivery."
+    }
+  ]
+}

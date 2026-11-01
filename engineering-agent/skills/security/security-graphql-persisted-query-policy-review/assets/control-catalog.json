@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "API and SaaS authority",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Persisted GraphQL operation admission and authorization",
+      "source_trace": "Trace who may introduce a query and whether registry admission is being mistaken for field/object authorization. Inspect alternate full-query and version paths.",
+      "implementation_branch": "Separate automatic persisted-query registration from a strict allowlist: accepting a full query on a cache miss may be normal APQ. Admission hashes do not remove resolver authorization. Verify the configured profile before treating unregistered query execution as an allowlist bypass.",
+      "operational_method": "Retain the actual operation bytes, hash algorithm, computed hash, registry generation and principal permitted to register an operation. Compare a correct registry entry with a body/hash mismatch and a caller trying to replace a trusted operation ID. APQ fallback to full query may be intentional; neither a hash cache hit nor registration permission removes resolver/field authorization.",
+      "controlled_verification": "In an owned schema compare an approved operation with one unregistered harmless operation and a restricted synthetic field.",
+      "false_positive_discriminator": "Accepting arbitrary queries can be intentional; a known query hash does not grant resolver access and introspection alone proves no protected read.",
+      "remediation_acceptance": "Enforce the declared admission policy and resolver authority independently, preserving approved client versions."
+    }
+  ]
+}

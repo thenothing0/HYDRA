@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Mobile platform integrations",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "iOS App Group container authority across app and extension identities",
+      "source_trace": "Trace which signed components can reach shared data and whether lower-trust extension input changes another component protected state.",
+      "implementation_branch": "Use signed entitlements of each app/extension and the actual shared container identifier. App Group sharing is intentional among authorized members; the boundary may instead be account switching or an untrusted extension capability. A directory name seen in source is not proof of installed access or cross-team container entitlement.",
+      "operational_method": "Separate App Group file-container access from Keychain access-group entitlements; sharing one does not imply the other. Retain signed entitlements, the actual container API/path, file protection class and extension/application identity. Compare a synthetic account switch or extension read against the declared audience/lifecycle. Merely showing that authorized group members share a container is expected behavior, not cross-team privilege.",
+      "controlled_verification": "Use owned signed test targets and synthetic shared data; compare intended extension exchange with an out-of-policy action/resource selection.",
+      "false_positive_discriminator": "A shared group identifier is not proof that an unrelated app can access it; entitlement enforcement remains essential.",
+      "remediation_acceptance": "Constrain shared data and per-operation authority within entitled components, preserving legitimate extensions."
+    }
+  ]
+}

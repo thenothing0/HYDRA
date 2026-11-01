@@ -1,0 +1,21 @@
+{
+  "name": "security-ruby-yaml-object-loading-review",
+  "domain": "Cryptographic protocols and runtime consumers",
+  "intent": "Ruby YAML loader mode, permitted classes and object construction trust",
+  "artifacts": "Ruby/Psych versions, safe/unsafe load callsite, permitted classes/aliases and downstream object use.",
+  "trace": "Follow lower-trust YAML through the actual loader configuration and determine whether arbitrary constructors or authority-bearing object state are accepted.",
+  "experiment": "Use an isolated fixture with primitive data and an inert custom class; compare allowed plain data and rejected unexpected object construction.",
+  "disproof": "YAML parsing itself is not unsafe object loading; a safe loader rejecting the test type disproves that specific path.",
+  "repair": "Use context-appropriate safe loading and explicit data validation, retesting valid aliases/types required by the feature.",
+  "source": "https://ruby-doc.org/stdlib-3.1.1/libdoc/psych/rdoc/Psych.html",
+  "adjacent": "security-jwt-review; security-tls-peer-validation-review; security-deserialization-review",
+  "branch_decisions": "Resolve Psych/Ruby version, safe_load/unsafe_load/load behavior, permitted classes and aliases at the actual callsite. Do not assume every YAML loader constructs arbitrary objects or every permitted class is dangerous. Use a harmless custom fixture class only in an isolated harness, trace reachable callbacks, and avoid executing untrusted deserialization gadgets.",
+  "operational_method": "Retain loaded Psych gem version, actual method owner/implementation and safe_load/load/unsafe_load arguments, including permitted classes/aliases. Ruby version alone can be insufficient when the gem or wrapper differs. Trace the permitted class construction/callback and downstream use in source before selecting a harmless isolated fixture class. A generic YAML parse success or an old reference version does not demonstrate object execution in the installed loader.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

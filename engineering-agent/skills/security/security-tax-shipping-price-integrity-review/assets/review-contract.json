@@ -1,0 +1,21 @@
+{
+  "name": "security-tax-shipping-price-integrity-review",
+  "domain": "Commerce and business state",
+  "intent": "Configured tax/shipping calculation and quote-to-fulfillment integrity",
+  "artifacts": "Address/shipping/tax calculation, quote storage, discounts and final charge/order confirmation.",
+  "trace": "Trace client inputs and quote IDs into the server total and the address/service actually fulfilled. Distinguish recalculated estimates from committed amounts.",
+  "experiment": "Use a configured synthetic tax/shipping calculation with its inclusion, rounding and currency policy. Change one address/service/weight or rounding-boundary determinant and compare authorized quote, final charge and fulfilled service.",
+  "disproof": "A transient displayed estimate is not an undercharge; inspect authoritative charge and fulfillment state.",
+  "repair": "Recalculate or bind all quote determinants and retest legitimate address changes and stale-quote rejection.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Transaction_Authorization_Cheat_Sheet.html",
+  "adjacent": "security-payment-integrity-review; security-workflow-transitions-review; security-race-conditions-review",
+  "branch_decisions": "Bind the quote to address, service, currency, quantity and applicable time policy. A merchant may deliberately honor a historical guaranteed quote. Compare final charged and fulfilled service values; do not call a legitimate estimate update or tax-inclusive display convention a price manipulation.",
+  "operational_method": "Retain the configured calculation policy: tax-inclusive/exclusive prices, shipping taxability, currency minor units, per-line versus invoice rounding and guaranteed-quote lifetime. Recompute an owned quote under that same policy, then change address/service/weight or a rounding boundary and inspect the final charge and fulfilled service. A mismatch between two legitimate rounding conventions is not a security finding; identify an unauthorized determinant change or value beyond the declared tolerance. This does not determine legal tax obligations.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "overlaps",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

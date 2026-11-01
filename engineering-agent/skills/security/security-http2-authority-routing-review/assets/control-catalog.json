@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Browser and HTTP boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Agreement between TLS identity, HTTP/2 authority and application tenant routing",
+      "source_trace": "Trace connection identity and per-request authority through the reverse proxy to the final tenant selection. Identify the authoritative check rather than assuming shared infrastructure implies shared access.",
+      "implementation_branch": "HTTP/2 connection coalescing can legitimately send a different authority over an existing TLS connection when its trust requirements hold. Do not require literal SNI equality universally. The defect is wrong application/tenant authority or an explicitly violated routing policy, not every multi-authority connection.",
+      "operational_method": "",
+      "controlled_verification": "Use two owned virtual hosts and synthetic tenant responses on one isolated connection; compare intended authority and one permitted mismatch fixture.",
+      "false_positive_discriminator": "A different error page, shared certificate or 421 response does not demonstrate another tenant content or action.",
+      "remediation_acceptance": "Align authority handling and tenant checks, then verify correct routing, rejection and authorized connection reuse."
+    }
+  ]
+}

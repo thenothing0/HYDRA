@@ -1,0 +1,21 @@
+{
+  "name": "security-ingress-annotation-authority-review",
+  "domain": "Kubernetes and deployment controllers",
+  "intent": "Ingress annotations/templates controlling privileged proxy behavior",
+  "artifacts": "Controller/version, allowed annotations, snippet/template handling, ingress writers and generated proxy config.",
+  "trace": "Trace an allowed ingress writer field into routing, file access or configuration evaluated by a higher-privilege controller.",
+  "experiment": "Use an isolated controller fixture and inert routing marker; compare permitted routing and one policy-forbidden annotation effect.",
+  "disproof": "Controller support for powerful annotations is not tenant escalation unless a lower-trust writer can reach the protected effect.",
+  "repair": "Constrain annotations/ingress writers and generated configuration, retesting intended routes and rejected privileged directives.",
+  "source": "https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/",
+  "adjacent": "security-kubernetes-rbac-review; security-kubernetes-workload-isolation-review; security-kubernetes-network-policy-review",
+  "branch_decisions": "Identify the installed ingress controller and enabled annotation/template features. The same annotation name can be ignored by a different controller. Separate permission to create Ingress objects from ability to alter global controller configuration; only trace input into generated configuration when a lower-trust actor can set it and the controller actually consumes it.",
+  "operational_method": "For ingress-nginx, collect the effective controller ConfigMap, snippet enablement, risk admission settings and installed controller version. Retain the generated configuration or rejection diagnostic for the specific annotation. A submitted annotation that is ignored or rejected does not reach the proxy parser. Compare a harmless admitted annotation with the disputed privileged directive in an isolated renderer, and keep permission to edit the controller ConfigMap separate from permission to create an Ingress.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

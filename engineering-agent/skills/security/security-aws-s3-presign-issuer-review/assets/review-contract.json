@@ -1,0 +1,21 @@
+{
+  "name": "security-aws-s3-presign-issuer-review",
+  "domain": "AWS service boundaries",
+  "intent": "S3 SigV4 issued capabilities: signed fields, signer lifetime and object version",
+  "artifacts": "Signer endpoint/code, signer principal, bucket/key/version selection, expiration and owned objects.",
+  "trace": "Trace the caller-selected resource and operation to the signer identity and effective capability. Determine whether the requester is authorized for that exact object before signing.",
+  "experiment": "Inspect a redacted owned SigV4 signing request with temporary signer expiry, signed headers and optional versionId. Compare intended capability with altered method/key/header/version or expiry assumptions using offline canonical inputs; claim redemption only if an authorized fixture actually observes it.",
+  "disproof": "A transferable presigned URL is intentional. Its mere use by its bearer is not a bypass of the signer endpoint.",
+  "repair": "Authorize requester/resource/operation before signing and retest scope, expiry and intended downloads.",
+  "source": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html",
+  "adjacent": "security-aws-iam-review; security-aws-object-storage-review; security-aws-workload-identity-review",
+  "branch_decisions": "Evaluate the caller policy at the signing application separately from the signing principal permissions. The bearer URL may intentionally permit an unauthenticated recipient. Bind operation, bucket, key, required headers and expiry; inspect whether a later object replacement changes what a still-valid download URL serves. A locally generated signature does not prove the application grants it to a restricted caller.",
+  "operational_method": "Evaluate the actual SigV4 capability, not just issuer entitlement: method, canonical object key, optional versionId, signed headers, signer credential type and credential expiry. A temporary signer session can expire before X-Amz-Expires; a version-bound GET differs from a mutable unversioned key. For upload issuance, distinguish presigned PUT headers from POST policy conditions and check the stored object/version the application later consumes. Preserve the application request and redacted canonical signing inputs; a valid signature or successful public-object read does not demonstrate another caller may obtain the capability. Route general bucket publication to the S3 access-policy workflow.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "overlaps",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

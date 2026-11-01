@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "AI applications and agent runtimes",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Agent broker file-root capabilities and grant-generation revocation",
+      "source_trace": "Follow model-supplied paths through normalization and descriptor/open logic. Compare the final object to the user-authorized workspace rather than only a textual prefix.",
+      "implementation_branch": "Resolve paths at the actual file operation, including parent symlinks, directory handles and races between check and use. A lexical startswith check can misclassify sibling names, while sandboxed mount isolation may deny the path independently. Use disposable local roots and marker files; privileged fixture creation of a symlink is not proof the untrusted actor can create it.",
+      "operational_method": "Specialize in broker-issued workspace/root capabilities: grant ID, canonical root, allowed operations, user/task ownership and revocation generation. Resolve the actual file descriptor/path at use and compare it with the current capability; an old tool handle must not silently retain authority after a narrowed grant if policy revokes it. Test disposable marker roots and a stale broker handle. Ordinary traversal/link mechanics without a changing agent grant belong in filesystem review.",
+      "controlled_verification": "Grant a disposable file-root capability for markerA, then narrow/revoke it and reuse the old broker handle under the declared generation policy. Compare a fresh permitted handle and the stale context without accessing real private files.",
+      "false_positive_discriminator": "A prompt asking for an outside path is not access; an external file read by setup code must not be attributed to the agent tool.",
+      "remediation_acceptance": "Enforce final file-object authority and retest legitimate nested paths, link/rename races in local fixtures and explicit user grants."
+    }
+  ]
+}

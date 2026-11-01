@@ -1,0 +1,41 @@
+{
+  "category": "A03",
+  "coverage": [
+    {
+      "id": "A03-01",
+      "boundary": "Advisory applicability",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A03-02",
+      "boundary": "Registry and namespace resolution",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A03-03",
+      "boundary": "Untrusted build inputs",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A03-04",
+      "boundary": "Release artifact identity",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A03-05",
+      "boundary": "Build tools, actions and images",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A03-06",
+      "boundary": "Fix, exception and deployment",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    }
+  ]
+}

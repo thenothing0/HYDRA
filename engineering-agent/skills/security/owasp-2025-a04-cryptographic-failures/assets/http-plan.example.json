@@ -1,0 +1,15 @@
+{
+  "authorization": "EXAMPLE ONLY: replace with actual existing authorization and inspect endpoint effects",
+  "origins": [
+    "https://example.invalid"
+  ],
+  "max_requests": 5,
+  "min_interval_seconds": 1,
+  "requests": [
+    {
+      "id": "owner-control",
+      "method": "GET",
+      "url": "https://example.invalid/replace-with-authorized-route"
+    }
+  ]
+}

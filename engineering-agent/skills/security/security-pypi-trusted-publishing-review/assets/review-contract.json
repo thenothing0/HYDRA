@@ -1,0 +1,21 @@
+{
+  "name": "security-pypi-trusted-publishing-review",
+  "domain": "CI and package publication",
+  "intent": "PyPI trusted publisher OIDC identity and release artifact selection",
+  "artifacts": "Publisher registration, repository/workflow/environment claims and build/publish job artifact flow.",
+  "trace": "Follow accepted OIDC claims to project publication authority and ensure the uploaded distribution is from the approved immutable build.",
+  "experiment": "Use a local policy fixture or owned test repository without public publication; compare intended workflow identity and a claim/artifact mismatch.",
+  "disproof": "An OIDC token request or PyPI project name in config is not a successful publishing grant.",
+  "repair": "Constrain publisher claims and artifact promotion, preserving intended release and rejecting mismatched contexts.",
+  "source": "https://docs.pypi.org/trusted-publishers/",
+  "adjacent": "security-ci-artifact-provenance-review; security-package-resolution-review; security-github-actions-trust-review",
+  "branch_decisions": "Match the registered publisher repository, workflow and environment to the OIDC identity allowed to mint the upload token. A successful build is not evidence it selected the artifact eventually uploaded. Inspect reusable-workflow and artifact handoffs; a correctly rejected mismatch is a publisher-binding control, not proof that release contents are trustworthy.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

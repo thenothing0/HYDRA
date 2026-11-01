@@ -1,0 +1,18 @@
+{
+  "category": "A03",
+  "taxonomy_note": "Compatibility planning lens only, not a normative cross-domain mapping. Final root-cause taxonomy may differ or remain unassigned.",
+  "native_context": "Docker BuildKit secret lifecycle and image/cache distribution",
+  "domain": "cloud",
+  "controls": [
+    {
+      "id": "CONTAINER_BUILD_SECRETS-1",
+      "boundary": "Container build secret and layer retention boundary — authoritative consumer",
+      "source_trace": "Open Dockerfile, context ignore rules, build arguments, secret mounts, layer/export metadata, build logs and cache export/access. Identify actual sensitive inputs using synthetic markers.",
+      "controlled_verification": "Build only an owned fixture with a fake secret marker and inspect relevant exported layers/history/logs/cache. Distinguish copying a secret then deleting it in a later layer from avoiding persistence in the first place. Record the build engine/settings used.",
+      "false_positive_discriminator": "A secret mount directive alone is not a leak; using a fake marker in an inaccessible build-only context does not establish recipient exposure. Conversely, deleting a file in the final image does not erase prior exported layers.",
+      "remediation_acceptance": "Use supported ephemeral secret delivery and prevent the evidenced persistence/export path. Retest required build behavior and search the actual distributed artifacts for the fake marker."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

@@ -1,0 +1,16 @@
+{
+  "category": "A02",
+  "taxonomy_note": "Initial root-cause lens; reassess final mapping.",
+  "controls": [
+    {
+      "id": "REQUEST_SMUGGLING-1",
+      "boundary": "HTTP request desynchronization — authoritative consumer",
+      "source_trace": "Record exact proxy/backend versions, protocol conversions, framing rules, connection reuse and any normalization layer. Establish the two parsers' interpretations before a probe.",
+      "controlled_verification": "Prefer an isolated replica with two controlled requests on a dedicated connection and explicit frontend/backend logs. Use an inert canary to observe an actual message-boundary disagreement and which backend request consumes it. Bound bytes/time and terminate the fixture connection.",
+      "false_positive_discriminator": "A timeout, 400 or duplicate framing header is not proof of desynchronization. No shared connection or consistent parser rejection may defeat the proposed chain. A single mock parser does not validate a real proxy stack.",
+      "remediation_acceptance": "Use supported consistent framing/rejection across the actual stack and eliminate the evidenced ambiguous boundary. Retest ordinary persistent requests and the exact prior parser disagreement."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

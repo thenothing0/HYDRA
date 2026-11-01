@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-retest-verification",
+  "cases": [
+    {
+      "id": "error-after-commit",
+      "scenario": "The patched endpoint returns 403 but the protected fixture balance still changes.",
+      "expected_decision": "Still reproducible for the side-effect boundary; do not mark fixed from status code."
+    },
+    {
+      "id": "expired-account",
+      "scenario": "The old PoC no longer works because the fixture account was deleted; changed code is unavailable.",
+      "expected_decision": "Blocked or inconclusive; reconstruct preconditions before making a fix claim."
+    },
+    {
+      "id": "verified-fix",
+      "scenario": "The original violation is denied before state changes and the permitted control succeeds on the identified changed build.",
+      "expected_decision": "Draft a supported fixed outcome within the tested paths; do not alter external report state."
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "OWASP A03: Software Supply Chain Failures"
+  short_description: "Review and remediate OWASP A03:2025 risks"
+  default_prompt: "Use $owasp-2025-a03-software-supply-chain to review this project, document supported findings, and verify requested fixes."

@@ -1,0 +1,16 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Initial root-cause lens; reassess final mapping.",
+  "controls": [
+    {
+      "id": "CSRF-1",
+      "boundary": "Cross-site request forgery — authoritative consumer",
+      "source_trace": "Map state-changing actions, ambient browser credentials, token/origin checks and cookie policy. Record the specific attacker origin and real victim prerequisites.",
+      "controlled_verification": "Using two owned origins and a disposable account, submit the smallest state change a browser can actually deliver cross-site. Inspect durable state and compare the legitimate flow. If a token exists, verify its binding/validation at the action, rather than merely checking that a field is present.",
+      "false_positive_discriminator": "A request requiring a nonambient secret not available to the attacking origin may defeat the hypothesis. A command-line client can forge headers and does not prove a browser can send them; response readability is not required for a CSRF state effect.",
+      "remediation_acceptance": "Apply supported CSRF/session-origin defenses at the action boundary while retaining required cross-origin flows. Retest legitimate submission, the evidenced cross-site request and alternate state-changing routes."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

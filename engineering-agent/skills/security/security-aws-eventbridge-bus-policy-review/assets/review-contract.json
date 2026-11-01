@@ -1,0 +1,21 @@
+{
+  "name": "security-aws-eventbridge-bus-policy-review",
+  "domain": "AWS service boundaries",
+  "intent": "EventBridge producer identity, routing and consumer trust",
+  "artifacts": "Bus resource policy, PutEvents caller, event fields/rules and downstream privileged consumer.",
+  "trace": "Determine whether untrusted producers can set fields the consumer treats as an authenticated tenant or action instruction.",
+  "experiment": "Use an owned bus or local event fixture with inert markers; compare intended producer events and a controlled spoofed authority field.",
+  "disproof": "Publishing to a public intake bus can be intentional; a rule match alone is not a privileged consumer effect.",
+  "repair": "Authenticate producer context and validate consumer authority, then retest rightful events and spoofed-field rejection.",
+  "source": "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus-perms.html",
+  "adjacent": "security-aws-iam-review; security-aws-object-storage-review; security-aws-workload-identity-review",
+  "branch_decisions": "An event detail field claiming a tenant or user is application data, not the caller identity authenticated by the bus. Evaluate PutEvents admission, routing rule scope and consumer validation independently. Service-originated events and custom producers have different provenance; a rule match alone does not demonstrate that a protected consumer trusts a forged identity.",
+  "operational_method": "Inspect PutEvents rights separately from PutRule/PutTargets and rule-update authority. Retain producer principal, source bus, selected rule and target ARN for the same synthetic event. A rule writer can redirect an otherwise authentic event; that is different from a producer forging detail fields. Verify the consumer action and intended destination with a local event-routing stub or supplied trace, without publishing real notifications.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

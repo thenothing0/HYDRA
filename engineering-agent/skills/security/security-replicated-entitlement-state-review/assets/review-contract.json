@@ -1,0 +1,21 @@
+{
+  "name": "security-replicated-entitlement-state-review",
+  "domain": "API and SaaS authority",
+  "intent": "Authorization under multi-region or replica entitlement lag",
+  "artifacts": "Membership source, replication/TTL model, authorization read path, failover routing and declared revocation window.",
+  "trace": "Trace stale membership/session state into a protected decision after an authoritative change. Separate accepted bounded lag from undocumented continued access.",
+  "experiment": "Use a deterministic owned two-replica fixture with delayed entitlement propagation and one synthetic protected operation before/after the allowed window.",
+  "disproof": "Any replication delay is not automatically a vulnerability; identify the policy and observed protected effect beyond it.",
+  "repair": "Use policy-appropriate consistency/invalidation and verify revocation, failover and entitled regional traffic.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+  "adjacent": "security-api-bola-review; security-api-function-authorization-review; security-background-job-authorization-review",
+  "branch_decisions": "Use the documented revocation completion time and actual routing/replica identity. A stale UI claim is not server authorization. An explicitly permitted grace interval is an expected state; an observed protected effect beyond it may identify missing propagation rather than a universal authentication bypass.",
+  "operational_method": "Retain decision provenance: replica/cache identity, entitlement generation read, routing/failover choice and protected consumer timestamp. A stale value shown in a log is not necessarily the value used for authorization. Under the declared propagation contract, compare the same revoked synthetic identity on fresh and stale paths and identify whether cache invalidation, decision-time recheck or replica routing is the missing enforcement edge.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

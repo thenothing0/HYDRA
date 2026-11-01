@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Kubernetes and deployment controllers",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "CSI external-secret mount identity and workload/resource selection",
+      "source_trace": "Trace who chooses external secret identifiers and which workload identity the provider uses at mount/refresh.",
+      "implementation_branch": "Map pod service account, SecretProviderClass namespace and provider-specific workload identity into the requested external secret. Mount permission and permission to sync a Kubernetes Secret can differ. A privileged operator changing the pod identity is setup authority, not an app-originated exploit; inspect whether an actual restricted workload can select another identity or resource.",
+      "operational_method": "Choose provider and authentication mode explicitly: node identity, pod identity and workload federation select different principals. Collect SecretProviderClass parameters, pod service account and the effective identity-selection path. A fixture that grants every pod the same fake node identity cannot establish workload isolation. Compare two synthetic secret identifiers under the same actual restricted workload identity and verify provider admission before treating a mounted path as secret exposure.",
+      "controlled_verification": "Use a local provider stub with synthetic secrets; compare rightful pod/service-account mount and a foreign resource or provider-class substitution.",
+      "false_positive_discriminator": "A successful controller/admin mount does not show an unprivileged pod can read another secret.",
+      "remediation_acceptance": "Bind provider configuration and external resource authority to the intended workload, verifying mount and rotation."
+    }
+  ]
+}

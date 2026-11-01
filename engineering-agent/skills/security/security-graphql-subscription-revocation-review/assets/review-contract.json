@@ -1,0 +1,21 @@
+{
+  "name": "security-graphql-subscription-revocation-review",
+  "domain": "API and SaaS authority",
+  "intent": "GraphQL subscription entitlement after connection setup",
+  "artifacts": "Subscription resolver, connection identity, event filtering, revocation hooks and owned event publisher.",
+  "trace": "Trace authorization at subscribe time and each delivered event, including membership/session changes while the connection remains open.",
+  "experiment": "Subscribe with an owned account, revoke its synthetic resource entitlement, then emit one inert event; compare a still-entitled subscriber.",
+  "disproof": "An open connection is not itself unauthorized data delivery; buffered already-authorized events require timing evidence.",
+  "repair": "Revalidate or terminate according to policy and retest revocation, reconnect and entitled event delivery.",
+  "source": "https://graphql.org/learn/subscriptions/",
+  "adjacent": "security-api-bola-review; security-api-function-authorization-review; security-background-job-authorization-review",
+  "branch_decisions": "Record whether the contract requires immediate per-event reauthorization or bounded revocation propagation. Events queued before revocation need issuance/delivery timing. A still-open WebSocket without protected events is not continued access; separately test reconnect under the revoked identity.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

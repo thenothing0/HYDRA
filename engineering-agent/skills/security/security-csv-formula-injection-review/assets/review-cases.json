@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-csv-formula-injection-review",
+  "cases": [
+    {
+      "id": "formula-evaluated",
+      "scenario": "A user-controlled fixture field becomes a formula cell showing 2 in the agreed reviewer spreadsheet.",
+      "expected_decision": "Confirm formula interpretation only; any further impact needs its own evidence."
+    },
+    {
+      "id": "typed-text",
+      "scenario": "An explicitly typed text cell displays =1+1 literally on the supported open/save/reopen path.",
+      "expected_decision": "Treat the demonstrated path as protected while stating other importers were not tested."
+    },
+    {
+      "id": "bytes-only",
+      "scenario": "The exported bytes begin with an equals sign but no recipient application was exercised.",
+      "expected_decision": "Record a source-supported concern with evaluation and impact unverified."
+    }
+  ]
+}

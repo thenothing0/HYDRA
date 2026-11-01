@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "CI and package publication",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "NuGet package source mapping and transitive restore trust",
+      "source_trace": "Determine which source can satisfy each direct/transitive package ID and whether fallback or merged config defeats the intended mapping.",
+      "implementation_branch": "Determine whether package source mapping covers direct and transitive IDs, and which existing cache/lockfile affects the restore. A cache hit may conceal the source that a clean restore would select. An intentionally mirrored trusted source is not dependency confusion; show an unintended producer selected for the protected package identity without publishing a package.",
+      "operational_method": "Resolve merged nuget.config files including clear elements and source names. For a package ID, exact mapping is more specific than prefix, a longer prefix is more specific than a shorter one, and wildcard is least specific; equal applicable mappings may still allow multiple sources. Keep global-packages cache hits separate from fresh source resolution. Compare one internal ID and a similarly prefixed external ID using a disposable cache and supplied or isolated restore metadata, not untrusted package execution.",
+      "controlled_verification": "Use inert local feeds and package coordinates; compare intended source mapping with a controlled duplicate/fallback without executing package hooks.",
+      "false_positive_discriminator": "Two configured feeds do not prove confusion; an unused package name or failed restore is not a selected untrusted artifact.",
+      "remediation_acceptance": "Bind package families to intended sources and verify direct/transitive restore plus locked updates."
+    }
+  ]
+}

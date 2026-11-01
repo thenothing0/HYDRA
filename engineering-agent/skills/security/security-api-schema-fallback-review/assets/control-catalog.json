@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "API and SaaS authority",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Security validation under API version or schema fallback",
+      "source_trace": "Trace whether a fallback parses or defaults security-relevant fields differently from the policy validator, including missing/unknown versions.",
+      "implementation_branch": "Check where version negotiation occurs relative to authentication, canonicalization and validation. Defaults for absent fields can differ from explicit null or unknown enums. A supported legacy format is legitimate; the relevant result is whether the same forbidden operation reaches a protected consumer through a different decoder.",
+      "operational_method": "",
+      "controlled_verification": "Compare the legitimate version with one supported fallback in an owned operation using harmless distinct markers and the same actor.",
+      "false_positive_discriminator": "Multiple API versions are normal; a parser error or equivalent authorized behavior is not a bypass.",
+      "remediation_acceptance": "Apply the same invariant after canonicalization and test current, supported legacy and unsupported-version rejection."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "security-oauth-dpop-binding-review",
+  "domain": "Identity and federation extensions",
+  "intent": "DPoP proof validation and token-to-key binding",
+  "artifacts": "Proof validation, access-token cnf binding, resource method/URI normalization, nonce/replay stores and clock policy.",
+  "trace": "Trace proof key ownership, htm/htu binding and access-token hash to the protected operation. Identify where proofs can be replayed or accepted for another token/resource.",
+  "experiment": "Use owned synthetic tokens/keys on a local resource; compare the rightful request with a mismatched proof key or recorded single replay.",
+  "disproof": "A valid proof signature does not establish token binding; failure caused only by a malformed request cannot show replay protection works.",
+  "repair": "Enforce proof context and replay policy, then verify authorized proof renewal and controlled mismatches.",
+  "source": "https://www.rfc-editor.org/rfc/rfc9449",
+  "adjacent": "security-oauth-oidc-review; security-jwt-review; security-saml-review",
+  "branch_decisions": "Compare token cnf.jkt with the canonical public-JWK thumbprint of the verified proof key. Check proof typ, allowed asymmetric algorithm, htm, htu, time and jti replay policy. htu excludes query and fragment. Resource requests require the contextual access-token hash ath; token-endpoint proofs differ. A valid nonce challenge followed by a fresh proof is not replay acceptance.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

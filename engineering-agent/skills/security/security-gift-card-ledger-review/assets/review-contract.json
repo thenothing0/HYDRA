@@ -1,0 +1,21 @@
+{
+  "name": "security-gift-card-ledger-review",
+  "domain": "Commerce and business state",
+  "intent": "Funded issuance and transferable bearer gift-card value lifecycle",
+  "artifacts": "Card issuance/redemption state, balance ledger, recipient binding and owned payment sandbox.",
+  "trace": "Trace each benefit to its authoritative debit/credit and eligibility rule, including partial redemption, rollback and refunded issuance.",
+  "experiment": "Use synthetic funding, activation and transfer entries for one test card, then redeem and reverse under the owner policy. Compare spendable issuance against funding/promotional authority and ensure the same debit/transfer is not counted twice.",
+  "disproof": "A displayed balance change is not additional spendable value; verify ledger and redemption authority, not UI arithmetic.",
+  "repair": "Preserve value conservation and atomic redemption, then test legitimate partial use, replay rejection and rollback.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Transaction_Authorization_Cheat_Sheet.html",
+  "adjacent": "security-payment-integrity-review; security-workflow-transitions-review; security-race-conditions-review",
+  "branch_decisions": "Track issued, available, reserved, redeemed and refunded value separately. An optimistic balance may later reconcile without permitting extra spend. Show two authoritative debits/credits or another forbidden benefit under the same eligibility rule before classifying a duplicate-redemption defect.",
+  "operational_method": "Specialize in the funded issuance and transferable bearer-card lifecycle. Retain funding/capture, activation, transfer, redemption and reversal entries for one synthetic instrument; separate deliberately unfunded promotional value. Verify issued spendable value against authorized funding/credit and track the owner of each debit when a card changes hands. Knowing a display code is not proof of a valid bearer secret or authority to redeem someone else card.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "overlaps",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Browser and HTTP boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Subresource integrity and script provenance at mutable external script loads",
+      "source_trace": "Follow which external bytes execute, including fallback loaders and dynamically added scripts. Establish who can change the resource before assigning compromise impact.",
+      "implementation_branch": "Check module/preload and dynamic-loader paths independently; a verified initial script can load unverified descendants. For cross-origin resources include the actual CORS mode in the fixture. Establish a lower-trust publisher and executing fallback before claiming dependency compromise rather than missing defense in depth.",
+      "operational_method": "When integrity metadata contains several supported algorithms, derive the strongest supported algorithm and compare against its candidate digest set; matching a weaker digest does not rescue a failed stronger supported set. Retain exact fetched response bytes and the actual browser load result. Separate unsupported algorithms, CORS rejection and integrity failure in diagnostics before attributing an altered-script execution to SRI.",
+      "controlled_verification": "On an owned mirror replace one script with a harmless altered marker and compare the intended hash match, mismatch rejection and fallback behavior.",
+      "false_positive_discriminator": "Missing SRI alone is not a demonstrated vendor compromise; a changed script that never executes is not a provenance failure.",
+      "remediation_acceptance": "Pin or independently verify intended resources and retest normal loading, rejection and every fallback capable of executing code."
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Compatibility planning lens only, not a normative cross-domain mapping. Final root-cause taxonomy may differ or remain unassigned.",
+  "native_context": "OWASP LLM08:2025 and LLM02:2025 when supported by the data boundary",
+  "domain": "ai",
+  "controls": [
+    {
+      "id": "RAG_AUTHORIZATION-1",
+      "boundary": "RAG retrieval authorization and tenant isolation — authoritative consumer",
+      "source_trace": "Map document ingestion owner/tenant metadata, vector filter, reranker, citation fetch, caches and entitlement update/delete propagation. Record the retrieval principal at every stage.",
+      "controlled_verification": "In an owned index, ingest A/B documents with unique harmless private markers. Query as A and inspect retrieved chunks, generated context and citation downloads for B's marker. Evaluate revocation/deletion against the declared propagation contract and repeat the legitimate B retrieval control.",
+      "false_positive_discriminator": "A vector match score or guessed document title is not private-content disclosure. Public/shared documents and intentionally delayed authorized snapshots require their real policy context.",
+      "remediation_acceptance": "Enforce trusted entitlement at retrieval and each content-delivery/cache boundary. Retest denied markers, rightful retrieval and originally affected citation/cache paths after the specified update window."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

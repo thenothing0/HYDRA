@@ -79,6 +79,7 @@ and **Ctrl+Q** exits after cleanup.
 | `/plan` / `/diff` | Inspect the plan or tracked file changes |
 | `/burp` | Check the Burp MCP connection and discover its tools |
 | `/hackerone` | Show automatic-reporting policy and recent receipts |
+| `/skills QUERY` / `/skill NAME` | Search and select bundled skills |
 | `/status` | Show run limits, usage and stop reason |
 | `/handoff` | Display a validated export of committed session state |
 | `/cancel` / `/quit` | Cancel work or exit |
@@ -149,6 +150,19 @@ temporary installation and signing limits are documented, and live Firefox
 behavior remains unverified. See [browser setup](engineering-agent/BROWSER.md).
 Use security workflows only with explicit authorization for the target scope.
 
+## Bundled skills
+
+HYDRA includes **300 authored security/OWASP skills** and their **2,069 resources**,
+covering review procedures, evidence, remediation and report preparation.
+Use `/skills xss`, `/skill security-xss-review` or `--skill NAME` at launch.
+The agent can also search and load relevant skills during a task.
+
+Only selected instructions and small metadata suggestions enter the prompt;
+references load on demand. Selections are pinned to package hashes and survive
+resume. Helper scripts use normal process approval and remain unavailable in
+read-only mode. Skills do not grant scope or bypass reporting/tool permissions.
+See [skill usage, helpers and import details](engineering-agent/skills/README.md).
+
 ## HackerOne reporting
 
 Launch with `--hackerone` to enable the official Hacker API integration. After
@@ -177,7 +191,7 @@ and the [machine-readable phase record](engineering-agent/EOS_V5_STATUS.json).
 
 ## Verification and current limits
 
-The 2026-11-01 local engineering-suite snapshot was **765 passed, ten skipped**.
+The 2026-11-01 local engineering-suite snapshot was **788 passed, eleven skipped**.
 Engineering CI runs on Python 3.10, 3.11 and 3.12 and checks the Linux installer.
 Tests cover real file/process operations, verification, recovery, terminal
 interactions, local HTTP/MCP transports and governance. Fixture results measure
@@ -207,6 +221,7 @@ task-success benchmarking remain development work. See
 | [`engineering-agent/BURP.md`](engineering-agent/BURP.md) | Burp MCP connection and approvals |
 | [`engineering-agent/BROWSER.md`](engineering-agent/BROWSER.md) | Chromium/Firefox extension setup |
 | [`engineering-agent/HACKERONE.md`](engineering-agent/HACKERONE.md) | Account setup and evidence-gated automatic reporting |
+| [`engineering-agent/skills/README.md`](engineering-agent/skills/README.md) | Bundled skill discovery, selection, references and helpers |
 | [`engineering-agent/AI_EOS_V5.md`](engineering-agent/AI_EOS_V5.md) | Implemented V5 foundations and next phases |
 | [`SECURITY_PLATFORM_LEGACY.md`](SECURITY_PLATFORM_LEGACY.md) | Archived root README for the separate security/knowledge platform |
 

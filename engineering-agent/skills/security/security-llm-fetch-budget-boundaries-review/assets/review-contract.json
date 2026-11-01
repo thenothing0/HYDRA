@@ -1,0 +1,21 @@
+{
+  "name": "security-llm-fetch-budget-boundaries-review",
+  "domain": "AI applications and agent runtimes",
+  "intent": "LLM-driven fetch loops and cost admission at external-tool boundaries",
+  "artifacts": "Fetch/tool loop implementation, URL policy, budgets, cancellation and per-user charging context.",
+  "trace": "Trace lower-trust model output into repeated fetch/tool calls and identify admission before each network/cost increment.",
+  "experiment": "Use local deterministic stub tools with tiny budgets and bounded fixtures; compare normal completion and a loop exceeding the configured count/cost.",
+  "disproof": "A model suggesting many calls is not resource exhaustion if the orchestrator enforces a budget; do not generate production load.",
+  "repair": "Enforce cumulative budgets/cancellation at the tool executor and verify useful short tasks and bounded termination.",
+  "source": "https://genai.owasp.org/llm-top-10/",
+  "adjacent": "security-llm-prompt-injection-review; security-agent-tool-authorization-review; security-mcp-authorization-review",
+  "branch_decisions": "Bound the complete tool-call graph, including retries, redirect hops, pagination and nested model invocations, before considering per-request limits. Distinguish a configured authorized budget from a caller ability to exceed it. Use tiny local cost units and deterministic ceilings; do not generate substantial provider charges or infer monetary loss from a long transcript alone.",
+  "operational_method": "Inspect atomic budget reservation before parallel fan-out, not only a sequential decrement after calls finish. Retain requested, reserved, completed, canceled and reconciled cost units for each child call/retry. In a tiny deterministic fixture start two calls competing for one remaining reservation and verify the configured cap; distinguish asking for cancellation from stopping already charged in-flight work. Never generate significant provider cost for this review.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

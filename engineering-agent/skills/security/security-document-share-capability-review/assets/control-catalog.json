@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Data publication and privacy boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Document share-link authority, recipient scope and revocation lifecycle",
+      "source_trace": "Trace who can issue or alter a share capability and whether it remains bound to the intended document, audience and operations after changes.",
+      "implementation_branch": "Determine whether the link intentionally grants bearer access, requires a named recipient or is restricted to a tenant. Possession of an active bearer link is expected authorization under that model. Check permission changes, expiry and revocation at preview/export/download consumers; a cached page shell alone does not show continued private document access.",
+      "operational_method": "",
+      "controlled_verification": "Use two owned synthetic documents/users; compare intended share access with an unauthorized issuer, changed object or revoked link.",
+      "false_positive_discriminator": "Anonymous bearer access can be the declared sharing feature; possession alone is not an authorization bypass.",
+      "remediation_acceptance": "Bind issuance and share scope/lifetime to policy, retesting valid recipients, permission downgrade and revocation."
+    }
+  ]
+}

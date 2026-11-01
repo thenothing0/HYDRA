@@ -1,0 +1,21 @@
+{
+  "name": "security-gcp-workload-identity-pool-review",
+  "domain": "Google Cloud service boundaries",
+  "intent": "Workload Identity Federation provider claims and service-account delegation",
+  "artifacts": "Pool/provider issuer, attribute mappings/conditions, principal bindings and impersonation chain.",
+  "trace": "Trace external issuer claims into effective principals and distinguish provider admission from permission to impersonate a service account.",
+  "experiment": "Use an owned local claim-policy fixture or isolated test provider with two synthetic workloads; compare intended subject and a controlled claim mismatch.",
+  "disproof": "Token exchange success alone does not establish target resource access; the impersonation/resource policy may still deny.",
+  "repair": "Bind issuer attributes and delegation to the intended workload, then verify approved jobs and unrelated workload denial.",
+  "source": "https://cloud.google.com/iam/docs/workload-identity-federation",
+  "adjacent": "security-gcp-iam-review; security-firestore-rules-review",
+  "branch_decisions": "Evaluate issuer, audience, attribute mapping and provider conditions before IAM principal/principalSet bindings. Attribute values such as repository name can be reassigned; immutable producer IDs may have different trust properties. Direct resource access and service-account impersonation are separate grants; a successful token exchange alone establishes neither final permission.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

@@ -1,0 +1,41 @@
+{
+  "category": "A09",
+  "coverage": [
+    {
+      "id": "A09-01",
+      "boundary": "Auditable event production",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A09-02",
+      "boundary": "Record and viewer integrity",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A09-03",
+      "boundary": "Secrets in exceptional logs",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A09-04",
+      "boundary": "Rule evaluation and notification",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A09-05",
+      "boundary": "Collector loss and backpressure",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A09-06",
+      "boundary": "Retention, integrity and access",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    }
+  ]
+}

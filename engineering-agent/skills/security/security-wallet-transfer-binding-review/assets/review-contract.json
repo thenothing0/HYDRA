@@ -1,0 +1,21 @@
+{
+  "name": "security-wallet-transfer-binding-review",
+  "domain": "Commerce and business state",
+  "intent": "Approved wallet transfer version and per-currency balanced postings",
+  "artifacts": "Transfer initiation, authorization proof, ledger posting and idempotent final state in an owned sandbox.",
+  "trace": "Bind the approved transfer intent to sender wallet, recipient, amount and currency through execution, including limits and account state.",
+  "experiment": "Record synthetic held/posted per-currency entries for one approved transfer, including fee or FX terms when applicable. Compare valid one-use posting with a changed approved-version tuple and a duplicate delivery/reversal; inspect both debit and credit sides.",
+  "disproof": "A pending transfer ID or altered client summary is not a posted unauthorized transfer; inspect both ledger sides.",
+  "repair": "Bind approved intent to atomic debits/credits and verify legitimate retries plus rejected substitutions.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Transaction_Authorization_Cheat_Sheet.html",
+  "adjacent": "security-payment-integrity-review; security-workflow-transitions-review; security-race-conditions-review",
+  "branch_decisions": "Confirm that transfer approval covers the immutable amount, currency, sender and destination actually posted. Pending, failed and reversed ledger entries are not final spendable credit. A cross-currency display mismatch needs authoritative posting evidence, and the sandbox must never represent actual customer funds.",
+  "operational_method": "Use signed minor-unit postings per currency. For a same-currency synthetic transfer with fee, debit from sender must equal recipient credit plus fee postings; held funds are not yet final credit. For exchange, record the approved rate/version and both currency ledgers rather than adding unlike units. Bind postings to the approved transfer version and link reversals to original entries; a retry must not generate a second independent credit under the same one-use policy.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "overlaps",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

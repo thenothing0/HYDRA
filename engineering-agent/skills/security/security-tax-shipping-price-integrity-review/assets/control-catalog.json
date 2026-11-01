@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Commerce and business state",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Configured tax/shipping calculation and quote-to-fulfillment integrity",
+      "source_trace": "Trace client inputs and quote IDs into the server total and the address/service actually fulfilled. Distinguish recalculated estimates from committed amounts.",
+      "implementation_branch": "Bind the quote to address, service, currency, quantity and applicable time policy. A merchant may deliberately honor a historical guaranteed quote. Compare final charged and fulfilled service values; do not call a legitimate estimate update or tax-inclusive display convention a price manipulation.",
+      "operational_method": "Retain the configured calculation policy: tax-inclusive/exclusive prices, shipping taxability, currency minor units, per-line versus invoice rounding and guaranteed-quote lifetime. Recompute an owned quote under that same policy, then change address/service/weight or a rounding boundary and inspect the final charge and fulfilled service. A mismatch between two legitimate rounding conventions is not a security finding; identify an unauthorized determinant change or value beyond the declared tolerance. This does not determine legal tax obligations.",
+      "controlled_verification": "Use a configured synthetic tax/shipping calculation with its inclusion, rounding and currency policy. Change one address/service/weight or rounding-boundary determinant and compare authorized quote, final charge and fulfilled service.",
+      "false_positive_discriminator": "A transient displayed estimate is not an undercharge; inspect authoritative charge and fulfillment state.",
+      "remediation_acceptance": "Recalculate or bind all quote determinants and retest legitimate address changes and stale-quote rejection."
+    }
+  ]
+}

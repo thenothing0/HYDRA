@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-webauthn-review",
+  "cases": [
+    {
+      "id": "wrong-account-binding",
+      "scenario": "A correctly signed fixture assertion for account A is accepted as account B despite the credential record belonging only to A.",
+      "expected_decision": "Confirm the account-binding failure only after actual identity mapping and signature validity are shown."
+    },
+    {
+      "id": "zero-counter",
+      "scenario": "A supported synced passkey returns signCount zero while the valid ceremony meets all required checks.",
+      "expected_decision": "Do not infer cloning or authentication bypass from the counter alone."
+    },
+    {
+      "id": "mock-verifier",
+      "scenario": "A unit stub always accepts signatures and a wrong challenge reaches the handler.",
+      "expected_decision": "Report only the application binding result established by the stub; real verifier behavior remains untested."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Identity and federation extensions",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "OIDC front/back-channel logout and local session termination",
+      "source_trace": "Trace issuer/session identity from a logout message to exactly the intended local sessions. Inspect replay and whether a notification merely clears UI state.",
+      "implementation_branch": "Back-channel logout validation and front-channel browser state are different paths. Resolve sid/sub and issuer/client binding before selecting sessions. Browser cookie restrictions may block front-channel effects; a local logout UI change is not evidence that a server session or refresh family ended.",
+      "operational_method": "Validate a back-channel logout token as its own token class: signature/context, required logout event, issuer/audience, time and sid/sub selection; reject a Logout Token containing any nonce claim, even with an otherwise valid signature/events object. A valid login ID token is not a Logout Token. Retain replay handling and the exact selected sessions. Compare an authentic synthetic logout token with an otherwise valid login ID token and a wrong-session token; UI logout alone proves no refresh-family revocation.",
+      "controlled_verification": "Use two owned issuer sessions and local sessions; compare intended logout, wrong-issuer/session message and a harmless replay.",
+      "false_positive_discriminator": "A changed login screen is not proof that a server session was revoked; global logout may be an intentional policy rather than overbroad binding.",
+      "remediation_acceptance": "Validate logout issuer/context and revoke the correct sessions; retest retained unrelated sessions and intended termination."
+    }
+  ]
+}

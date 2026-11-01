@@ -1,0 +1,23 @@
+{
+  "name": "security-php-stream-wrapper-input-review",
+  "domain": "Cryptographic protocols and runtime consumers",
+  "intent": "PHP stream-wrapper selection through lower-trust resource paths",
+  "artifacts": "Runtime/wrapper configuration, file/resource callsites, path validation and resulting parser/include consumer.",
+  "trace": "Trace untrusted scheme/path input into the actual enabled wrapper and operation, distinguishing read, write, include and network effects.",
+  "experiment": "Use an isolated local fixture with inert files and a reviewed wrapper stub; compare intended local resource and one prohibited scheme.",
+  "disproof": "A wrapper name or allow_url setting is not arbitrary execution; the reachable consumer and effective operation determine impact.",
+  "repair": "Constrain resource schemes and final path authority at the consuming call, preserving intended file operations.",
+  "source": "https://www.php.net/manual/en/wrappers.php",
+  "adjacent": "security-jwt-review; security-tls-peer-validation-review; security-deserialization-review",
+  "branch_decisions": "Identify the enabled wrapper and the exact consuming function; file reading, include/require, network fetching and archive metadata have different behavior. Version and configuration change historical assumptions. A wrapper-looking string rejected by the actual consumer proves no side effect; model with an inert local stream and do not trigger remote or deserialization gadgets.",
+  "operational_method": "Read the effective wrapper registry and the precise consumer function. Distinguish allow_url_fopen from allow_url_include and wrappers to which each applies; a local stream or include path is not equivalent to a remote fetch. For phar metadata inspect installed PHP behavior and any explicit metadata access rather than assuming all file operations deserialize it. Preserve the actual function/wrapper/configuration chain; a replacement inert wrapper demonstrates only its own semantics.",
+  "additional_sources": [
+    "https://www.php.net/manual/en/phar.getmetadata.php"
+  ],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-triager-response",
+  "cases": [
+    {
+      "id": "impact-overstatement",
+      "scenario": "The original report claimed account takeover, but the evidence proves only a controlled unauthorized read.",
+      "expected_decision": "Correct the claim, explain the demonstrated read and its context, and keep takeover unverified."
+    },
+    {
+      "id": "private-duplicate",
+      "scenario": "The report is labeled duplicate of a private report the researcher cannot view.",
+      "expected_decision": "Do not invent the other report. Compare the known root cause and request an allowed explanation if needed."
+    },
+    {
+      "id": "need-more-info",
+      "scenario": "The triager asks for reproduction roles and the supplied trace already records both owned test roles.",
+      "expected_decision": "Draft the precise roles/steps/evidence response using existing artifacts; do not silently rerun live tests or send it."
+    }
+  ]
+}

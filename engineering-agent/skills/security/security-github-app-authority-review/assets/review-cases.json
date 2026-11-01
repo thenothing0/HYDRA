@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-github-app-authority-review",
+  "cases": [
+    {
+      "id": "installation-swap",
+      "scenario": "Customer A selects owned fixture installation B in an API parameter and the service performs an unauthorized stub repository action.",
+      "expected_decision": "Confirm product-level confused authority from routing plus action evidence."
+    },
+    {
+      "id": "provider-denial",
+      "scenario": "A token request attempts a repository outside its installation and the provider rejects it with no action.",
+      "expected_decision": "Do not claim the installation token exceeded provider authority."
+    },
+    {
+      "id": "id-enumeration",
+      "scenario": "Installation IDs can be observed but every action checks the customer's verified entitlement.",
+      "expected_decision": "Do not equate identifier visibility with cross-customer access."
+    }
+  ]
+}

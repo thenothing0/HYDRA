@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "AWS service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "CloudFront signed URL/cookie policy and content publication boundary",
+      "source_trace": "Resolve the exact resource/time/IP policy and issuance authority, then determine whether alternate distribution/origin paths bypass the intended private delivery.",
+      "implementation_branch": "Inspect the actual distribution behavior and origin access path, not only a signed cookie. A custom policy can intentionally cover a path wildcard, while a direct public origin may bypass the distribution entirely. Separate URL expiry from an already-started transfer and signed access from per-customer entitlement; use owned marker objects for both paths.",
+      "operational_method": "",
+      "controlled_verification": "Use owned synthetic objects/distribution paths and compare allowed signed delivery with an unauthorized path or expired capability.",
+      "false_positive_discriminator": "A cached object intentionally published publicly is not a signature bypass; a valid bearer sharing a capability follows its declared model.",
+      "remediation_acceptance": "Bind signer scope and origin protection, then verify authorized delivery and rejected alternate paths."
+    }
+  ]
+}

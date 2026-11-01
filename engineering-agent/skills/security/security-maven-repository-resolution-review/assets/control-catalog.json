@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "CI and package publication",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Maven repository/mirror resolution and executable build inputs",
+      "source_trace": "Trace actual repository precedence for dependencies and plugins, separating declared metadata from the effective source and verified artifact.",
+      "implementation_branch": "Inspect effective settings, mirrors, repositories and plugin repositories rather than only pom.xml. Plugins and extensions execute during builds, while dependency resolution has its own selected coordinates/checksums. Do not run an untrusted Maven project to inspect it; use supplied effective models or an isolated resolver fixture without executing downloaded build code.",
+      "operational_method": "Derive one effective mirror per repository: exact mirrorOf repository-ID match takes precedence over wildcard matches, then evaluate exclusions and configured order. Resolve inherited repositories and pluginRepositories as separate executable-input paths; do not assume mirrors aggregate artifacts across all matches. Compare intended and disputed coordinates against supplied effective settings and resolver output, with caches identified. Inspect an untrusted build statically rather than executing its lifecycle to obtain an effective POM.",
+      "controlled_verification": "Resolve inert local fixtures against owned repositories with conflicting harmless coordinates and record selected origin without executing plugins.",
+      "false_positive_discriminator": "A repository URL or unused dependency declaration is not dependency confusion; prove the resolver selected the lower-trust artifact.",
+      "remediation_acceptance": "Constrain mirrors/sources and artifact verification, testing intended updates and rejected origin substitution."
+    }
+  ]
+}

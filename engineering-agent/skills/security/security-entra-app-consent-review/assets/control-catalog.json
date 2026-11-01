@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "domain": "cloud",
+  "native_context": "Microsoft Entra delegated/app-only permissions and tenant binding",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "ENTRA_APP_CONSENT-1",
+      "boundary": "Microsoft Entra delegated/app-only permissions and tenant binding — authoritative consumer",
+      "source_trace": "Collect app/service-principal identity, tenant, consent/grants, token type/claims and the resource API's enforcement. Distinguish delegated scopes from application roles.",
+      "controlled_verification": "Trace one protected API operation under an intended delegated or app-only context, then compare an owned wrong-tenant or insufficient-grant fixture. Determine whether the API uses the correct grant semantics and caller/account binding rather than merely checking that a token is signed.",
+      "false_positive_discriminator": "Admin consent or a broad permission listing is not proof the application exercises unintended authority. A delegated token and an app-only token cannot be evaluated with interchangeable assumptions.",
+      "remediation_acceptance": "Enforce the intended tenant, issuer, token purpose and operation-specific scope/role, and narrow unnecessary grants. Retest the legitimate integration and the evidenced wrong context."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

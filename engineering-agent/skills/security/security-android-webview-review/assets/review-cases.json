@@ -1,0 +1,27 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-android-webview-review",
+  "cases": [
+    {
+      "id": "supported-boundary-violation",
+      "input_requirements": "Capture WebView/build version, origin/frame/navigation chain, bridge registration, reachable method/authority, harmless native marker and the trusted-content control.",
+      "decision": "Confirm only when intended policy, lower-trust reachability and actual protected effect are all supported; keep simulation/source proof labeled."
+    },
+    {
+      "id": "legitimate-or-insufficient-observation",
+      "observation": "JavaScript enabled in a WebView or use of a bridge alone is not a defect. Prove that lower-trust content reaches a protected native method under the claimed build and navigation state.",
+      "decision": "Do not confirm from the stated observation alone. Obtain the missing boundary/effect evidence or explain the permitted behavior."
+    },
+    {
+      "id": "missing-runtime-or-authority",
+      "observation": "Source/configuration suggests this path, but a required identity, policy layer or runtime observation is unavailable.",
+      "decision": "Record a source-supported concern or hypothesis with the missing decisive check. Do not invent verification, credentials or impact."
+    },
+    {
+      "id": "remediation-regression",
+      "input_requirements": "Keep privileged bridges away from untrusted content or use constrained origin-aware messaging and narrow native methods where supported. Retest redirects, embedded frames, blocked navigation and the intended trusted integration.",
+      "decision": "Close only after the original prohibited behavior is prevented and the legitimate control still works on the changed build/configuration."
+    }
+  ]
+}

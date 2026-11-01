@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "API and SaaS authority",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Server-Sent Events stream identity and per-event resource filtering",
+      "source_trace": "Follow requester identity into channel/cursor selection and each emitted object. Check replay/resume without replacing current authorization with a cursor capability by accident.",
+      "implementation_branch": "Last-Event-ID can be a resume position rather than a bearer credential. Reapply the current actor/resource filter to replayed events. Distinguish broker events already authorized and buffered before revocation from new events, and do not equate HTTP stream establishment with delivery of protected data.",
+      "operational_method": "",
+      "controlled_verification": "Use two owned streams and synthetic events; compare normal subscribe/resume with a foreign cursor/channel and a revoked membership.",
+      "false_positive_discriminator": "A kept-alive response or guessed channel name is not cross-user event exposure; prove an unauthorized synthetic event is delivered.",
+      "remediation_acceptance": "Bind stream/cursor access to current policy and verify entitled resume plus restricted event exclusion."
+    }
+  ]
+}

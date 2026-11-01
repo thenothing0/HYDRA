@@ -1,0 +1,18 @@
+{
+  "category": "A06",
+  "domain": "business",
+  "native_context": "Protected workflow transitions and business prerequisites",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "WORKFLOW_TRANSITIONS-1",
+      "boundary": "Protected workflow transitions and business prerequisites — authoritative consumer",
+      "source_trace": "Build the actual state graph, actor roles, prerequisites, approval content/version and commit boundary. Identify which transition protects a business invariant.",
+      "controlled_verification": "With an owned inert workflow compare the legitimate sequence with one skipped/reordered transition or content change after approval. Inspect whether the final consumer requires approval for the exact current object/version and whether errors leave partial committed state.",
+      "false_positive_discriminator": "An API allowing direct transition is not insecure if equivalent prerequisites are enforced. A stale UI status does not prove stale approval authority; durable transition state is the oracle.",
+      "remediation_acceptance": "Validate actor, current state, prerequisites and approved version atomically at transition. Retest the original invalid sequence, legitimate sequence and rollback/retry behavior."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

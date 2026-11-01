@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Compatibility planning lens only, not a normative cross-domain mapping. Final root-cause taxonomy may differ or remain unassigned.",
+  "native_context": "MASVS-PLATFORM; distinguish web rendering from native capability exposure",
+  "domain": "mobile",
+  "controls": [
+    {
+      "id": "ANDROID_WEBVIEW-1",
+      "boundary": "Android WebView content-to-native capability boundary — authoritative consumer",
+      "source_trace": "Trace trusted/untrusted navigation, JavaScript bridge registration, message channels, origin rules and native operations. Record Android/WebView version and frame scope.",
+      "controlled_verification": "Use owned local content to compare the intended trusted page with an untrusted navigation/frame reaching an inert native operation. Inspect which origin/frame supplied the message at the native consumer and whether navigation changes the trust context.",
+      "false_positive_discriminator": "JavaScript enabled or a bridge method existing is not sufficient. A bridge inaccessible to attacker-controlled content may defeat the path; top-level URL checks may not describe subframe/message behavior.",
+      "remediation_acceptance": "Restrict navigation/bridge capabilities and enforce supported caller-origin/frame checks at sensitive operations. Retest intended web content, untrusted navigation and the evidenced frame/channel path."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

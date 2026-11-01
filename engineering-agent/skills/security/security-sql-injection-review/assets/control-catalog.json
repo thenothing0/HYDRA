@@ -1,0 +1,16 @@
+{
+  "category": "A05",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "SQL_INJECTION-1",
+      "boundary": "SQL injection and structural query control — authoritative consumer",
+      "source_trace": "Open the driver call, bound parameter list, query builder/raw fragment and second-order consumers. Identify the database dialect and whether caller input controls a value, identifier or SQL structure.",
+      "controlled_verification": "Use a disposable database with one public and one hidden synthetic row. Compare a literal search containing punctuation with the suspected structural path and record the query/bindings and selected fixture rows. For a stored sort/filter value, follow it through the later reporting job instead of stopping at safe insertion. No production row extraction or delay probe is needed.",
+      "false_positive_discriminator": "A database syntax error is a candidate. A bound value containing SQL punctuation is still data. An ORM name does not make raw fragments safe, but a trusted constant selected by a closed map can defeat the structural-control hypothesis.",
+      "remediation_acceptance": "Bind data values with the driver API and map structural choices to approved constants. Retest normal filters/sorting, literal punctuation, the original structural path and database privilege assumptions."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

@@ -58,6 +58,16 @@ def validate_state(state, workspace, ident, *, persisted=True):
     require(type(state.get("generation")) is int and state["generation"] >= 1, "generation")
     require(isinstance(state.get("plan"), list) and all(isinstance(s, str) for s in state["plan"]), "plan")
     require(isinstance(state.get("events"), list), "events")
+    if "skills" in state:
+        selected = state["skills"]
+        require(isinstance(selected, list) and len(selected) <= 3, "skills")
+        names = set()
+        for item in selected:
+            require(isinstance(item, dict) and isinstance(item.get("name"), str)
+                    and bool(re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", item["name"]))
+                    and item["name"] not in names and isinstance(item.get("sha256"), str)
+                    and bool(re.fullmatch(r"[a-f0-9]{64}", item["sha256"])), "selected skill")
+            names.add(item["name"])
     for event in state["events"]:
         require(isinstance(event, dict), "event object")
         require(isinstance(event.get("kind"), str) and bool(event["kind"]), "event kind")

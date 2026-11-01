@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "run_id": "replace-with-opaque-run-id",
+  "category": "A03",
+  "mode": "mixed",
+  "target": "",
+  "authorization": "",
+  "limitations": "",
+  "evidence": [],
+  "coverage": [],
+  "findings": []
+}

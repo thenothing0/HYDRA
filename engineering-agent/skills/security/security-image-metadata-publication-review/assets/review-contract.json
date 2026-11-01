@@ -1,0 +1,21 @@
+{
+  "name": "security-image-metadata-publication-review",
+  "domain": "Data publication and privacy boundaries",
+  "intent": "Sensitive image metadata retained through transformation and public delivery",
+  "artifacts": "Upload metadata policy, transformation pipeline, EXIF/XMP fields, original/thumbnail routes and recipient entitlement.",
+  "trace": "Follow protected metadata through original, resized and cached variants. Establish whether the publisher intentionally authorizes the destination audience to receive it.",
+  "experiment": "Use an owned image with synthetic location/identity metadata and compare public/authorized output variants; do not collect real-user location data.",
+  "disproof": "Metadata presence is not automatically a confidentiality violation; public photographer attribution and owner-requested original downloads can be intended.",
+  "repair": "Strip/protect sensitive fields according to policy across variants, preserving intended attribution and image quality.",
+  "source": "https://exiftool.org/TagNames/EXIF.html",
+  "adjacent": "security-api-sensitive-fields-review; security-deleted-data-access-review; security-document-processing-review",
+  "branch_decisions": "Inspect the delivered derivative, original-download path and CDN cache separately. Stripping visible EXIF fields may leave thumbnails, XMP or other containers; a server filename is not necessarily original metadata. Confirm a synthetic classified field survives the actual public delivery path, and distinguish deliberately published attribution from private location/device data.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

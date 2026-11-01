@@ -1,0 +1,21 @@
+{
+  "name": "security-pam-account-lifecycle-review",
+  "domain": "Enterprise identity and privileged access",
+  "intent": "Privileged access management checkout, approval and revocation binding",
+  "artifacts": "Vault/account entitlement, approval ticket, checkout/session broker, credential rotation and audit attribution.",
+  "trace": "Trace who can request which managed account and whether approval remains bound to resource, purpose, operator and time during use.",
+  "experiment": "Use a local PAM stub and synthetic credential/session capability; compare approved checkout and wrong-account/stale-approval use.",
+  "disproof": "Viewing a managed account name is not credential access; an approved privileged session is expected within its declared scope.",
+  "repair": "Bind approval and brokered use to current authority, verifying rotation/revocation and intended emergency access.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+  "adjacent": "security-windows-service-permissions-review; security-ldap-injection-review; security-posix-file-permissions-review",
+  "branch_decisions": "Separate approval, credential checkout, brokered session and actual privileged account lifetime. Closing a ticket may not promise immediate termination of every active session. Trace the declared expiry/revocation semantics and whether the same actor retains a prohibited capability; an audit event proves recording, not termination or least privilege.",
+  "operational_method": "Identify credential-disclosing checkout versus broker-only session access before selecting the revocation oracle. Retain account/approval binding, credential version, checkout expiry, rotation event and any reconnect capability. Compare a legitimate owned checkout/session with a stale checkout after the declared expiry/rotation rule. Closing a ticket does not universally terminate a tunnel or erase a disclosed password; the product contract decides which final capability should cease.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

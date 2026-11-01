@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "CI and package publication",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Tekton TaskRun parameters, workspaces and execution identity",
+      "source_trace": "Trace lower-trust parameters or remotely resolved task content into a workload with privileged credentials, volumes or service identity.",
+      "implementation_branch": "Resolve referenced Task/ClusterTask/bundle content, admitted service account, workspace/PVC mounts and parameter substitution into executable steps. A parameter appearing in a script is different from an argv element. The TaskRun submitter may intentionally hold deployment authority; show where the actual restricted submitter can borrow a stronger execution identity.",
+      "operational_method": "",
+      "controlled_verification": "Use an isolated cluster task with inert output; compare permitted parameter use and a forbidden task/workspace/service-account selection.",
+      "false_positive_discriminator": "Task expressiveness is not escalation if only an appropriately trusted operator may create the run.",
+      "remediation_acceptance": "Constrain task sources and run authority, preserving approved parameterization and workspace isolation."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "security-kubernetes-secret-at-rest-review",
+  "domain": "Kubernetes and deployment controllers",
+  "intent": "Kubernetes Secret storage encryption and effective read paths",
+  "artifacts": "API-server encryption config/provider order, key lifecycle, datastore snapshot policy and actual API identities.",
+  "trace": "Separate base64 representation, encryption at rest and API authorization. Trace access to plaintext through datastore backups, providers and permitted API readers.",
+  "experiment": "Use a local cluster/synthetic Secret and an owned storage snapshot to distinguish plaintext persistence from authorized API decryption.",
+  "disproof": "Reading a Secret through an authorized API is expected even when at-rest encryption works; base64 alone is not encryption evidence.",
+  "repair": "Protect storage/backups and effective read authority, verifying key rotation, rewrite and recovery behavior.",
+  "source": "https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/",
+  "adjacent": "security-kubernetes-rbac-review; security-kubernetes-workload-isolation-review; security-kubernetes-network-policy-review",
+  "branch_decisions": "API authorization, etcd encryption and node/workload delivery protect different paths. A base64 field is not encryption, while a privileged API reader obtaining plaintext may be expected. Verify encryption-provider ordering, rotation/rewrite status and storage evidence without publishing real keys; configured encryption alone does not prove historical objects were rewritten.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Data publication and privacy boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Sensitive image metadata retained through transformation and public delivery",
+      "source_trace": "Follow protected metadata through original, resized and cached variants. Establish whether the publisher intentionally authorizes the destination audience to receive it.",
+      "implementation_branch": "Inspect the delivered derivative, original-download path and CDN cache separately. Stripping visible EXIF fields may leave thumbnails, XMP or other containers; a server filename is not necessarily original metadata. Confirm a synthetic classified field survives the actual public delivery path, and distinguish deliberately published attribution from private location/device data.",
+      "operational_method": "",
+      "controlled_verification": "Use an owned image with synthetic location/identity metadata and compare public/authorized output variants; do not collect real-user location data.",
+      "false_positive_discriminator": "Metadata presence is not automatically a confidentiality violation; public photographer attribution and owner-requested original downloads can be intended.",
+      "remediation_acceptance": "Strip/protect sensitive fields according to policy across variants, preserving intended attribution and image quality."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "security-aws-kms-encryption-context-review",
+  "domain": "AWS service boundaries",
+  "intent": "KMS decrypt/data-key authority across encryption contexts and services",
+  "artifacts": "Key policy/grants, caller IAM context, encryption-context constraints, ciphertext origin and service path.",
+  "trace": "Resolve effective KMS authority and whether trusted encryption context or ViaService constraints bind the intended tenant/workload. Treat encryption context as authenticated metadata, not secret data.",
+  "experiment": "Use an owned test key and synthetic ciphertext locally/in an authorized sandbox; compare rightful context and principal with a mismatched tenant context.",
+  "disproof": "The ability to invoke an SDK or read a key ARN is not decryption authority; cryptographic rejection alone does not test IAM separation.",
+  "repair": "Constrain principal/service/context authorization and verify legitimate decrypt plus cross-context denial.",
+  "source": "https://docs.aws.amazon.com/kms/latest/developerguide/encrypt_context.html",
+  "adjacent": "security-aws-iam-review; security-aws-object-storage-review; security-aws-workload-identity-review",
+  "branch_decisions": "Encryption context is authenticated additional data, not encrypted secret storage. Follow the exact context supplied to KMS and conditions in both key and identity policies, including grants and service-mediated calls. A caller able to choose a tenant context must still be authorized to use that tenant; mere knowledge of the context is not entitlement.",
+  "operational_method": "Start from key type and exact API: encryption context applies to supported symmetric encryption operations, not every asymmetric or HMAC operation. Record the literal map sent to Encrypt/Decrypt and the condition/grant used. Distinguish EncryptionContextEquals from EncryptionContextSubset constraints and compare the caller-supplied tenant map with the policy-expected map. A local cryptographic context mismatch is not evidence that IAM separates tenants; inspect the grant/policy path independently.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

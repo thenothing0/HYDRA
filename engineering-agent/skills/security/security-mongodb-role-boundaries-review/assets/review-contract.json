@@ -1,0 +1,21 @@
+{
+  "name": "security-mongodb-role-boundaries-review",
+  "domain": "Databases and messaging",
+  "intent": "MongoDB database/collection actions and delegated role authority",
+  "artifacts": "Authentication database, user roles/inheritance, resource patterns and requested collection or administrative operation.",
+  "trace": "Resolve the actual principal and action/resource grant, including whether a wrapper supplies privileged credentials for caller-selected namespaces.",
+  "experiment": "Use a local database with two owned namespaces and synthetic documents; compare permitted action and one forbidden collection/role operation.",
+  "disproof": "Connection success or database-name discovery is not document-read or administrative authority.",
+  "repair": "Limit effective roles and wrapper namespace selection, testing legitimate queries and restricted resources.",
+  "source": "https://www.mongodb.com/docs/manual/core/authorization/",
+  "adjacent": "security-postgres-rls-review; security-redis-acl-review; security-kafka-acl-review",
+  "branch_decisions": "Evaluate inherited roles with database and collection resource scope, including anyResource or cluster actions. Authentication database is not necessarily the database being accessed. A driver connection succeeding proves login only; record the exact collection operation allowed to the restricted principal and do not infer write, admin or cross-database rights from a read.",
+  "operational_method": "Identify self-hosted versus Atlas role definitions and the effective deployment API before interpreting familiar role names. Expand inherited privileges into action/resource pairs and inspect role-grant/user-administration authority separately from collection reads. Use supplied users/roles definitions and one owned collection operation; a permitted role-administration action can create a distinct delegation path, but do not grant a production role to demonstrate it.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

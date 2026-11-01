@@ -1,0 +1,21 @@
+{
+  "name": "security-trial-eligibility-lifecycle-review",
+  "domain": "Commerce and business state",
+  "intent": "Trial eligibility lineage across organization deletion and recreation",
+  "artifacts": "Eligibility keys, organization creation/deletion, prior usage state and upgrade/downgrade transitions.",
+  "trace": "Identify the declared unit of eligibility and where prior benefit history survives recreation or identity changes.",
+  "experiment": "Create an owned organization eligibility lineage, consume its trial, delete it and recreate a new organization ID under the same declared lineage. Compare a genuinely independent eligible organization; no real payment or identity data is required.",
+  "disproof": "Multiple trials can be intentional for separate organizations; demonstrate violation of the actual benefit rule rather than assuming one trial per human.",
+  "repair": "Enforce the declared eligibility identity and retention policy while preserving legitimate new-customer trials.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Transaction_Authorization_Cheat_Sheet.html",
+  "adjacent": "security-payment-integrity-review; security-workflow-transitions-review; security-race-conditions-review",
+  "branch_decisions": "Decide whether eligibility attaches to person, organization, payment instrument or product; do not impose an invented global rule. Distinguish a new independent organization from reusing the same eligibility identity. The effect must be an additional allowed benefit, not merely an account creation or trial-label response.",
+  "operational_method": "Specialize in organization deletion/recreation and eligibility lineage. Retain the product-defined eligibility key and any surviving usage/tombstone record when a new organization ID is allocated. Compare recreated identity with a genuinely independent eligible organization; do not impose one-person or payment-instrument rules the product never declared. No real payment instrument or additional personal-data retention is required for the synthetic lifecycle fixture.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "overlaps",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

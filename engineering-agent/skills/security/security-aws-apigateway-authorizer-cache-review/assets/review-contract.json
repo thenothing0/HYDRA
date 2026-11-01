@@ -1,0 +1,21 @@
+{
+  "name": "security-aws-apigateway-authorizer-cache-review",
+  "domain": "AWS service boundaries",
+  "intent": "API Gateway authorizer cache key and generated policy scope",
+  "artifacts": "API type and payload version, identity sources, cache TTL/key, IAM-policy or simple-Boolean response mode and backend authorization.",
+  "trace": "Trace a cached authorization result across method/resource/tenant differences. For IAM policies inspect resource scope; for HTTP API simple responses inspect route-varying allow reuse.",
+  "experiment": "In an owned gateway fixture compare fresh and cached requests for two synthetic routes with different entitlements.",
+  "disproof": "An authorizer cache hit is expected; establish a forbidden backend action or data result rather than only skipped authorizer logs.",
+  "repair": "Align cache identity and mode-specific decision scope, including route-key identity when required; preserve authorized reuse and the declared revocation interval.",
+  "source": "https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html",
+  "adjacent": "security-aws-iam-review; security-aws-object-storage-review; security-aws-workload-identity-review",
+  "branch_decisions": "Branch first on REST API versus HTTP API and authorizer payload version. REST decisions can return scoped IAM policies; HTTP API v2 simple responses can return isAuthorized without any Resource policy. For each mode inspect identity sources, route-key inclusion, TTL and backend checks. Reusing an allow result matters only if a forbidden route/effect is then accepted.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

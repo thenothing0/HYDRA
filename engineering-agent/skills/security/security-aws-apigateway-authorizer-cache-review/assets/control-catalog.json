@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "AWS service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "API Gateway authorizer cache key and generated policy scope",
+      "source_trace": "Trace a cached authorization result across method/resource/tenant differences. For IAM policies inspect resource scope; for HTTP API simple responses inspect route-varying allow reuse.",
+      "implementation_branch": "Branch first on REST API versus HTTP API and authorizer payload version. REST decisions can return scoped IAM policies; HTTP API v2 simple responses can return isAuthorized without any Resource policy. For each mode inspect identity sources, route-key inclusion, TTL and backend checks. Reusing an allow result matters only if a forbidden route/effect is then accepted.",
+      "operational_method": "",
+      "controlled_verification": "In an owned gateway fixture compare fresh and cached requests for two synthetic routes with different entitlements.",
+      "false_positive_discriminator": "An authorizer cache hit is expected; establish a forbidden backend action or data result rather than only skipped authorizer logs.",
+      "remediation_acceptance": "Align cache identity and mode-specific decision scope, including route-key identity when required; preserve authorized reuse and the declared revocation interval."
+    }
+  ]
+}

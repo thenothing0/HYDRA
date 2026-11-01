@@ -1,0 +1,18 @@
+{
+  "category": "A06",
+  "taxonomy_note": "Compatibility planning lens only, not a normative cross-domain mapping. Final root-cause taxonomy may differ or remain unassigned.",
+  "native_context": "OWASP LLM01:2025; web Top 10 lens is optional planning compatibility only",
+  "domain": "ai",
+  "controls": [
+    {
+      "id": "LLM_PROMPT_INJECTION-1",
+      "boundary": "LLM application instruction and data boundary — authoritative consumer",
+      "source_trace": "Identify attacker-controlled content sources, instruction boundaries, model/task configuration and actual downstream capabilities. Define a measurable protected task or authority invariant.",
+      "controlled_verification": "In an owned local fixture insert a benign conflicting instruction into a retrieved page/document. Compare an uncontaminated task with the contaminated one and inspect structured output/tool records for the defined violation. Use synthetic canaries and inert tool effects, not real secret extraction.",
+      "false_positive_discriminator": "The model quoting hostile text is not necessarily following it. A changed answer without a protected task violation is a narrower observation. Prompt wording and a single successful refusal do not prove robust enforcement.",
+      "remediation_acceptance": "Constrain external-content authority and enforce sensitive tool/data actions outside model interpretation. Retest the original source/channel and legitimate document tasks; describe residual model variability honestly."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

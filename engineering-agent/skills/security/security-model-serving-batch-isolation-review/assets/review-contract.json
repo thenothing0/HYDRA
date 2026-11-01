@@ -1,0 +1,21 @@
+{
+  "name": "security-model-serving-batch-isolation-review",
+  "domain": "AI applications and agent runtimes",
+  "intent": "Multi-tenant model-serving request and response isolation in batching",
+  "artifacts": "Batch scheduler, request identity, KV/prefix cache, streaming routing and cancellation lifecycle.",
+  "trace": "Trace tokens/outputs/state through dynamic batching and cache reuse to the correct caller, especially canceled/retried requests.",
+  "experiment": "Use a local deterministic serving stub or owned isolated runtime with distinct synthetic prompt markers and bounded batches.",
+  "disproof": "Semantically similar output is not cross-request leakage without attributed private marker/state; public model knowledge is not tenant data.",
+  "repair": "Bind cache and stream ownership through batch lifecycle and verify canceled, retried and simultaneous entitled requests.",
+  "source": "https://genai.owasp.org/llm-top-10/",
+  "adjacent": "security-llm-prompt-injection-review; security-agent-tool-authorization-review; security-mcp-authorization-review",
+  "branch_decisions": "Track request-to-output slots through dynamic batching, cancellation, streaming and KV/prefix cache reuse. Shared model weights and public prompt prefixes may be expected; private prompts, generated tokens and tenant-specific adapters have different isolation requirements. Use distinguishable synthetic tenants and observe final routing, not only an internal tensor allocation that cannot affect another request.",
+  "operational_method": "Retain request ID, tenant, slot generation, cache provenance and final stream owner through admit, cancel, release and reallocate events. Compare cancellation of requestA followed by slot reuse for B with a legitimate same-tenant prefix-cache hit. The implementation trace must show which generation owns each emitted token/response; a toy scheduler demonstrates only its own behavior and cannot certify a real serving runtime or accelerator cache.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Identity and federation extensions",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "DPoP proof validation and token-to-key binding",
+      "source_trace": "Trace proof key ownership, htm/htu binding and access-token hash to the protected operation. Identify where proofs can be replayed or accepted for another token/resource.",
+      "implementation_branch": "Compare token cnf.jkt with the canonical public-JWK thumbprint of the verified proof key. Check proof typ, allowed asymmetric algorithm, htm, htu, time and jti replay policy. htu excludes query and fragment. Resource requests require the contextual access-token hash ath; token-endpoint proofs differ. A valid nonce challenge followed by a fresh proof is not replay acceptance.",
+      "operational_method": "",
+      "controlled_verification": "Use owned synthetic tokens/keys on a local resource; compare the rightful request with a mismatched proof key or recorded single replay.",
+      "false_positive_discriminator": "A valid proof signature does not establish token binding; failure caused only by a malformed request cannot show replay protection works.",
+      "remediation_acceptance": "Enforce proof context and replay policy, then verify authorized proof renewal and controlled mismatches."
+    }
+  ]
+}

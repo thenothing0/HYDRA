@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Commerce and business state",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Funded issuance and transferable bearer gift-card value lifecycle",
+      "source_trace": "Trace each benefit to its authoritative debit/credit and eligibility rule, including partial redemption, rollback and refunded issuance.",
+      "implementation_branch": "Track issued, available, reserved, redeemed and refunded value separately. An optimistic balance may later reconcile without permitting extra spend. Show two authoritative debits/credits or another forbidden benefit under the same eligibility rule before classifying a duplicate-redemption defect.",
+      "operational_method": "Specialize in the funded issuance and transferable bearer-card lifecycle. Retain funding/capture, activation, transfer, redemption and reversal entries for one synthetic instrument; separate deliberately unfunded promotional value. Verify issued spendable value against authorized funding/credit and track the owner of each debit when a card changes hands. Knowing a display code is not proof of a valid bearer secret or authority to redeem someone else card.",
+      "controlled_verification": "Use synthetic funding, activation and transfer entries for one test card, then redeem and reverse under the owner policy. Compare spendable issuance against funding/promotional authority and ensure the same debit/transfer is not counted twice.",
+      "false_positive_discriminator": "A displayed balance change is not additional spendable value; verify ledger and redemption authority, not UI arithmetic.",
+      "remediation_acceptance": "Preserve value conservation and atomic redemption, then test legitimate partial use, replay rejection and rollback."
+    }
+  ]
+}

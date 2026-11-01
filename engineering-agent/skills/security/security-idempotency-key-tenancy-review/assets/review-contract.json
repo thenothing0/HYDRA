@@ -1,0 +1,21 @@
+{
+  "name": "security-idempotency-key-tenancy-review",
+  "domain": "API and SaaS authority",
+  "intent": "Idempotency key binding to actor, tenant and request meaning",
+  "artifacts": "Idempotency store keys, response cache, payload fingerprint, operation type and expiry/cleanup.",
+  "trace": "Determine whether a caller-chosen key can select another actor response or suppress/replace a different operation. Distinguish retries from unrelated requests.",
+  "experiment": "Use two owned tenants and synthetic reversible operations sharing one key; compare the rightful retry with a changed payload or tenant.",
+  "disproof": "A duplicate correctly returning the same caller result is expected; shared key syntax does not prove cross-user cache reuse.",
+  "repair": "Bind cached outcomes to security context and operation meaning, preserving safe retries and documented conflict responses.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+  "adjacent": "security-api-bola-review; security-api-function-authorization-review; security-background-job-authorization-review",
+  "branch_decisions": "Model first use, rightful retry, changed body, changed tenant and expiry separately. Some APIs intentionally reject a reused key with different parameters. Returning another tenant response, suppressing its action or replaying its effect are different outcomes; do not infer all three from a key collision.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

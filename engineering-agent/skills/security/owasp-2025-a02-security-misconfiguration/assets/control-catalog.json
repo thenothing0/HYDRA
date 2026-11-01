@@ -1,0 +1,66 @@
+{
+  "category": "A02",
+  "version": "4.0.0",
+  "controls": [
+    {
+      "id": "A02-01",
+      "slug": "first-start",
+      "boundary": "Initialization, upgrade and restore",
+      "source_trace": "Bootstrap defaults -> persisted settings -> upgrade/restore override.",
+      "controlled_verification": "Observe fresh disposable instance and relevant upgrade state separately.",
+      "false_positive_discriminator": "A securely configured existing instance does not prove secure defaults.",
+      "remediation_acceptance": "New instances start restricted and historical insecure persisted state is addressed explicitly.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A02-02",
+      "slug": "effective-settings",
+      "boundary": "Configuration precedence",
+      "source_trace": "Declared config -> environment -> runtime override -> active value.",
+      "controlled_verification": "Compare the known route behavior with effective deployment settings.",
+      "false_positive_discriminator": "Unused sample files and overridden fragments are not proof of runtime exposure.",
+      "remediation_acceptance": "Change authoritative config and verify fresh deployment plus override behavior.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A02-03",
+      "slug": "diagnostics",
+      "boundary": "Debug and administrative exposure",
+      "source_trace": "Diagnostics/debug route registration -> ingress reachability -> auth policy.",
+      "controlled_verification": "Request a known in-scope diagnostic route and a controlled error.",
+      "false_positive_discriminator": "A generic error or version banner alone may not expose a protected capability.",
+      "remediation_acceptance": "Restrict administrative surfaces; client errors avoid secrets while operator correlation remains.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A02-04",
+      "slug": "proxy-trust",
+      "boundary": "Ingress and forwarded-header trust",
+      "source_trace": "Proxy trust config -> caller IP/host/origin interpretation -> sensitive decision.",
+      "controlled_verification": "Use controlled requests within the documented ingress model; compare spoofed and trusted context.",
+      "false_positive_discriminator": "Trusted proxy values may be legitimate only on the actual trusted hop.",
+      "remediation_acceptance": "Untrusted direct callers cannot override security-relevant origin/address context.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A02-05",
+      "slug": "parser-features",
+      "boundary": "Parser capability settings",
+      "source_trace": "XML/format parser construction -> external resolution/expansion flags -> input.",
+      "controlled_verification": "Use an inert local fixture to observe prohibited feature activation.",
+      "false_positive_discriminator": "Feature names in dependencies do not prove enabled runtime behavior.",
+      "remediation_acceptance": "Disable unnecessary unsafe capabilities and verify supported legitimate documents.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A02-06",
+      "slug": "exposure-policy",
+      "boundary": "Storage and client security policy",
+      "source_trace": "Effective resource permissions/response directives -> consumer -> protected asset.",
+      "controlled_verification": "Evaluate actual policy and minimal known fixture access; inspect browser context as relevant.",
+      "false_positive_discriminator": "Missing headers and permissive fragments need context and effective deny-rule evaluation.",
+      "remediation_acceptance": "Required exposure boundaries hold after redeploy; permitted content remains usable.",
+      "default_status": "not-tested"
+    }
+  ]
+}

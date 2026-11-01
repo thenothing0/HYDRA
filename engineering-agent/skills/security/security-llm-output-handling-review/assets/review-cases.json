@@ -1,0 +1,27 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-llm-output-handling-review",
+  "cases": [
+    {
+      "id": "supported-boundary-violation",
+      "input_requirements": "Include producer influence, exact generated-field-to-sink path, consumer context, stub versus live-model evidence, inert downstream effect and valid-output control.",
+      "decision": "Confirm only when intended policy, lower-trust reachability and actual protected effect are all supported; keep simulation/source proof labeled."
+    },
+    {
+      "id": "legitimate-or-insufficient-observation",
+      "observation": "An alarming string in a chat answer is not code execution. Schema-valid JSON does not establish that fields are safe for a shell, SQL expression or HTML context.",
+      "decision": "Do not confirm from the stated observation alone. Obtain the missing boundary/effect evidence or explain the permitted behavior."
+    },
+    {
+      "id": "missing-runtime-or-authority",
+      "observation": "Source/configuration suggests this path, but a required identity, policy layer or runtime observation is unavailable.",
+      "decision": "Record a source-supported concern or hypothesis with the missing decisive check. Do not invent verification, credentials or impact."
+    },
+    {
+      "id": "remediation-regression",
+      "input_requirements": "Apply context-appropriate data APIs, constrained structure and output handling at the consumer. Retest valid generated content, malformed/extra structure, streaming/fallback paths and the original sink effect; model prompting alone is insufficient assurance.",
+      "decision": "Close only after the original prohibited behavior is prevented and the legitimate control still works on the changed build/configuration."
+    }
+  ]
+}

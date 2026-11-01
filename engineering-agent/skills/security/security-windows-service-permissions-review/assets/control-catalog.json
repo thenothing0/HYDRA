@@ -1,0 +1,17 @@
+{
+  "category": "A01",
+  "native_context": "Windows service configuration and file authority",
+  "taxonomy_note": "Planning lens only; actual root-cause mapping is independent.",
+  "controls": [
+    {
+      "id": "SECURITY_WINDOWS_SERVICE_PERMISSIONS_REVIEW-1",
+      "boundary": "Windows service configuration and file authority — authoritative consumer",
+      "source_trace": "Collect the low-privilege token/groups, service DACL/configuration, service account, executable/argument path and file/parent ACLs. Record the trigger that makes the service consume a change.",
+      "controlled_verification": "Use read-only effective-access inspection or an inert owned replica. Determine whether the alleged actor can change the exact service setting or consumed file/path and whether a privileged service will actually use it under the stated trigger. Do not replace a real service binary or restart production for proof.",
+      "false_positive_discriminator": "An unquoted path or readable executable alone is not escalation. The actor needs control of a viable consumed path/configuration; permissions on one directory may not apply to the relevant object.",
+      "remediation_acceptance": "Remove the specific unintended edit authority at the service/file/parent boundary while preserving intended operators. Re-evaluate the low-privilege token and valid maintenance workflow."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

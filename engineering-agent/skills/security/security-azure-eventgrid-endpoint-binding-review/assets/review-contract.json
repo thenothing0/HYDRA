@@ -1,0 +1,24 @@
+{
+  "name": "security-azure-eventgrid-endpoint-binding-review",
+  "domain": "Azure service boundaries",
+  "intent": "Event Grid subscription validation and event-consumer authority",
+  "artifacts": "Subscription creation, validation handshake, delivery authentication and webhook handler actions.",
+  "trace": "Separate proof of endpoint control from proof that delivered events originate from the intended topic/tenant. Trace fields used for privileged downstream actions.",
+  "experiment": "Use owned endpoints and synthetic events; compare a valid subscription/delivery with a locally forged event bearing the same data fields.",
+  "disproof": "Echoing a validation code or accepting a public webhook request is not a protected effect by itself.",
+  "repair": "Authenticate delivery context and constrain action resources, preserving legitimate subscription validation and retries.",
+  "source": "https://learn.microsoft.com/en-us/azure/event-grid/webhook-event-delivery",
+  "adjacent": "security-entra-app-consent-review; security-azure-storage-sas-review",
+  "branch_decisions": "Endpoint validation establishes subscription delivery control; it does not make arbitrary future request bodies authentic. Identify the delivery schema and configured authentication mode, then trace verified subscription/source context into the consumer. A replayed legitimate event may be an idempotency issue, while an unsigned external body accepted as privileged input is a separate trust boundary.",
+  "operational_method": "For Event Grid event schema, identify the POST Microsoft.EventGrid.SubscriptionValidationEvent and its data.validationCode; the synchronous ownership response echoes that value as validationResponse. CloudEvents v1.0 instead uses the OPTIONS abuse-protection handshake with WebHook-Request-Origin and WebHook-Allowed-Origin; it does not use the Event Grid validation-event mechanism. Retain configured delivery authentication separately from this endpoint-control handshake. Compare the correct schema handshake and one mismatched mode, then inspect an authentic synthetic business event versus an untrusted body at the protected consumer; echoing a validation code is not event authenticity.",
+  "additional_sources": [
+    "https://learn.microsoft.com/en-us/azure/event-grid/end-point-validation-event-grid-events-schema",
+    "https://learn.microsoft.com/en-us/azure/event-grid/end-point-validation-cloud-events-schema"
+  ],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

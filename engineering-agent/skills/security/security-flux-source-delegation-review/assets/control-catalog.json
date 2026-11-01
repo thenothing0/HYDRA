@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Kubernetes and deployment controllers",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Flux source reconciliation and impersonated deployment identity",
+      "source_trace": "Trace who can reference or alter a source and which identity applies its rendered resources. Distinguish controller identity from per-reconciliation impersonation.",
+      "implementation_branch": "Trace source artifact revision/digest into the Kustomization or HelmRelease and its effective serviceAccountName/controller identity. Source read access does not equal deployment edit authority. A namespace boundary can be crossed through allowed references only if the actual controller configuration and impersonated identity permit it; inspect cross-namespace-reference policy explicitly.",
+      "operational_method": "",
+      "controlled_verification": "Use an isolated fixture with two owned namespaces and inert manifests; compare intended source/account with a forbidden cross-namespace reference.",
+      "false_positive_discriminator": "A source download alone is not privileged application; record the actual apply authority and admitted objects.",
+      "remediation_acceptance": "Bind source references and reconciliation identities to tenants, preserving valid dependency and rollout behavior."
+    }
+  ]
+}

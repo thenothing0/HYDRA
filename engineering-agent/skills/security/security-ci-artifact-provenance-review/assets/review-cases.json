@@ -1,0 +1,27 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-ci-artifact-provenance-review",
+  "cases": [
+    {
+      "id": "supported-boundary-violation",
+      "input_requirements": "Provide producer/consumer workflow revisions, artifact identifier/digest, attacker-controlled selector, verification policy and timing, substituted inert content result and valid-release control.",
+      "decision": "Confirm only when intended policy, lower-trust reachability and actual protected effect are all supported; keep simulation/source proof labeled."
+    },
+    {
+      "id": "legitimate-or-insufficient-observation",
+      "observation": "A valid signature or attestation alone does not authorize the producer for this deployment. Missing one particular attestation feature is not a defect when equivalent trust enforcement is evidenced.",
+      "decision": "Do not confirm from the stated observation alone. Obtain the missing boundary/effect evidence or explain the permitted behavior."
+    },
+    {
+      "id": "missing-runtime-or-authority",
+      "observation": "Source/configuration suggests this path, but a required identity, policy layer or runtime observation is unavailable.",
+      "decision": "Record a source-supported concern or hypothesis with the missing decisive check. Do not invent verification, credentials or impact."
+    },
+    {
+      "id": "remediation-regression",
+      "input_requirements": "Bind promotion to the intended immutable artifact and authorized producer with fail-closed verification. Retest permitted promotion, wrong producer/digest/ref, absent verification material and the recovery path under the documented release contract.",
+      "decision": "Close only after the original prohibited behavior is prevented and the legitimate control still works on the changed build/configuration."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "category": "A08",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "PROTOTYPE_POLLUTION-1",
+      "boundary": "JavaScript prototype pollution — authoritative consumer",
+      "source_trace": "Inspect recursive merge/set/path utilities and the exact resulting object. Trace prototype-affecting properties to a security-sensitive lookup, rendering, configuration or option consumer.",
+      "controlled_verification": "Use an isolated Node/browser process with fresh objects and an inert marker. Compare own-property and inherited-property values before/after the real merge. Then determine whether the affected consumer reads that value; restore/terminate the fixture rather than modifying a shared process prototype.",
+      "false_positive_discriminator": "An unusual JSON key is not proof of prototype mutation. Mutation without a reachable security consumer establishes a narrower primitive, not automatic code execution.",
+      "remediation_acceptance": "Use supported safe merge/data structures and explicit ownership/schema checks at the relevant boundary. Retest nested paths, normal merge behavior and the actual affected consumer in a clean runtime."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

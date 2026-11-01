@@ -1,0 +1,16 @@
+{
+  "category": "A02",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "HOST_HEADER-1",
+      "boundary": "Host and forwarded-origin trust — authoritative consumer",
+      "source_trace": "Trace Host/forwarded authority through trusted-proxy configuration into reset links, absolute URLs, routing or cache keys. Identify which intermediary strips/sets each field.",
+      "controlled_verification": "Use an owned local service and mailbox/sink. Compare the normal authority with one caller-selected value on the exact sensitive feature. Observe the generated link or routed protected response and whether a recipient actually relies on it.",
+      "false_positive_discriminator": "A reflected host in a public debug message is not password-reset takeover. A proxy ignoring caller-supplied forwarded fields defeats that path; direct-origin access needs its own reachability evidence.",
+      "remediation_acceptance": "Use configured trusted public origins for sensitive links and bind forwarding trust to actual peers. Retest valid deployment/proxy routes, the original authority input and cache behavior if involved."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

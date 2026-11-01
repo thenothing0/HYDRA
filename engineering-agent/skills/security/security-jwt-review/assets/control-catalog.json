@@ -1,0 +1,16 @@
+{
+  "category": "A07",
+  "taxonomy_note": "Initial root-cause lens; reassess final mapping.",
+  "controls": [
+    {
+      "id": "JWT-1",
+      "boundary": "JWT validation and token lifecycle — authoritative consumer",
+      "source_trace": "Open token issuance, verifier configuration, key source, claim validation and downstream account lookup. Distinguish access, ID, reset and other token purposes even when they share a signer.",
+      "controlled_verification": "With local nonsecret keys and synthetic claims, compare a valid intended token against one correctly signed token for a different issuer/audience/purpose and one invalid signature. Trace the exact verifier-to-account consumer. When inspecting key selection, determine whether untrusted token metadata can choose a trust anchor, not merely a key identifier in a trusted set.",
+      "false_positive_discriminator": "Decoding a token is not signature verification. A signed token with a harmless unused claim is not a bypass. Do not claim real cross-service acceptance from a standalone mocked verifier.",
+      "remediation_acceptance": "Bind verification to the expected issuer, audience, purpose and allowed key/algorithm source; enforce the declared expiry/revocation contract at the consumer. Retest intended and cross-purpose tokens plus key rotation compatibility."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

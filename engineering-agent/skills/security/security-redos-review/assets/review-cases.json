@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-redos-review",
+  "cases": [
+    {
+      "id": "bounded-local-growth",
+      "scenario": "A reachable fixture regex exceeds a predeclared small process budget for short invalid subjects while its valid control completes.",
+      "expected_decision": "Record the local engine/cost evidence and reachability; do not claim a measured live outage."
+    },
+    {
+      "id": "pre-match-cap",
+      "scenario": "The application rejects subjects above a proven small bound before the relevant regex call.",
+      "expected_decision": "Account for that protection; do not assume unrestricted input."
+    },
+    {
+      "id": "static-warning",
+      "scenario": "A scanner flags a pattern, but engine, caller control and input limits are unknown.",
+      "expected_decision": "Keep ReDoS as a hypothesis with those decisive gaps."
+    }
+  ]
+}

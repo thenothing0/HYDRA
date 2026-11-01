@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Browser and HTTP boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Trusted Types policy creation and trust at DOM injection sinks",
+      "source_trace": "Trace an attacker-controlled value through createHTML/createScriptURL or the default policy into the protected sink. Determine whether the factory sanitizes the actual context or merely wraps input.",
+      "implementation_branch": "Identify which factory and output type reaches the sink: TrustedHTML is not TrustedScriptURL. An unsafe default policy can convert raw strings and must be traced separately from named factories. Policy-name allowlisting controls factory creation; it does not certify that the approved factory sanitizes its input.",
+      "operational_method": "Record the sink type, assignment result/exception, selected default or named factory and resulting DOM or script URL. A raw string TypeError is different from a default policy transforming the same input into an accepted typed value. Exercise the real factory on legitimate content and an inert untrusted marker; policy creation or a TrustedHTML label alone supplies no sanitization oracle.",
+      "controlled_verification": "Use an owned DOM fixture with a benign execution marker and legitimate rich content; compare raw strings with values produced by the real policy factory.",
+      "false_positive_discriminator": "A TrustedHTML object is not proof of sanitization. An unsupported browser or unenforced policy cannot prove the protected configuration failed.",
+      "remediation_acceptance": "Constrain policy creation and repair the factory/consumer, then verify rejected untrusted markup and preserved intended rendering."
+    }
+  ]
+}

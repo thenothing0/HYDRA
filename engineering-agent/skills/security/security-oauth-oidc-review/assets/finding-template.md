@@ -1,0 +1,33 @@
+# Finding record
+
+Use one record per root cause; remove instructional text when producing a report.
+
+- ID / title:
+- Status: confirmed | suspected | unverified | patched-unverified | fixed | not-reproduced
+- Category: OWASP A__:2025; secondary categories only when helpful
+- CWE: evidence-supported identifier, or unmapped
+- Target: repository/commit, artifact/build, environment, path/route and line
+- Scope: identities, synthetic records, authorized actions and exclusions
+- Security requirement / expected behavior:
+- Preconditions: role, feature, configuration, network access and version
+- Observed behavior:
+- Evidence: source trace or request/response identifiers, timestamps, commands, output paths; redact secrets
+- Reproduction: minimal steps and paired permitted/denied controls
+- Impact: actual demonstrated boundary and separately labeled plausible consequences
+- Severity / rationale: exposure, prerequisites, asset sensitivity, blast radius, compensating controls; CVSS vector only if calculated
+- Confidence and limitations:
+- Root cause and other affected entry points:
+- Remediation: code/config/design location, migration needs, owner and rollback concerns
+- Verification: pre-fix result, post-fix result, valid behavior, side-effect checks, build tested
+- Coverage: performed / not performed / not applicable, with reason
+- References: original publisher, URL, publication/update date, relevance; historical case mapping labeled as analysis
+
+Closure requires the original failure to be prevented on the tested build and legitimate controls to pass. A supplied patch without a retest is patched-unverified. An HTTP status alone is insufficient when state may already have changed.
+
+## Technique-specific evidence
+
+A similar email string, readable token or redirect alone does not prove takeover. Distinguish authorization code delivery, token use and local authenticated authority.
+
+Include provider/client context, registered redirect evidence, redacted state/code flow, claim/account binding, controlled identities and the exact identity consequence.
+
+Confirm only policy-supported reachable security effects. Keep suspected/unverified items separate and name the missing check. Use synthetic data, controlled identities, bounded attempts and minimal reversible actions; stop on unrelated data exposure, unexpected state change or degradation.

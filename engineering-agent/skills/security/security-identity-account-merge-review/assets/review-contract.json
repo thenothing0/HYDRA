@@ -1,0 +1,21 @@
+{
+  "name": "security-identity-account-merge-review",
+  "domain": "Identity and federation extensions",
+  "intent": "Account merge authority and transferred entitlements",
+  "artifacts": "Merge initiation/confirmation, proofs for both accounts, transferable resources and recovery/session lifecycle.",
+  "trace": "Trace which identity authorizes source and destination and when resources, MFA/recovery settings and sessions move. Identify stale proof or one-sided confirmation.",
+  "experiment": "Use two owned synthetic accounts with distinct resources; compare a properly confirmed merge with a missing or wrong-account confirmation.",
+  "disproof": "An alias/display-name change is not an account merge; access to already-owned resources proves no new entitlement.",
+  "repair": "Bind both account proofs and perform atomic policy-defined transfer; verify cancellation, recovery settings and session treatment.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+  "adjacent": "security-oauth-oidc-review; security-jwt-review; security-saml-review",
+  "branch_decisions": "Prove authority over both source and destination under the product policy, including proofs captured before an account switch. Decide which sessions, recovery factors and balances may transfer. An atomic resource transfer without correct identity binding is still unsafe; correct binding without partial-state cleanup is a separate invariant.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

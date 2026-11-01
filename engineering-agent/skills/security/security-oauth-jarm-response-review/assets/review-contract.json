@@ -1,0 +1,21 @@
+{
+  "name": "security-oauth-jarm-response-review",
+  "domain": "Identity and federation extensions",
+  "intent": "JWT-secured authorization response trust and transaction binding",
+  "artifacts": "JARM validation code, issuer/audience/algorithms, state/nonce lifecycle and callback/session consumer.",
+  "trace": "Follow the signed authorization response through validation to code exchange and final session. Preserve the difference between authentic issuer data and correct client/transaction binding.",
+  "experiment": "Use an owned client/issuer fixture and compare a valid response with a response for another owned client or expired transaction.",
+  "disproof": "Correct JWT signature verification alone is not a full callback check; an error without a minted session rejects the attack hypothesis.",
+  "repair": "Bind issuer, audience and transaction before exchange/session creation; retest valid, wrong-client and replay paths.",
+  "source": "https://openid.net/specs/oauth-v2-jarm-final.html",
+  "adjacent": "security-oauth-oidc-review; security-jwt-review; security-saml-review",
+  "branch_decisions": "Separate response signature/encryption processing from transaction state and authorization-code exchange. Verify issuer/audience and registered response mode/algorithms in context. A valid response for another owned client is a useful mismatch control; a malformed unsigned object rejected before parsing tests no transaction-binding property.",
+  "operational_method": "Bind the verified response to one initiating browser transaction and consume its state according to the client replay policy. Keep code exchange tied to the expected issuer/client, redirect URI and PKCE transaction as applicable. Compare two concurrent transactions for the same client, not only different audiences. A valid signed response delivered to the wrong local transaction must not silently complete that other session.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

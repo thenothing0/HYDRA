@@ -1,0 +1,21 @@
+{
+  "name": "security-aws-cloudfront-signed-access-review",
+  "domain": "AWS service boundaries",
+  "intent": "CloudFront signed URL/cookie policy and content publication boundary",
+  "artifacts": "Trusted key groups, signer policy, URL/cookie scope, cache behavior and private origin access.",
+  "trace": "Resolve the exact resource/time/IP policy and issuance authority, then determine whether alternate distribution/origin paths bypass the intended private delivery.",
+  "experiment": "Use owned synthetic objects/distribution paths and compare allowed signed delivery with an unauthorized path or expired capability.",
+  "disproof": "A cached object intentionally published publicly is not a signature bypass; a valid bearer sharing a capability follows its declared model.",
+  "repair": "Bind signer scope and origin protection, then verify authorized delivery and rejected alternate paths.",
+  "source": "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/PrivateContent.html",
+  "adjacent": "security-aws-iam-review; security-aws-object-storage-review; security-aws-workload-identity-review",
+  "branch_decisions": "Inspect the actual distribution behavior and origin access path, not only a signed cookie. A custom policy can intentionally cover a path wildcard, while a direct public origin may bypass the distribution entirely. Separate URL expiry from an already-started transfer and signed access from per-customer entitlement; use owned marker objects for both paths.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

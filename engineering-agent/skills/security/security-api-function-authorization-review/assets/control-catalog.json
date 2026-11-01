@@ -1,0 +1,16 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "API_FUNCTION_AUTHORIZATION-1",
+      "boundary": "API function-level authorization — authoritative consumer",
+      "source_trace": "Read route registration, method dispatch, capability middleware and service entrypoints. Identify a real operation restricted to a role, rather than an administrative-looking URL.",
+      "controlled_verification": "With an owned fixture resource, compare a viewer calling a restricted publish action against an editor calling the same action. Keep the resource and payload constant. Trace whether an alternate version or worker invokes the same service without the capability gate. Record publication state or an operation audit event after both successful and error responses.",
+      "false_positive_discriminator": "The viewer being forbidden from another owner's object is object authorization, not proof that the whole function is forbidden. A hidden UI button or an HTTP method difference alone establishes neither policy nor effect.",
+      "remediation_acceptance": "Enforce the required capability at the shared operation boundary while preserving necessary object/tenant checks. Verify denied actors cannot commit through any evidenced entrypoint and the editor can still publish."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Commerce and business state",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Marketplace seller/customer settlement and fee allocation integrity",
+      "source_trace": "Follow client-selected seller/account IDs to payout recipient and reconcile gross, fees, refunds and net settlement.",
+      "implementation_branch": "Track the server order seller, connected payment account and fee/refund allocation independently. A seller display ID may be public while settlement account selection is protected. Report the exact value or recipient mismatch established by provider sandbox and internal ledger, not a hypothetical full-platform theft chain.",
+      "operational_method": "For one owned order, reconcile gross captured amount with seller allocation, platform fee, tax/other contract allocations and linked refunds/chargebacks. Identify the actor allowed to change each destination or allocation and compare it with the provider sandbox settlement account actually selected. A visible seller identifier mismatch alone is not diverted funds; retain both provider and internal posting IDs and do not assume one fee convention for every marketplace.",
+      "controlled_verification": "Use two owned sandbox sellers and a synthetic order; compare correct settlement with one foreign seller/account substitution.",
+      "false_positive_discriminator": "Public seller metadata is not settlement authority; a rejected provider account mismatch closes the proposed transfer path.",
+      "remediation_acceptance": "Bind financial recipients to server order ownership and verify correct allocation and refund reversal."
+    }
+  ]
+}

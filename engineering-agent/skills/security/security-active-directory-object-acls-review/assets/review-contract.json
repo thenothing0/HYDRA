@@ -1,0 +1,21 @@
+{
+  "name": "security-active-directory-object-acls-review",
+  "domain": "Enterprise identity and privileged access",
+  "intent": "Active Directory effective object control and delegated identity changes",
+  "artifacts": "Directory object/OU ACLs, inheritance, group membership, protected-object behavior and specific write/extended right.",
+  "trace": "Resolve the effective principal right on the exact object and trace it into a protected attribute, membership or credential operation.",
+  "experiment": "Use owned lab objects and synthetic principals or configuration-only proof; compare legitimate delegated management and a prohibited object/attribute.",
+  "disproof": "An ACE name without inheritance/group resolution is not effective control; read access or a denied write is not escalation.",
+  "repair": "Constrain delegation and inheritance while preserving intended administration, then verify actual allowed/denied rights.",
+  "source": "https://learn.microsoft.com/en-us/windows/win32/ad/object-and-attribute-protection",
+  "adjacent": "security-windows-service-permissions-review; security-ldap-injection-review; security-posix-file-permissions-review",
+  "branch_decisions": "Evaluate inherited ACE applicability, deny/allow semantics, group membership and protected-object behavior for the exact property/control right. GenericWrite and ownership/control rights can have different material effects. Read-only ACL exports can establish a delegation path, but a successful directory login or one permissive ACE alone does not prove arbitrary domain-wide control.",
+  "operational_method": "Resolve the object/property GUID, inherited-object type and inherit-only/applicability flags for each relevant ACE. Evaluate the actual token group set and effective descriptor, including protected-object inheritance behavior, before interpreting GenericWrite/ownership/control rights. Bind one permitted directory operation and one forbidden property/control right to that effective access decision. An isolated permissive ACE or membership display is not a complete domain-control path.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

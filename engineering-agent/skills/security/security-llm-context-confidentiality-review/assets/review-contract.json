@@ -1,0 +1,21 @@
+{
+  "name": "security-llm-context-confidentiality-review",
+  "domain": "AI applications and agent runtimes",
+  "intent": "Protected context disclosure through an LLM application response",
+  "artifacts": "Context assembly, explicitly confidential synthetic material, authorized audience and output/filter paths.",
+  "trace": "Identify the protected information and its trust/entitlement boundary, then follow whether lower-trust input can cause its release to a different actor.",
+  "experiment": "Use a local app or owned identities with a synthetic secret marker and legitimate question control; observe actual emitted content, not the model claiming access.",
+  "disproof": "Generic system-prompt wording or public instructions are not inherently confidential data; a hallucinated secret is not disclosure.",
+  "repair": "Remove unnecessary sensitive context and enforce entitlement outside model discretion, then retest authorized and restricted outputs.",
+  "source": "https://genai.owasp.org/llm-top-10/",
+  "adjacent": "security-llm-prompt-injection-review; security-agent-tool-authorization-review; security-mcp-authorization-review",
+  "branch_decisions": "Define the actual secret/data boundary before evaluating a model response. System instructions can be ordinary product text; disclosure requires protected material and evidence that the response derives from it rather than guessing. Use a synthetic hidden canary and public-text controls, keep uncertainty explicit, and separate authorized answer content from verbatim protected context.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

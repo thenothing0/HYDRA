@@ -1,0 +1,17 @@
+{
+  "category": "A05",
+  "native_context": "JavaScript application and bundle security analysis",
+  "taxonomy_note": "Planning lens only; actual root-cause mapping is independent.",
+  "controls": [
+    {
+      "id": "SECURITY_JAVASCRIPT_ANALYSIS_REVIEW-1",
+      "boundary": "JavaScript analysis: artifact → data flow → supported finding — authoritative consumer",
+      "source_trace": "Preserve the shipped bundle hash, build/runtime, chunk relationship and source-map provenance. Open actual callsites and their consumers; keep public client identifiers apart from credentials.",
+      "controlled_verification": "For a recovered request builder, resolve method, base URL, dynamic identifiers and credential mode. Follow its argument back to a real source and forward to the server or browser sink. If the helper marks a value unresolved, inspect the binding/wrapper manually; do not replace it with a guessed URL. A route string becomes a finding only after a violated authority or execution boundary is evidenced.",
+      "false_positive_discriminator": "Comments, regex text, dead code and a public source map are not execution. An AST method-name match has no guaranteed receiver binding. Embedded map content with unvalidated mappings is not proof of deployed source equivalence.",
+      "remediation_acceptance": "Repair the actual consumer boundary, preserving the feature. Rerun the relevant call path on the changed shipped build; minification or deleting a visible endpoint string is not a server authorization repair."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

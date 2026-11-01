@@ -1,0 +1,41 @@
+{
+  "category": "A01",
+  "coverage": [
+    {
+      "id": "A01-01",
+      "boundary": "Object authorization",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A01-02",
+      "boundary": "Tenant queries and aggregates",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A01-03",
+      "boundary": "Setup and privileged lifecycle",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A01-04",
+      "boundary": "Authorization-sensitive caching",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A01-05",
+      "boundary": "Queues, subscriptions and batches",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A01-06",
+      "boundary": "Server-side destination policy",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    }
+  ]
+}

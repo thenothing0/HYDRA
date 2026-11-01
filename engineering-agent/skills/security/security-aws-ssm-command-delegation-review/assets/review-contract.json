@@ -1,0 +1,21 @@
+{
+  "name": "security-aws-ssm-command-delegation-review",
+  "domain": "AWS service boundaries",
+  "intent": "Systems Manager command/session delegation to managed instances",
+  "artifacts": "SSM principal permissions, allowed documents, target selectors, document parameters and instance role.",
+  "trace": "Trace who chooses a document/target and whether permitted parameters delegate unintended process or instance authority. Separate SendCommand from session or document-update permissions.",
+  "experiment": "Use an isolated owned managed-node fixture or source-policy proof with an inert command document; compare intended target/document and an out-of-policy selection.",
+  "disproof": "Access to an instance inventory is not command execution. Never test with destructive shell commands or unrelated production instances.",
+  "repair": "Bind document/target/parameter authority and verify permitted diagnostics and rejected delegation.",
+  "source": "https://docs.aws.amazon.com/systems-manager/latest/userguide/security-iam.html",
+  "adjacent": "security-aws-iam-review; security-aws-object-storage-review; security-aws-workload-identity-review",
+  "branch_decisions": "Separate SendCommand, StartSession and document creation/update/default-version selection. Evaluate target conditions against actual mutable instance tags and the selected document version. IAM permission to invoke a document does not sanitize its parameters: inspect the installed agent/document interpolation behavior. Session shell access and one constrained document action carry different effective authority.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

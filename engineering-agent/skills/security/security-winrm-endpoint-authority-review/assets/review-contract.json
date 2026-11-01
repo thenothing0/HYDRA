@@ -1,0 +1,23 @@
+{
+  "name": "security-winrm-endpoint-authority-review",
+  "domain": "Enterprise identity and privileged access",
+  "intent": "WinRM/PowerShell remoting endpoint and constrained-command authority",
+  "artifacts": "Listener/auth settings, endpoint/session configuration, JEA role capabilities and command/resource consumer.",
+  "trace": "Trace the authenticated caller into the exact endpoint and permitted commands/parameters, including helpers that delegate broader filesystem/process access.",
+  "experiment": "Use an isolated owned endpoint and inert command stubs; compare intended constrained operation and one forbidden parameter/resource.",
+  "disproof": "Remoting enabled or an available cmdlet name is not unrestricted execution; validate actual role capability and parameter binding.",
+  "repair": "Constrain endpoint delegation and helper parameters, preserving intended remote administration.",
+  "source": "https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/overview",
+  "adjacent": "security-windows-service-permissions-review; security-ldap-injection-review; security-posix-file-permissions-review",
+  "branch_decisions": "Resolve endpoint security descriptors, session configuration and JEA role capability files under the actual connecting principal. A constrained command can invoke a helper that holds broader authority; inspect helper inputs and executable provenance. A permitted remoting connection is not a full shell, and unrestricted administrator endpoints may be intentional.",
+  "operational_method": "Expand every role capability matching the connecting principal and compute the effective merged JEA capability set; permissions merge permissively, so another role can remove a parameter restriction present in one file. Include endpoint RunAs identity, visible providers/commands and wrapper implementation. Compare a constrained command under one role with the actual combined roles in an owned endpoint fixture; one .psrc alone does not establish confinement.",
+  "additional_sources": [
+    "https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/role-capabilities?view=powershell-7.6"
+  ],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

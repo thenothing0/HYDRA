@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Commerce and business state",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Inventory reservation ownership, expiry and allocation transitions",
+      "source_trace": "Follow reserved units through confirm, expiry and cancellation; check whether a caller can confirm another reservation or obtain allocation twice.",
+      "implementation_branch": "Separate stock reservation from final allocation and fulfillment. The expiry-versus-confirm order should be deterministic in the local fixture. A restored reservation counter with an uncommitted checkout proves no extra allocation; deliberate oversell/backorder policy must be documented before asserting conservation.",
+      "operational_method": "Write the owned state table: available stock becomes held on reserve, held becomes allocated on confirm, and held returns to available on expiry/release. Under a no-oversell fixture, available+held+allocated stays equal to initial stock; adapt for documented backorders. Schedule confirm versus expiry deterministically, then repeat release delivery and inspect authoritative counters/allocations. A UI stock label or a rejected confirmation is not extra fulfillment.",
+      "controlled_verification": "Use a tiny local stock fixture with two owned customers; compare rightful confirmation with stale/foreign reservation and inspect allocation state.",
+      "false_positive_discriminator": "A reservation accepted by the UI is not a fulfilled allocation; documented overbooking must be distinguished from the asserted invariant.",
+      "remediation_acceptance": "Bind reservation owner and atomic stock transitions, testing expiry/confirm ordering with deterministic local barriers."
+    }
+  ]
+}

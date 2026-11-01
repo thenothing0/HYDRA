@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-gcp-iam-review",
+  "cases": [
+    {
+      "id": "inherited-grant",
+      "scenario": "A fixture project resource remains accessible through an inherited grant that contradicts the tenant role contract.",
+      "expected_decision": "Confirm the full effective tuple and intended boundary, including applicable restrictions."
+    },
+    {
+      "id": "denied-elsewhere",
+      "scenario": "An allow binding looks broad but a supported applicable deny policy rejects the tested permission.",
+      "expected_decision": "Do not report that isolated allow as a successful bypass."
+    },
+    {
+      "id": "incomplete-ancestry",
+      "scenario": "Only the child resource allow policy is visible and ancestor restrictions are unavailable.",
+      "expected_decision": "Record a partial analysis and missing ancestry; do not invent effective access."
+    }
+  ]
+}

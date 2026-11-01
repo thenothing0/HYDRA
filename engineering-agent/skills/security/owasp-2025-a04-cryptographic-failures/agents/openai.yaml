@@ -1,0 +1,4 @@
+interface:
+  display_name: "OWASP A04: Cryptographic Failures"
+  short_description: "Review and remediate OWASP A04:2025 risks"
+  default_prompt: "Use $owasp-2025-a04-cryptographic-failures to review this project, document supported findings, and verify requested fixes."

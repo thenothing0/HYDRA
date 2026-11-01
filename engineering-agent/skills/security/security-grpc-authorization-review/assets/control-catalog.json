@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Compatibility planning lens only, not a normative cross-domain mapping. Final root-cause taxonomy may differ or remain unassigned.",
+  "native_context": "gRPC credentials/interceptors; TLS authentication is separate from application authorization",
+  "domain": "web",
+  "controls": [
+    {
+      "id": "GRPC_AUTHORIZATION-1",
+      "boundary": "gRPC method, object and stream authorization — authoritative consumer",
+      "source_trace": "Open service definitions, interceptor registration, gateway mappings and stream handlers. Locate the trusted principal and the point each message selects its resource.",
+      "controlled_verification": "Use an owned unary request as the positive control. In a local/authorized stream send one permitted fixture object, then one other-tenant fixture identifier without changing the session. Trace whether only stream establishment is checked while the second message is consumed with service authority. Compare the actual protected reply or state.",
+      "false_positive_discriminator": "A gRPC status or a generated stub revealing a method name is not proof. Metadata supplied by a caller is not trusted identity unless the actual transport/verification path establishes it.",
+      "remediation_acceptance": "Cover unary and streaming entrypoints with authenticated context, then authorize each resource-sensitive message as required by policy. Retest valid streams, denied later messages and cancellation cleanup."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

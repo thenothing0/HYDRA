@@ -1,0 +1,21 @@
+{
+  "name": "security-azure-devops-pipeline-trust-review",
+  "domain": "Azure service boundaries",
+  "intent": "Azure DevOps pipeline resource and service-connection trust",
+  "artifacts": "Pipeline YAML/templates, resource authorization, branch/environment protections and service connections.",
+  "trace": "Trace editable code/templates/variables into a job with a privileged service connection, including approvals tied to a different artifact or branch.",
+  "experiment": "Use an isolated pipeline fixture with inert publish output; compare a trusted run and a lower-trust template/resource change.",
+  "disproof": "A connection name visible in YAML is not use authority; a denied approval or resource permission may already stop the path.",
+  "repair": "Bind approvals/resources to the consumed revision and scope service connections, preserving legitimate releases.",
+  "source": "https://learn.microsoft.com/en-us/azure/devops/pipelines/security/overview",
+  "adjacent": "security-entra-app-consent-review; security-azure-storage-sas-review",
+  "branch_decisions": "Inspect pipeline edit authority, protected-resource checks, service-connection authorization and the job token scope together. Approval of a resource does not necessarily approve every future script revision. Follow the checked source/ref and template expansion into the secret-bearing job; an untrusted pull request stopped before resource admission does not demonstrate credential exposure.",
+  "operational_method": "Retain the protected resource check configuration and actual evaluated run/ref. Required-template, branch-control, environment approval and service-connection pipeline authorization are distinct gates. Determine whether the connection is available to all pipelines or selected definitions and whether an editor can change the checked source after approval. The denial control must stop before the secret-bearing job; successful environment approval alone does not prove service-connection admission.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

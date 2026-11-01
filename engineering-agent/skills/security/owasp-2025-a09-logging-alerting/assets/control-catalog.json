@@ -1,0 +1,66 @@
+{
+  "category": "A09",
+  "version": "4.0.0",
+  "controls": [
+    {
+      "id": "A09-01",
+      "slug": "event-contract",
+      "boundary": "Auditable event production",
+      "source_trace": "Security action -> structured event -> correlation/outcome -> collection.",
+      "controlled_verification": "Generate one labeled harmless test event and follow the same ID.",
+      "false_positive_discriminator": "Black-box silence does not prove missing internal logging.",
+      "remediation_acceptance": "Required actions have usable complete events at the observed collector.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A09-02",
+      "slug": "log-representation",
+      "boundary": "Record and viewer integrity",
+      "source_trace": "Untrusted field -> serialization -> parser -> storage -> rendered viewer.",
+      "controlled_verification": "Use inert newline/control-character fixtures and inspect record boundaries.",
+      "false_positive_discriminator": "Multiline raw text and forged parsed/viewed records are different effects.",
+      "remediation_acceptance": "One untrusted field cannot create misleading trusted records in the actual reader.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A09-03",
+      "slug": "secret-failure-path",
+      "boundary": "Secrets in exceptional logs",
+      "source_trace": "Sensitive argument/exception -> logger formatting -> collector/export/access.",
+      "controlled_verification": "Use a unique synthetic secret marker on a controlled failure path.",
+      "false_positive_discriminator": "Do not print or search unrelated real secrets.",
+      "remediation_acceptance": "Marker is absent from prohibited locations; useful redacted correlation remains.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A09-04",
+      "slug": "detection-delivery",
+      "boundary": "Rule evaluation and notification",
+      "source_trace": "Event -> query/rule/version/window -> test sink -> receipt.",
+      "controlled_verification": "Use a test notification destination and record delivery delay.",
+      "false_positive_discriminator": "A source rule or logged event is not proof of notification delivery.",
+      "remediation_acceptance": "Required signal reaches the intended test recipient inside the configured window.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A09-05",
+      "slug": "sink-outage",
+      "boundary": "Collector loss and backpressure",
+      "source_trace": "Producer -> queue/buffer -> retry/drop -> health signal -> recovery.",
+      "controlled_verification": "Use a local failing sink with bounded records.",
+      "false_positive_discriminator": "Do not fill live disks or flood collectors.",
+      "remediation_acceptance": "Loss/backpressure matches policy and application guarantees survive the failure.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A09-06",
+      "slug": "audit-access",
+      "boundary": "Retention, integrity and access",
+      "source_trace": "Log classification -> readers/writers -> retention/export -> incident use.",
+      "controlled_verification": "Review effective storage/access policy with supplied operator evidence.",
+      "false_positive_discriminator": "External testers cannot infer protected internal retention settings.",
+      "remediation_acceptance": "Intended investigation evidence remains available and unauthorized readers/writers lack access.",
+      "default_status": "not-tested"
+    }
+  ]
+}

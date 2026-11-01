@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Enterprise identity and privileged access",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "WinRM/PowerShell remoting endpoint and constrained-command authority",
+      "source_trace": "Trace the authenticated caller into the exact endpoint and permitted commands/parameters, including helpers that delegate broader filesystem/process access.",
+      "implementation_branch": "Resolve endpoint security descriptors, session configuration and JEA role capability files under the actual connecting principal. A constrained command can invoke a helper that holds broader authority; inspect helper inputs and executable provenance. A permitted remoting connection is not a full shell, and unrestricted administrator endpoints may be intentional.",
+      "operational_method": "Expand every role capability matching the connecting principal and compute the effective merged JEA capability set; permissions merge permissively, so another role can remove a parameter restriction present in one file. Include endpoint RunAs identity, visible providers/commands and wrapper implementation. Compare a constrained command under one role with the actual combined roles in an owned endpoint fixture; one .psrc alone does not establish confinement.",
+      "controlled_verification": "Use an isolated owned endpoint and inert command stubs; compare intended constrained operation and one forbidden parameter/resource.",
+      "false_positive_discriminator": "Remoting enabled or an available cmdlet name is not unrestricted execution; validate actual role capability and parameter binding.",
+      "remediation_acceptance": "Constrain endpoint delegation and helper parameters, preserving intended remote administration."
+    }
+  ]
+}

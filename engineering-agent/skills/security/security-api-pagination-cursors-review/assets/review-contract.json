@@ -1,0 +1,21 @@
+{
+  "name": "security-api-pagination-cursors-review",
+  "domain": "API and SaaS authority",
+  "intent": "Pagination cursor binding across account, tenant and filters",
+  "artifacts": "Cursor encoding/validation, first/next-page handlers, authorization filters and two owned synthetic datasets.",
+  "trace": "Follow the continuation token into the resumed query. Check whether it preserves or overrides tenant, sort/filter and current entitlement rather than trusting issuance context forever.",
+  "experiment": "Compare a legitimate next page with the same cursor under another owned actor or changed filter; inspect returned synthetic objects.",
+  "disproof": "An opaque or unsigned cursor is not a flaw if the resumed query re-enforces policy; an empty page proves no data access.",
+  "repair": "Bind or revalidate cursor context and current authorization, preserving normal pagination and stable results.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+  "adjacent": "security-api-bola-review; security-api-function-authorization-review; security-background-job-authorization-review",
+  "branch_decisions": "Check whether the cursor carries authority or only a position; a signed position can still be safely re-authorized. Keep initial and resumed query filters visible. Sort-key changes, deleted rows and expiry can change a page without implying cross-tenant access; require an attributed unauthorized synthetic record.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

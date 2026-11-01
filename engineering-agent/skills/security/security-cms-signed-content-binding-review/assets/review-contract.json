@@ -1,0 +1,21 @@
+{
+  "name": "security-cms-signed-content-binding-review",
+  "domain": "Cryptographic protocols and runtime consumers",
+  "intent": "CMS signed object, signer purpose and consumed-content binding",
+  "artifacts": "CMS parser/verifier version, signer trust/EKU policy, signed attributes and application object selection.",
+  "trace": "Trace the verified signer and signed bytes to the exact document/action consumed, including detached content and duplicate/ambiguous structures.",
+  "experiment": "Use an isolated fixture with owned certificates and synthetic documents; compare rightful signer/content and a wrong-purpose or mismatched content object.",
+  "disproof": "A mathematically valid signature is not application signer authorization; a displayed certificate subject is not proof of trust.",
+  "repair": "Bind accepted signer purpose and content representation to the consumer and verify valid signed workflows.",
+  "source": "https://www.rfc-editor.org/rfc/rfc5652",
+  "adjacent": "security-jwt-review; security-tls-peer-validation-review; security-deserialization-review",
+  "branch_decisions": "Resolve attached versus detached content, signed attributes, signer certificate purpose and the exact object the consumer uses. A cryptographically valid signer may not be trusted for this operation. Unsigned outer metadata or an alternate embedded object must not replace verified content; compare intended signed data and a harmless alternate object in an offline fixture.",
+  "operational_method": "Select the CMS signedAttrs branch explicitly. For id-data, signedAttrs may be absent; verification then covers the content-octet path defined by the profile, so do not reject that valid form merely for lacking attributes. When signedAttrs is present, validate required content-type/message-digest attributes, their agreement with selected content and the specified signed-attribute encoding; non-id-data requires signedAttrs. Retain the actual verifier-selected signer/content and consume that verified result, not an unsigned outer alternative. An embedded certificate is not automatically an authorized signer. Compare valid id-data without attributes with an attributed-content mismatch and a wrong-purpose signer offline.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

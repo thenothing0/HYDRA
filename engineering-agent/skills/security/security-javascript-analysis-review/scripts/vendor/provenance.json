@@ -1,0 +1,18 @@
+{
+  "name": "acorn",
+  "version": "8.19.0",
+  "source": "https://registry.npmjs.org/acorn/-/acorn-8.19.0.tgz",
+  "registry_metadata": "https://registry.npmjs.org/acorn/8.19.0",
+  "registry_integrity": "sha512-oJlA3XiRm7Cyk6qFD2Jn8ak9B7jSy0qy00ADO3+8dpT0LSjFihQYv4C02LFCSYJV3Q37xYwwRy5m+IpIiUzqWw==",
+  "integrity_checked": true,
+  "file_sha256": {
+    "acorn.mjs": "76254fc76529713b4dfd2532972d17a991ffd9aafeebb1f977445b5506b9fb0b",
+    "LICENSE-acorn": "76a876cf886ff9be2a8b5e2e86514fed06223c8c9f0c1e9ee9606e93841e00b7"
+  },
+  "license": "MIT",
+  "retrieved": "2026-10-27",
+  "install_scripts_executed": false,
+  "upstream_latest_checked": "8.19.0",
+  "maintainer_advisory_page": "https://github.com/acornjs/acorn/security/advisories",
+  "advisory_observation": "No published maintainer advisories shown when browsed; not a guarantee of absence of vulnerabilities."
+}

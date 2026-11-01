@@ -1,0 +1,16 @@
+{
+  "category": "A05",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "NOSQL_INJECTION-1",
+      "boundary": "NoSQL operator and query injection — authoritative consumer",
+      "source_trace": "Inspect accepted input types, JSON decoding, selector construction and the actual database query API. Separate intended advanced-query capability from ordinary scalar fields.",
+      "controlled_verification": "In a local dataset compare a valid scalar filter with a caller-supplied structured value at the exact affected field. Observe the final selector/operator interpretation and selected synthetic records. Follow validation through wrappers or JSON re-decoding to establish whether the database receives the structure.",
+      "false_positive_discriminator": "An operator-looking string stored as a literal is not query control. Rejecting an object at schema validation defeats that path. A user-authorized query console needs its own capability contract.",
+      "remediation_acceptance": "Enforce the intended scalar/structured schema and construct trusted selectors explicitly. Retest valid scalar queries, wrong types and the original operator path without removing intended search functionality."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

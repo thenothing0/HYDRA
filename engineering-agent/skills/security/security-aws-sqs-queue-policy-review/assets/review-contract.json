@@ -1,0 +1,21 @@
+{
+  "name": "security-aws-sqs-queue-policy-review",
+  "domain": "AWS service boundaries",
+  "intent": "SQS producer/consumer authority and message-driven operations",
+  "artifacts": "Queue resource/identity policies, sender context, encryption, dead-letter routing and consumer validation.",
+  "trace": "Trace who can send, receive, delete or redrive messages and whether message body/attributes grant downstream authority.",
+  "experiment": "Use a small owned queue or local consumer with synthetic messages; compare rightful producer processing and an untrusted actor/authority field.",
+  "disproof": "A visible queue URL is not queue access; authorized message submission alone is not application privilege escalation.",
+  "repair": "Constrain queue operations and independently validate the consumer action/resource policy, including redrive.",
+  "source": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-security-iam.html",
+  "adjacent": "security-aws-iam-review; security-aws-object-storage-review; security-aws-workload-identity-review",
+  "branch_decisions": "Separate send, receive, delete and queue-policy administration. Message attributes are producer-controlled unless another verified envelope binds them. Inspect visibility timeout and redelivery as normal delivery behavior, then check consumer idempotency/authority at the final action. Receiving a test message proves read access only to the tested queue and principal.",
+  "operational_method": "For SNS/EventBridge/service-to-queue delivery, inspect the queue resource-policy principal and applicable aws:SourceArn/aws:SourceAccount constraints. Match the exact source rather than accepting a payload source label. If SSE-KMS applies, keep KMS denial distinct from queue policy denial. The local fixture should model queue admission before consumer processing and use one source-allowed and one source-mismatched marker; no receive/list access to unrelated queues is needed.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

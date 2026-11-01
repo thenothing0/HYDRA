@@ -1,0 +1,21 @@
+{
+  "name": "security-tekton-task-run-authority-review",
+  "domain": "CI and package publication",
+  "intent": "Tekton TaskRun parameters, workspaces and execution identity",
+  "artifacts": "Task/Pipeline references, resolvers, TaskRun writers, service accounts, workspaces and pod templates.",
+  "trace": "Trace lower-trust parameters or remotely resolved task content into a workload with privileged credentials, volumes or service identity.",
+  "experiment": "Use an isolated cluster task with inert output; compare permitted parameter use and a forbidden task/workspace/service-account selection.",
+  "disproof": "Task expressiveness is not escalation if only an appropriately trusted operator may create the run.",
+  "repair": "Constrain task sources and run authority, preserving approved parameterization and workspace isolation.",
+  "source": "https://tekton.dev/docs/pipelines/taskruns/",
+  "adjacent": "security-ci-artifact-provenance-review; security-package-resolution-review; security-github-actions-trust-review",
+  "branch_decisions": "Resolve referenced Task/ClusterTask/bundle content, admitted service account, workspace/PVC mounts and parameter substitution into executable steps. A parameter appearing in a script is different from an argv element. The TaskRun submitter may intentionally hold deployment authority; show where the actual restricted submitter can borrow a stronger execution identity.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

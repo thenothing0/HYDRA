@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-electron-ipc-review",
+  "cases": [
+    {
+      "id": "untrusted-frame",
+      "scenario": "A controlled child frame reaches a privileged IPC handler and changes a protected in-memory fixture record.",
+      "expected_decision": "Confirm the evidenced sender/operation boundary; do not inflate it to arbitrary host execution."
+    },
+    {
+      "id": "narrow-bridge",
+      "scenario": "A context bridge accepts only one harmless operation and the main process rejects the wrong sender/resource.",
+      "expected_decision": "Treat the tested privileged path as protected despite bridge availability."
+    },
+    {
+      "id": "debug-only",
+      "scenario": "The observed capability exists only after an owner enables a developer console and manually invokes privileged code.",
+      "expected_decision": "State that prerequisite; do not represent it as a remote renderer exploit."
+    }
+  ]
+}

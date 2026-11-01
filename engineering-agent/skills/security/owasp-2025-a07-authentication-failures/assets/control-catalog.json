@@ -1,0 +1,66 @@
+{
+  "category": "A07",
+  "version": "4.0.0",
+  "controls": [
+    {
+      "id": "A07-01",
+      "slug": "recovery-binding",
+      "boundary": "Recovery recipient and identity",
+      "source_trace": "Account lookup -> verified destination -> token subject/purpose -> reset.",
+      "controlled_verification": "Use two controlled accounts/inbox sinks and track each recovery stage.",
+      "false_positive_discriminator": "A success page is not evidence of token delivery, reset or account takeover.",
+      "remediation_acceptance": "Recipient, subject and purpose remain bound; unauthorized destination gets no recovery authority.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A07-02",
+      "slug": "token-contract",
+      "boundary": "Token trust contract",
+      "source_trace": "Allowed algorithm/key source -> signature -> issuer/audience/purpose/time -> caller.",
+      "controlled_verification": "Vary one claim/trust property in a local or explicitly controlled token fixture.",
+      "false_positive_discriminator": "Readable JWT claims and unaccepted malformed tokens are not forgery.",
+      "remediation_acceptance": "Tokens outside the application contract reject on the actual protected path.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A07-03",
+      "slug": "session-lifecycle",
+      "boundary": "Session rotation and revocation",
+      "source_trace": "Anonymous session -> login/privilege change -> refresh/logout/reset -> server authority.",
+      "controlled_verification": "Compare controlled pre/post-transition sessions against the declared policy.",
+      "false_positive_discriminator": "Stateless bounded lifetime and immediate revocation are different documented models.",
+      "remediation_acceptance": "Session behavior matches the chosen policy across refresh and alternate paths.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A07-04",
+      "slug": "factor-paths",
+      "boundary": "MFA and recovery branch consistency",
+      "source_trace": "Primary login -> factor challenge -> recovery/fallback -> authenticated authority.",
+      "controlled_verification": "Check controlled branches and identify whether reset still requires the factor.",
+      "false_positive_discriminator": "Password reset does not imply full takeover when a second factor remains effective.",
+      "remediation_acceptance": "Lower-assurance branches cannot bypass a required factor or bind it to the wrong identity.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A07-05",
+      "slug": "federation-link",
+      "boundary": "Federation and account linking",
+      "source_trace": "Redirect/callback -> state/nonce -> provider subject -> local account linkage.",
+      "controlled_verification": "Use controlled provider identities and registered callbacks only.",
+      "false_positive_discriminator": "Similar email display strings do not prove equivalent verified identity.",
+      "remediation_acceptance": "Federated response is bound to the intended session/provider/account and valid trust contract.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A07-06",
+      "slug": "abuse-throttle",
+      "boundary": "Authentication abuse controls",
+      "source_trace": "Attempt identity/source -> counter key/window -> delay/lockout -> recovery.",
+      "controlled_verification": "Inspect configuration or use a small agreed test-account request budget.",
+      "false_positive_discriminator": "Do not spray credentials; a small timing sample is weak evidence.",
+      "remediation_acceptance": "Required throttling resists simple key bypass and avoids unintended real-user lockout.",
+      "default_status": "not-tested"
+    }
+  ]
+}

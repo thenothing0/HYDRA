@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Databases and messaging",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "SQL Server execution context, ownership chains and delegated modules",
+      "source_trace": "Follow caller execution into modules and cross-database operations using the actual effective principal and ownership path.",
+      "implementation_branch": "Resolve EXECUTE AS CALLER/OWNER/principal, ownership chaining, module signing and cross-database trust separately. Permission to execute a module can deliberately delegate its fixed action. Evaluate whether its actual resource/projection violates the caller policy, whether the module is fixed or influenced by lower-trust parameters/editing; do not require editable input before reviewing fixed-module data disclosure.",
+      "operational_method": "A fixed module can expose forbidden tenant rows even when its inputs and definition cannot be edited; inspect its returned projection and actual caller policy. Separate ordinary ownership chaining from dynamic SQL, which breaks that chain, EXECUTE AS identity substitution and certificate-signing additive permissions. For cross-database access retain trust/signature/user mappings on both databases and whether the module was re-signed after changes. Compare one restricted caller result with the same caller direct-query denial; this may establish intended narrow delegation or an overbroad fixed module.",
+      "controlled_verification": "Use an isolated SQL Server fixture with synthetic tables and two owned principals; compare approved module use and an out-of-policy object access.",
+      "false_positive_discriminator": "A module that legitimately elevates for a narrowly defined operation is not arbitrary privilege escalation.",
+      "remediation_acceptance": "Constrain module inputs/context and cross-database delegation, preserving the intended stored operation."
+    }
+  ]
+}

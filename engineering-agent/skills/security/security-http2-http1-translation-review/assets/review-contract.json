@@ -1,0 +1,21 @@
+{
+  "name": "security-http2-http1-translation-review",
+  "domain": "Browser and HTTP boundaries",
+  "intent": "HTTP/2 internal request normalization and HTTP/1 serialization agreement",
+  "artifacts": "Exact proxy/backend versions and configuration, owned replica packet traces and connection reuse behavior.",
+  "trace": "Resolve how the intermediary translates lengths, prohibited fields, trailers and stream boundaries into backend messages. Keep parser hypotheses tied to the actual deployed chain.",
+  "experiment": "In an isolated translator/parser fixture correlate one H2 stream, its normalized request and exact H1 serialization with backend boundaries. Compare a legitimate equal-length control with one bounded rejected or differently normalized input; do not involve shared connections/users.",
+  "disproof": "Different status codes or a malformed-header rejection are not request smuggling without a second parsed message/effect.",
+  "repair": "Normalize or reject ambiguous translation and retest the exact framing pair plus normal multiplexed traffic.",
+  "source": "https://www.rfc-editor.org/rfc/rfc9112",
+  "adjacent": "security-javascript-analysis-review; security-xss-review; security-request-smuggling-review",
+  "branch_decisions": "A frontend rejection with zero bytes forwarded stops the proposed chain. Otherwise correlate HTTP/2 DATA length, translated HTTP/1 framing, legal trailers, connection reuse and actual backend boundaries. A second ordinary request is not proof of desynchronization; establish an unexpected boundary caused by the challenged stream in an isolated backend, without shared-user traffic.",
+  "operational_method": "Trace four concrete artifacts: decoded H2 header/DATA events, normalized internal request, serialized H1 bytes and backend parser boundaries on the same isolated connection. Resolve pseudo-header authority versus Host, content-length versus DATA accounting and trailer forwarding in the translator implementation. Frontend rejection with zero forwarded bytes disproves that path. Attribute any unexpected boundary to one transformation step; do not treat a second ordinary request or generic two-hop discrepancy as H2 translation proof.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "overlaps",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

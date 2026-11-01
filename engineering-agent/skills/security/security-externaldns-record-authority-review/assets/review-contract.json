@@ -1,0 +1,21 @@
+{
+  "name": "security-externaldns-record-authority-review",
+  "domain": "Kubernetes and deployment controllers",
+  "intent": "ExternalDNS source-object control and DNS zone delegation",
+  "artifacts": "Controller sources/filters, ownership registry, zone permissions and source object writers.",
+  "trace": "Follow a resource annotation/hostname into DNS changes under the controller identity. Determine tenant/zone boundaries and collision/takeover behavior.",
+  "experiment": "Use a local provider stub or owned test zone; compare a permitted record with an out-of-tenant name requested by a lower-trust resource writer.",
+  "disproof": "A requested hostname or dry-run log is not an actual DNS change; never claim or overwrite unrelated domains.",
+  "repair": "Bind source writers to permitted zones/names and verify conflict handling, deletion and legitimate reconciliation.",
+  "source": "https://kubernetes-sigs.github.io/external-dns/latest/",
+  "adjacent": "security-kubernetes-rbac-review; security-kubernetes-workload-isolation-review; security-kubernetes-network-policy-review",
+  "branch_decisions": "Resolve controller sources, domain filters, namespace/label selectors and provider credentials. A TXT ownership record coordinates controllers; it is not universally an authorization boundary against a cluster actor who controls admitted sources. Show which owned zone/record the restricted source can influence and distinguish provider-side IAM denial from a controller filtering decision.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

@@ -60,6 +60,11 @@ failed, changed or ambiguous submissions are blocked from automatic retry.
 
 [Engineering guide](ENGINEERING.md) · [Provider configuration/status](PROVIDERS.md)
 
+[Bundled skills](skills/README.md) adds 300 security/OWASP procedures with their
+references, templates and offline helpers. Use `/skills xss` and `/skill NAME`,
+or `--skill NAME` at launch. The agent can search/load relevant skills itself;
+only selected instructions enter the prompt. Helpers retain command approval.
+
 [AI-EOS V5 implementation](AI_EOS_V5.md) adds validated session state, independent
 run limits, failure budgets and evidence-linked handoff. Use `/status` or
 `/handoff` in the terminal, or `python -m hydra handoff SESSION_ID` to export JSON.

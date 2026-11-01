@@ -1,0 +1,18 @@
+{
+  "category": "A04",
+  "taxonomy_note": "Compatibility planning lens only, not a normative cross-domain mapping. Final root-cause taxonomy may differ or remain unassigned.",
+  "native_context": "MASVS-STORAGE-1 and MASVS-STORAGE-2 as applicable",
+  "domain": "mobile",
+  "controls": [
+    {
+      "id": "MOBILE_LOCAL_DATA-1",
+      "boundary": "Mobile local data, backup and retention exposure — authoritative consumer",
+      "source_trace": "Map sensitive files/databases/preferences, backups, logs, clipboard/snapshots and cache lifecycle. Define the attacker device state: ordinary app, unlocked user, backup access or compromised device.",
+      "controlled_verification": "Use synthetic account markers on an owned test device/build. Follow one sensitive value into its stored copies and compare access in the prohibited versus intended device/account state. Test logout/account switch against the declared retention policy.",
+      "false_positive_discriminator": "Reading files on a rooted/jailbroken device does not establish access by an ordinary app. Encryption at rest does not by itself protect data after the legitimate process decrypts it.",
+      "remediation_acceptance": "Apply appropriate platform storage/protection and lifecycle cleanup for the actual threat model. Retest required offline/background use and the original unintended access/retention path."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

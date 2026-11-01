@@ -1,0 +1,18 @@
+{
+  "category": "A03",
+  "taxonomy_note": "Compatibility planning lens only, not a normative cross-domain mapping. Final root-cause taxonomy may differ or remain unassigned.",
+  "native_context": "Artifact provenance verification; provider identity and consumer policy are distinct",
+  "domain": "ci-cd",
+  "controls": [
+    {
+      "id": "CI_ARTIFACT_PROVENANCE-1",
+      "boundary": "CI artifact promotion and producer identity — authoritative consumer",
+      "source_trace": "Inspect producer identity/event/ref, immutable artifact digest, provenance/attestation and the release consumer's verification policy. Record run identity, not only display names.",
+      "controlled_verification": "In a local/owned pipeline fixture compare an approved artifact with one from an untrusted run sharing the same artifact name. Determine whether verification binds the exact consumed bytes to the approved producer, event/ref and release context.",
+      "false_positive_discriminator": "A checksum delivered beside an artifact by the same untrusted producer establishes integrity of a transfer, not producer trust. A signature existing somewhere does not prove enforcement at consumption.",
+      "remediation_acceptance": "Verify trusted producer/run and immutable digest before privileged promotion. Retest legitimate release, wrong producer and byte substitution at the actual consumer."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

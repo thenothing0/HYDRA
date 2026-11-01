@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Enterprise identity and privileged access",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Privileged access management checkout, approval and revocation binding",
+      "source_trace": "Trace who can request which managed account and whether approval remains bound to resource, purpose, operator and time during use.",
+      "implementation_branch": "Separate approval, credential checkout, brokered session and actual privileged account lifetime. Closing a ticket may not promise immediate termination of every active session. Trace the declared expiry/revocation semantics and whether the same actor retains a prohibited capability; an audit event proves recording, not termination or least privilege.",
+      "operational_method": "Identify credential-disclosing checkout versus broker-only session access before selecting the revocation oracle. Retain account/approval binding, credential version, checkout expiry, rotation event and any reconnect capability. Compare a legitimate owned checkout/session with a stale checkout after the declared expiry/rotation rule. Closing a ticket does not universally terminate a tunnel or erase a disclosed password; the product contract decides which final capability should cease.",
+      "controlled_verification": "Use a local PAM stub and synthetic credential/session capability; compare approved checkout and wrong-account/stale-approval use.",
+      "false_positive_discriminator": "Viewing a managed account name is not credential access; an approved privileged session is expected within its declared scope.",
+      "remediation_acceptance": "Bind approval and brokered use to current authority, verifying rotation/revocation and intended emergency access."
+    }
+  ]
+}

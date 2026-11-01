@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "API and SaaS authority",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Idempotency key binding to actor, tenant and request meaning",
+      "source_trace": "Determine whether a caller-chosen key can select another actor response or suppress/replace a different operation. Distinguish retries from unrelated requests.",
+      "implementation_branch": "Model first use, rightful retry, changed body, changed tenant and expiry separately. Some APIs intentionally reject a reused key with different parameters. Returning another tenant response, suppressing its action or replaying its effect are different outcomes; do not infer all three from a key collision.",
+      "operational_method": "",
+      "controlled_verification": "Use two owned tenants and synthetic reversible operations sharing one key; compare the rightful retry with a changed payload or tenant.",
+      "false_positive_discriminator": "A duplicate correctly returning the same caller result is expected; shared key syntax does not prove cross-user cache reuse.",
+      "remediation_acceptance": "Bind cached outcomes to security context and operation meaning, preserving safe retries and documented conflict responses."
+    }
+  ]
+}

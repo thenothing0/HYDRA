@@ -1,0 +1,66 @@
+{
+  "category": "A06",
+  "version": "4.0.0",
+  "controls": [
+    {
+      "id": "A06-01",
+      "slug": "business-invariant",
+      "boundary": "Supported business rule",
+      "source_trace": "Requirement/product behavior -> trusted authority -> enforced invariant.",
+      "controlled_verification": "Establish the intended rule with owner evidence before probing a synthetic workflow.",
+      "false_positive_discriminator": "Undocumented assumptions stay questions; ordinary discount behavior may be intended.",
+      "remediation_acceptance": "Accepted security invariant is explicit and enforced at the authoritative boundary.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A06-02",
+      "slug": "state-machine",
+      "boundary": "Ordered workflow transitions",
+      "source_trace": "Persistent state -> permitted transition -> actor -> side-effect commit.",
+      "controlled_verification": "Skip/reorder one controlled step and inspect authoritative state.",
+      "false_positive_discriminator": "UI navigation is not a state machine; status alone does not show commit outcome.",
+      "remediation_acceptance": "Invalid/repeated transitions leave state/effects unchanged; valid paths still complete.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A06-03",
+      "slug": "one-time-concurrency",
+      "boundary": "Atomic one-time benefit",
+      "source_trace": "Read eligibility -> reservation/uniqueness -> committed benefit -> queue.",
+      "controlled_verification": "Use bounded approved attempts or deterministic local interleaving.",
+      "false_positive_discriminator": "One non-reproducing race attempt is inconclusive; process locks are not distributed guarantees.",
+      "remediation_acceptance": "Exactly one committed result under the relevant cross-worker concurrency model.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A06-04",
+      "slug": "trusted-amount",
+      "boundary": "Amounts, entitlement and authority",
+      "source_trace": "Caller assertion -> server-calculated value -> authorization -> commit.",
+      "controlled_verification": "Use tiny synthetic amounts/entitlements and independent owner-side readback.",
+      "false_positive_discriminator": "Legitimate delegated calculation is not automatically untrusted.",
+      "remediation_acceptance": "Trusted values are reconciled at commit and cannot be overridden through alternate channels.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A06-05",
+      "slug": "replay-cross-channel",
+      "boundary": "Replay and channel consistency",
+      "source_trace": "API/webhook/job -> operation identity -> state transition -> deduplication.",
+      "controlled_verification": "Replay an agreed one-time fixture through each relevant entry point.",
+      "false_positive_discriminator": "Replay may be valid for idempotent reads; identify the business contract.",
+      "remediation_acceptance": "All channels enforce the same invariant and stable operation identity.",
+      "default_status": "not-tested"
+    },
+    {
+      "id": "A06-06",
+      "slug": "resource-design",
+      "boundary": "Resource/abuse constraints by design",
+      "source_trace": "Actor -> expensive capability -> quota/admission -> durable resource.",
+      "controlled_verification": "Review budgets or use bounded local cost instrumentation.",
+      "false_positive_discriminator": "Do not exhaust live inventory, money or service capacity to prove impact.",
+      "remediation_acceptance": "Admission/accounting limits protect intended resources without breaking legitimate usage.",
+      "default_status": "not-tested"
+    }
+  ]
+}

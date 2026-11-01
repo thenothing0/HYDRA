@@ -1,0 +1,21 @@
+{
+  "name": "security-auction-bid-state-review",
+  "domain": "Commerce and business state",
+  "intent": "Auction bid identity, increment rules and close-time commitment",
+  "artifacts": "Bid acceptance, auction clock/close policy, bidder eligibility and winner/payment transition.",
+  "trace": "Track server authority over bid value, bidder, auction and finalization, including edited/withdrawn bids and stale close state.",
+  "experiment": "Use a local auction with synthetic bids and compare a legal bid with one expired or unauthorized transition.",
+  "disproof": "A leader shown in a client feed is not a committed winner; identify the authoritative auction result.",
+  "repair": "Enforce eligibility/value/time at acceptance and finalization, preserving legitimate withdrawal and tied-bid policy.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Transaction_Authorization_Cheat_Sheet.html",
+  "adjacent": "security-payment-integrity-review; security-workflow-transitions-review; security-race-conditions-review",
+  "branch_decisions": "Use the authoritative clock and close/extension policy, including anti-sniping extensions if present. Feed delivery timing is not bid acceptance timing. Separate an invalid bid accepted into authoritative state from a stale displayed leader or a legitimate tie-break rule.",
+  "operational_method": "Build the product state table for open, extended, closed, withdrawn and settled states, including tie rules and any escrow/payment prerequisite. Record authoritative bid acceptance time separately from feed delivery. Compare an owned replacement/withdrawal before close with the same forbidden transition after effective close. A late display update or a legitimate anti-sniping extension does not establish acceptance of an invalid bid.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Mobile platform integrations",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "FileProvider root selection and temporary URI permission scope",
+      "source_trace": "Trace which app receives which URI and whether it can access files beyond the intended shared object through path/root or grant handling.",
+      "implementation_branch": "Trace configured roots, canonical path resolution, manifest export/grant settings and individual Intent/ClipData grants. A broad root is potential reach, not proof an attacker has a usable URI grant. Separate read from write and persisted versus temporary access; use owned marker files and verify the effective recipient operation and grant revocation.",
+      "operational_method": "Record provider root mapping, canonical file, actual recipient and grant flags on Intent/ClipData, including prefix scope where supported. Separate read/write and actual supported persistability; a client requesting persistence does not make every provider grant persistable. Compare a marker URI with a sibling/outside-root URI and observe permissions after the documented temporary-grant lifetime/revocation event. Exported=false alone does not invalidate an explicitly issued grant.",
+      "controlled_verification": "Use owned emulator apps and synthetic files inside/outside a share root; compare intended URI access and one unauthorized file request.",
+      "false_positive_discriminator": "A content URI or broad-looking path XML is not arbitrary file access without an effective granted/open path.",
+      "remediation_acceptance": "Constrain roots and URI grants, then retest legitimate shares, grant lifetime and outside-file denial."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "AWS service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "EventBridge producer identity, routing and consumer trust",
+      "source_trace": "Determine whether untrusted producers can set fields the consumer treats as an authenticated tenant or action instruction.",
+      "implementation_branch": "An event detail field claiming a tenant or user is application data, not the caller identity authenticated by the bus. Evaluate PutEvents admission, routing rule scope and consumer validation independently. Service-originated events and custom producers have different provenance; a rule match alone does not demonstrate that a protected consumer trusts a forged identity.",
+      "operational_method": "Inspect PutEvents rights separately from PutRule/PutTargets and rule-update authority. Retain producer principal, source bus, selected rule and target ARN for the same synthetic event. A rule writer can redirect an otherwise authentic event; that is different from a producer forging detail fields. Verify the consumer action and intended destination with a local event-routing stub or supplied trace, without publishing real notifications.",
+      "controlled_verification": "Use an owned bus or local event fixture with inert markers; compare intended producer events and a controlled spoofed authority field.",
+      "false_positive_discriminator": "Publishing to a public intake bus can be intentional; a rule match alone is not a privileged consumer effect.",
+      "remediation_acceptance": "Authenticate producer context and validate consumer authority, then retest rightful events and spoofed-field rejection."
+    }
+  ]
+}

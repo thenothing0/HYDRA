@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Databases and messaging",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "ClickHouse effective row policies, roles and alternate data paths",
+      "source_trace": "Trace which policies apply to the selected table/query identity and whether a permitted alternate engine/view path bypasses the intended tenant restriction.",
+      "implementation_branch": "Evaluate active roles and permissive/restrictive policy composition for the installed version and table operation. SELECT row policy is not a universal write or external-table guard. A user with unrestricted alternative access may intentionally bypass the filtered view; distinguish an application boundary from a privileged DBA role.",
+      "operational_method": "Expand applicable roles and policy expressions: permissive policies combine as OR and restrictive policies constrain the result with AND. Resolve deployed-version/settings behavior when no policy applies, rather than assuming a universal default. Record the actual table operation and alternate view/table functions. Compare a mixed-tenant owned dataset under one role and the effective role set; SELECT filtering alone does not establish write or external-source confinement.",
+      "controlled_verification": "Use isolated synthetic tenant rows with an ordinary application identity; compare entitled query and one reachable alternate path.",
+      "false_positive_discriminator": "A superuser seeing all rows or an unused table-function name is not an application-user bypass.",
+      "remediation_acceptance": "Apply the intended policy to effective data paths and test legitimate analytics and foreign-row denial."
+    }
+  ]
+}

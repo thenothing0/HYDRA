@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Cryptographic protocols and runtime consumers",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Java JNDI lookup authority and external object/resource handling",
+      "source_trace": "Follow lower-trust names into reachable naming providers and determine which local/network/deserialization capabilities the configured runtime permits.",
+      "implementation_branch": "Resolve the actual JDK/provider version and configured factories, not historical default assumptions. A lookup URL can select a resource or object factory without enabling remote code loading. Trace caller control into the installed provider and downstream consumer; use an inert local provider stub instead of running a gadget or contacting an external naming server.",
+      "operational_method": "Resolve installed JDK/provider and the actual naming URL, ObjectFactory selection and returned-object consumer. Inspect effective object-factory/deserialization filters, including jdk.jndi.object.factoriesFilter where supported, and provider-specific settings; obsolete remote-codebase assumptions are not universal current behavior. An inert naming stub proves only lookup reachability. Require actual configured resolution or complete source evidence before claiming object construction, without executing gadgets or changing trust switches.",
+      "controlled_verification": "Use a local inert naming stub or source-only complete trace; do not serve object factories or execution payloads to production.",
+      "false_positive_discriminator": "A JNDI string or affected library name is not reachable code execution; version/configuration and consumer behavior matter.",
+      "remediation_acceptance": "Constrain lookup sources/providers and object handling, preserving intended naming resources."
+    }
+  ]
+}

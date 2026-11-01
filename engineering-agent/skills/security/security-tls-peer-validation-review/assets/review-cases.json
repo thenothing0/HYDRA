@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-tls-peer-validation-review",
+  "cases": [
+    {
+      "id": "wrong-peer-accepted",
+      "scenario": "The application client sends a harmless canary to a local server whose certificate is trusted but names the wrong service.",
+      "expected_decision": "Confirm service-identity validation failure for the exercised client path."
+    },
+    {
+      "id": "private-ca-valid",
+      "scenario": "A correctly provisioned internal CA and matching service identity are accepted.",
+      "expected_decision": "Do not treat nonpublic trust as a certificate bypass."
+    },
+    {
+      "id": "scanner-only",
+      "scenario": "An external TLS scanner finds a server issue, but no application client validation path was examined.",
+      "expected_decision": "Route the server finding separately; this client-authentication claim remains untested."
+    }
+  ]
+}

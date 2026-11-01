@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-tenant-invitations-review",
+  "cases": [
+    {
+      "id": "recipient-swap",
+      "scenario": "A recipient-bound fixture invitation creates the specified privileged membership for a different owned account.",
+      "expected_decision": "Confirm binding failure from provider/product contract and durable membership authority."
+    },
+    {
+      "id": "shareable-by-design",
+      "scenario": "A product explicitly allows any holder to join with a low-privilege shareable invitation.",
+      "expected_decision": "Do not invent an email-recipient restriction; assess the actual allowed grant."
+    },
+    {
+      "id": "org-role-only",
+      "scenario": "An accepted invitation grants a role only inside the intended fixture organization.",
+      "expected_decision": "Do not claim global administrator authority without that separately observed privilege."
+    }
+  ]
+}

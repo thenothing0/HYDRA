@@ -1,0 +1,21 @@
+{
+  "name": "security-oauth-device-authorization-review",
+  "domain": "Identity and federation extensions",
+  "intent": "Device Authorization Grant account/device transaction binding",
+  "artifacts": "Device/user-code issuance, verification UI, polling client identity, expiry and owned test accounts/devices.",
+  "trace": "Separate the device transaction, user confirmation and polling client. Determine which account and audience the final token represents, including user-visible confirmation.",
+  "experiment": "In an owned issuer fixture confirm one device transaction, then compare another client/device transaction and expired/reused codes without guessing user codes.",
+  "disproof": "A deliberately portable user code is not a flaw by itself; no token issuance or wrong-account binding means the strong claim is unproved.",
+  "repair": "Bind the approved transaction, client and account; retest legitimate pairing, expiry and unauthorized transaction substitution.",
+  "source": "https://www.rfc-editor.org/rfc/rfc8628",
+  "adjacent": "security-oauth-oidc-review; security-jwt-review; security-saml-review",
+  "branch_decisions": "Distinguish device_code, human user_code and the polling client; they have different audiences. A user confirmation must be tied to the intended device transaction, but cross-device confirmation is normal. Use expiry/polling errors as protocol observations, not evidence of account authentication unless a token is actually issued.",
+  "operational_method": "Identify issuer, client_id, device_code and the approved user transaction in the polling state. Public clients are identified differently from confidential clients that authenticate. Separate authorization_pending, access_denied and expired_token states from successful token issuance; a user_code displayed on another device is normal. Compare rightful polling with a client/transaction mismatch in an owned issuer fixture, without asking a real user to approve an attacker transaction.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

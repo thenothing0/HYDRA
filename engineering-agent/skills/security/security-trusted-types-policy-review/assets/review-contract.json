@@ -1,0 +1,21 @@
+{
+  "name": "security-trusted-types-policy-review",
+  "domain": "Browser and HTTP boundaries",
+  "intent": "Trusted Types policy creation and trust at DOM injection sinks",
+  "artifacts": "Effective require-trusted-types-for/trusted-types policy, policy factories, default policy, sink consumer and browser support.",
+  "trace": "Trace an attacker-controlled value through createHTML/createScriptURL or the default policy into the protected sink. Determine whether the factory sanitizes the actual context or merely wraps input.",
+  "experiment": "Use an owned DOM fixture with a benign execution marker and legitimate rich content; compare raw strings with values produced by the real policy factory.",
+  "disproof": "A TrustedHTML object is not proof of sanitization. An unsupported browser or unenforced policy cannot prove the protected configuration failed.",
+  "repair": "Constrain policy creation and repair the factory/consumer, then verify rejected untrusted markup and preserved intended rendering.",
+  "source": "https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API",
+  "adjacent": "security-javascript-analysis-review; security-xss-review; security-request-smuggling-review",
+  "branch_decisions": "Identify which factory and output type reaches the sink: TrustedHTML is not TrustedScriptURL. An unsafe default policy can convert raw strings and must be traced separately from named factories. Policy-name allowlisting controls factory creation; it does not certify that the approved factory sanitizes its input.",
+  "operational_method": "Record the sink type, assignment result/exception, selected default or named factory and resulting DOM or script URL. A raw string TypeError is different from a default policy transforming the same input into an accepted typed value. Exercise the real factory on legitimate content and an inert untrusted marker; policy creation or a TrustedHTML label alone supplies no sanitization oracle.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

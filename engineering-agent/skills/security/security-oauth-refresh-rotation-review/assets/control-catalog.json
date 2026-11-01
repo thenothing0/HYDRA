@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Identity and federation extensions",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Refresh-token family rotation, reuse response and atomicity",
+      "source_trace": "Track issuance, replacement and revocation as one transition. Determine whether reuse rejects only one request or invalidates the intended family and downstream sessions.",
+      "implementation_branch": "Record the issuer policy for token-family reuse, allowed concurrency and any grace window. Do not assume every access token must be revoked on refresh reuse. Inspect atomic replacement and the exact descendants still usable after a detected replay, using synthetic local state rather than live token guessing.",
+      "operational_method": "Trace family ID, predecessor, replacement token and commit/delivery state. If rotation commits but the response is lost, a retry can be legitimate under an explicit grace/idempotency contract; distinguish it from two independently successful descendants exceeding policy. Use deterministic local interleaving and transport-loss simulation, then record which family members remain usable without treating every reuse event as proven theft.",
+      "controlled_verification": "Replay one previously consumed synthetic refresh token and inspect family state; use deterministic local barriers for a race rather than live request bursts.",
+      "false_positive_discriminator": "Two locally issued access tokens are not necessarily a defect if policy explicitly allows overlap; record actual reuse policy and validity.",
+      "remediation_acceptance": "Implement atomic family transitions and the declared reuse response, then verify normal refresh and reuse handling."
+    }
+  ]
+}

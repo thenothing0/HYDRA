@@ -1,0 +1,16 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "API_BOLA-1",
+      "boundary": "API object-level authorization (BOLA/IDOR) — authoritative consumer",
+      "source_trace": "Open the resource model, tenant membership rule, object lookup, serializer and export/download consumer. Write down whether tenant membership, ownership, a share grant or a combination authorizes this action.",
+      "controlled_verification": "Create private document B with a unique inert marker as owner B. Actor A first reads its own document, then requests B using the same A session. If the direct endpoint denies, trace the export relationship: can an A-owned export job accept document B? Compare the owner/tenant of both the job and every referenced document, at enqueue and consumption. Observe the exported marker or durable write, not just job creation.",
+      "false_positive_discriminator": "An accepted job whose worker later rejects B is not a demonstrated document disclosure. A shared document is a legitimate control only under the recorded grant. Endpoint denial and a successful authorized owner read must use the same build.",
+      "remediation_acceptance": "Bind every referenced object to the caller action policy before use, including nested and batched objects. For mixed-owner batches verify the documented atomic/reject/filter behavior and absence of forbidden content in exports, logs and job results."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

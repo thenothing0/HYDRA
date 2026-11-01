@@ -1,0 +1,21 @@
+{
+  "name": "security-sse-event-authorization-review",
+  "domain": "API and SaaS authority",
+  "intent": "Server-Sent Events stream identity and per-event resource filtering",
+  "artifacts": "EventSource auth mechanism, stream selection, Last-Event-ID handling, broker subscription and event serializer.",
+  "trace": "Follow requester identity into channel/cursor selection and each emitted object. Check replay/resume without replacing current authorization with a cursor capability by accident.",
+  "experiment": "Use two owned streams and synthetic events; compare normal subscribe/resume with a foreign cursor/channel and a revoked membership.",
+  "disproof": "A kept-alive response or guessed channel name is not cross-user event exposure; prove an unauthorized synthetic event is delivered.",
+  "repair": "Bind stream/cursor access to current policy and verify entitled resume plus restricted event exclusion.",
+  "source": "https://html.spec.whatwg.org/multipage/server-sent-events.html",
+  "adjacent": "security-api-bola-review; security-api-function-authorization-review; security-background-job-authorization-review",
+  "branch_decisions": "Last-Event-ID can be a resume position rather than a bearer credential. Reapply the current actor/resource filter to replayed events. Distinguish broker events already authorized and buffered before revocation from new events, and do not equate HTTP stream establishment with delivery of protected data.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

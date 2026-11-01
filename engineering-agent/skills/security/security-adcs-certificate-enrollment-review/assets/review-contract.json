@@ -1,0 +1,23 @@
+{
+  "name": "security-adcs-certificate-enrollment-review",
+  "domain": "Enterprise identity and privileged access",
+  "intent": "AD CS certificate template enrollment and identity authority",
+  "artifacts": "Template settings, enrollment/management permissions, issuance requirements, EKUs and CA policy.",
+  "trace": "Determine which low-privilege principal can enroll or modify a template and what identity/purpose a resulting certificate would represent.",
+  "experiment": "Use an owned lab CA or configuration proof with synthetic identities; compare intended enrollment and an out-of-policy subject/purpose request.",
+  "disproof": "A risky-looking template flag alone does not establish effective enrollment or certificate-based authentication to a protected service.",
+  "repair": "Constrain enrollment/template authority and issuance identity, verifying intended certificate workflows and denied impersonation.",
+  "source": "https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/certificate-template-concepts",
+  "adjacent": "security-windows-service-permissions-review; security-ldap-injection-review; security-posix-file-permissions-review",
+  "branch_decisions": "Evaluate template enrollment rights, subject/SAN control, issuance requirements, EKUs and CA policy together. A permissive-looking template alone does not establish a usable authentication certificate. Use exported configuration or an isolated lab to trace the exact claimed principal and relying service; do not enroll certificates impersonating real directory users.",
+  "operational_method": "Retain CA/DC build and patch level, template issuance/enrollment settings, certificate SID/strong mapping evidence and the actual relying authentication protocol. A SAN selected by a caller is not enough to decide accepted identity under current strong-mapping enforcement. Compare a deliberately mapped synthetic identity with a mapping-mismatched certificate in supplied traces or an isolated directory lab; certificate issuance, successful mapping and final service authorization are separate necessary edges. Do not request impersonation certificates for real principals.",
+  "additional_sources": [
+    "https://support.microsoft.com/en-us/servicing/os/windows-server/2022/05/kb5014754-certificate-based-authentication-changes-on-windows-domain-controllers"
+  ],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

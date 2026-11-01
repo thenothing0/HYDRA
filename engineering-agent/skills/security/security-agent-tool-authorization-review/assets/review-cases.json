@@ -1,0 +1,27 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-agent-tool-authorization-review",
+  "cases": [
+    {
+      "id": "supported-boundary-violation",
+      "input_requirements": "Provide user/tool authority contract, credential identity, exact sanitized call and resource, gate/approval trace, stub ledger or actual bounded effect and permitted-call control.",
+      "decision": "Confirm only when intended policy, lower-trust reachability and actual protected effect are all supported; keep simulation/source proof labeled."
+    },
+    {
+      "id": "legitimate-or-insufficient-observation",
+      "observation": "Tool availability is not automatically excess authority, and a model proposing a forbidden action is not execution. The finding requires a violated application permission or approval contract.",
+      "decision": "Do not confirm from the stated observation alone. Obtain the missing boundary/effect evidence or explain the permitted behavior."
+    },
+    {
+      "id": "missing-runtime-or-authority",
+      "observation": "Source/configuration suggests this path, but a required identity, policy layer or runtime observation is unavailable.",
+      "decision": "Record a source-supported concern or hypothesis with the missing decisive check. Do not invent verification, credentials or impact."
+    },
+    {
+      "id": "remediation-regression",
+      "input_requirements": "Constrain tool functionality and enforce actor/resource/action permissions outside the model. When the product requires approval, bind it to immutable reviewed parameters and appropriate lifetime; retest required actions, denied cross-authority calls and replay/change cases.",
+      "decision": "Close only after the original prohibited behavior is prevented and the legitimate control still works on the changed build/configuration."
+    }
+  ]
+}

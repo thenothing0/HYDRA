@@ -1,0 +1,16 @@
+{
+  "category": "A05",
+  "taxonomy_note": "Analyst planning lens; reassess actual root cause.",
+  "controls": [
+    {
+      "id": "LDAP_INJECTION-1",
+      "boundary": "LDAP filter and distinguished-name injection — authoritative consumer",
+      "source_trace": "Read filter and distinguished-name construction separately, including library escaping APIs and directory search scope. Establish who controls each interpolated component.",
+      "controlled_verification": "With a local directory fixture, compare a legitimate account value with punctuation that must remain literal in that component. Inspect the serialized filter/DN and returned fixture entries. If input reaches both contexts, evaluate both representations rather than reusing one escaping rule.",
+      "false_positive_discriminator": "A rejected malformed filter is not an authentication bypass. Correct filter escaping does not establish DN safety, and a parameter-like API name needs its actual library contract checked.",
+      "remediation_acceptance": "Use the library's context-appropriate builder/escaping and constrain directory search authority. Retest valid special-character account names and the original query-selection discrepancy."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

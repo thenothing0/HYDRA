@@ -1,0 +1,21 @@
+{
+  "name": "security-scim-provisioning-authority-review",
+  "domain": "Identity and federation extensions",
+  "intent": "SCIM connector tenant, account and group-membership authority",
+  "artifacts": "Connector credential/tenant mapping, SCIM schemas, PATCH handling, group membership and deprovisioning consumers.",
+  "trace": "Trace external identifiers and connector authority into local account/group operations, especially replace/remove membership and disabled-user handling.",
+  "experiment": "Use two owned tenants and synthetic users/groups; compare the rightful connector with cross-tenant identifier or PATCH membership substitution.",
+  "disproof": "An externalId collision is not account compromise unless it selects or alters the wrong local principal.",
+  "repair": "Bind connectors and operations to tenant/principal policy and verify create/update/deactivate plus unrelated tenant preservation.",
+  "source": "https://www.rfc-editor.org/rfc/rfc7644",
+  "adjacent": "security-oauth-oidc-review; security-jwt-review; security-saml-review",
+  "branch_decisions": "PATCH add/remove/replace and bulk semantics need the actual schema/path interpretation, especially group members and user active state. A connector may legitimately administer all users in its own tenant. Test cross-tenant mapping, immutable identity and deprovisioned-session effects as separate assertions.",
+  "operational_method": "Retain the ordered PATCH operation list and filtered path interpretation, especially group members and active state. Distinguish connector externalId lookup from server-assigned id and inspect which tenant namespace each uses. Compare the before/after synthetic membership set, not only the final status code; a valid same-tenant administrative connector operation remains a positive control.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

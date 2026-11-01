@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-redis-acl-review",
+  "cases": [
+    {
+      "id": "selector-grant",
+      "scenario": "A secondary selector lets a restricted fixture user write another tenant's test key contrary to its role contract.",
+      "expected_decision": "Confirm the complete matching rule and persisted fixture effect."
+    },
+    {
+      "id": "admin-intended",
+      "scenario": "A designated owner/admin user can read all synthetic keys as its documented role permits.",
+      "expected_decision": "Do not represent intended administration as a tenant-user bypass."
+    },
+    {
+      "id": "dry-run-only",
+      "scenario": "An authorization dry-run predicts access but the real application identity/route is unavailable.",
+      "expected_decision": "Report predicted ACL authority with the missing application reachability, not invented data disclosure."
+    }
+  ]
+}

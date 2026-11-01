@@ -16,7 +16,7 @@ from hydra.engineering.providers import describe_providers, settings
 from hydra.engineering.tui.controller import EngineeringController
 from hydra.engineering.tui.widgets import CommandApproval, ModelSelection, Prompt, safe_text
 
-HELP = "/new  /sessions  /resume ID  /diff  /plan  /model [ID]  /provider NAME MODEL  /burp  /hackerone  /status  /handoff  /cancel  /help  /quit"
+HELP = "/new  /sessions  /resume ID  /diff  /plan  /model [ID]  /provider NAME MODEL  /skills [QUERY]  /skill NAME|clear  /burp  /hackerone  /status  /handoff  /cancel  /help  /quit"
 
 
 class SessionItem(ListItem):
@@ -386,6 +386,44 @@ class EngineeringApp(App):
                 self.add_message("HackerOne reporting", json.dumps(report, ensure_ascii=False, indent=2))
             except (ValueError, OSError, KeyError) as error:
                 self.add_message("HackerOne reporting", str(error))
+        elif command == "/skills":
+            from hydra.engineering.skills import SkillCatalog
+
+            try:
+                catalog = SkillCatalog()
+                entries = catalog.search(argument.strip())
+                self.add_message("Bundled skills", json.dumps({"total": len(catalog.entries), "skills": entries}, ensure_ascii=False, indent=2))
+            except (ValueError, OSError) as error:
+                self.add_message("Skills unavailable", str(error), "error")
+        elif command == "/skill":
+            if self.busy:
+                self.notify("Cancel or finish the current run before changing skills.")
+                return
+            from hydra.engineering.skills import SkillCatalog, SkillSelection, MAX_ACTIVE, MAX_INSTRUCTIONS
+
+            try:
+                name = argument.strip()
+                catalog = SkillCatalog()
+                session = self.controller.session
+                if name == "clear":
+                    self.options.skills = []
+                    if session:
+                        session.state["skills"] = []
+                        session.save()
+                    self.add_message("Skills", "Active selection cleared; the catalog is still available.")
+                elif session:
+                    selection = SkillSelection(catalog, session, self.options.skills)
+                    selection.use(name)
+                    self.options.skills = [item["name"] for item in selection.active]
+                    self.add_message("Skill selected", json.dumps(catalog.metadata(name), ensure_ascii=False, indent=2))
+                else:
+                    names = list(dict.fromkeys([*(self.options.skills or []), name]))
+                    if len(names) > MAX_ACTIVE or sum(len(catalog.read(item)["content"]) for item in names) > MAX_INSTRUCTIONS:
+                        raise ValueError("Choose at most three skills within the instruction context budget")
+                    self.options.skills = names
+                    self.add_message("Skill selected", json.dumps(catalog.metadata(name), ensure_ascii=False, indent=2))
+            except (ValueError, OSError) as error:
+                self.add_message("Cannot select skill", str(error), "error")
         elif command in ("/status", "/handoff"):
             if self.busy and command == "/handoff":
                 self.notify("Cancel or finish the active run before exporting its committed state.")

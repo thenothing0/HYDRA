@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "domain": "business",
+  "native_context": "Background job actor, tenant and delayed authority",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "BACKGROUND_JOB_AUTHORIZATION-1",
+      "boundary": "Background job actor, tenant and delayed authority — authoritative consumer",
+      "source_trace": "Read enqueue, worker, job-status and result-download code together. Record requester identity, resource references, service credentials, grant lifetime and the policy for revoked membership.",
+      "controlled_verification": "Queue an A-owned export referring to private synthetic B data. Determine whether the worker re-establishes the caller's permitted resource set or trusts a supplied tenant/user field. Separately inspect whether A can read B's existing job/result. For revocation, use the product's declared enqueue-time versus execution-time grant rule.",
+      "false_positive_discriminator": "A privileged worker is normal architecture. Job acceptance without forbidden consumption is not an export leak. A policy intentionally granting an immutable snapshot must not be labeled stale authorization solely because membership later changes.",
+      "remediation_acceptance": "Bind requester, referenced objects and result owner; enforce the declared grant lifetime at consumption. Retest result URLs/status as well as the job action and legitimate delayed processing."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

@@ -1,0 +1,16 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Initial root-cause lens; reassess final mapping.",
+  "controls": [
+    {
+      "id": "SSRF-1",
+      "boundary": "Server-side request forgery — authoritative consumer",
+      "source_trace": "Read the exact URL parser/client, redirect and retry settings, DNS resolution/connection path, proxy behavior and documented allowed destinations. Identify which bytes the caller can influence.",
+      "controlled_verification": "Use an owned allowed endpoint and a separate owned denied endpoint. If redirects are enabled, make the allowed fixture redirect to the denied fixture and correlate a unique application-fetch marker at each hop. For DNS changes, inspect whether the connected address is the one validated; preserve hostname/SNI/certificate verification when evaluating a proposed pinned-address repair.",
+      "false_positive_discriminator": "A public fetch feature or DNS lookup alone is not forbidden HTTP reachability. A callback from the tester's browser is not a server fetch. Absence of a callback without a working allowed control is inconclusive.",
+      "remediation_acceptance": "Enforce destination policy on actual connections, redirect hops and relevant retries; retain correct TLS peer validation. Retest legitimate fetches and denied callbacks without cloud-metadata or unrelated internal probes."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

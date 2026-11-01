@@ -1,0 +1,21 @@
+{
+  "name": "security-account-identifier-reuse-review",
+  "domain": "Data publication and privacy boundaries",
+  "intent": "Reassigned account identifiers inheriting a previous principal authority",
+  "artifacts": "Account creation/deletion schema, immutable principal IDs, username/email/numeric-ID reuse rules, ACL joins, group memberships and entitlement caches.",
+  "trace": "Trace a genuinely new principal through identifier allocation into old ACLs, memberships or ownership. Distinguish stable principal identity from a recycled display or login identifier; route residual deleted-record access to security-deleted-data-access-review.",
+  "experiment": "In a disposable identity fixture grant principal P1 a marker capability, retire P1, assign its reusable login label to distinct P2 and compare P2 with a fresh control and an explicitly restored P1.",
+  "disproof": "An authorized restoration of the same principal or harmless display-name reuse is not cross-principal authority transfer; require an inherited protected capability under the product identity policy.",
+  "repair": "Bind grants to immutable principals or identity generations, retire stale memberships/caches and verify safe identifier reuse alongside intended same-principal restoration.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+  "adjacent": "security-api-sensitive-fields-review; security-deleted-data-access-review; security-document-processing-review",
+  "branch_decisions": "Distinguish an intentionally restored account from a genuinely new principal assigned a reused name, email or numeric ID. Follow immutable principal identity into ACLs, group memberships, ownership and cached entitlements. A recycled display name is harmless unless it selects old authority; compare a new principal with a legitimate restoration under the declared lifecycle policy.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

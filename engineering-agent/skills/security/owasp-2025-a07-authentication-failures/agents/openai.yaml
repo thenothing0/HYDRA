@@ -1,0 +1,4 @@
+interface:
+  display_name: "OWASP A07: Authentication Failures"
+  short_description: "Review and remediate OWASP A07:2025 risks"
+  default_prompt: "Use $owasp-2025-a07-authentication-failures to review this project, document supported findings, and verify requested fixes."

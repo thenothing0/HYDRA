@@ -1,0 +1,21 @@
+{
+  "name": "security-ldap-signing-channel-binding-review",
+  "domain": "Enterprise identity and privileged access",
+  "intent": "LDAP signing/channel-binding enforcement for directory authentication",
+  "artifacts": "Client bind mode, server signing/channel-binding policy, TLS termination and supported client behavior.",
+  "trace": "Determine what authenticity/integrity properties the actual bind path enforces, distinguishing TLS peer validation from binding the authenticated session.",
+  "experiment": "Use an owned directory lab or configuration trace with synthetic accounts; compare a supported protected bind and a deliberately unsupported protection mode.",
+  "disproof": "A listening LDAP port or successful anonymous metadata read is not credential relay or authenticated directory access.",
+  "repair": "Enforce the required bind protections and verify normal directory clients and rejected weaker paths.",
+  "source": "https://learn.microsoft.com/en-us/troubleshoot/windows-server/active-directory/enable-ldap-signing-in-windows-server",
+  "adjacent": "security-windows-service-permissions-review; security-ldap-injection-review; security-posix-file-permissions-review",
+  "branch_decisions": "Separate simple bind over TLS, SASL signing and TLS channel-binding requirements for the actual client/server combination. Signing policy and channel-binding policy cover different relay/tampering paths. A rejected unsigned bind is a useful specific control; it does not prove every TLS client validates the directory peer or supplies the required binding.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

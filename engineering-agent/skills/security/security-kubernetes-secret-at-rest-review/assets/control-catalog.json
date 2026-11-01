@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Kubernetes and deployment controllers",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Kubernetes Secret storage encryption and effective read paths",
+      "source_trace": "Separate base64 representation, encryption at rest and API authorization. Trace access to plaintext through datastore backups, providers and permitted API readers.",
+      "implementation_branch": "API authorization, etcd encryption and node/workload delivery protect different paths. A base64 field is not encryption, while a privileged API reader obtaining plaintext may be expected. Verify encryption-provider ordering, rotation/rewrite status and storage evidence without publishing real keys; configured encryption alone does not prove historical objects were rewritten.",
+      "operational_method": "",
+      "controlled_verification": "Use a local cluster/synthetic Secret and an owned storage snapshot to distinguish plaintext persistence from authorized API decryption.",
+      "false_positive_discriminator": "Reading a Secret through an authorized API is expected even when at-rest encryption works; base64 alone is not encryption evidence.",
+      "remediation_acceptance": "Protect storage/backups and effective read authority, verifying key rotation, rewrite and recovery behavior."
+    }
+  ]
+}

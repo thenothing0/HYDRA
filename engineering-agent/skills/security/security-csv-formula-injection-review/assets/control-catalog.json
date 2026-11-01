@@ -1,0 +1,18 @@
+{
+  "category": "A05",
+  "domain": "data",
+  "native_context": "Spreadsheet formula interpretation of exported fields",
+  "taxonomy_note": "Planning compatibility lens only. Classify the final observed root cause independently; unsupported mappings stay unassigned.",
+  "controls": [
+    {
+      "id": "CSV_FORMULA_INJECTION-1",
+      "boundary": "Spreadsheet formula interpretation of exported fields — authoritative consumer",
+      "source_trace": "Read export quoting, delimiters, cell typing and intended spreadsheet applications/import settings. Identify a recipient who opens attacker-influenced data outside the attacker's own view.",
+      "controlled_verification": "Create a local CSV with an inert formula marker and a legitimate text control. Import it in the intended application/settings and observe cell interpretation, including the actual quoting/delimiter path. Preserve whether the result was merely authored or actually opened.",
+      "false_positive_discriminator": "A leading formula character in CSV bytes is a candidate, not proof of execution in every spreadsheet. Quoting protects CSV structure but may not force a spreadsheet cell to text.",
+      "remediation_acceptance": "Choose a format/cell representation appropriate to intended recipients and test round-trip behavior. Retest ordinary data, delimiters/quotes and the original formula interpretation without external commands or links."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

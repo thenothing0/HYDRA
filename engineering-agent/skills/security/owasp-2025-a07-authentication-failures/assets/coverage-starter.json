@@ -1,0 +1,41 @@
+{
+  "category": "A07",
+  "coverage": [
+    {
+      "id": "A07-01",
+      "boundary": "Recovery recipient and identity",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A07-02",
+      "boundary": "Token trust contract",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A07-03",
+      "boundary": "Session rotation and revocation",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A07-04",
+      "boundary": "MFA and recovery branch consistency",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A07-05",
+      "boundary": "Federation and account linking",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A07-06",
+      "boundary": "Authentication abuse controls",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    }
+  ]
+}

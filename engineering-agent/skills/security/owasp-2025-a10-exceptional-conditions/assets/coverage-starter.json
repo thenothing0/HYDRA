@@ -1,0 +1,41 @@
+{
+  "category": "A10",
+  "coverage": [
+    {
+      "id": "A10-01",
+      "boundary": "Unknown security decision",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A10-02",
+      "boundary": "Disabled or absent capability",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A10-03",
+      "boundary": "Failure around commit",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A10-04",
+      "boundary": "Retry identity and conflict",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A10-05",
+      "boundary": "Cleanup and cancellation",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    },
+    {
+      "id": "A10-06",
+      "boundary": "Retry and degradation policy",
+      "status": "not-tested",
+      "reason": "Not assessed yet; replace with actual test result or concrete gap"
+    }
+  ]
+}

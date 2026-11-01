@@ -1,0 +1,21 @@
+{
+  "name": "security-jwe-decryption-boundary-review",
+  "domain": "Cryptographic protocols and runtime consumers",
+  "intent": "JWE key/algorithm/context selection and decryption error handling",
+  "artifacts": "JOSE library/version, allowed algorithms, key selection, authenticated headers and downstream plaintext consumer.",
+  "trace": "Trace untrusted protected/unprotected header choices into key/algorithm use and then into a purpose-specific validated payload.",
+  "experiment": "Use local synthetic keys/ciphertexts and bounded valid/invalid cases; compare intended context with a wrong purpose/key/algorithm path without recovering production plaintext.",
+  "disproof": "Different error messages alone do not prove a practical decryption oracle; decrypted bytes accepted for another purpose need separate evidence.",
+  "repair": "Constrain algorithms/keys/context and uniform failure handling, retesting valid messages and prohibited combinations.",
+  "source": "https://www.rfc-editor.org/rfc/rfc7516",
+  "adjacent": "security-jwt-review; security-tls-peer-validation-review; security-deserialization-review",
+  "branch_decisions": "Bind key selection and allowed alg/enc values to the recipient/context rather than trusting header choices. Successful decryption authenticates the ciphertext under a key, not necessarily its sender or tenant. Inspect any nested signature and application claims separately; differing local error text alone does not demonstrate an exploitable remote oracle.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

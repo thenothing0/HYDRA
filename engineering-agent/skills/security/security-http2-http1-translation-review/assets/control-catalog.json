@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Browser and HTTP boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "HTTP/2 internal request normalization and HTTP/1 serialization agreement",
+      "source_trace": "Resolve how the intermediary translates lengths, prohibited fields, trailers and stream boundaries into backend messages. Keep parser hypotheses tied to the actual deployed chain.",
+      "implementation_branch": "A frontend rejection with zero bytes forwarded stops the proposed chain. Otherwise correlate HTTP/2 DATA length, translated HTTP/1 framing, legal trailers, connection reuse and actual backend boundaries. A second ordinary request is not proof of desynchronization; establish an unexpected boundary caused by the challenged stream in an isolated backend, without shared-user traffic.",
+      "operational_method": "Trace four concrete artifacts: decoded H2 header/DATA events, normalized internal request, serialized H1 bytes and backend parser boundaries on the same isolated connection. Resolve pseudo-header authority versus Host, content-length versus DATA accounting and trailer forwarding in the translator implementation. Frontend rejection with zero forwarded bytes disproves that path. Attribute any unexpected boundary to one transformation step; do not treat a second ordinary request or generic two-hop discrepancy as H2 translation proof.",
+      "controlled_verification": "In an isolated translator/parser fixture correlate one H2 stream, its normalized request and exact H1 serialization with backend boundaries. Compare a legitimate equal-length control with one bounded rejected or differently normalized input; do not involve shared connections/users.",
+      "false_positive_discriminator": "Different status codes or a malformed-header rejection are not request smuggling without a second parsed message/effect.",
+      "remediation_acceptance": "Normalize or reject ambiguous translation and retest the exact framing pair plus normal multiplexed traffic."
+    }
+  ]
+}

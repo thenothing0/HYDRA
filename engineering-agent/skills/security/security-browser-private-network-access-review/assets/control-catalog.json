@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Browser and HTTP boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Browser-mediated requests from a public page into an owned private-network service",
+      "source_trace": "Follow the browser network-permission and CORS boundaries separately from destination reachability. Determine whether the attacker can read a result or trigger a protected effect.",
+      "implementation_branch": "Determine the deployed browser generation: historical PNA preflight and newer LNA permission behavior are not interchangeable. Record secure context, initiator origin, resolved address space and permission state. An explicit user-granted local-network permission is not a bypass. A loopback fixture is not automatically representative of a public-to-private transition; preserve the actual prerequisites.",
+      "operational_method": "Record engine build, enabled feature/enterprise policy, permission state and whether the profile grant was reset before the comparison. The same version may have different rollout or policy settings. Retain initiator and resolved destination address spaces with the actual request count. A granted-permission success and denied-permission absence are different expected branches; a loopback-only setup must not stand in for an untested public-origin transition.",
+      "controlled_verification": "Use only an owned isolated service with an inert marker and compare permission-denied and intended-origin controls; never enumerate a victim network.",
+      "false_positive_discriminator": "An attempted fetch, private IP string or server-side fetch result is not a browser private-network bypass.",
+      "remediation_acceptance": "Constrain origin/authorization on the internal service and verify the recorded browser flow after repair."
+    }
+  ]
+}

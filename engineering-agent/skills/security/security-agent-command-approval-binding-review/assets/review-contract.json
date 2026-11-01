@@ -1,0 +1,21 @@
+{
+  "name": "security-agent-command-approval-binding-review",
+  "domain": "AI applications and agent runtimes",
+  "intent": "Approval-to-command binding across agent execution and retries",
+  "artifacts": "Approval UI/record, executor arguments, shell expansion, working directory and retry logic.",
+  "trace": "Trace the exact reviewed action into the executed process, including changed arguments, environment, cwd or substituted scripts after approval.",
+  "experiment": "Use inert local command stubs that record argv/cwd; compare an approved action and a deliberately modified subsequent action.",
+  "disproof": "An approval for a displayed command is not a generic grant to related actions; conversely, repeated approval is unnecessary when the actual authorized action is unchanged.",
+  "repair": "Bind approval to the security-relevant execution object and preserve legitimate idempotent retries.",
+  "source": "https://genai.owasp.org/llm-top-10/",
+  "adjacent": "security-llm-prompt-injection-review; security-agent-tool-authorization-review; security-mcp-authorization-review",
+  "branch_decisions": "Bind approval to executable, argv, working directory, environment and relevant script/input identity. Textually identical shell commands can execute changed files or resolve a different executable. Distinguish an intentionally approved general shell capability from approval of one immutable operation, and verify whether retries or edits invalidate the specific approval contract.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

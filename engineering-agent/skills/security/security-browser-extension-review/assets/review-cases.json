@@ -1,0 +1,22 @@
+{
+  "kind": "authored-review-cases",
+  "executed": false,
+  "skill": "security-browser-extension-review",
+  "cases": [
+    {
+      "id": "payload-identity-trusted",
+      "scenario": "A controlled page supplies an allowed-origin string in a message and the extension stub performs a forbidden privileged action.",
+      "expected_decision": "Confirm only if the actual handler trusts that payload over available trusted sender/context checks."
+    },
+    {
+      "id": "sender-gate",
+      "scenario": "A forged payload is rejected using trusted sender metadata and the stub ledger is unchanged.",
+      "expected_decision": "Treat the tested capability boundary as protected."
+    },
+    {
+      "id": "permission-only",
+      "scenario": "The manifest grants powerful access but no lower-trust reachable privileged operation is evidenced.",
+      "expected_decision": "Describe least-privilege hardening separately from a confirmed privilege bypass."
+    }
+  ]
+}

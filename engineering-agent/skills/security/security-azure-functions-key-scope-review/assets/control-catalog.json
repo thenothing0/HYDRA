@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Azure service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Azure Functions host/function keys and application action authority",
+      "source_trace": "Identify what the key actually admits and whether a caller with an intended narrow key reaches another function or protected business operation.",
+      "implementation_branch": "Identify function, host and administrative/master key scope without copying key material into reports. A function key may intentionally authenticate a shared integration; it does not identify an end user. Compare invocation admission with handler authorization, and account for an explicitly anonymous trigger or an alternate authenticated gateway before classifying key reachability.",
+      "operational_method": "",
+      "controlled_verification": "Use an owned function fixture with synthetic effects; compare an intended function key and a restricted function/action.",
+      "false_positive_discriminator": "A publishable endpoint or a key parameter is not account administration authority; a handler can still enforce its own actor policy.",
+      "remediation_acceptance": "Restrict key distribution/scope and handler permissions, then verify intended trigger calls and cross-function denial."
+    }
+  ]
+}

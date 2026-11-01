@@ -1,0 +1,18 @@
+{
+  "category": "A01",
+  "taxonomy_note": "Compatibility planning lens only, not a normative cross-domain mapping. Final root-cause taxonomy may differ or remain unassigned.",
+  "native_context": "MASVS-PLATFORM; refine the control from the observed boundary",
+  "domain": "mobile",
+  "controls": [
+    {
+      "id": "ANDROID_COMPONENTS-1",
+      "boundary": "Android exported components and caller authority — authoritative consumer",
+      "source_trace": "Inspect the merged release manifest, exported components, permissions, caller checks, intent parameters and URI grants. Record Android/version/build and intended inter-app contract.",
+      "controlled_verification": "In an owned test app/device invoke the component from a separate low-privilege test app with a harmless fixture URI/action. Compare its protected effect with the legitimate app flow and inspect whether identity is checked before privileged work.",
+      "false_positive_discriminator": "An exported component is not inherently vulnerable. A signature permission, caller check or restricted URI grant may enforce the intended contract. A debug manifest may not describe release exposure.",
+      "remediation_acceptance": "Apply the required caller/action/resource check and narrow component/grant exposure. Retest legitimate integrations, the original untrusted caller and URI grant lifetime where relevant."
+    }
+  ],
+  "catalog_revision": "11.0",
+  "coverage_unit": "One primary investigative assertion for this technique; not exhaustive coverage. Expand only for genuinely distinct policy/effect assertions in the actual assessment."
+}

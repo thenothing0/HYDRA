@@ -1,0 +1,21 @@
+{
+  "name": "security-aws-cognito-identity-roles-review",
+  "domain": "AWS service boundaries",
+  "intent": "Cognito identity-pool role selection and effective workload authority",
+  "artifacts": "Identity-pool providers, authenticated/unauthenticated roles, role mappings, trust policy and token context.",
+  "trace": "Follow a presented identity into selected role and resulting session restrictions. Distinguish authentication success from excessive AWS permissions granted by that role.",
+  "experiment": "Use an owned identity pool/test roles with harmless resources; compare intended identity class with a controlled provider/role-mapping variation.",
+  "disproof": "An unauthenticated identity ID can be intended; no sensitive AWS action is proved by obtaining it alone.",
+  "repair": "Constrain role selection/trust and effective permissions, verifying intended guest and authenticated capabilities.",
+  "source": "https://docs.aws.amazon.com/cognito/latest/developerguide/iam-roles.html",
+  "adjacent": "security-aws-iam-review; security-aws-object-storage-review; security-aws-workload-identity-review",
+  "branch_decisions": "Identify identity pools separately from user-pool login. Determine whether authenticated, unauthenticated or claim-mapped roles are selected and what the resulting STS session actually permits. A client-visible pool ID is not a secret. Evaluate audience/subject/authentication-state trust and ambiguous role rules before interpreting a successful identity or credential issuance as excess privilege.",
+  "operational_method": "Collect identity-pool aud and amr conditions from the role trust policy, the login provider claim mapping, role-mapping rules, ambiguous-role resolution and any allowed CustomRoleArn choice. Follow the selected role into the resulting session permissions. Use two synthetic claim sets differing in the decisive rule input, with an unauthenticated claim-state control; an identity ID or successful login is not proof that the privileged role was selected.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

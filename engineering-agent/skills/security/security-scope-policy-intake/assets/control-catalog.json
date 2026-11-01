@@ -1,0 +1,16 @@
+{
+  "category": "A01",
+  "native_context": "Testing-policy and authorization intake",
+  "taxonomy_note": "Planning lens only; actual root-cause mapping is independent.",
+  "controls": [
+    {
+      "id": "SECURITY_SCOPE_POLICY_INTAKE-1",
+      "boundary": "invariant and caller control",
+      "source_trace": "Map actual assets, actors, existing authority and required invariants before selecting checks.",
+      "controlled_verification": "Reconcile a concrete proposed action with the supplied policy, environment and evidence; do not claim it was executed.",
+      "false_positive_discriminator": "Authorization and coverage cannot be inferred from a template or hostname match alone.",
+      "remediation_acceptance": "Deliver an honest coverage/action ledger with specific missing checks, appropriate routes and preserved existing authorization."
+    }
+  ],
+  "coverage_unit": "One workflow reconciliation, not a technical security control or measured coverage."
+}

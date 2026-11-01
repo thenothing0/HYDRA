@@ -1,0 +1,21 @@
+{
+  "name": "security-tenant-domain-verification-review",
+  "domain": "API and SaaS authority",
+  "intent": "Custom-domain ownership proof and tenant routing lifecycle",
+  "artifacts": "Domain claim/challenge generation, DNS/HTTP verification, normalization, reassignment and tenant routing.",
+  "trace": "Trace who controls the verification token and whether old proof can claim a different tenant/domain or survive intended ownership removal.",
+  "experiment": "Use only owned domains or a local resolver fixture; compare correct proof with another owned tenant challenge and a stale ownership transition.",
+  "disproof": "A DNS CNAME or validation error does not prove claimability; never claim an unowned production domain to strengthen the report.",
+  "repair": "Bind proof to normalized domain, tenant and current transaction, then verify renewal/removal and rightful onboarding.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+  "adjacent": "security-api-bola-review; security-api-function-authorization-review; security-background-job-authorization-review",
+  "branch_decisions": "Distinguish hostname normalization, current proof ownership and the tenant allowed to claim it. Old verification tokens may be invalidated or remain valid by declared policy. A dangling DNS target is not proof that a provider will accept a new claim; use only an owned domain/fixture for that transition.",
+  "operational_method": "Record which DNS/HTTP proof method was accepted and how alternate methods interact. An HTTP challenge hosted by the same unverified SaaS tenant can make ownership proof circular; locate the independent domain-controlled endpoint before trusting it. Compare an owned domain under each supported method, stale proof and reassignment, without claiming another party hostname or registering its dangling resource.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

@@ -1,0 +1,21 @@
+{
+  "name": "security-aws-sns-subscription-routing-review",
+  "domain": "AWS service boundaries",
+  "intent": "SNS publish/subscription authority and sensitive destination routing",
+  "artifacts": "Topic policy, subscription creation/confirmation, filter policy and delivered message classification.",
+  "trace": "Determine who may subscribe or change a destination and whether confirmation proves endpoint control plus tenant entitlement, rather than only reachability.",
+  "experiment": "Use owned synthetic topic messages and destinations; compare intended subscription with another owned tenant/destination request.",
+  "disproof": "A subscription confirmation token or public topic ARN is not data exposure until unauthorized delivery or alteration is established.",
+  "repair": "Bind subscription management to intended recipients and retest confirmation, filtering, deletion and actual delivery.",
+  "source": "https://docs.aws.amazon.com/sns/latest/dg/sns-access-policy-use-cases.html",
+  "adjacent": "security-aws-iam-review; security-aws-object-storage-review; security-aws-workload-identity-review",
+  "branch_decisions": "Distinguish publish permission, Subscribe permission, endpoint confirmation and consumer authenticity checks. A confirmed endpoint is not proof that every subscriber is entitled to the message data. Trace topic policy, filter policy and any envelope signature into the actual consumer; do not send live customer notifications or infer plaintext exposure from topic metadata alone.",
+  "operational_method": "Identify delivery protocol before choosing the validation oracle. HTTP/S delivery uses the actual SNS envelope/signature and subscription-confirmation contract; SQS delivery depends on queue admission policy and may use raw message delivery. Raw delivery must not be rejected merely for lacking an HTTP envelope. Record topic, subscription endpoint owner, protocol and raw/enveloped mode, then trace one synthetic notification to the intended recipient and a forbidden-route control.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "needs-depth",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

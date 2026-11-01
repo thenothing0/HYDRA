@@ -1,0 +1,21 @@
+{
+  "name": "security-jws-detached-payload-review",
+  "domain": "Cryptographic protocols and runtime consumers",
+  "intent": "Detached JWS payload bytes and signature-to-consumer agreement",
+  "artifacts": "JWS serialization, b64/critical-header handling, HTTP/body transformations and final consumer bytes.",
+  "trace": "Determine which exact bytes are authenticated and whether normalization/decoding makes the application act on different content than was verified.",
+  "experiment": "Use local synthetic signed messages and harmless paired payloads differing at one transformation boundary; record verifier and consumer digests.",
+  "disproof": "A valid signature on an unchanged intended payload is expected; a serialization rejection is not message substitution.",
+  "repair": "Bind verification to the exact consumed representation and supported header policy, preserving legitimate detached payloads.",
+  "source": "https://www.rfc-editor.org/rfc/rfc7797",
+  "adjacent": "security-jwt-review; security-tls-peer-validation-review; security-deserialization-review",
+  "branch_decisions": "Separate ordinary detached JWS from unencoded-payload b64=false; the latter requires correct b64/crit processing. Signature validity and identical byte digests do not ensure equivalent JSON meaning if duplicate members have first/last parser differences. Bind accepted algorithm/key and parse the verified bytes consistently, rejecting ambiguous structures where the application contract requires uniqueness.",
+  "operational_method": "",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "keep",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}

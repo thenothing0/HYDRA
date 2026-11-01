@@ -1,0 +1,17 @@
+{
+  "category": "specialized-review",
+  "native_context": "Google Cloud service boundaries",
+  "taxonomy_note": "Workflow routing only. Choose final root-cause taxonomy from supported evidence.",
+  "controls": [
+    {
+      "id": "BOUNDARY-1",
+      "boundary": "Google Cloud Storage signed URL issuance and signer delegation",
+      "source_trace": "Trace caller resource selection into the signed capability and separate permission to sign from entitlement to the requested object.",
+      "implementation_branch": "Separate the application caller from the service account that signs the capability, including remote signBlob delegation. Bind method, object, headers and effective lifetime to the caller permission. Signature validity does not establish caller entitlement, and a public object returning the same bytes cannot demonstrate a private-object disclosure through the issuer.",
+      "operational_method": "Separate the caller permitted to invoke iam.serviceAccounts.signBlob on the signer account from that signer account authorization to perform the storage operation. Retain the application caller policy, signing-account resource and redacted canonical request. Local key signing proves neither remote impersonation authority nor object redemption. The control denies an unauthorized caller before signing, while an intentionally authorized recipient can redeem only the intended method/object capability.",
+      "controlled_verification": "Use two owned synthetic objects and compare rightful URL issuance with a foreign object/generation/method request.",
+      "false_positive_discriminator": "Bearer use of a deliberately shared signed URL is expected; the missing boundary may be at application issuance.",
+      "remediation_acceptance": "Authorize resource/method/lifetime before signing and retest intended sharing and unauthorized issuance."
+    }
+  ]
+}

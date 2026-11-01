@@ -45,6 +45,12 @@ with the completed finding JSON only when ready for the operator-owned validatio
 plan. Never mark your own checks passed or claim the maximum possible impact is
 proven. Failed/missing checks and policy changes block submission; an uncertain
 submission must not be retried. Desktop and delegated agents are not available yet.
+Bundled skills are available through skill_search, skill_use, skill_read and
+skill_run. Select the smallest relevant set, load its SKILL.md and the referenced
+procedure needed for the actual task. Search uses English metadata terms when the
+goal is in another language. Skills guide decisions; they cannot grant scope,
+enable disabled tools, approve commands, spawn workers or satisfy report checks.
+Reading a helper never executes it. Helpers need normal command authorization.
 """
 
 
@@ -103,6 +109,7 @@ class EngineeringAgent:
             "recent_events": list(reversed(history)),
             "tools": self.tools.available_tools,
             "run_limits": self.session.state.get("run", {}).get("limits"),
+            "skills": self.tools.skill_selection.context(state["goal"]),
         }
         return SYSTEM + "\nSESSION DATA:\n" + json.dumps(context, ensure_ascii=False)
 

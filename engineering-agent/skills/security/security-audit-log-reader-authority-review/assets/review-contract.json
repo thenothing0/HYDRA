@@ -1,0 +1,21 @@
+{
+  "name": "security-audit-log-reader-authority-review",
+  "domain": "Data publication and privacy boundaries",
+  "intent": "Audit query scope across partition expansion, cursor and export publication",
+  "artifacts": "Event schema, log-reader roles, tenant/project filters, retention and export endpoints.",
+  "trace": "Follow a caller query into effective log scope and serializer fields. Differentiate read access to security events from permission to read credentials/PII inside them.",
+  "experiment": "Query synthetic audit events through a scoped reader capability, then alter the continuation/export query or partition while preserving the same visible filter. Inspect final event fields and artifact audience against the immutable scope.",
+  "disproof": "An audit-event count or event type may be intentionally visible; require an actual field/object policy violation.",
+  "repair": "Constrain reader scope and redact unnecessary sensitive fields, preserving authorized incident response and audit fidelity.",
+  "source": "https://cheatsheetseries.owasp.org/cheatsheets/User_Privacy_Protection_Cheat_Sheet.html",
+  "adjacent": "security-api-sensitive-fields-review; security-deleted-data-access-review; security-document-processing-review",
+  "branch_decisions": "Evaluate reader scope, query filters, export jobs and fields independently from permission to perform the logged actions. Audit readers may intentionally see security-relevant cross-user metadata; establish which contents remain protected. A redacted UI does not prove raw export/search restrictions, and a permitted event count is not automatically a complete log disclosure.",
+  "operational_method": "Specialize in audit query/export scope carried across the UI, query DSL, cursor and async result link. Retain the immutable tenant/project scope attached to the reader capability and compare it with index/partition selection and field projection after query rewriting. Test a scoped synthetic search, a forged continuation/export context and the final redacted event payload. Ordinary one-object API access without audit query fan-out belongs in generic object/property review.",
+  "additional_sources": [],
+  "full_audit_initial_verdict": "overlaps",
+  "kind": "authored-technique-contract",
+  "execution_state": "not_executed",
+  "findings": [],
+  "observations": [],
+  "authority_inferred": false
+}
