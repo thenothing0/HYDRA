@@ -381,3 +381,17 @@ async def test_tui_obeys_tool_budget_and_exports_committed_state(tmp_path):
         assert session.path.read_bytes() == before
         assert model.calls == 1
         assert session.handoff()["source_checksum"] == session.state["checksum"]
+
+
+@pytest.mark.asyncio
+async def test_hackerone_status_is_offline_and_preserves_no_credentials_in_chat(tmp_path):
+    model = ScriptModel([])
+    options = RunOptions(provider="ollama", model="fixture", hackerone=True)
+    app = EngineeringApp(tmp_path, options, model_factory=lambda *_: model)
+    async with app.run_test(size=(120, 36)) as pilot:
+        app.query_one("#prompt", Prompt).load_text("/hackerone")
+        await pilot.press("enter")
+        await pilot.pause()
+        assert model.calls == 0
+        assert not (tmp_path / ".hydra").exists()
+        assert app.options.hackerone

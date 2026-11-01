@@ -16,7 +16,7 @@ from hydra.engineering.providers import describe_providers, settings
 from hydra.engineering.tui.controller import EngineeringController
 from hydra.engineering.tui.widgets import CommandApproval, ModelSelection, Prompt, safe_text
 
-HELP = "/new  /sessions  /resume ID  /diff  /plan  /model [ID]  /provider NAME MODEL  /burp  /status  /handoff  /cancel  /help  /quit"
+HELP = "/new  /sessions  /resume ID  /diff  /plan  /model [ID]  /provider NAME MODEL  /burp  /hackerone  /status  /handoff  /cancel  /help  /quit"
 
 
 class SessionItem(ListItem):
@@ -377,6 +377,15 @@ class EngineeringApp(App):
             self.query_one("#sessions-panel").display = True
         elif command == "/burp":
             self.run_worker(self.check_burp(), group="burp-status", exclusive=True, exit_on_error=False)
+        elif command == "/hackerone":
+            from hydra.engineering.hackerone_reporting import HackerOneReporting
+
+            try:
+                report = HackerOneReporting(self.controller.workspace).status()
+                report["enabled_for_session"] = self.options.hackerone
+                self.add_message("HackerOne reporting", json.dumps(report, ensure_ascii=False, indent=2))
+            except (ValueError, OSError, KeyError) as error:
+                self.add_message("HackerOne reporting", str(error))
         elif command in ("/status", "/handoff"):
             if self.busy and command == "/handoff":
                 self.notify("Cancel or finish the active run before exporting its committed state.")

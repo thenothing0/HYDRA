@@ -27,6 +27,7 @@ class RunOptions:
     allow_run: bool = False
     verify_command: list[str] | None = None
     burp_url: str | None = None
+    hackerone: bool = False
 
     @classmethod
     def from_args(cls, args):
@@ -113,6 +114,7 @@ class EngineeringController:
                 allow_browser_actions=options.allow_browser_actions,
                 burp_url=options.burp_url,
                 approve_burp=self.approve_burp,
+                hackerone=options.hackerone,
             )
             session.state["verification_command"] = tools.verify_command
             session.save()

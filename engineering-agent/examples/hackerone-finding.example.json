@@ -1,0 +1,16 @@
+{
+  "title": "Replace with a specific evidence-supported finding title",
+  "vulnerability_information": "Describe the issue, prerequisite actor/accounts and affected feature.",
+  "impact": "Describe observed security impact without hypothetical severity inflation.",
+  "severity_rating": "medium",
+  "weakness_id": 1,
+  "asset_identifier": "app.example.test",
+  "affected_url": "https://app.example.test/affected-path",
+  "root_cause": "Stable description of the independent underlying defect",
+  "reproduction_steps": ["Replace with exact permitted setup", "Replace with the observed reproduction and control"],
+  "expected_result": "Describe the expected boundary.",
+  "observed_result": "Describe the actual reproducible behavior.",
+  "impact_bounds": "List the completed approved investigation checks and explain the stopping point.",
+  "limitations": "Record remaining unknowns and any checks that were not permitted.",
+  "evidence": [{"path": "evidence/redacted-reproduction.txt", "sha256": "REPLACE_WITH_ACTUAL_FILE_SHA256"}]
+}

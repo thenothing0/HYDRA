@@ -78,6 +78,7 @@ and **Ctrl+Q** exits after cleanup.
 | `/sessions` / `/resume SESSION_ID` | Browse or resume saved work |
 | `/plan` / `/diff` | Inspect the plan or tracked file changes |
 | `/burp` | Check the Burp MCP connection and discover its tools |
+| `/hackerone` | Show automatic-reporting policy and recent receipts |
 | `/status` | Show run limits, usage and stop reason |
 | `/handoff` | Display a validated export of committed session state |
 | `/cancel` / `/quit` | Cancel work or exit |
@@ -148,6 +149,19 @@ temporary installation and signing limits are documented, and live Firefox
 behavior remains unverified. See [browser setup](engineering-agent/BROWSER.md).
 Use security workflows only with explicit authorization for the target scope.
 
+## HackerOne reporting
+
+Launch with `--hackerone` to enable the official Hacker API integration. After
+local account setup and authorization of a program/asset-specific validation
+plan, HYDRA can submit automatically when five operator-owned checks pass:
+reproduction, negative control, observed impact, impact bounds and report quality.
+Model confidence or a self-completed checklist cannot bypass the execution gates.
+
+The integration rechecks current scope/policy, requires hashed redacted evidence,
+limits submissions and prevents repeated or uncertain writes. It does not prove
+that impact can never increase or that the program has no duplicate report.
+See [HackerOne setup, validation contract and tested limits](engineering-agent/HACKERONE.md).
+
 ## AI-EOS V5 implementation
 
 Phase 1 adds validated durable state, independent per-run limits, failure
@@ -163,8 +177,8 @@ and the [machine-readable phase record](engineering-agent/EOS_V5_STATUS.json).
 
 ## Verification and current limits
 
-The 2026-10-17 local engineering-suite snapshot was **723 passed, nine skipped**.
-Engineering CI passed on Python 3.10, 3.11 and 3.12, including the Linux installer.
+The 2026-11-01 local engineering-suite snapshot was **765 passed, ten skipped**.
+Engineering CI runs on Python 3.10, 3.11 and 3.12 and checks the Linux installer.
 Tests cover real file/process operations, verification, recovery, terminal
 interactions, local HTTP/MCP transports and governance. Fixture results measure
 implementation behavior, not live model quality. Check the CI badges for the
@@ -192,6 +206,7 @@ task-success benchmarking remain development work. See
 | [`engineering-agent/PROVIDERS.md`](engineering-agent/PROVIDERS.md) | Provider configuration and authentication status |
 | [`engineering-agent/BURP.md`](engineering-agent/BURP.md) | Burp MCP connection and approvals |
 | [`engineering-agent/BROWSER.md`](engineering-agent/BROWSER.md) | Chromium/Firefox extension setup |
+| [`engineering-agent/HACKERONE.md`](engineering-agent/HACKERONE.md) | Account setup and evidence-gated automatic reporting |
 | [`engineering-agent/AI_EOS_V5.md`](engineering-agent/AI_EOS_V5.md) | Implemented V5 foundations and next phases |
 | [`SECURITY_PLATFORM_LEGACY.md`](SECURITY_PLATFORM_LEGACY.md) | Archived root README for the separate security/knowledge platform |
 

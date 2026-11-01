@@ -1,0 +1,14 @@
+{
+  "program": "REPLACE_WITH_PROGRAM_HANDLE",
+  "structured_scope_id": 1,
+  "reviewed_snapshot_digest": "REPLACE_WITH_DIGEST_FROM_HYDRA_HACKERONE_PROGRAM",
+  "expires_at": "2000-01-01T00:00:00Z",
+  "max_reports": 1,
+  "checks": [
+    {"id": "reproduction", "argv": ["python", "/path/outside/workspace/verify_finding.py", "--check", "reproduction", "{finding}"], "pinned_files": ["/path/outside/workspace/verify_finding.py"], "timeout": 60},
+    {"id": "negative_control", "argv": ["python", "/path/outside/workspace/verify_finding.py", "--check", "negative_control", "{finding}"], "pinned_files": ["/path/outside/workspace/verify_finding.py"], "timeout": 60},
+    {"id": "impact", "argv": ["python", "/path/outside/workspace/verify_finding.py", "--check", "impact", "{finding}"], "pinned_files": ["/path/outside/workspace/verify_finding.py"], "timeout": 60},
+    {"id": "impact_bounds", "argv": ["python", "/path/outside/workspace/verify_finding.py", "--check", "impact_bounds", "{finding}"], "pinned_files": ["/path/outside/workspace/verify_finding.py"], "timeout": 60},
+    {"id": "report_quality", "argv": ["python", "/path/outside/workspace/verify_finding.py", "--check", "report_quality", "{finding}"], "pinned_files": ["/path/outside/workspace/verify_finding.py"], "timeout": 60}
+  ]
+}

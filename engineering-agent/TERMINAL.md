@@ -81,6 +81,7 @@ there is no secret-key entry field, and keys are never requested in chat.
 | Ctrl+O in model dialog | Save a default model for future launches |
 | `/provider NAME MODEL` | Select an implemented provider/model |
 | `/burp` | Check the Burp MCP server and list its tools |
+| `/hackerone` | Show the local automatic-reporting policy and recent receipts |
 | `/status` | Show the selected session's run limits, usage and stop reason |
 | `/handoff` | Show a validated handoff of committed session state |
 | `/cancel` / Ctrl+C | Cancel the active run |
@@ -100,6 +101,11 @@ Launch flags override a saved default. Unimplemented subscription/OAuth profiles
 remain unavailable; they are not labelled as working OAuth routes.
 
 Burp MCP is built in; see [BURP.md](BURP.md) for its extension and connection setup.
+
+Start with `--hackerone` to expose HackerOne tools. Account credentials, an
+operator-authorized program/asset and finding-specific verifiers are configured
+separately. Only a completed validation plan can trigger automatic submission;
+`--allow-run` does not bypass those gates. See [HACKERONE.md](HACKERONE.md).
 
 Run limits apply to this interface too: `--max-tool-calls`, `--max-tokens`,
 `--max-context-chars` and `--max-failures`. Token limits use observed provider

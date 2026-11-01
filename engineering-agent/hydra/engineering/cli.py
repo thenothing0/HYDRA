@@ -38,6 +38,7 @@ def parser():
         command.add_argument("--max-context-chars", type=int, default=64000)
         command.add_argument("--max-failures", type=int, default=5)
         command.add_argument("--burp-url", help="Official Burp MCP SSE endpoint on loopback (or BURP_MCP_URL)")
+        command.add_argument("--hackerone", action="store_true", help="Enable HackerOne tools; submission still requires an authorized validation plan")
         command.add_argument("--read-only", action="store_true")
         command.add_argument(
             "--browser",
@@ -78,6 +79,21 @@ def parser():
     burp = sub.add_parser("burp", help="Check the official Burp MCP extension and list its tools")
     burp.add_argument("--workspace", default=".")
     burp.add_argument("--url")
+    hackerone = sub.add_parser("hackerone", help="Configure and inspect evidence-gated HackerOne reporting")
+    reporting = hackerone.add_subparsers(dest="hackerone_command", required=True)
+    for name in ("status", "programs", "scopes", "program", "authorize", "submit"):
+        command = reporting.add_parser(name)
+        command.add_argument("--workspace", default=".")
+        if name in ("program", "scopes"):
+            command.add_argument("program")
+        if name == "program":
+            command.add_argument("--scope-id", required=True, type=int)
+        if name == "authorize":
+            command.add_argument("--plan", required=True, help="Operator-owned plan JSON outside the agent workspace")
+            command.add_argument("--policy-reviewed", action="store_true")
+        if name == "submit":
+            command.add_argument("finding_path", help="Relative workspace path to finding JSON")
+            command.add_argument("--allow-run", action="store_true", help="Approve the fixed validation commands for this invocation")
     browser = sub.add_parser("browser", help="Local unpacked-extension bridge")
     commands = browser.add_subparsers(dest="browser_command", required=True)
     for name in ("start", "status", "extension"):
@@ -175,6 +191,7 @@ async def start_run(args, workspace, session=None, goal=None, model=None):
         allow_browser_actions=args.allow_browser_actions,
         burp_url=getattr(args, "burp_url", None),
         approve_burp=approve,
+        hackerone=getattr(args, "hackerone", False),
     )
     session.state["verification_command"] = tools.verify_command
     session.save()
@@ -213,6 +230,37 @@ async def main(argv=None):
     if getattr(args, "allow_browser_actions", False) and not args.browser:
         raise ValueError("--allow-browser-actions requires --browser")
     workspace = Workspace(args.workspace)
+    if args.command == "hackerone":
+        from hydra.engineering.hackerone_api import HackerOneClient, program_handle
+        from hydra.engineering.hackerone_reporting import HackerOneReporting, fingerprint
+        from hydra.engineering.process import ProcessRunner
+
+        store = HackerOneReporting(workspace)
+        if args.hackerone_command == "status":
+            result = store.status()
+        else:
+            store.client = HackerOneClient()
+            if args.hackerone_command == "programs":
+                programs = await store.client.collection("/programs")
+                result = {"programs": [{"id": p.get("id"), "handle": p.get("attributes", {}).get("handle"),
+                                        "submission_state": p.get("attributes", {}).get("submission_state")}
+                                       for p in programs]}
+            elif args.hackerone_command == "scopes":
+                result = {"scopes": await store.client.collection(f"/programs/{program_handle(args.program)}/structured_scopes")}
+            elif args.hackerone_command == "program":
+                snapshot = await store.client.snapshot(args.program, args.scope_id)
+                result = {"snapshot": snapshot, "reviewed_snapshot_digest": fingerprint(snapshot)}
+            elif args.hackerone_command == "authorize":
+                plan_path = Path(args.plan).resolve(strict=True)
+                if plan_path.is_relative_to(workspace.root):
+                    raise ValueError("Keep the operator's validation plan outside the agent workspace")
+                result = await store.authorize(json.loads(plan_path.read_text(encoding="utf-8")),
+                                               policy_reviewed=args.policy_reviewed)
+            else:
+                runner = ProcessRunner(workspace, (lambda argv: True) if args.allow_run else approve)
+                result = await store.submit(json.loads(workspace.read_bytes(args.finding_path)), run_check=runner.run)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0 if result.get("success", True) else 1
     if args.command == "handoff":
         session = Session(workspace, session_id=args.session_id)
         print(json.dumps(session.handoff(), ensure_ascii=False, indent=2))

@@ -48,6 +48,11 @@ keys/accounts, model downloads and external applications are configured separate
 provider catalog refresh. [Burp MCP](BURP.md) is a built-in capability; `/burp`
 checks the official extension and its tools. Each Burp call needs approval.
 
+[HackerOne reporting](HACKERONE.md) is opt-in with `--hackerone`. An authorized
+program/asset-specific plan must pass five operator-owned verification commands
+before automatic submission. Reports retain evidence hashes and durable receipts;
+failed, changed or ambiguous submissions are blocked from automatic retry.
+
 ```powershell
 .\run.ps1 run "Fix the failing tests with a minimal change" --workspace E:\projects\app --provider deepseek --model YOUR_MODEL_ID
 .\run.ps1 run "Explain the architecture" --workspace E:\projects\app --read-only
